@@ -32,7 +32,12 @@ SOURCES += \
 HEADERS += \
         mainwindow.h \
     jsonxx.h \
-    fileutil.h
+    fileutil.h \
+    user.h \
+    shop.h \
+    money.h \
+    information.h \
+    ccmis.h
 
 FORMS += \
         mainwindow.ui
