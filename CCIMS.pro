@@ -34,7 +34,8 @@ HEADERS += \
     user.h \
     shop.h \
     money.h \
-    information.h
+    information.h \
+    ccmis.h
 
 FORMS += \
         mainwindow.ui

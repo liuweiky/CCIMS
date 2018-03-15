@@ -10,6 +10,7 @@ struct Information
     int Onumber;//出账卡号
     int Inumber;//收账卡号
     int money;  //交易额
+    Information* next;//下个结点
 };
 
 #endif // INFORMATION_H
