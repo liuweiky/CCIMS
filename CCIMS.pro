@@ -27,7 +27,8 @@ SOURCES += \
         main.cpp \
         mainwindow.cpp \
     jsonxx.cpp \
-    fileutil.cpp
+    fileutil.cpp \
+    ccmis.cpp
 
 HEADERS += \
         mainwindow.h \

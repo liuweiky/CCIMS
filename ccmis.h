@@ -1,21 +1,35 @@
 #ifndef CCMIS_H
 #define CCMIS_H
 
+#include <fstream>
+#include <sstream>
+
+using namespace std;
 #include "information.h"
 #include "money.h"
 #include "shop.h"
 #include "user.h"
+#include "jsonxx.h"
+
+
 
 class CCMIS
 {
 private:
-    Information*    inf;//信息表头结点
-    Money*  mon;        //余额表头结点
-    Shop*   sho;        //商店表头结点
-    User*   use;        //用户表头结点
+    Information*    mInfo;//信息表头结点
+    Money*  mMoney;        //余额表头结点
+    Shop*   mShop;        //商店表头结点
+    User*   mUser;        //用户表头结点
 
 public:
-    CCMIS() {}
+
+    static const string USER_FILE_NAME;
+
+    static const string JSON_KEY_NUMBER;
+    static const string JSON_KEY_NAME;
+    static const string JSON_KEY_PASSWORD;
+
+    CCMIS();
     ~CCMIS() {}
 
     void ReadInf(string filename);          //读入整个信息表文件
@@ -27,7 +41,7 @@ public:
 
     void ReadMoney(string filename);    //读入整个信息表文件
     void ReadShop(string filename);     //读入整个余额表文件
-    void ReadUser(string filename);     //读入整个用户表文件
+    bool ReadUser(string filename);     //读入整个用户表文件
 
     void SearchNumber(int id);      //根据卡号输出信息
     void SearchSubsidy(int id);     //根据补贴输出信息
