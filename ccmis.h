@@ -24,6 +24,7 @@ private:
 public:
 
     static const string USER_FILE_NAME;
+    static const string SHOP_FILE_NAME;
 
     static const string JSON_KEY_NUMBER;
     static const string JSON_KEY_NAME;
@@ -40,7 +41,7 @@ public:
     void ChangeInf(Information* beforeinf, Information* afterinf);//改变单个信息表
 
     void ReadMoney(string filename);    //读入整个信息表文件
-    void ReadShop(string filename);     //读入整个余额表文件
+    bool ReadShop(string filename);     //读入整个商户表文件
     bool ReadUser(string filename);     //读入整个用户表文件
 
     void SearchNumber(int id);      //根据卡号输出信息
