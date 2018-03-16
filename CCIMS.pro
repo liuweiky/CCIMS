@@ -26,19 +26,17 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
         main.cpp \
         mainwindow.cpp \
-    jsonxx.cpp \
-    fileutil.cpp \
-    ccmis.cpp
+        jsonxx.cpp \
+        ccmis.cpp
 
 HEADERS += \
         mainwindow.h \
-    jsonxx.h \
-    fileutil.h \
-    user.h \
-    shop.h \
-    money.h \
-    information.h \
-    ccmis.h
+        jsonxx.h \
+        user.h \
+        shop.h \
+        money.h \
+        information.h \
+        ccmis.h
 
 FORMS += \
         mainwindow.ui
