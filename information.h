@@ -5,8 +5,12 @@
 
 struct Information
 {
-    unsigned long  date;   //日期
-    unsigned long  time;   //时间
+    string tag; //流水号
+    unsigned int year;   //日期
+    unsigned int month;   //日期
+    unsigned int day;   //日期
+    unsigned int hour;   //日期
+    unsigned int minute;   //日期
     unsigned int Onumber;//出账卡号
     unsigned int Inumber;//收账卡号
     unsigned int money;  //交易额

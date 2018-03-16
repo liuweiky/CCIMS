@@ -17,12 +17,10 @@ const int CCMIS::GROUP_BATH = 3;
 CCMIS::CCMIS()
 {
     mInfo = new Information();
-    mMoney = new Money();
     mShop = new Shop();
     mUser = new User();
 
     mInfo->next = NULL;
-    mMoney->next = NULL;
     mShop->next = NULL;
     mUser->next = NULL;
 
@@ -37,7 +35,9 @@ CCMIS::CCMIS()
         cout << "Open " + SHOP_FILE_NAME + " failed.";
     }
 
-    WriteUser(USER_FILE_NAME);
+    //WriteUser(USER_FILE_NAME);
+
+    GenerateTag(6998, 1101, 1500);
 }
 
 bool CCMIS::WriteUser(string filename)
@@ -101,6 +101,7 @@ bool CCMIS::ReadUser(string filename)
             u->balance = array.get<jsonxx::Object>(i).get<jsonxx::Number>(JSON_KEY_BALANCE);
             u->coupon = array.get<jsonxx::Object>(i).get<jsonxx::Number>(JSON_KEY_COUPON);
 
+            /**DON NOT DELETE THE ANNOTATION RASHLY!!!*/
             /*u->balance = (rand() % (100000 - 0 + 1)) + 0;
             if (u->number < 5000)
             {
@@ -170,7 +171,43 @@ bool CCMIS::ReadShop(string filename)
     }
 }
 
-void CCMIS::AddInf(Information *tempinf)
+string CCMIS::GenerateTag(int onum, int inum, int mon)
 {
+    time_t tt = time(NULL);//这句返回的只是一个时间cuo
+    tm* t= localtime(&tt);
 
+    /**TIME*/
+    string tag = to_string(t->tm_year + 1900);
+
+    tag += t->tm_mon + 1 < 10 ? "0" + to_string(t->tm_mon + 1) : to_string(t->tm_mon + 1);
+    tag += t->tm_mday < 10 ? "0" + to_string(t->tm_mday) : to_string(t->tm_mday);
+    tag += t->tm_hour < 10 ? "0" + to_string(t->tm_hour) : to_string(t->tm_hour);
+    tag += t->tm_min < 10 ? "0" + to_string(t->tm_min) : to_string(t->tm_min);
+    tag += t->tm_sec < 10 ? "0" + to_string(t->tm_sec) : to_string(t->tm_sec);
+
+    /**I/O NUMBER*/
+    tag += onum < 1000 ? "000" + to_string(onum) : to_string(onum);
+    tag += inum < 1000 ? "000" + to_string(inum) : to_string(inum);
+
+    /**COST*/
+    if (mon < 10)
+    {
+        tag += "0000" + to_string(mon);
+    } else if (mon < 100)
+    {
+        tag += "000" + to_string(mon);
+    } else if (mon < 1000)
+    {
+        tag += "00" + to_string(mon);
+    } else if (mon < 10000)
+    {
+        tag += "0" + to_string(mon);
+    } else {
+        tag += to_string(mon);
+    }
+
+
+    cout<<tag;
+
+    return tag;
 }

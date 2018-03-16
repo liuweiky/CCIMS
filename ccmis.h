@@ -5,10 +5,11 @@
 #include <sstream>
 #include <stdlib.h>
 #include <time.h>
+#include <string>
+#include <time.h>
 
 using namespace std;
 #include "information.h"
-#include "money.h"
 #include "shop.h"
 #include "user.h"
 #include "jsonxx.h"
@@ -19,7 +20,6 @@ class CCMIS
 {
 private:
     Information*    mInfo;//信息表头结点
-    Money*  mMoney;        //余额表头结点
     Shop*   mShop;        //商店表头结点
     User*   mUser;        //用户表头结点
 
@@ -58,6 +58,8 @@ public:
     void SearchSubsidy(int id);     //根据补贴输出信息
     void SearchTime(int startdate, int startime,
                     int finishdate, int finishtime);  //根据时间输出信息
+
+    string GenerateTag(int onum, int inum, int mon);    //生成流水号
 };
 
 #endif // CCMIS_H
