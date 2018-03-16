@@ -3,6 +3,8 @@
 
 #include <fstream>
 #include <sstream>
+#include <stdlib.h>
+#include <time.h>
 
 using namespace std;
 #include "information.h"
@@ -25,10 +27,20 @@ public:
 
     static const string USER_FILE_NAME;
     static const string SHOP_FILE_NAME;
+    static const string MONEY_FILE_NAME;
 
     static const string JSON_KEY_NUMBER;
     static const string JSON_KEY_NAME;
     static const string JSON_KEY_PASSWORD;
+    static const string JSON_KEY_BALANCE;
+    static const string JSON_KEY_COUPON;
+
+    static const int GROUP_SUPERUSER;
+    static const int GROUP_CANTEEN;
+    static const int GROUP_MARKET;
+    static const int GROUP_BATH;
+
+    static bool GenerateRandomMoney();
 
     CCMIS();
     ~CCMIS() {}
@@ -40,7 +52,7 @@ public:
     void DeleteInf(Information* tempinf);   //删除单个信息表
     void ChangeInf(Information* beforeinf, Information* afterinf);//改变单个信息表
 
-    void ReadMoney(string filename);    //读入整个信息表文件
+    bool ReadMoney(string filename);    //读入整个余额表文件
     bool ReadShop(string filename);     //读入整个商户表文件
     bool ReadUser(string filename);     //读入整个用户表文件
 
