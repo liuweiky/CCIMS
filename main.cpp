@@ -10,6 +10,8 @@ int main(int argc, char *argv[])
 
     CCMIS c;
 
+    CCMIS::GenerateRandomMoney();
+
     QApplication a(argc, argv);
     MainWindow w;
     w.show();
