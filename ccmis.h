@@ -27,12 +27,24 @@ public:
 
     static const string USER_FILE_NAME;
     static const string SHOP_FILE_NAME;
+    static const string INFO_FILE_NAME;
 
     static const string JSON_KEY_NUMBER;
     static const string JSON_KEY_NAME;
     static const string JSON_KEY_PASSWORD;
     static const string JSON_KEY_BALANCE;
     static const string JSON_KEY_COUPON;
+
+    static const string JSON_KEY_TAG;
+    static const string JSON_KEY_YEAR;
+    static const string JSON_KEY_MONTH;
+    static const string JSON_KEY_DAY;
+    static const string JSON_KEY_HOUR;
+    static const string JSON_KEY_MINUTE;
+    static const string JSON_KEY_SECOND;
+    static const string JSON_KEY_ONUMBER;
+    static const string JSON_KEY_INUMBER;
+    static const string JSON_KEY_MONEY;
 
     static const int GROUP_SUPERUSER;
     static const int GROUP_CANTEEN;
@@ -43,9 +55,9 @@ public:
     ~CCMIS() {}
 
     void ReadInf(string filename);          //读入整个信息表文件
-    void WriteInf(string filename);         //写出整个信息表文件
+    bool WriteInf(string filename);         //写出整个信息表文件
     void ClearInf();                        //清空整个信息表
-    void AddInf(Information* tempinf);      //添加单个信息表
+    void InsertInf(Information* tempinf);      //添加单个信息表
     void DeleteInf(Information* tempinf);   //删除单个信息表
     void ChangeInf(Information* beforeinf, Information* afterinf);//改变单个信息表
 
@@ -60,6 +72,10 @@ public:
                     int finishdate, int finishtime);  //根据时间输出信息
 
     string GenerateTag(int onum, int inum, int mon);    //生成流水号
+    string GenerateTag(int year, int month, int day, int hour, int min, int sec, int onum, int inum, int mon);    //生成流水号
+
+    Information* BuildInfo(int onum, int inum, int mon);
+    Information* BuildInfo(int year, int month, int day, int hour, int min, int sec, int onum, int inum, int mon);
 };
 
 #endif // CCMIS_H

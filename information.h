@@ -6,11 +6,12 @@
 struct Information
 {
     string tag; //流水号
-    unsigned int year;   //日期
-    unsigned int month;   //日期
-    unsigned int day;   //日期
-    unsigned int hour;   //日期
-    unsigned int minute;   //日期
+    unsigned int year;   //年
+    unsigned int month;   //月
+    unsigned int day;   //日
+    unsigned int hour;   //时
+    unsigned int minute;   //分
+    unsigned int second;   //秒
     unsigned int Onumber;//出账卡号
     unsigned int Inumber;//收账卡号
     unsigned int money;  //交易额

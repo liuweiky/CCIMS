@@ -2,12 +2,24 @@
 
 const string CCMIS::USER_FILE_NAME  = "./user.json";
 const string CCMIS::SHOP_FILE_NAME  = "./shop.json";
+const string CCMIS::INFO_FILE_NAME  = "./info.json";
 
 const string CCMIS::JSON_KEY_NUMBER  = "number";
 const string CCMIS::JSON_KEY_NAME  = "name";
 const string CCMIS::JSON_KEY_PASSWORD  = "password";
 const string CCMIS::JSON_KEY_BALANCE  = "balance";
 const string CCMIS::JSON_KEY_COUPON  = "coupon";
+
+const string CCMIS::JSON_KEY_TAG = "tag";
+const string CCMIS::JSON_KEY_YEAR = "year";
+const string CCMIS::JSON_KEY_MONTH = "month";
+const string CCMIS::JSON_KEY_DAY = "day";
+const string CCMIS::JSON_KEY_HOUR = "hour";
+const string CCMIS::JSON_KEY_MINUTE = "minute";
+const string CCMIS::JSON_KEY_SECOND = "second";
+const string CCMIS::JSON_KEY_ONUMBER = "onumber";
+const string CCMIS::JSON_KEY_INUMBER = "inumber";
+const string CCMIS::JSON_KEY_MONEY = "money";
 
 const int CCMIS::GROUP_SUPERUSER = 0;
 const int CCMIS::GROUP_CANTEEN = 1;
@@ -37,7 +49,10 @@ CCMIS::CCMIS()
 
     //WriteUser(USER_FILE_NAME);
 
-    GenerateTag(6998, 1101, 1500);
+    //GenerateTag(6998, 1101, 1500);
+
+    InsertInf(BuildInfo(6998, 1101, 1500));
+    WriteInf(INFO_FILE_NAME);
 }
 
 bool CCMIS::WriteUser(string filename)
@@ -173,7 +188,7 @@ bool CCMIS::ReadShop(string filename)
 
 string CCMIS::GenerateTag(int onum, int inum, int mon)
 {
-    time_t tt = time(NULL);//这句返回的只是一个时间cuo
+    time_t tt = time(NULL);
     tm* t= localtime(&tt);
 
     /**TIME*/
@@ -210,4 +225,67 @@ string CCMIS::GenerateTag(int onum, int inum, int mon)
     cout<<tag;
 
     return tag;
+}
+
+
+void CCMIS::InsertInf(Information* tempinf)
+{
+    tempinf->next = mInfo->next;
+    mInfo->next = tempinf;
+}
+
+Information* CCMIS::BuildInfo(int onum, int inum, int mon)
+{
+    Information* info = new Information();
+    info->tag = GenerateTag(onum, inum, mon);
+
+    time_t tt = time(NULL);
+    tm* t= localtime(&tt);
+
+    info->year = t->tm_year + 1900;
+    info->month = t->tm_mon + 1;
+    info->day = t->tm_mday;
+    info->hour = t->tm_hour;
+    info->minute = t->tm_min;
+    info->second = t->tm_sec;
+
+    info->Onumber = onum;
+    info->Inumber = inum;
+    info->money = mon;
+
+    info->next = NULL;
+}
+
+bool CCMIS::WriteInf(string filename)
+{
+    jsonxx::Array array;
+
+    ofstream out(INFO_FILE_NAME);
+
+    if (!out.is_open())
+        return false;
+
+    Information* i = mInfo->next;
+    while (i != NULL) {
+        jsonxx::Object obj;
+
+        obj << JSON_KEY_TAG << i->tag;
+        obj << JSON_KEY_YEAR << i->year;
+        obj << JSON_KEY_MONTH << i->month;
+        obj << JSON_KEY_DAY << i->day;
+        obj << JSON_KEY_HOUR << i->hour;
+        obj << JSON_KEY_MINUTE << i->minute;
+        obj << JSON_KEY_SECOND << i->second;
+        obj << JSON_KEY_ONUMBER << i->Onumber;
+        obj << JSON_KEY_INUMBER << i->Inumber;
+        obj << JSON_KEY_MONEY << i->money;
+
+        array << obj;
+
+        i=i->next;
+    }
+
+    out << array.json();
+    out.close();
+    return true;
 }
