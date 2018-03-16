@@ -34,7 +34,6 @@ HEADERS += \
         jsonxx.h \
         user.h \
         shop.h \
-        money.h \
         information.h \
         ccmis.h
 
