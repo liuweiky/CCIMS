@@ -5,11 +5,11 @@
 
 struct Information
 {
-    int date;   //日期
-    int time;   //时间
-    int Onumber;//出账卡号
-    int Inumber;//收账卡号
-    int money;  //交易额
+    unsigned long  date;   //日期
+    unsigned long  time;   //时间
+    unsigned int Onumber;//出账卡号
+    unsigned int Inumber;//收账卡号
+    unsigned int money;  //交易额
     Information* next;//下个结点
 };
 
