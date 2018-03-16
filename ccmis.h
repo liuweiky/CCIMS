@@ -52,7 +52,7 @@ public:
     void DeleteInf(Information* tempinf);   //删除单个信息表
     void ChangeInf(Information* beforeinf, Information* afterinf);//改变单个信息表
 
-    void ReadMoney(string filename);    //读入整个信息表文件
+    bool ReadMoney(string filename);    //读入整个余额表文件
     bool ReadShop(string filename);     //读入整个商户表文件
     bool ReadUser(string filename);     //读入整个用户表文件
 

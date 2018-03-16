@@ -10,7 +10,7 @@ int main(int argc, char *argv[])
 
     CCMIS c;
 
-    CCMIS::GenerateRandomMoney();
+    //CCMIS::GenerateRandomMoney();
 
     QApplication a(argc, argv);
     MainWindow w;

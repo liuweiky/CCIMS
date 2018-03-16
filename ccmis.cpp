@@ -86,6 +86,11 @@ CCMIS::CCMIS()
     {
         cout << "Open " + SHOP_FILE_NAME + " failed.";
     }
+
+    if (!ReadMoney(MONEY_FILE_NAME))
+    {
+        cout << "Open " + MONEY_FILE_NAME + " failed.";
+    }
 }
 
 bool CCMIS::ReadUser(string filename)
@@ -178,3 +183,47 @@ bool CCMIS::ReadShop(string filename)
     }
 }
 
+bool CCMIS::ReadMoney(string filename)
+{
+    /**by liuvv*/
+    ifstream in(filename);
+
+    if (in.is_open())
+    {
+        ostringstream tmp;
+        tmp << in.rdbuf();
+        string s;
+        s = tmp.str();
+        in.close();
+
+        //cout<<s;
+
+        jsonxx::Array array;
+
+        array.parse(s); //解析 json
+
+        //cout<<array.json();
+
+        for (int i = 0; i < array.size(); i++)  //迭代构造
+        {
+            Money* m = new Money();
+
+            m->number = array.get<jsonxx::Object>(i).get<jsonxx::Number>(JSON_KEY_NUMBER);
+            m->balance = array.get<jsonxx::Object>(i).get<jsonxx::Number>(JSON_KEY_BALANCE);
+            m->coupon = array.get<jsonxx::Object>(i).get<jsonxx::Number>(JSON_KEY_COUPON);
+
+            m->next = mMoney->next;
+            mMoney->next = m;
+        }
+
+        Money* m = mMoney->next;    //验证数据
+        while (m != NULL) {
+            cout<<m->number<<"\t"<<m->balance<<"\t"<<m->coupon<<endl;
+            m=m->next;
+        }
+
+        return true;
+    } else {
+        return false;
+    }
+}
