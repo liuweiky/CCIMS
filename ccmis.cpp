@@ -51,8 +51,13 @@ CCMIS::CCMIS()
 
     //GenerateTag(6998, 1101, 1500);
 
-    InsertInf(BuildInfo(6998, 1101, 1500));
-    WriteInf(INFO_FILE_NAME);
+    //InsertInf(BuildInfo(6998, 1101, 1500));
+    //WriteInf(INFO_FILE_NAME);
+
+    if (!ReadInf(INFO_FILE_NAME))
+    {
+        cout << "Open " + INFO_FILE_NAME + " failed.";
+    }
 }
 
 bool CCMIS::WriteUser(string filename)
@@ -227,7 +232,6 @@ string CCMIS::GenerateTag(int onum, int inum, int mon)
     return tag;
 }
 
-
 void CCMIS::InsertInf(Information* tempinf)
 {
     tempinf->next = mInfo->next;
@@ -288,4 +292,65 @@ bool CCMIS::WriteInf(string filename)
     out << array.json();
     out.close();
     return true;
+}
+
+bool CCMIS::ReadInf(string filename)
+{
+    ifstream in(filename);
+
+    if (in.is_open())
+    {
+        ostringstream tmp;
+        tmp << in.rdbuf();
+        string s;
+        s = tmp.str();
+        in.close();
+
+        //cout<<s;
+
+        jsonxx::Array array;
+
+        array.parse(s); //解析 json
+
+        //cout<<array.json();
+
+        for (int i = 0; i < array.size(); i++)  //迭代构造
+        {
+            Information* info = new Information();
+
+            info->tag = array.get<jsonxx::Object>(i).get<jsonxx::String>(JSON_KEY_TAG);
+            info->year = array.get<jsonxx::Object>(i).get<jsonxx::Number>(JSON_KEY_YEAR);
+            info->month = array.get<jsonxx::Object>(i).get<jsonxx::Number>(JSON_KEY_MONTH);
+            info->day = array.get<jsonxx::Object>(i).get<jsonxx::Number>(JSON_KEY_DAY);
+            info->hour = array.get<jsonxx::Object>(i).get<jsonxx::Number>(JSON_KEY_HOUR);
+            info->minute = array.get<jsonxx::Object>(i).get<jsonxx::Number>(JSON_KEY_MINUTE);
+            info->second = array.get<jsonxx::Object>(i).get<jsonxx::Number>(JSON_KEY_SECOND);
+            info->Inumber= array.get<jsonxx::Object>(i).get<jsonxx::Number>(JSON_KEY_INUMBER);
+            info->Onumber= array.get<jsonxx::Object>(i).get<jsonxx::Number>(JSON_KEY_ONUMBER);
+            info->money= array.get<jsonxx::Object>(i).get<jsonxx::Number>(JSON_KEY_MONEY);
+
+            info->next = mInfo->next;
+            mInfo->next = info;
+        }
+
+        Information* info = mInfo->next;    //验证数据
+        while (info != NULL) {
+            cout
+                 <<info->tag<<"\t"
+                 <<info->year<<"\t"
+                 <<info->month<<"\t"
+                 <<info->day<<"\t"
+                 <<info->hour<<"\t"
+                 <<info->minute<<"\t"
+                 <<info->second<<"\t"
+                 <<info->Inumber<<"\t"
+                 <<info->Onumber<<"\t"
+                 <<info->money<<endl;
+            info=info->next;
+        }
+
+        return true;
+    } else {
+        return false;
+    }
 }

@@ -54,7 +54,7 @@ public:
     CCMIS();
     ~CCMIS() {}
 
-    void ReadInf(string filename);          //读入整个信息表文件
+    bool ReadInf(string filename);          //读入整个信息表文件
     bool WriteInf(string filename);         //写出整个信息表文件
     void ClearInf();                        //清空整个信息表
     void InsertInf(Information* tempinf);      //添加单个信息表
