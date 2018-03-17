@@ -27,7 +27,8 @@ SOURCES += \
         main.cpp \
         mainwindow.cpp \
         jsonxx.cpp \
-        ccmis.cpp
+        ccmis.cpp \
+    superusermainwindow.cpp
 
 HEADERS += \
         mainwindow.h \
@@ -35,7 +36,9 @@ HEADERS += \
         user.h \
         shop.h \
         information.h \
-        ccmis.h
+        ccmis.h \
+    superusermainwindow.h
 
 FORMS += \
-        mainwindow.ui
+        mainwindow.ui \
+    superusermainwindow.ui

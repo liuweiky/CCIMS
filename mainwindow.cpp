@@ -33,7 +33,9 @@ void MainWindow::on_pushButton_clicked()
 
         if (number < 1000)
         {
-            msg.setText(tr("登录成功！\n 你是：管理员"));
+            //msg.setText(tr("登录成功！\n 你是：管理员"));
+            SuperuserMainWindow* window = new SuperuserMainWindow();
+            window->show();
         } else if (number < 4000){
             msg.setText(tr("登录成功！\n 你是：店家"));
         } else {
@@ -41,7 +43,7 @@ void MainWindow::on_pushButton_clicked()
         }
 
 
-        msg.exec();
+        //msg.exec();
     } else {
         QMessageBox msg;
         msg.setText(tr("用户名或密码错误！"));

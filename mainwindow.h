@@ -2,6 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include "superusermainwindow.h"
 #include "ccmis.h"
 #include <QDialog>
 #include <QMessageBox>
