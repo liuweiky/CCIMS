@@ -22,6 +22,7 @@ private:
     Information*    mInfo;//信息表头结点
     Shop*   mShop;        //商店表头结点
     User*   mUser;        //用户表头结点
+    int mUserNumber;
 
 public:
 
@@ -71,11 +72,15 @@ public:
     void SearchTime(int startdate, int startime,
                     int finishdate, int finishtime);  //根据时间输出信息
 
-    string GenerateTag(int onum, int inum, int mon);    //生成流水号
-    string GenerateTag(int year, int month, int day, int hour, int min, int sec, int onum, int inum, int mon);    //生成流水号
+    string GenerateTag(int onum, int inum, int mon);    //根据当前时间生成流水号
+    string GenerateTag(int year, int month, int day, int hour, int min, int sec, int onum, int inum, int mon);    //手动生成流水号
 
     Information* BuildInfo(int onum, int inum, int mon);
     Information* BuildInfo(int year, int month, int day, int hour, int min, int sec, int onum, int inum, int mon);
+
+    bool CheckPassword(string password);
+
+    void SetUserNumber(int n);
 };
 
 #endif // CCMIS_H

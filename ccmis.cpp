@@ -28,6 +28,8 @@ const int CCMIS::GROUP_BATH = 3;
 
 CCMIS::CCMIS()
 {
+    mUserNumber = -1;
+
     mInfo = new Information();
     mShop = new Shop();
     mUser = new User();
@@ -353,4 +355,41 @@ bool CCMIS::ReadInf(string filename)
     } else {
         return false;
     }
+}
+
+bool CCMIS::CheckPassword(string password)
+{
+    if (mUserNumber == -1) return false;    //用户名未初始化
+
+    if (mUserNumber < 4000) //店家登录
+    {
+        Shop* s = mShop->next;
+        while (s != NULL) {
+            if (s->number == mUserNumber)
+                break;
+            s = s->next;
+        }
+
+        if (s !=NULL && password.compare(s->password) == 0)
+            return true;
+        else return false;
+    } else {    //教职工登录
+        User* u = mUser->next;
+        while (u != NULL) {
+            if (u->number == mUserNumber)
+                break;
+            u = u->next;
+        }
+
+        if (u !=NULL && password.compare(u->password) == 0)
+            return true;
+        else return false;
+    }
+
+
+}
+
+void CCMIS::SetUserNumber(int n)
+{
+    mUserNumber = n;
 }

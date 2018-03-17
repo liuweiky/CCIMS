@@ -8,11 +8,9 @@
 int main(int argc, char *argv[])
 {
 
-    CCMIS c;
-
     QApplication a(argc, argv);
     MainWindow w;
-   w.show();
+    w.show();
 
 
 
