@@ -335,7 +335,7 @@ bool CCMIS::ReadInf(string filename)
             mInfo->next = info;
         }
 
-        Information* info = mInfo->next;    //验证数据
+        /*Information* info = mInfo->next;    //验证数据
         while (info != NULL) {
             cout
                  <<info->tag<<"\t"
@@ -349,7 +349,7 @@ bool CCMIS::ReadInf(string filename)
                  <<info->Onumber<<"\t"
                  <<info->money<<endl;
             info=info->next;
-        }
+        }*/
 
         return true;
     } else {
