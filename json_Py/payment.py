@@ -38,8 +38,8 @@ for i in range(len(user)):
     if user[i]['number'] < 9000:
         user_arr[i] = user[i]['number']
 
-#stu_arr = [int(x) for x in user_arr if ((x > 4000) and (x < 5000))]
-stu_arr = [4001, 4002, 4003]
+stu_arr = [int(x) for x in user_arr if ((x > 4000) and (x < 5000))]
+#stu_arr = [4001, 4002, 4003]
 tea_arr = [int(x) for x in user_arr if ((x > 5000) and (x < 6000))]
 emp_arr = [int(x) for x in user_arr if ((x > 6000) and (x < 7000))]
 
@@ -119,7 +119,7 @@ def datelist(beginDate, endDate):
     return date_l
 
 
-whole_date_arr = datelist('2017-01-01', '2017-01-03')
+whole_date_arr = datelist('2018-01-01', '2018-03-01')
 
 
 def one_stu_whole_payments(stu_index):
@@ -218,3 +218,9 @@ with open('ALL_TEA_PAYMENTS.json', 'w') as outfile:
 
 with open('ALL_EMP_PAYMENTS.json', 'w') as outfile:
     json.dump(all_emp_payment, outfile, ensure_ascii=False, indent=2)
+
+
+all_payment = all_stu_payment + all_tea_payment +all_emp_payment
+
+with open('ALL_PAYMENTS.json', 'w') as outfile:
+    json.dump(all_payment, outfile, ensure_ascii=False, indent=2)
