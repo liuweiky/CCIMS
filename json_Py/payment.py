@@ -89,7 +89,7 @@ def MakeOnePayment(DateTime, Onumber, Inumber, Money):
         'day': int(DateTime[8:10]),
         'hour': int(tmp_hour),
         'minute': int(tmp_min),
-        'sec': int(tmp_sec),
+        'second': int(tmp_sec),
         'onumber': int(Onumber),
         'inumber': int(Inumber),
         'money': int(Money),
@@ -99,13 +99,13 @@ def MakeOnePayment(DateTime, Onumber, Inumber, Money):
 
 def MakeOneAllowance(OnePaymentDict, PaymentList):
     tmp_pay_dict = copy.deepcopy(OnePaymentDict)
-    tmp_pay_dict['sec'] = tmp_pay_dict['sec'] + 1
+    tmp_pay_dict['second'] = tmp_pay_dict['second'] + 1
 
     tmp_pay_dict['onumber'] = int(9002)
     tmp_pay_dict['inumber'] = OnePaymentDict['onumber']
     tmp_pay_dict['money'] = int(5)
     money_str = str(5).zfill(5)
-    tmp_pay_dict['tag'] = OnePaymentDict['tag'][0:12]+ str(tmp_pay_dict['sec']) \
+    tmp_pay_dict['tag'] = OnePaymentDict['tag'][0:12]+ str(tmp_pay_dict['second']) \
                 + str (tmp_pay_dict['onumber']) + str(tmp_pay_dict['inumber']) \
                 + money_str
     PaymentList.append(tmp_pay_dict)
