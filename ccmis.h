@@ -67,6 +67,8 @@ public:
     static const int MESSAGE_TRANSACTION_NO_SHOP;
     static const int MESSAGE_TRANSACTION_OVERFLOW;
     static const int MESSAGE_TRANSACTION_BALANCE_NOT_ENOUGH;
+    static const int MESSAGE_TRANSACTION_MONEY_LOWER_THAN_ZERO;
+    static const int MESSAGE_TRANSACTION_UNKNOWN;
 
     static const int GROUP_SUPERUSER;
     static const int GROUP_CANTEEN;
@@ -94,6 +96,8 @@ public:
                     int finishdate, int finishtime);  //根据时间输出信息
 
     int GetTotalCanteenConsumptionByDay(int year, int month, int day,int num); //获取当日食堂消费额
+    int GetTotalCanteenAndMarketConsumptionByDay(int year, int month, int day,int num);     //获取当日食堂超市消费额
+
 
     User* GetUserByNum(int num);    //通过卡号获取用户指针
     Shop* GetShopByNum(int num);    //通过卡号获取商户指针

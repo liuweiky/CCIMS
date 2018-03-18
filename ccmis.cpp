@@ -41,6 +41,8 @@ const int CCMIS::MESSAGE_TRANSACTION_NO_USER = -1;
 const int CCMIS::MESSAGE_TRANSACTION_NO_SHOP = -2;
 const int CCMIS::MESSAGE_TRANSACTION_OVERFLOW = -3;
 const int CCMIS::MESSAGE_TRANSACTION_BALANCE_NOT_ENOUGH = -4;
+const int CCMIS::MESSAGE_TRANSACTION_MONEY_LOWER_THAN_ZERO = -5;
+const int CCMIS::MESSAGE_TRANSACTION_UNKNOWN = -6;
 
 const int CCMIS::GROUP_SUPERUSER = 0;
 const int CCMIS::GROUP_CANTEEN = 1;
@@ -91,7 +93,7 @@ CCMIS::CCMIS()
     char timestr[64];
     strftime(timestr, sizeof(timestr), "%Y-%m-%d %H:%M:%S",localtime(&timep));
     cout<<"start: "<<timestr<<endl;
-    cout << NewTransaction(5001, 1100, 3000)<<endl;
+    cout << NewTransaction(4001, 3101, 2500)<<endl;
 
 
     time (&timep);
@@ -518,6 +520,28 @@ int CCMIS::GetTotalCanteenConsumptionByDay(int year, int month, int day, int num
     return c;
 }
 
+int CCMIS::GetTotalCanteenAndMarketConsumptionByDay(int year, int month, int day, int num)
+{
+    int c =0;
+    Information* info = mInfo->next;
+    while (info != NULL) {
+        if (
+                (info->Inumber / 1000 == GROUP_CANTEEN ||
+                 info->Inumber / 1000 == GROUP_MARKET) &&
+                info->year == year &&
+                info->month == month &&
+                info->day == day &&
+                info->Onumber == num)
+        {
+            c += info->money;
+        }
+
+        info = info->next;
+    }
+
+    return c;
+}
+
 int CCMIS::NewSubsidy(User* u)
 {
     if (u->number >= USER_TEA_EMP_BEGIN && u->number <= USER_TEA_EMP_END)   //教职工单次消费超20
@@ -525,7 +549,7 @@ int CCMIS::NewSubsidy(User* u)
         u->balance += 500;
         WriteUser(USER_FILE_NAME);
 
-        Information* info = BuildInfo(0, u->number, 500);
+        Information* info = BuildInfo(2, u->number, 500);
         InsertInf(info);
         WriteInf(INFO_FILE_NAME);
     }
@@ -534,6 +558,8 @@ int CCMIS::NewSubsidy(User* u)
 
 int CCMIS::NewTransaction(int onum, int inum, int mon)
 {
+    if (mon <= 0)
+        return MESSAGE_TRANSACTION_MONEY_LOWER_THAN_ZERO;
 
     User* u = GetUserByNum(onum);
     if (u == NULL)
@@ -555,7 +581,7 @@ int CCMIS::NewTransaction(int onum, int inum, int mon)
             return MESSAGE_TRANSACTION_OVERFLOW;    //超过每笔消费或单日限制
         } else {    //交易条件具备，开始交易
 
-            if (u->balance <= mon)  //余额不足
+            if (u->balance < mon)  //余额不足
                 return MESSAGE_TRANSACTION_BALANCE_NOT_ENOUGH;
 
             u->balance -= mon;
@@ -571,6 +597,51 @@ int CCMIS::NewTransaction(int onum, int inum, int mon)
 
             return MESSAGE_TRANSACTION_SUCCESS;
         }
+    } else if (inum / 1000 == GROUP_MARKET) {   //收款方是超市组
+        if (
+                GetTotalCanteenAndMarketConsumptionByDay(t->tm_year + 1900, t->tm_mon + 1, t->tm_mday, onum) + mon > 10000)
+        {
+            return MESSAGE_TRANSACTION_OVERFLOW;    //超过单日限制
+        } else {
+            if (u->balance < mon)  //余额不足
+                return MESSAGE_TRANSACTION_BALANCE_NOT_ENOUGH;
+
+            u->balance -= mon;
+            WriteUser(USER_FILE_NAME);
+            Information* info = BuildInfo(onum, inum, mon);
+            InsertInf(info);
+            WriteInf(INFO_FILE_NAME);
+
+            return MESSAGE_TRANSACTION_SUCCESS;
+        }
+    } else if (inum / 1000 == GROUP_BATH) {
+        if (u->balance + u->coupon < mon)   //余额不足
+            return MESSAGE_TRANSACTION_BALANCE_NOT_ENOUGH;
+
+        if (mon < 200)
+            mon = 200;    //至少消费2元
+
+        if (u->coupon > 0)   //洗漱券有余额
+        {
+            if (u->coupon >= mon)   //洗漱券余额超过 mon
+            {
+                u->coupon -= mon;
+            } else {    //否则先扣coupon，再扣balance
+                u->balance -= (mon - u->coupon);
+
+                u->coupon = 0;
+            }
+        } else {
+            u->balance -= mon;
+        }
+
+        WriteUser(USER_FILE_NAME);
+        Information* info = BuildInfo(onum, inum, mon);
+        InsertInf(info);
+        WriteInf(INFO_FILE_NAME);
+
+        return MESSAGE_TRANSACTION_SUCCESS;
     }
 
+    return MESSAGE_TRANSACTION_UNKNOWN; //未知错误
 }
