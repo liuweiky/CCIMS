@@ -435,14 +435,11 @@ void CCMIS::SetUserNumber(int n)
     mUserNumber = n;
 }
 
-<<<<<<< HEAD
 Information* CCMIS::GetInfoPointer()
 {
     return mInfo;
 }
 
-
-=======
 void CCMIS::DeleteInf(Information *tempinf)
 {
     if (tempinf == NULL)
@@ -653,4 +650,3 @@ int CCMIS::NewTransaction(int onum, int inum, int mon)
 
     return MESSAGE_TRANSACTION_UNKNOWN; //未知错误
 }
->>>>>>> 7f37cb4223df48907913a27a401e384acd7889e1
