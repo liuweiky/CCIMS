@@ -41,6 +41,7 @@ const int CCMIS::MESSAGE_TRANSACTION_NO_USER = -1;
 const int CCMIS::MESSAGE_TRANSACTION_NO_SHOP = -2;
 const int CCMIS::MESSAGE_TRANSACTION_OVERFLOW = -3;
 const int CCMIS::MESSAGE_TRANSACTION_BALANCE_NOT_ENOUGH = -4;
+const int CCMIS::MESSAGE_TRANSACTION_MONEY_LOWER_THAN_ZERO = -5;
 
 const int CCMIS::GROUP_SUPERUSER = 0;
 const int CCMIS::GROUP_CANTEEN = 1;
@@ -91,7 +92,7 @@ CCMIS::CCMIS()
     char timestr[64];
     strftime(timestr, sizeof(timestr), "%Y-%m-%d %H:%M:%S",localtime(&timep));
     cout<<"start: "<<timestr<<endl;
-    cout << NewTransaction(5001, 1100, 3000)<<endl;
+    cout << NewTransaction(5001, 1101, 0)<<endl;
 
 
     time (&timep);
@@ -518,6 +519,28 @@ int CCMIS::GetTotalCanteenConsumptionByDay(int year, int month, int day, int num
     return c;
 }
 
+int CCMIS::GetTotalCanteenAndMarketConsumptionByDay(int year, int month, int day, int num)
+{
+    int c =0;
+    Information* info = mInfo->next;
+    while (info != NULL) {
+        if (
+                (info->Inumber / 1000 == GROUP_CANTEEN ||
+                 info->Inumber / 1000 == GROUP_MARKET) &&
+                info->year == year &&
+                info->month == month &&
+                info->day == day &&
+                info->Onumber == num)
+        {
+            c += info->money;
+        }
+
+        info = info->next;
+    }
+
+    return c;
+}
+
 int CCMIS::NewSubsidy(User* u)
 {
     if (u->number >= USER_TEA_EMP_BEGIN && u->number <= USER_TEA_EMP_END)   //教职工单次消费超20
@@ -534,6 +557,8 @@ int CCMIS::NewSubsidy(User* u)
 
 int CCMIS::NewTransaction(int onum, int inum, int mon)
 {
+    if (mon <= 0)
+        return MESSAGE_TRANSACTION_MONEY_LOWER_THAN_ZERO;
 
     User* u = GetUserByNum(onum);
     if (u == NULL)
@@ -555,7 +580,7 @@ int CCMIS::NewTransaction(int onum, int inum, int mon)
             return MESSAGE_TRANSACTION_OVERFLOW;    //超过每笔消费或单日限制
         } else {    //交易条件具备，开始交易
 
-            if (u->balance <= mon)  //余额不足
+            if (u->balance < mon)  //余额不足
                 return MESSAGE_TRANSACTION_BALANCE_NOT_ENOUGH;
 
             u->balance -= mon;
@@ -568,6 +593,23 @@ int CCMIS::NewTransaction(int onum, int inum, int mon)
             {
                 NewSubsidy(u);
             }
+
+            return MESSAGE_TRANSACTION_SUCCESS;
+        }
+    } else if (inum / 1000 == GROUP_MARKET) {   //收款方是超市组
+        if (
+                GetTotalCanteenAndMarketConsumptionByDay(t->tm_year + 1900, t->tm_mon + 1, t->tm_mday, onum) + mon > 10000)
+        {
+            return MESSAGE_TRANSACTION_OVERFLOW;    //超过单日限制
+        } else {
+            if (u->balance < mon)  //余额不足
+                return MESSAGE_TRANSACTION_BALANCE_NOT_ENOUGH;
+
+            u->balance -= mon;
+            WriteUser(USER_FILE_NAME);
+            Information* info = BuildInfo(onum, inum, mon);
+            InsertInf(info);
+            WriteInf(INFO_FILE_NAME);
 
             return MESSAGE_TRANSACTION_SUCCESS;
         }
