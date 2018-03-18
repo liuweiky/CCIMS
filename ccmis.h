@@ -18,6 +18,7 @@ using namespace std;
 
 class CCMIS
 {
+
 private:
     Information*    mInfo;//信息表头结点
     Shop*   mShop;        //商店表头结点
@@ -77,6 +78,8 @@ public:
 
     Information* BuildInfo(int onum, int inum, int mon);
     Information* BuildInfo(int year, int month, int day, int hour, int min, int sec, int onum, int inum, int mon);
+
+    Information* GetInfoPointer();
 
     bool CheckPassword(string password);
 

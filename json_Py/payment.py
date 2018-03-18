@@ -103,7 +103,7 @@ def MakeOneAllowance(OnePaymentDict, PaymentList):
 
     tmp_pay_dict['onumber'] = int(9002)
     tmp_pay_dict['inumber'] = OnePaymentDict['onumber']
-    tmp_pay_dict['money'] = int(5)
+    tmp_pay_dict['money'] = int(500)
     money_str = str(5).zfill(5)
     tmp_pay_dict['tag'] = OnePaymentDict['tag'][0:12]+ str(tmp_pay_dict['second']) \
                 + str (tmp_pay_dict['onumber']) + str(tmp_pay_dict['inumber']) \

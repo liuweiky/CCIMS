@@ -6,8 +6,8 @@
 struct Shop
 {
     int     number;
-    string  name;
-    string  password;
+    std::string  name;
+    std::string  password;
     Shop*  next;    //下个结点
 };
 

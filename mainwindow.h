@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include "superusermainwindow.h"
 #include "ccmis.h"
+#include "info_table.h"
 #include <QDialog>
 #include <QMessageBox>
 

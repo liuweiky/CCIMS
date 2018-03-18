@@ -393,3 +393,10 @@ void CCMIS::SetUserNumber(int n)
 {
     mUserNumber = n;
 }
+
+Information* CCMIS::GetInfoPointer()
+{
+    return mInfo;
+}
+
+

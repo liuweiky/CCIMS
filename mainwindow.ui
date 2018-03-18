@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>654</width>
-    <height>555</height>
+    <width>794</width>
+    <height>647</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -17,9 +17,9 @@
    <widget class="QWidget" name="verticalLayoutWidget">
     <property name="geometry">
      <rect>
-      <x>160</x>
-      <y>10</y>
-      <width>341</width>
+      <x>170</x>
+      <y>80</y>
+      <width>481</width>
       <height>391</height>
      </rect>
     </property>
@@ -76,6 +76,9 @@
          <property name="inputMask">
           <string/>
          </property>
+         <property name="placeholderText">
+          <string>学生/教工/职工/商家</string>
+         </property>
         </widget>
        </item>
       </layout>
@@ -111,6 +114,9 @@
          <property name="echoMode">
           <enum>QLineEdit::Password</enum>
          </property>
+         <property name="placeholderText">
+          <string>请输入密码</string>
+         </property>
         </widget>
        </item>
       </layout>
@@ -138,8 +144,8 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>654</width>
-     <height>23</height>
+     <width>794</width>
+     <height>26</height>
     </rect>
    </property>
   </widget>

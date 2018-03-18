@@ -33,11 +33,13 @@ void MainWindow::on_pushButton_clicked()
 
         if (number < 1000)
         {
-            //msg.setText(tr("登录成功！\n 你是：管理员"));
-            SuperuserMainWindow* window = new SuperuserMainWindow();
-            window->show();
+            msg.setText(tr("登录成功！\n 你是：管理员"));
+            //SuperuserMainWindow* window = new SuperuserMainWindow();
+            Info_Table* AllInfo = new Info_Table(mCCMIS->GetInfoPointer());
+            AllInfo->show();
         } else if (number < 4000){
             msg.setText(tr("登录成功！\n 你是：店家"));
+
         } else {
             msg.setText(tr("登录成功！\n 你是：学生/教职工"));
         }
@@ -45,10 +47,17 @@ void MainWindow::on_pushButton_clicked()
 
         //msg.exec();
     } else {
-        QMessageBox msg;
-        msg.setText(tr("用户名或密码错误！"));
-        msg.exec();
-    }
+//        QMessageBox msg;
+//        msg.setText(tr("用户名或密码错误！"));
+//        msg.exec();
 
+         //可以有错误提示音
+        QMessageBox::warning(this, tr("警告！"),
+                           tr("用户名或密码错误！"),
+                           QMessageBox::Yes);
+        ui->UserNameLineEdit->clear();
+        ui->PasswordLineEdit->clear();
+        ui->UserNameLineEdit->setFocus();
+}
 
 }

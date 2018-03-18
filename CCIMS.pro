@@ -4,7 +4,8 @@
 #
 #-------------------------------------------------
 
-QT       += core gui
+QT += core gui
+QT += widgets
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -28,7 +29,8 @@ SOURCES += \
         mainwindow.cpp \
         jsonxx.cpp \
         ccmis.cpp \
-    superusermainwindow.cpp
+    superusermainwindow.cpp \
+    info_table.cpp
 
 HEADERS += \
         mainwindow.h \
@@ -37,8 +39,10 @@ HEADERS += \
         shop.h \
         information.h \
         ccmis.h \
-    superusermainwindow.h
+    superusermainwindow.h \
+    info_table.h
 
 FORMS += \
         mainwindow.ui \
-    superusermainwindow.ui
+    superusermainwindow.ui \
+    info_table.ui

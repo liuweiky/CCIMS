@@ -5,7 +5,7 @@
 
 struct Information
 {
-    string tag; //流水号
+    std::string tag; //流水号
     unsigned int year;   //年
     unsigned int month;   //月
     unsigned int day;   //日
