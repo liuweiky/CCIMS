@@ -48,6 +48,29 @@ public:
     static const string JSON_KEY_INUMBER;
     static const string JSON_KEY_MONEY;
 
+    static const int SUPERUSER_BEGIN;
+    static const int SUPERUSER_END;
+    static const int SHOP_CANTEEN_BEGIN;
+    static const int SHOP_CANTEEN_END;
+    static const int SHOP_MARKET_BEGIN;
+    static const int SHOP_MARKET_END;
+    static const int SHOP_BATH_BEGIN;
+    static const int SHOP_BATH_END;
+    static const int SHOP_BEGIN;
+    static const int SHOP_END;
+    static const int USER_TEA_EMP_BEGIN;
+    static const int USER_TEA_EMP_END;
+    static const int USER_BEGIN;
+    static const int USER_END;
+
+    static const int MESSAGE_TRANSACTION_SUCCESS;
+    static const int MESSAGE_TRANSACTION_NO_USER;
+    static const int MESSAGE_TRANSACTION_NO_SHOP;
+    static const int MESSAGE_TRANSACTION_OVERFLOW;
+    static const int MESSAGE_TRANSACTION_BALANCE_NOT_ENOUGH;
+    static const int MESSAGE_TRANSACTION_MONEY_LOWER_THAN_ZERO;
+    static const int MESSAGE_TRANSACTION_UNKNOWN;
+
     static const int GROUP_SUPERUSER;
     static const int GROUP_CANTEEN;
     static const int GROUP_MARKET;
@@ -73,10 +96,21 @@ public:
     void SearchTime(int startdate, int startime,
                     int finishdate, int finishtime);  //根据时间输出信息
 
-    string GenerateTag(int onum, int inum, int mon);    //根据当前时间生成流水号
-    string GenerateTag(int year, int month, int day, int hour, int min, int sec, int onum, int inum, int mon);    //手动生成流水号
+    int GetTotalCanteenConsumptionByDay(int year, int month, int day,int num); //获取当日食堂消费额
+    int GetTotalCanteenAndMarketConsumptionByDay(int year, int month, int day,int num);     //获取当日食堂超市消费额
 
-    Information* BuildInfo(int onum, int inum, int mon);
+
+    User* GetUserByNum(int num);    //通过卡号获取用户指针
+    Shop* GetShopByNum(int num);    //通过卡号获取商户指针
+
+    int NewTransaction(int onum, int inum, int mon);   //新建交易记录，先减少onum的余额，增加inum的余额（可选），并生成流水号、info，插入到表，更新user.json、info.json，返回是否交易成功，money要乘以100
+    bool NewRefund(Information* tempinf);   //撤销某条交易信息
+    int NewSubsidy(User* u);  //新建补贴交易
+
+    string GenerateTag(int onum, int inum, int mon);    //根据当前时间生成流水号，money要乘以100
+    string GenerateTag(int year, int month, int day, int hour, int min, int sec, int onum, int inum, int mon);    //手动生成流水号，money要乘以100
+
+    Information* BuildInfo(int onum, int inum, int mon);    //money要乘以100
     Information* BuildInfo(int year, int month, int day, int hour, int min, int sec, int onum, int inum, int mon);
 
     Information* GetInfoPointer();
