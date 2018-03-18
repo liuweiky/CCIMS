@@ -82,7 +82,7 @@ CCMIS::CCMIS()
         cout << "Open " + INFO_FILE_NAME + " failed.";
     }
 
-    cout<<GetTotalConsumptionByDay(2018,1,3,4001)<<endl;
+    cout<<GetTotalCanteenConsumptionByDay(2018,1,3,4001)<<endl;
     cout<<GetUserByNum(4000)<<endl;
 
     cout << "start transaction...\n";
@@ -91,7 +91,7 @@ CCMIS::CCMIS()
     char timestr[64];
     strftime(timestr, sizeof(timestr), "%Y-%m-%d %H:%M:%S",localtime(&timep));
     cout<<"start: "<<timestr<<endl;
-    cout << NewTransaction(4001, 1101, 3000)<<endl;
+    cout << NewTransaction(5001, 1100, 3000)<<endl;
 
 
     time (&timep);
@@ -497,12 +497,13 @@ Shop* CCMIS::GetShopByNum(int num)
 
 }
 
-int CCMIS::GetTotalConsumptionByDay(int year, int month, int day, int num)
+int CCMIS::GetTotalCanteenConsumptionByDay(int year, int month, int day, int num)
 {
     int c =0;
     Information* info = mInfo->next;
     while (info != NULL) {
         if (
+                info->Inumber / 1000 == GROUP_CANTEEN &&
                 info->year == year &&
                 info->month == month &&
                 info->day == day &&
@@ -549,7 +550,7 @@ int CCMIS::NewTransaction(int onum, int inum, int mon)
     {
         if (
                 mon > 5000 ||
-                GetTotalConsumptionByDay(t->tm_year + 1900, t->tm_mon + 1, t->tm_mday, onum) + mon > 10000)
+                GetTotalCanteenConsumptionByDay(t->tm_year + 1900, t->tm_mon + 1, t->tm_mday, onum) + mon > 10000)
         {
             return MESSAGE_TRANSACTION_OVERFLOW;    //超过每笔消费或单日限制
         } else {    //交易条件具备，开始交易

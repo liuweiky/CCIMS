@@ -93,7 +93,7 @@ public:
     void SearchTime(int startdate, int startime,
                     int finishdate, int finishtime);  //根据时间输出信息
 
-    int GetTotalConsumptionByDay(int year, int month, int day,int num); //获取当日消费额
+    int GetTotalCanteenConsumptionByDay(int year, int month, int day,int num); //获取当日食堂消费额
 
     User* GetUserByNum(int num);    //通过卡号获取用户指针
     Shop* GetShopByNum(int num);    //通过卡号获取商户指针
