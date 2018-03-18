@@ -404,6 +404,7 @@ void CCMIS::DeleteInf(Information *tempinf)
     while (i != NULL) {
         if (i->next == tempinf)
             break;
+        i = i->next;
     }
 
     if (i != NULL)
