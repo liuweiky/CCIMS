@@ -68,6 +68,7 @@ public:
     static const int MESSAGE_TRANSACTION_OVERFLOW;
     static const int MESSAGE_TRANSACTION_BALANCE_NOT_ENOUGH;
     static const int MESSAGE_TRANSACTION_MONEY_LOWER_THAN_ZERO;
+    static const int MESSAGE_TRANSACTION_UNKNOWN;
 
     static const int GROUP_SUPERUSER;
     static const int GROUP_CANTEEN;
