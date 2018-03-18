@@ -393,3 +393,23 @@ void CCMIS::SetUserNumber(int n)
 {
     mUserNumber = n;
 }
+
+
+void CCMIS::DeleteInf(Information *tempinf)
+{
+    if (tempinf == NULL)
+        return;
+
+    Information* i = mInfo->next;
+    while (i != NULL) {
+        if (i->next == tempinf)
+            break;
+    }
+
+    if (i != NULL)
+    {
+        i->next = tempinf->next;
+    }
+
+    delete tempinf;
+}
