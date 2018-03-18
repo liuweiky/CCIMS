@@ -21,6 +21,27 @@ const string CCMIS::JSON_KEY_ONUMBER = "onumber";
 const string CCMIS::JSON_KEY_INUMBER = "inumber";
 const string CCMIS::JSON_KEY_MONEY = "money";
 
+const int CCMIS::SUPERUSER_BEGIN = 0;
+const int CCMIS::SUPERUSER_END = 999;
+const int CCMIS::SHOP_CANTEEN_BEGIN = 1101;
+const int CCMIS::SHOP_CANTEEN_END = 1999;
+const int CCMIS::SHOP_MARKET_BEGIN = 2101;
+const int CCMIS::SHOP_MARKET_END = 2999;
+const int CCMIS::SHOP_BATH_BEGIN = 3101;
+const int CCMIS::SHOP_BATH_END = 3999;
+const int CCMIS::SHOP_BEGIN = 1000;
+const int CCMIS::SHOP_END = 3999;
+const int CCMIS::USER_TEA_EMP_BEGIN = 5000;
+const int CCMIS::USER_TEA_EMP_END = 6999;
+const int CCMIS::USER_BEGIN = 4000;
+const int CCMIS::USER_END = 6999;
+
+const int CCMIS::MESSAGE_TRANSACTION_SUCCESS = 0;
+const int CCMIS::MESSAGE_TRANSACTION_NO_USER = -1;
+const int CCMIS::MESSAGE_TRANSACTION_NO_SHOP = -2;
+const int CCMIS::MESSAGE_TRANSACTION_OVERFLOW = -3;
+const int CCMIS::MESSAGE_TRANSACTION_BALANCE_NOT_ENOUGH = -4;
+
 const int CCMIS::GROUP_SUPERUSER = 0;
 const int CCMIS::GROUP_CANTEEN = 1;
 const int CCMIS::GROUP_MARKET = 2;
@@ -60,6 +81,24 @@ CCMIS::CCMIS()
     {
         cout << "Open " + INFO_FILE_NAME + " failed.";
     }
+
+    cout<<GetTotalConsumptionByDay(2018,1,3,4001)<<endl;
+    cout<<GetUserByNum(4000)<<endl;
+
+    cout << "start transaction...\n";
+    time_t timep;
+    time (&timep);
+    char timestr[64];
+    strftime(timestr, sizeof(timestr), "%Y-%m-%d %H:%M:%S",localtime(&timep));
+    cout<<"start: "<<timestr<<endl;
+    cout << NewTransaction(4001, 1101, 3000)<<endl;
+
+
+    time (&timep);
+    strftime(timestr, sizeof(timestr), "%Y-%m-%d %H:%M:%S",localtime(&timep));
+    cout<<"end: "<<timestr<<endl;
+
+    cout << "transaction complete...\n";
 }
 
 bool CCMIS::WriteUser(string filename)
@@ -229,7 +268,7 @@ string CCMIS::GenerateTag(int onum, int inum, int mon)
     }
 
 
-    cout<<tag;
+    cout<<tag<<endl;
 
     return tag;
 }
@@ -394,7 +433,6 @@ void CCMIS::SetUserNumber(int n)
     mUserNumber = n;
 }
 
-
 void CCMIS::DeleteInf(Information *tempinf)
 {
     if (tempinf == NULL)
@@ -413,4 +451,125 @@ void CCMIS::DeleteInf(Information *tempinf)
     }
 
     delete tempinf;
+}
+
+User* CCMIS::GetUserByNum(int num)
+{
+    if (num >= USER_BEGIN && num <= USER_END)
+    {
+        User* u = mUser->next;
+        while (u !=NULL) {
+            if (u->number == num)
+                return u;
+            u = u->next;
+        }
+
+        return NULL;
+    } else {
+        return NULL;
+    }
+
+
+}
+
+Shop* CCMIS::GetShopByNum(int num)
+{
+    if (
+            (num >= SHOP_CANTEEN_BEGIN &&
+            num <= SHOP_CANTEEN_END) ||
+            (num >= SHOP_MARKET_BEGIN &&
+             num <= SHOP_MARKET_END) ||
+            (num >= SHOP_BATH_BEGIN &&
+            num <= SHOP_BATH_END))   //防止越权取得0、1、2号用户权限
+    {
+        Shop* s = mShop->next;
+        while (s != NULL) {
+            if (s->number == num)
+                return s;
+            s = s->next;
+        }
+
+        return NULL;
+    } else {
+        return NULL;
+    }
+
+
+}
+
+int CCMIS::GetTotalConsumptionByDay(int year, int month, int day, int num)
+{
+    int c =0;
+    Information* info = mInfo->next;
+    while (info != NULL) {
+        if (
+                info->year == year &&
+                info->month == month &&
+                info->day == day &&
+                info->Onumber == num)
+        {
+            c += info->money;
+        }
+
+        info = info->next;
+    }
+
+    return c;
+}
+
+int CCMIS::NewSubsidy(User* u)
+{
+    if (u->number >= USER_TEA_EMP_BEGIN && u->number <= USER_TEA_EMP_END)   //教职工单次消费超20
+    {
+        u->balance += 500;
+        WriteUser(USER_FILE_NAME);
+
+        Information* info = BuildInfo(0, u->number, 500);
+        InsertInf(info);
+        WriteInf(INFO_FILE_NAME);
+    }
+
+}
+
+int CCMIS::NewTransaction(int onum, int inum, int mon)
+{
+
+    User* u = GetUserByNum(onum);
+    if (u == NULL)
+        return MESSAGE_TRANSACTION_NO_USER;   //学生、教职工号不存在，交易失败
+
+    Shop* s = GetShopByNum(inum);
+    if (s == NULL)
+        return MESSAGE_TRANSACTION_NO_SHOP;   //商号不存在，交易失败
+
+    time_t tt = time(NULL);
+    tm* t= localtime(&tt);
+
+    if (inum / 1000 == GROUP_CANTEEN)   //收款方是食堂组
+    {
+        if (
+                mon > 5000 ||
+                GetTotalConsumptionByDay(t->tm_year + 1900, t->tm_mon + 1, t->tm_mday, onum) + mon > 10000)
+        {
+            return MESSAGE_TRANSACTION_OVERFLOW;    //超过每笔消费或单日限制
+        } else {    //交易条件具备，开始交易
+
+            if (u->balance <= mon)  //余额不足
+                return MESSAGE_TRANSACTION_BALANCE_NOT_ENOUGH;
+
+            u->balance -= mon;
+            WriteUser(USER_FILE_NAME);
+            Information* info = BuildInfo(onum, inum, mon);
+            InsertInf(info);
+            WriteInf(INFO_FILE_NAME);
+
+            if (u->number >= USER_TEA_EMP_BEGIN && u->number <= USER_TEA_EMP_END && mon > 2000)   //教职工单次消费超20
+            {
+                NewSubsidy(u);
+            }
+
+            return MESSAGE_TRANSACTION_SUCCESS;
+        }
+    }
+
 }
