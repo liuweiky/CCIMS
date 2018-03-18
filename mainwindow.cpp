@@ -31,13 +31,13 @@ void MainWindow::on_pushButton_clicked()
     {
         QMessageBox msg;
 
-        if (number < 1000)
+        if (number <= CCMIS::SUPERUSER_END)
         {
             msg.setText(tr("登录成功！\n 你是：管理员"));
             //SuperuserMainWindow* window = new SuperuserMainWindow();
             Info_Table* AllInfo = new Info_Table(mCCMIS->GetInfoPointer());
             AllInfo->show();
-        } else if (number < 4000){
+        } else if (number <= CCMIS::SHOP_END){
             msg.setText(tr("登录成功！\n 你是：店家"));
 
         } else {
