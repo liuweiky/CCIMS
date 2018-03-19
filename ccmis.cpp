@@ -1,8 +1,8 @@
 #include "ccmis.h"
 
-const string CCMIS::USER_FILE_NAME  = "./user.json";
-const string CCMIS::SHOP_FILE_NAME  = "./shop.json";
-const string CCMIS::INFO_FILE_NAME  = "./info.json";
+const string CCMIS::USER_FILE_NAME  = "../CCIMS/user.json";
+const string CCMIS::SHOP_FILE_NAME  = "../CCIMS/shop.json";
+const string CCMIS::INFO_FILE_NAME  = "../CCIMS/info.json";
 
 const string CCMIS::JSON_KEY_NUMBER  = "number";
 const string CCMIS::JSON_KEY_NAME  = "name";
@@ -435,6 +435,11 @@ void CCMIS::SetUserNumber(int n)
     mUserNumber = n;
 }
 
+Information* CCMIS::GetInfoPointer()
+{
+    return mInfo;
+}
+
 void CCMIS::DeleteInf(Information *tempinf)
 {
     if (tempinf == NULL)
@@ -644,4 +649,25 @@ int CCMIS::NewTransaction(int onum, int inum, int mon)
     }
 
     return MESSAGE_TRANSACTION_UNKNOWN; //未知错误
+}
+
+bool CCMIS::NewRefund(Information *tempinf)
+{
+    User* u = mUser->next;
+    while (u != NULL) {
+        if (u->number == tempinf->Onumber)
+            break;
+        u = u->next;
+    }
+
+    if (u == NULL)
+        return false;
+
+    u->balance += tempinf->money;
+    DeleteInf(tempinf);
+
+    WriteUser(USER_FILE_NAME);
+    WriteInf(INFO_FILE_NAME);
+
+    return true;
 }

@@ -4,7 +4,8 @@
 #
 #-------------------------------------------------
 
-QT       += core gui
+QT += core gui
+QT += widgets
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -29,7 +30,11 @@ SOURCES += \
         jsonxx.cpp \
         ccmis.cpp \
     superusermainwindow.cpp \
+<<<<<<< HEAD
     usermainwindow.cpp
+=======
+    info_table.cpp
+>>>>>>> c4551380f23154324a09751b2448325f7944bf6f
 
 HEADERS += \
         mainwindow.h \
@@ -39,9 +44,17 @@ HEADERS += \
         information.h \
         ccmis.h \
     superusermainwindow.h \
+<<<<<<< HEAD
     usermainwindow.h
+=======
+    info_table.h
+>>>>>>> c4551380f23154324a09751b2448325f7944bf6f
 
 FORMS += \
         mainwindow.ui \
     superusermainwindow.ui \
+<<<<<<< HEAD
     usermainwindow.ui
+=======
+    info_table.ui
+>>>>>>> c4551380f23154324a09751b2448325f7944bf6f
