@@ -29,12 +29,9 @@ SOURCES += \
         mainwindow.cpp \
         jsonxx.cpp \
         ccmis.cpp \
-    superusermainwindow.cpp \
-<<<<<<< HEAD
-    usermainwindow.cpp
-=======
-    info_table.cpp
->>>>>>> c4551380f23154324a09751b2448325f7944bf6f
+        superusermainwindow.cpp \
+        usermainwindow.cpp \
+        info_table.cpp \
 
 HEADERS += \
         mainwindow.h \
@@ -43,18 +40,12 @@ HEADERS += \
         shop.h \
         information.h \
         ccmis.h \
-    superusermainwindow.h \
-<<<<<<< HEAD
-    usermainwindow.h
-=======
-    info_table.h
->>>>>>> c4551380f23154324a09751b2448325f7944bf6f
+        superusermainwindow.h \
+        usermainwindow.h \
+        info_table.h \
 
 FORMS += \
         mainwindow.ui \
-    superusermainwindow.ui \
-<<<<<<< HEAD
-    usermainwindow.ui
-=======
-    info_table.ui
->>>>>>> c4551380f23154324a09751b2448325f7944bf6f
+        superusermainwindow.ui \
+        usermainwindow.ui \
+        info_table.ui \
