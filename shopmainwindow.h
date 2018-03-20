@@ -2,6 +2,9 @@
 #define SHOPMAINWINDOW_H
 
 #include <QMainWindow>
+#include <QDate>
+#include <QTime>
+#include <QTimer>
 
 namespace Ui {
 class ShopMainWindow;
@@ -17,6 +20,12 @@ public:
 
 private slots:
     void on_BackButton_clicked();
+
+    void on_SearchButton_clicked();
+
+public slots:
+    void showtime();
+    void showname(QString);
 
 signals:
     void BackMainWindow();

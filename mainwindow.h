@@ -30,6 +30,7 @@ private slots:
 
 signals:
     void BackMainWindow();
+    void showname(QString);
 
 private:
     Ui::MainWindow *ui;

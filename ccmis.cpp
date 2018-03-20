@@ -1,8 +1,8 @@
 #include "ccmis.h"
 
-const string CCMIS::USER_FILE_NAME  = "../CCIMS/user.json";
-const string CCMIS::SHOP_FILE_NAME  = "../CCIMS/shop.json";
-const string CCMIS::INFO_FILE_NAME  = "../CCIMS/info.json";
+const string CCMIS::USER_FILE_NAME  = "user.json";
+const string CCMIS::SHOP_FILE_NAME  = "shop.json";
+const string CCMIS::INFO_FILE_NAME  = "info.json";
 
 const string CCMIS::JSON_KEY_NUMBER  = "number";
 const string CCMIS::JSON_KEY_NAME  = "name";

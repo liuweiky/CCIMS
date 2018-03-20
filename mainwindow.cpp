@@ -9,6 +9,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     mSMW = new ShopMainWindow;
     connect(mSMW,SIGNAL(BackMainWindow()),this,SLOT(reshow()));
+    connect(this,SIGNAL(showname(QString)),mSMW,SLOT(showname(QString)));
 
     mCCMIS = new CCMIS();
 
@@ -28,41 +29,43 @@ void MainWindow::reshow(){
 
 void MainWindow::on_pushButton_clicked()
 {
-    int number = ui->UserNameLineEdit->text().toInt();
+//    int number = ui->UserNameLineEdit->text().toInt();
 
-    mCCMIS->SetUserNumber(number);
+//    mCCMIS->SetUserNumber(number);
 
-    if (mCCMIS->CheckPassword(
-                ui->PasswordLineEdit->text().toStdString()))
-    {
-        QMessageBox msg;
-
-        if (number <= CCMIS::SUPERUSER_END)
-        {
-            msg.setText(tr("登录成功！\n 你是：管理员"));
-            Info_Table* AllInfo = new Info_Table(mCCMIS->GetInfoPointer());
-            AllInfo->show();
-        } else if (number <= CCMIS::SHOP_END){
-            msg.setText(tr("登录成功！\n 你是：店家"));
-            mSMW = new ShopMainWindow;
-            mSMW->show();
-        } else {
-            msg.setText(tr("登录成功！\n 你是：学生/教职工"));
-        }
-
-
-        //msg.exec();
-    } else {
+//    if (mCCMIS->CheckPassword(
+//                ui->PasswordLineEdit->text().toStdString()))
+//    {
 //        QMessageBox msg;
-//        msg.setText(tr("用户名或密码错误！"));
-//        msg.exec();
 
-         //可以有错误提示音
-        QMessageBox::warning(this, tr("警告！"),
-                           tr("用户名或密码错误！"),
-                           QMessageBox::Yes);
-        ui->UserNameLineEdit->clear();
-        ui->PasswordLineEdit->clear();
-        ui->UserNameLineEdit->setFocus();
-    }
+//        if (number <= CCMIS::SUPERUSER_END)
+//        {
+//            msg.setText(tr("登录成功！\n 你是：管理员"));
+//            Info_Table* AllInfo = new Info_Table(mCCMIS->GetInfoPointer());
+//            AllInfo->show();
+//        } else if (number <= CCMIS::SHOP_END){
+//            msg.setText(tr("登录成功！\n 你是：店家"));
+//            mSMW->show();
+//        } else {
+//            msg.setText(tr("登录成功！\n 你是：学生/教职工"));
+//        }
+//    this->hide();
+
+//        //msg.exec();
+//    } else {
+////        QMessageBox msg;
+////        msg.setText(tr("用户名或密码错误！"));
+////        msg.exec();
+
+//         //可以有错误提示音
+//        QMessageBox::warning(this, tr("警告！"),
+//                           tr("用户名或密码错误！"),
+//                           QMessageBox::Yes);
+//        ui->UserNameLineEdit->clear();
+//        ui->PasswordLineEdit->clear();
+//        ui->UserNameLineEdit->setFocus();
+//    }
+    showname("陆子旭");
+    mSMW->show();
+    this->hide();
 }
