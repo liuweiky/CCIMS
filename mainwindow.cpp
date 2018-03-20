@@ -7,6 +7,9 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 
+    mSMW = new ShopMainWindow;
+    connect(mSMW,SIGNAL(BackMainWindow()),this,SLOT(reshow()));
+
     mCCMIS = new CCMIS();
 
     QRegExp regx("[0-9]+$");    //正则表达式，只允许输入0~9
@@ -19,9 +22,12 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
+void MainWindow::reshow(){
+    this->show();
+}
+
 void MainWindow::on_pushButton_clicked()
 {
-
     int number = ui->UserNameLineEdit->text().toInt();
 
     mCCMIS->SetUserNumber(number);
@@ -34,12 +40,12 @@ void MainWindow::on_pushButton_clicked()
         if (number <= CCMIS::SUPERUSER_END)
         {
             msg.setText(tr("登录成功！\n 你是：管理员"));
-            //SuperuserMainWindow* window = new SuperuserMainWindow();
             Info_Table* AllInfo = new Info_Table(mCCMIS->GetInfoPointer());
             AllInfo->show();
         } else if (number <= CCMIS::SHOP_END){
             msg.setText(tr("登录成功！\n 你是：店家"));
-
+            mSMW = new ShopMainWindow;
+            mSMW->show();
         } else {
             msg.setText(tr("登录成功！\n 你是：学生/教职工"));
         }
@@ -58,6 +64,5 @@ void MainWindow::on_pushButton_clicked()
         ui->UserNameLineEdit->clear();
         ui->PasswordLineEdit->clear();
         ui->UserNameLineEdit->setFocus();
-}
-
+    }
 }

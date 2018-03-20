@@ -1,18 +1,17 @@
 #include <iostream>
-#include "mainwindow.h"
-#include "usermainwindow.h"
+
 #include <QApplication>
 
 #include "ccmis.h"
 
+#include "mainwindow.h"
+#include "shopmainwindow.h"
 
 int main(int argc, char *argv[])
 {
 
     QApplication a(argc, argv);
-//    MainWindow w;
-//    w.show();
-    usermainwindow w;
+    MainWindow w;
     w.show();
 
 
