@@ -671,3 +671,18 @@ bool CCMIS::NewRefund(Information *tempinf)
 
     return true;
 }
+
+int CCMIS::GetUserNum()
+{
+    return mUserNumber;
+}
+
+bool CCMIS::NewRecharge(int num, int money)
+{
+    User* u = GetUserByNum(num);
+    u->balance += money;
+    Information* info = BuildInfo(1, num, money);
+    InsertInf(info);
+
+    return WriteUser(USER_FILE_NAME) && WriteInf(INFO_FILE_NAME);
+}

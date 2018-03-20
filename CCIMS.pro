@@ -30,7 +30,9 @@ SOURCES += \
         jsonxx.cpp \
         ccmis.cpp \
         info_table.cpp \
-    shopmainwindow.cpp
+    shopmainwindow.cpp \
+    usermainwindow.cpp \
+    rechargewindow.cpp
 
 HEADERS += \
         mainwindow.h \
@@ -40,9 +42,13 @@ HEADERS += \
         information.h \
         ccmis.h \
         info_table.h \
-    shopmainwindow.h
+    shopmainwindow.h \
+    usermainwindow.h \
+    rechargewindow.h
 
 FORMS += \
         mainwindow.ui \
         info_table.ui \
-    shopmainwindow.ui
+    shopmainwindow.ui \
+    usermainwindow.ui \
+    rechargewindow.ui

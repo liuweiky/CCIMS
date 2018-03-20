@@ -10,6 +10,7 @@
 
 #include "shopmainwindow.h"
 #include "info_table.h"
+#include "usermainwindow.h"
 
 
 namespace Ui {

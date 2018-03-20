@@ -48,6 +48,8 @@ void MainWindow::on_pushButton_clicked()
             mSMW->show();
         } else {
             msg.setText(tr("登录成功！\n 你是：学生/教职工"));
+            UserMainWindow* umw = new UserMainWindow(mCCMIS);
+            umw->show();
         }
 
 
