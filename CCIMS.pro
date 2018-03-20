@@ -25,24 +25,30 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 
 SOURCES += \
-        main.cpp \
-        mainwindow.cpp \
-        jsonxx.cpp \
-        ccmis.cpp \
-        info_table.cpp \
-    shopmainwindow.cpp
+    main.cpp \
+    mainwindow.cpp \
+    jsonxx.cpp \
+    ccmis.cpp \
+    info_table.cpp \
+    shopmainwindow.cpp \
+    usermainwindow.cpp \
+    rechargewindow.cpp
 
 HEADERS += \
-        mainwindow.h \
-        jsonxx.h \
-        user.h \
-        shop.h \
-        information.h \
-        ccmis.h \
-        info_table.h \
-    shopmainwindow.h
+    mainwindow.h \
+    jsonxx.h \
+    user.h \
+    shop.h \
+    information.h \
+    ccmis.h \
+    info_table.h \
+    shopmainwindow.h \
+    usermainwindow.h \
+    rechargewindow.h
 
 FORMS += \
-        mainwindow.ui \
-        info_table.ui \
-    shopmainwindow.ui
+    mainwindow.ui \
+    info_table.ui \
+    shopmainwindow.ui \
+    usermainwindow.ui \
+    rechargewindow.ui

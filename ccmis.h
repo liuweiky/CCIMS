@@ -103,9 +103,10 @@ public:
     User* GetUserByNum(int num);    //通过卡号获取用户指针
     Shop* GetShopByNum(int num);    //通过卡号获取商户指针
 
-    int NewTransaction(int onum, int inum, int mon);   //新建交易记录，先减少onum的余额，增加inum的余额（可选），并生成流水号、info，插入到表，更新user.json、info.json，返回是否交易成功，money要乘以100
+    int NewTransaction(int onum, int inum, int mon);   //新建消费交易记录，先减少onum的余额，增加inum的余额（可选），并生成流水号、info，插入到表，更新user.json、info.json，返回是否交易成功，money要乘以100
     bool NewRefund(Information* tempinf);   //撤销某条交易信息
     int NewSubsidy(User* u);  //新建补贴交易
+    bool NewRecharge(int num, int money);   //新建充值记录
 
     string GenerateTag(int onum, int inum, int mon);    //根据当前时间生成流水号，money要乘以100
     string GenerateTag(int year, int month, int day, int hour, int min, int sec, int onum, int inum, int mon);    //手动生成流水号，money要乘以100
@@ -118,6 +119,7 @@ public:
     bool CheckPassword(string password);
 
     void SetUserNumber(int n);
+    int GetUserNum();
 };
 
 #endif // CCMIS_H

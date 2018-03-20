@@ -33,10 +33,32 @@ void MainWindow::on_pushButton_clicked()
 
 //    mCCMIS->SetUserNumber(number);
 
+<<<<<<< HEAD
 //    if (mCCMIS->CheckPassword(
 //                ui->PasswordLineEdit->text().toStdString()))
 //    {
 //        QMessageBox msg;
+=======
+    if (mCCMIS->CheckPassword(
+                ui->PasswordLineEdit->text().toStdString()))
+    {
+        QMessageBox msg;
+
+        if (number <= CCMIS::SUPERUSER_END)
+        {
+            msg.setText(tr("登录成功！\n 你是：管理员"));
+            Info_Table* AllInfo = new Info_Table(mCCMIS->GetInfoPointer());
+            AllInfo->show();
+        } else if (number <= CCMIS::SHOP_END){
+            msg.setText(tr("登录成功！\n 你是：店家"));
+            mSMW = new ShopMainWindow;
+            mSMW->show();
+        } else {
+            msg.setText(tr("登录成功！\n 你是：学生/教职工"));
+            UserMainWindow* umw = new UserMainWindow(mCCMIS);
+            umw->show();
+        }
+>>>>>>> e1153270ba76455533cfd4f805c8e718cb1123b8
 
 //        if (number <= CCMIS::SUPERUSER_END)
 //        {
