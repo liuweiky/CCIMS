@@ -2,7 +2,8 @@
 #define INFO_TABLE_H
 #include <QTableWidgetItem>
 #include <QWidget>
-#include "information.h"
+
+#include "ccmis.h"
 namespace Ui {
 class Info_Table;
 }
@@ -12,9 +13,11 @@ class Info_Table : public QWidget
     Q_OBJECT
 
 public:
-    explicit Info_Table(Information* ALL_INFO,QWidget *parent = 0);
+    explicit Info_Table(CCMIS* ccmis_system,QWidget *parent = 0);
     ~Info_Table();
-    void PrintOneInfo(Information* OneLineInfo,int  IndexOfRow);
+    void PrintOneInfo(CCMIS* ccmis_system, Information* OneLineInfo,int  IndexOfRow);
+
+    QString GetNameByNum(CCMIS* ccmis_system,int num);
 
 private:
     Ui::Info_Table *ui;

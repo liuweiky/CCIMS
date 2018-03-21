@@ -61,6 +61,9 @@ CCMIS::CCMIS()
     mShop->next = NULL;
     mUser->next = NULL;
 
+    totalInfoCount = 0;
+    totalShopCount = 0;
+    totalUserCount = 0;
 
     if (!ReadUser(USER_FILE_NAME))  //判断打开文件是否成功
     {
@@ -175,6 +178,9 @@ bool CCMIS::ReadUser(string filename)
 
             u->next = mUser->next;
             mUser->next = u;
+            //统计用户数
+            totalUserCount++;
+
         }
 
         User* u = mUser->next;    //验证数据
@@ -220,6 +226,9 @@ bool CCMIS::ReadShop(string filename)
 
             s->next = mShop->next;
             mShop->next = s;
+
+            //统计商铺数
+            totalShopCount++;
         }
 
         Shop* sh = mShop->next;    //验证数据
@@ -279,6 +288,7 @@ void CCMIS::InsertInf(Information* tempinf)
 {
     tempinf->next = mInfo->next;
     mInfo->next = tempinf;
+    totalInfoCount++;
 }
 
 Information* CCMIS::BuildInfo(int onum, int inum, int mon)
@@ -374,6 +384,8 @@ bool CCMIS::ReadInf(string filename)
 
             info->next = mInfo->next;
             mInfo->next = info;
+            //统计记录数目
+            totalInfoCount++;
         }
 
         /*Information* info = mInfo->next;    //验证数据
@@ -440,6 +452,24 @@ Information* CCMIS::GetInfoPointer()
     return mInfo;
 }
 
+unsigned int CCMIS::GetTotalInfoNumber()
+{
+    return totalInfoCount;
+}
+
+
+unsigned int CCMIS::GetTotalUserNumber()
+{
+    return totalUserCount;
+}
+
+
+unsigned int CCMIS::GetTotalShopNumber()
+{
+    return totalShopCount;
+}
+
+
 void CCMIS::DeleteInf(Information *tempinf)
 {
     if (tempinf == NULL)
@@ -458,6 +488,8 @@ void CCMIS::DeleteInf(Information *tempinf)
     }
 
     delete tempinf;
+
+    totalInfoCount--;
 }
 
 User* CCMIS::GetUserByNum(int num)
@@ -475,9 +507,9 @@ User* CCMIS::GetUserByNum(int num)
     } else {
         return NULL;
     }
-
-
 }
+
+
 
 Shop* CCMIS::GetShopByNum(int num)
 {
