@@ -43,7 +43,7 @@ void MainWindow::on_pushButton_clicked()
         if (number <= CCMIS::SUPERUSER_END)
         {
             msg.setText(tr("登录成功！\n 你是：管理员"));
-            Info_Table* AllInfo = new Info_Table(mCCMIS->GetInfoPointer());
+            Info_Table* AllInfo = new Info_Table(mCCMIS);
             AllInfo->show();
         } else if (number <= CCMIS::SHOP_END){
             msg.setText(tr("登录成功！\n 你是：店家"));
@@ -54,14 +54,26 @@ void MainWindow::on_pushButton_clicked()
             UserMainWindow* umw = new UserMainWindow(mCCMIS);
             umw->show();
         }
+<<<<<<< HEAD
     ShowNameSignal("陆子旭");
+=======
+
+        if (number <= CCMIS::SUPERUSER_END)
+        {
+            msg.setText(tr("登录成功！\n 你是：管理员"));
+            Info_Table* AllInfo = new Info_Table(mCCMIS);
+            AllInfo->show();
+        } else if (number <= CCMIS::SHOP_END){
+            msg.setText(tr("登录成功！\n 你是：店家"));
+            mSMW->show();
+        } else {
+            msg.setText(tr("登录成功！\n 你是：学生/教职工"));
+        }
+>>>>>>> 5a4b58ac29caf47e45dd6071304b4930e70d0395
     this->hide();
 
         //msg.exec();
     } else {
-//        QMessageBox msg;
-//        msg.setText(tr("用户名或密码错误！"));
-//        msg.exec();
 
          //可以有错误提示音
         QMessageBox::warning(this, tr("警告！"),

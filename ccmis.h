@@ -23,7 +23,11 @@ private:
     Information*    mInfo;//信息表头结点
     Shop*   mShop;        //商店表头结点
     User*   mUser;        //用户表头结点
-    int mUserNumber;
+    int mUserNumber;    //当前登陆用户的用户号
+
+    unsigned int totalUserCount;    //用户数统计 下同
+    unsigned int totalShopCount;
+    unsigned int totalInfoCount;
 
 public:
 
@@ -115,6 +119,12 @@ public:
     Information* BuildInfo(int year, int month, int day, int hour, int min, int sec, int onum, int inum, int mon);
 
     Information* GetInfoPointer();
+
+    unsigned int GetTotalInfoNumber();
+    unsigned int GetTotalUserNumber();
+    unsigned int GetTotalShopNumber();
+
+
 
     bool CheckPassword(string password);
 
