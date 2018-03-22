@@ -2,6 +2,12 @@
 #define ADMINISTRATORMAINWINDOW_H
 
 #include <QMainWindow>
+#include <QDate>
+#include <QTime>
+#include <QTimer>
+
+#include "administratorleadwindow.h"
+#include "administratorscwindow.h"
 
 namespace Ui {
 class AdministratorMainWindow;
