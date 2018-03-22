@@ -39,8 +39,11 @@ SOURCES += \
     administratormainwindow.cpp \
     administratorleadwindow.cpp \
     administratorscwindow.cpp \
-    administratorfailwindow.cpp \
-    shopsfwindow.cpp
+    shopsfwindow.cpp \
+    administratorsfwindow.cpp \
+    usersearchwindow.cpp \
+    userrechargewindow.cpp \
+    usersfwindow.cpp
 
 HEADERS += \
     mainwindow.h \
@@ -59,8 +62,11 @@ HEADERS += \
     administratormainwindow.h \
     administratorleadwindow.h \
     administratorscwindow.h \
-    administratorfailwindow.h \
-    shopsfwindow.h
+    shopsfwindow.h \
+    administratorsfwindow.h \
+    usersearchwindow.h \
+    userrechargewindow.h \
+    usersfwindow.h
 
 FORMS += \
     mainwindow.ui \
@@ -74,5 +80,8 @@ FORMS += \
     administratormainwindow.ui \
     administratorleadwindow.ui \
     administratorscwindow.ui \
-    administratorfailwindow.ui \
-    shopsfwindow.ui
+    shopsfwindow.ui \
+    administratorsfwindow.ui \
+    usersearchwindow.ui \
+    userrechargewindow.ui \
+    usersfwindow.ui

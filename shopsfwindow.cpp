@@ -25,3 +25,12 @@ void ShopSFWindow::ShowNameSlot(QString txtname)
 {
     ui->UserName->setText(txtname);
 }
+
+void ShopSFWindow::ShowBoolSlot(bool sf)
+{
+    if (sf) {
+        ui->SuccessOrfailure->setText("交易成功！");
+    }else {
+        ui->SuccessOrfailure->setText("交易失败！");
+    }
+}

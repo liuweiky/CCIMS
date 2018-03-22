@@ -13,15 +13,13 @@ ShopServiceWindow::ShopServiceWindow(QWidget *parent) :
     timer->start(500);
 
     //窗口跳转
-    mSSW = new ShopSuccessWindow;
-    connect(mSSW,SIGNAL(BackMainWindow(int,int,int,int)),
+    mSSFW = new ShopSFWindow;
+    connect(mSSFW,SIGNAL(BackMainWindow(int,int,int,int)),
             this,SLOT(reshow(int,int,int,int)));
-    connect(this,SIGNAL(ShowNameSignal(QString)),mSSW,SLOT(ShowNameSlot(QString)));
-
-    mSFW = new ShopFailWindow;
-    connect(mSFW,SIGNAL(BackMainWindow(int,int,int,int)),
-            this,SLOT(reshow(int,int,int,int)));
-    connect(this,SIGNAL(ShowNameSignal(QString)),mSFW,SLOT(ShowNameSlot(QString)));
+    connect(this,SIGNAL(ShowNameSignal(QString)),
+            mSSFW,SLOT(ShowNameSlot(QString)));
+    connect(this,SIGNAL(ShowBoolSignal(bool)),
+            mSSFW,SLOT(ShowBoolSlot(bool)));
 }
 
 ShopServiceWindow::~ShopServiceWindow()
@@ -51,4 +49,14 @@ void ShopServiceWindow::on_BackButton_clicked()
 {
     BackMainWindow(this->x(),this->y(),this->width(),this->height());
     this->close();
+}
+
+void ShopServiceWindow::on_WorkButton_clicked()
+{
+    mSSFW->setGeometry(this->x(),this->y(),this->width(),this->height());
+    mSSFW->show();
+    ShowNameSignal(ui->UserName->text());
+     //这里要bool是否成功
+    ShowBoolSignal(false);
+    this->hide();
 }

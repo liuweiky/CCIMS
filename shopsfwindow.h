@@ -2,6 +2,9 @@
 #define SHOPSFWINDOW_H
 
 #include <QMainWindow>
+#include <QDate>
+#include <QTime>
+#include <QTimer>
 
 namespace Ui {
 class ShopSFWindow;
@@ -18,6 +21,7 @@ public:
 public slots:
     void showtime();
     void ShowNameSlot(QString);
+    void ShowBoolSlot(bool);
 
 signals:
     //返回主界面：X，Y，宽，长

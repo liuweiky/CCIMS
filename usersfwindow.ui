@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>AdministratorFailWindow</class>
- <widget class="QMainWindow" name="AdministratorFailWindow">
+ <class>UserSFWindow</class>
+ <widget class="QMainWindow" name="UserSFWindow">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -20,13 +20,13 @@
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <layout class="QGridLayout" name="gridLayout_2">
+   <layout class="QGridLayout" name="gridLayout_4">
     <item row="0" column="0">
-     <layout class="QVBoxLayout" name="verticalLayout">
+     <layout class="QVBoxLayout" name="verticalLayout_4">
       <item>
-       <layout class="QHBoxLayout" name="horizontalLayout_4">
+       <layout class="QHBoxLayout" name="horizontalLayout_11">
         <item>
-         <widget class="QCommandLinkButton" name="BackButton">
+         <widget class="QCommandLinkButton" name="BackButton_2">
           <property name="minimumSize">
            <size>
             <width>40</width>
@@ -45,7 +45,7 @@
          </widget>
         </item>
         <item>
-         <spacer name="horizontalSpacer_7">
+         <spacer name="horizontalSpacer_20">
           <property name="orientation">
            <enum>Qt::Horizontal</enum>
           </property>
@@ -60,7 +60,7 @@
        </layout>
       </item>
       <item>
-       <spacer name="verticalSpacer">
+       <spacer name="verticalSpacer_5">
         <property name="orientation">
          <enum>Qt::Vertical</enum>
         </property>
@@ -74,15 +74,41 @@
       </item>
      </layout>
     </item>
+    <item row="0" column="1">
+     <spacer name="verticalSpacer_6">
+      <property name="orientation">
+       <enum>Qt::Vertical</enum>
+      </property>
+      <property name="sizeHint" stdset="0">
+       <size>
+        <width>20</width>
+        <height>198</height>
+       </size>
+      </property>
+     </spacer>
+    </item>
+    <item row="1" column="0">
+     <spacer name="horizontalSpacer_21">
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+      <property name="sizeHint" stdset="0">
+       <size>
+        <width>239</width>
+        <height>20</height>
+       </size>
+      </property>
+     </spacer>
+    </item>
     <item row="1" column="1">
-     <layout class="QGridLayout" name="gridLayout">
+     <layout class="QGridLayout" name="gridLayout_2">
       <property name="verticalSpacing">
        <number>150</number>
       </property>
       <item row="0" column="0">
-       <layout class="QHBoxLayout" name="horizontalLayout">
+       <layout class="QHBoxLayout" name="horizontalLayout_2">
         <item>
-         <spacer name="horizontalSpacer">
+         <spacer name="horizontalSpacer_10">
           <property name="orientation">
            <enum>Qt::Horizontal</enum>
           </property>
@@ -95,7 +121,7 @@
          </spacer>
         </item>
         <item>
-         <widget class="QLabel" name="UserName">
+         <widget class="QLabel" name="UserName_2">
           <property name="minimumSize">
            <size>
             <width>0</width>
@@ -117,7 +143,7 @@
          </widget>
         </item>
         <item>
-         <spacer name="horizontalSpacer_2">
+         <spacer name="horizontalSpacer_16">
           <property name="orientation">
            <enum>Qt::Horizontal</enum>
           </property>
@@ -132,9 +158,9 @@
        </layout>
       </item>
       <item row="1" column="0">
-       <layout class="QHBoxLayout" name="horizontalLayout_2">
+       <layout class="QHBoxLayout" name="horizontalLayout_9">
         <item>
-         <spacer name="horizontalSpacer_3">
+         <spacer name="horizontalSpacer_17">
           <property name="orientation">
            <enum>Qt::Horizontal</enum>
           </property>
@@ -147,7 +173,7 @@
          </spacer>
         </item>
         <item>
-         <widget class="QLabel" name="UserName_2">
+         <widget class="QLabel" name="SuccessOrfailure">
           <property name="minimumSize">
            <size>
             <width>370</width>
@@ -164,12 +190,12 @@
            <string notr="true">font: 72pt &quot;.SF NS Text&quot;;</string>
           </property>
           <property name="text">
-           <string>修改失败！</string>
+           <string>充值？！</string>
           </property>
          </widget>
         </item>
         <item>
-         <spacer name="horizontalSpacer_4">
+         <spacer name="horizontalSpacer_18">
           <property name="orientation">
            <enum>Qt::Horizontal</enum>
           </property>
@@ -185,10 +211,36 @@
       </item>
      </layout>
     </item>
+    <item row="1" column="2">
+     <spacer name="horizontalSpacer_9">
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+      <property name="sizeHint" stdset="0">
+       <size>
+        <width>239</width>
+        <height>20</height>
+       </size>
+      </property>
+     </spacer>
+    </item>
+    <item row="2" column="1">
+     <spacer name="verticalSpacer_3">
+      <property name="orientation">
+       <enum>Qt::Vertical</enum>
+      </property>
+      <property name="sizeHint" stdset="0">
+       <size>
+        <width>20</width>
+        <height>197</height>
+       </size>
+      </property>
+     </spacer>
+    </item>
     <item row="2" column="2">
-     <layout class="QVBoxLayout" name="verticalLayout_2">
+     <layout class="QVBoxLayout" name="verticalLayout_3">
       <item>
-       <spacer name="verticalSpacer_2">
+       <spacer name="verticalSpacer_4">
         <property name="orientation">
          <enum>Qt::Vertical</enum>
         </property>
@@ -201,9 +253,9 @@
        </spacer>
       </item>
       <item>
-       <layout class="QHBoxLayout" name="horizontalLayout_5">
+       <layout class="QHBoxLayout" name="horizontalLayout_10">
         <item>
-         <spacer name="horizontalSpacer_8">
+         <spacer name="horizontalSpacer_19">
           <property name="orientation">
            <enum>Qt::Horizontal</enum>
           </property>
@@ -216,7 +268,7 @@
          </spacer>
         </item>
         <item>
-         <widget class="QLCDNumber" name="Time">
+         <widget class="QLCDNumber" name="Time_2">
           <property name="minimumSize">
            <size>
             <width>140</width>
@@ -246,58 +298,6 @@
        </layout>
       </item>
      </layout>
-    </item>
-    <item row="1" column="0">
-     <spacer name="horizontalSpacer_5">
-      <property name="orientation">
-       <enum>Qt::Horizontal</enum>
-      </property>
-      <property name="sizeHint" stdset="0">
-       <size>
-        <width>40</width>
-        <height>20</height>
-       </size>
-      </property>
-     </spacer>
-    </item>
-    <item row="1" column="2">
-     <spacer name="horizontalSpacer_6">
-      <property name="orientation">
-       <enum>Qt::Horizontal</enum>
-      </property>
-      <property name="sizeHint" stdset="0">
-       <size>
-        <width>40</width>
-        <height>20</height>
-       </size>
-      </property>
-     </spacer>
-    </item>
-    <item row="0" column="1">
-     <spacer name="verticalSpacer_3">
-      <property name="orientation">
-       <enum>Qt::Vertical</enum>
-      </property>
-      <property name="sizeHint" stdset="0">
-       <size>
-        <width>20</width>
-        <height>40</height>
-       </size>
-      </property>
-     </spacer>
-    </item>
-    <item row="2" column="1">
-     <spacer name="verticalSpacer_4">
-      <property name="orientation">
-       <enum>Qt::Vertical</enum>
-      </property>
-      <property name="sizeHint" stdset="0">
-       <size>
-        <width>20</width>
-        <height>40</height>
-       </size>
-      </property>
-     </spacer>
     </item>
    </layout>
   </widget>

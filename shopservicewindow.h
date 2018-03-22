@@ -6,8 +6,7 @@
 #include <QTime>
 #include <QTimer>
 
-#include "shopsuccesswindow.h"
-#include "shopfailwindow.h"
+#include "shopsfwindow.h"
 
 namespace Ui {
 class ShopServiceWindow;
@@ -30,15 +29,17 @@ private slots:
     void reshow(int,int,int,int);
     void on_BackButton_clicked();
 
+    void on_WorkButton_clicked();
+
 signals:
     //返回主界面：X，Y，宽，长
     void BackMainWindow(int,int,int,int);
     void ShowNameSignal(QString);
+    void ShowBoolSignal(bool);
 
 private:
     Ui::ShopServiceWindow *ui;
-    ShopSuccessWindow *mSSW;
-    ShopFailWindow *mSFW;
+    ShopSFWindow *mSSFW;
 };
 
 #endif // SHOPSERVICEWINDOW_H
