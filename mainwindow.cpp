@@ -8,8 +8,9 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
 
     mSMW = new ShopMainWindow;
-    connect(mSMW,SIGNAL(BackMainWindow()),this,SLOT(reshow()));
-    connect(this,SIGNAL(showname(QString)),mSMW,SLOT(showname(QString)));
+    connect(mSMW,SIGNAL(BackMainWindow(int,int,int,int)),
+            this,SLOT(reshow(int,int,int,int)));
+    connect(this,SIGNAL(ShowNameSignal(QString)),mSMW,SLOT(ShowNameSlot(QString)));
 
     mCCMIS = new CCMIS();
 
@@ -23,7 +24,8 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-void MainWindow::reshow(){
+void MainWindow::reshow(int x,int y,int w,int l){
+    this->setGeometry(x,y,w,l);
     this->show();
 }
 
@@ -45,25 +47,14 @@ void MainWindow::on_pushButton_clicked()
             AllInfo->show();
         } else if (number <= CCMIS::SHOP_END){
             msg.setText(tr("登录成功！\n 你是：店家"));
-            mSMW = new ShopMainWindow;
+            mSMW->setGeometry(this->x(),this->y(),this->width(),this->height());
             mSMW->show();
         } else {
             msg.setText(tr("登录成功！\n 你是：学生/教职工"));
             UserMainWindow* umw = new UserMainWindow(mCCMIS);
             umw->show();
         }
-
-        if (number <= CCMIS::SUPERUSER_END)
-        {
-            msg.setText(tr("登录成功！\n 你是：管理员"));
-            Info_Table* AllInfo = new Info_Table(mCCMIS->GetInfoPointer());
-            AllInfo->show();
-        } else if (number <= CCMIS::SHOP_END){
-            msg.setText(tr("登录成功！\n 你是：店家"));
-            mSMW->show();
-        } else {
-            msg.setText(tr("登录成功！\n 你是：学生/教职工"));
-        }
+    ShowNameSignal("陆子旭");
     this->hide();
 
         //msg.exec();
@@ -80,7 +71,4 @@ void MainWindow::on_pushButton_clicked()
         ui->PasswordLineEdit->clear();
         ui->UserNameLineEdit->setFocus();
     }
-    showname("陆子旭");
-    mSMW->show();
-    this->hide();
 }

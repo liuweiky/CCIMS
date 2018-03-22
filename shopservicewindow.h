@@ -1,25 +1,25 @@
-#ifndef SHOPMAINWINDOW_H
-#define SHOPMAINWINDOW_H
+#ifndef SHOPSERVICEWINDOW_H
+#define SHOPSERVICEWINDOW_H
 
 #include <QMainWindow>
 #include <QDate>
 #include <QTime>
 #include <QTimer>
 
-#include "shopsearchwindow.h"
-#include "shopservicewindow.h"
+#include "shopsuccesswindow.h"
+#include "shopfailwindow.h"
 
 namespace Ui {
-class ShopMainWindow;
+class ShopServiceWindow;
 }
 
-class ShopMainWindow : public QMainWindow
+class ShopServiceWindow : public QMainWindow
 {
     Q_OBJECT
 
 public:
-    explicit ShopMainWindow(QWidget *parent = 0);
-    ~ShopMainWindow();
+    explicit ShopServiceWindow(QWidget *parent = 0);
+    ~ShopServiceWindow();
 
 public slots:
     void showtime();
@@ -29,8 +29,6 @@ private slots:
     //重新显示主界面：X，Y，宽，长
     void reshow(int,int,int,int);
     void on_BackButton_clicked();
-    void on_SearchButton_clicked();
-    void on_WorkButton_clicked();
 
 signals:
     //返回主界面：X，Y，宽，长
@@ -38,9 +36,9 @@ signals:
     void ShowNameSignal(QString);
 
 private:
-    Ui::ShopMainWindow *ui;
-    ShopSearchWindow *mSSearchW;
-    ShopServiceWindow *mSServiceW;
+    Ui::ShopServiceWindow *ui;
+    ShopSuccessWindow *mSSW;
+    ShopFailWindow *mSFW;
 };
 
-#endif // SHOPMAINWINDOW_H
+#endif // SHOPSERVICEWINDOW_H

@@ -5,6 +5,7 @@
 
 #include <QDialog>
 #include <QMessageBox>
+#include <QDesktopWidget>
 
 #include "ccmis.h"
 
@@ -26,12 +27,14 @@ public:
     ~MainWindow();
 
 private slots:
-    void reshow();
+    //重新显示主界面：X，Y，宽，长
+    void reshow(int,int,int,int);
     void on_pushButton_clicked();
 
 signals:
-    void BackMainWindow();
-    void showname(QString);
+    //返回主界面：X，Y，宽，长
+    void BackMainWindow(int,int,int,int);
+    void ShowNameSignal(QString);
 
 private:
     Ui::MainWindow *ui;
