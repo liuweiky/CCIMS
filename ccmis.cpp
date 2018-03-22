@@ -1,4 +1,5 @@
 #include "ccmis.h"
+#include <QFile>
 
 const string CCMIS::USER_FILE_NAME  = "user.json";
 const string CCMIS::SHOP_FILE_NAME  = "shop.json";
@@ -90,20 +91,20 @@ CCMIS::CCMIS()
     cout<<GetTotalCanteenConsumptionByDay(2018,1,3,4001)<<endl;
     cout<<GetUserByNum(4000)<<endl;
 
-    cout << "start transaction...\n";
-    time_t timep;
-    time (&timep);
-    char timestr[64];
-    strftime(timestr, sizeof(timestr), "%Y-%m-%d %H:%M:%S",localtime(&timep));
-    cout<<"start: "<<timestr<<endl;
-    cout << NewTransaction(4001, 3101, 2500)<<endl;
+//    cout << "start transaction...\n";
+//    time_t timep;
+//    time (&timep);
+//    char timestr[64];
+//    strftime(timestr, sizeof(timestr), "%Y-%m-%d %H:%M:%S",localtime(&timep));
+//    cout<<"start: "<<timestr<<endl;
+//    cout << NewTransaction(4001, 3101, 2500)<<endl;
 
 
-    time (&timep);
-    strftime(timestr, sizeof(timestr), "%Y-%m-%d %H:%M:%S",localtime(&timep));
-    cout<<"end: "<<timestr<<endl;
+//    time (&timep);
+//    strftime(timestr, sizeof(timestr), "%Y-%m-%d %H:%M:%S",localtime(&timep));
+//    cout<<"end: "<<timestr<<endl;
 
-    cout << "transaction complete...\n";
+//    cout << "transaction complete...\n";
 }
 
 bool CCMIS::WriteUser(string filename)

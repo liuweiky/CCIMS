@@ -1,12 +1,13 @@
 #ifndef SHOP_H
 #define SHOP_H
 
+#include <QString>
 #include <string>
 
 struct Shop
 {
     int     number;
-    std::string  name;
+    QString  name;
     std::string  password;
     Shop*  next;    //下个结点
 };

@@ -7,6 +7,7 @@
 #include <time.h>
 #include <string>
 #include <time.h>
+#include <QString>
 
 using namespace std;
 #include "information.h"
