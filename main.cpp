@@ -5,13 +5,14 @@
 #include "ccmis.h"
 
 #include "mainwindow.h"
+#include "placemainwindow.h"
 #include "shopmainwindow.h"
 
 int main(int argc, char *argv[])
 {
 
     QApplication a(argc, argv);
-    ShopMainWindow w;
+    PlaceMainWindow w;
     w.show();
 
 

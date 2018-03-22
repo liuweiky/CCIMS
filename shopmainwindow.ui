@@ -121,7 +121,7 @@
            <string notr="true">font: 36pt &quot;.SF NS Text&quot;;</string>
           </property>
           <property name="text">
-           <string>TextLabel</string>
+           <string>UserName</string>
           </property>
          </widget>
         </item>

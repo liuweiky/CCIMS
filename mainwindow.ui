@@ -93,7 +93,7 @@
            </font>
           </property>
           <property name="text">
-           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:24pt;&quot;&gt;卡号&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:36pt;&quot;&gt;卡号&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
           </property>
          </widget>
         </item>
@@ -101,14 +101,14 @@
          <widget class="QLineEdit" name="UserNameLineEdit">
           <property name="minimumSize">
            <size>
-            <width>0</width>
-            <height>40</height>
+            <width>390</width>
+            <height>55</height>
            </size>
           </property>
           <property name="maximumSize">
            <size>
-            <width>16777215</width>
-            <height>40</height>
+            <width>390</width>
+            <height>55</height>
            </size>
           </property>
           <property name="font">
@@ -166,7 +166,7 @@
            </font>
           </property>
           <property name="text">
-           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:24pt;&quot;&gt;密码&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:36pt;&quot;&gt;密码&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
           </property>
          </widget>
         </item>
@@ -174,14 +174,14 @@
          <widget class="QLineEdit" name="PasswordLineEdit">
           <property name="minimumSize">
            <size>
-            <width>0</width>
-            <height>40</height>
+            <width>390</width>
+            <height>55</height>
            </size>
           </property>
           <property name="maximumSize">
            <size>
-            <width>16777215</width>
-            <height>40</height>
+            <width>390</width>
+            <height>55</height>
            </size>
           </property>
           <property name="font">
@@ -232,23 +232,27 @@
          <widget class="QPushButton" name="pushButton">
           <property name="minimumSize">
            <size>
-            <width>220</width>
-            <height>40</height>
+            <width>450</width>
+            <height>70</height>
            </size>
           </property>
           <property name="maximumSize">
            <size>
-            <width>220</width>
-            <height>40</height>
+            <width>450</width>
+            <height>70</height>
            </size>
           </property>
           <property name="font">
            <font>
-            <family>微软雅黑</family>
-            <pointsize>20</pointsize>
-            <weight>75</weight>
-            <bold>true</bold>
+            <family>.SF NS Text</family>
+            <pointsize>36</pointsize>
+            <weight>50</weight>
+            <italic>false</italic>
+            <bold>false</bold>
            </font>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">font: 36pt &quot;.SF NS Text&quot;;</string>
           </property>
           <property name="text">
            <string>登录</string>

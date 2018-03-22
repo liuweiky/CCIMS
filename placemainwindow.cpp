@@ -1,9 +1,9 @@
-#include "shopsearchwindow.h"
-#include "ui_shopsearchwindow.h"
+#include "placemainwindow.h"
+#include "ui_placemainwindow.h"
 
-ShopSearchWindow::ShopSearchWindow(QWidget *parent) :
+PlaceMainWindow::PlaceMainWindow(QWidget *parent) :
     QMainWindow(parent),
-    ui(new Ui::ShopSearchWindow)
+    ui(new Ui::PlaceMainWindow)
 {
     ui->setupUi(this);
 
@@ -11,15 +11,14 @@ ShopSearchWindow::ShopSearchWindow(QWidget *parent) :
     QTimer *timer = new QTimer(this);
     connect(timer,SIGNAL(timeout()),this,SLOT(showtime()));
     timer->start(500);
-
 }
 
-ShopSearchWindow::~ShopSearchWindow()
+PlaceMainWindow::~PlaceMainWindow()
 {
     delete ui;
 }
 
-void ShopSearchWindow::showtime()
+void PlaceMainWindow::showtime()
 {
     QDate date = QDate::currentDate();
     QTime time = QTime::currentTime();
@@ -27,17 +26,17 @@ void ShopSearchWindow::showtime()
     ui->Time->display(txtTime);
 }
 
-void ShopSearchWindow::ShowNameSlot(QString txtname)
+void PlaceMainWindow::ShowNameSlot(QString txtname)
 {
     ui->UserName->setText(txtname);
 }
 
-void ShopSearchWindow::ShowMoneySlot(double money)
+void PlaceMainWindow::ShowMoneySlot(double money)
 {
     ui->money->setText("总盈利:"+QString::number(money)+"元");
 }
 
-void ShopSearchWindow::on_BackButton_clicked()
+void PlaceMainWindow::on_BackButton_clicked()
 {
     BackMainWindow(this->x(),this->y(),this->width(),this->height());
     this->close();

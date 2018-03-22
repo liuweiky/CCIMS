@@ -16,12 +16,16 @@ ShopMainWindow::ShopMainWindow(QWidget *parent) :
     mSSearchW = new ShopSearchWindow;
     connect(mSSearchW,SIGNAL(BackMainWindow(int,int,int,int)),
             this,SLOT(reshow(int,int,int,int)));
-    connect(this,SIGNAL(ShowNameSignal(QString)),mSSearchW,SLOT(ShowNameSlot(QString)));
+    connect(this,SIGNAL(ShowNameSignal(QString)),
+            mSSearchW,SLOT(ShowNameSlot(QString)));
+    connect(this,SIGNAL(ShowMoneySignal(double)),
+            mSSearchW,SLOT(ShowMoneySlot(double)));
 
     mSServiceW = new ShopServiceWindow;
     connect(mSServiceW,SIGNAL(BackMainWindow(int,int,int,int)),
             this,SLOT(reshow(int,int,int,int)));
-    connect(this,SIGNAL(ShowNameSignal(QString)),mSServiceW,SLOT(ShowNameSlot(QString)));
+    connect(this,SIGNAL(ShowNameSignal(QString)),
+            mSServiceW,SLOT(ShowNameSlot(QString)));
 }
 
 ShopMainWindow::~ShopMainWindow()
@@ -59,6 +63,8 @@ void ShopMainWindow::on_SearchButton_clicked()
     mSSearchW->setGeometry(this->x(),this->y(),this->width(),this->height());
     mSSearchW->show();
     ShowNameSignal(ui->UserName->text());
+     //这里要钱数
+    ShowMoneySignal(233);
     this->hide();
 }
 

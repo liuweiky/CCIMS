@@ -1,25 +1,19 @@
-#ifndef SHOPMAINWINDOW_H
-#define SHOPMAINWINDOW_H
+#ifndef ADMINISTRATORMAINWINDOW_H
+#define ADMINISTRATORMAINWINDOW_H
 
 #include <QMainWindow>
-#include <QDate>
-#include <QTime>
-#include <QTimer>
-
-#include "shopsearchwindow.h"
-#include "shopservicewindow.h"
 
 namespace Ui {
-class ShopMainWindow;
+class AdministratorMainWindow;
 }
 
-class ShopMainWindow : public QMainWindow
+class AdministratorMainWindow : public QMainWindow
 {
     Q_OBJECT
 
 public:
-    explicit ShopMainWindow(QWidget *parent = 0);
-    ~ShopMainWindow();
+    explicit AdministratorMainWindow(QWidget *parent = 0);
+    ~AdministratorMainWindow();
 
 public slots:
     void showtime();
@@ -39,9 +33,7 @@ signals:
     void ShowMoneySignal(double);
 
 private:
-    Ui::ShopMainWindow *ui;
-    ShopSearchWindow *mSSearchW;
-    ShopServiceWindow *mSServiceW;
+    Ui::AdministratorMainWindow *ui;
 };
 
-#endif // SHOPMAINWINDOW_H
+#endif // ADMINISTRATORMAINWINDOW_H

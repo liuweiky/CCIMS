@@ -1,22 +1,19 @@
-#ifndef SHOPSEARCHWINDOW_H
-#define SHOPSEARCHWINDOW_H
+#ifndef PLACEMAINWINDOW_H
+#define PLACEMAINWINDOW_H
 
 #include <QMainWindow>
-#include <QDate>
-#include <QTime>
-#include <QTimer>
 
 namespace Ui {
-class ShopSearchWindow;
+class PlaceMainWindow;
 }
 
-class ShopSearchWindow : public QMainWindow
+class PlaceMainWindow : public QMainWindow
 {
     Q_OBJECT
 
 public:
-    explicit ShopSearchWindow(QWidget *parent = 0);
-    ~ShopSearchWindow();
+    explicit PlaceMainWindow(QWidget *parent = 0);
+    ~PlaceMainWindow();
 
 public slots:
     void showtime();
@@ -32,7 +29,7 @@ signals:
     void ShowNameSignal(QString);
 
 private:
-    Ui::ShopSearchWindow *ui;
+    Ui::PlaceMainWindow *ui;
 };
 
-#endif // SHOPSEARCHWINDOW_H
+#endif // PLACEMAINWINDOW_H

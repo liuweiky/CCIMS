@@ -1,19 +1,19 @@
-#include "shopfailwindow.h"
-#include "ui_shopfailwindow.h"
+#include "shopsfwindow.h"
+#include "ui_shopsfwindow.h"
 
-ShopFailWindow::ShopFailWindow(QWidget *parent) :
+ShopSFWindow::ShopSFWindow(QWidget *parent) :
     QMainWindow(parent),
-    ui(new Ui::ShopFailWindow)
+    ui(new Ui::ShopSFWindow)
 {
     ui->setupUi(this);
 }
 
-ShopFailWindow::~ShopFailWindow()
+ShopSFWindow::~ShopSFWindow()
 {
     delete ui;
 }
 
-void ShopFailWindow::showtime()
+void ShopSFWindow::showtime()
 {
     QDate date = QDate::currentDate();
     QTime time = QTime::currentTime();
@@ -21,7 +21,7 @@ void ShopFailWindow::showtime()
     ui->Time->display(txtTime);
 }
 
-void ShopFailWindow::ShowNameSlot(QString txtname)
+void ShopSFWindow::ShowNameSlot(QString txtname)
 {
     ui->UserName->setText(txtname);
 }
