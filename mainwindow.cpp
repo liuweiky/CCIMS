@@ -54,7 +54,9 @@ void MainWindow::on_pushButton_clicked()
             UserMainWindow* umw = new UserMainWindow(mCCMIS);
             umw->show();
         }
+    //这里需要用户名
     ShowNameSignal("陆子旭");
+
     this->hide();
 
         //msg.exec();
