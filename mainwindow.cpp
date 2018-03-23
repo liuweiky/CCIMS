@@ -7,7 +7,9 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    mUMW = new UserMainWindow;
+    mCCMIS = new CCMIS();
+
+    mUMW = new UserMainWindow(mCCMIS);
     connect(mUMW,SIGNAL(BackMainWindow(int,int,int,int)),
             this,SLOT(reshow(int,int,int,int)));
     connect(this,SIGNAL(ShowNameSignal(QString)),
@@ -32,7 +34,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(this,SIGNAL(ShowNameSignal(QString)),
             mAMW,SLOT(ShowNameSlot(QString)));
 
-    mCCMIS = new CCMIS();
+
 
     QRegExp regx("[0-9]+$");    //正则表达式，只允许输入0~9
     QValidator *validator = new QRegExpValidator(regx, ui->UserNameLineEdit);

@@ -1,7 +1,7 @@
 #include "userrechargewindow.h"
 #include "ui_userrechargewindow.h"
 
-UserRechargeWindow::UserRechargeWindow(QWidget *parent) :
+UserRechargeWindow::UserRechargeWindow(CCMIS* c, QWidget *parent):
     QMainWindow(parent),
     ui(new Ui::UserRechargeWindow)
 {
@@ -12,7 +12,7 @@ UserRechargeWindow::UserRechargeWindow(QWidget *parent) :
     connect(timer,SIGNAL(timeout()),this,SLOT(showtime()));
     timer->start(500);
 
-    mCCMIS = c;
+    //mCCMIS = c;
 
     QRegExp regx("[0-9]+$");    //正则表达式，只允许输入0~9
     QValidator *validator = new QRegExpValidator(regx, ui->moneyLineEdit);

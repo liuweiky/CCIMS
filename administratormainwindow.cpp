@@ -18,13 +18,13 @@ AdministratorMainWindow::AdministratorMainWindow(QWidget *parent) :
     connect(mALW,SIGNAL(BackMainWindow(int,int,int,int)),
             this,SLOT(reshow(int,int,int,int)));
     connect(this,SIGNAL(ShowNameSignal(QString)),
+             mALW,SLOT(ShowNameSlot(QString)));
 
     mASCW = new AdministratorSCWindow;
     connect(mASCW,SIGNAL(BackMainWindow(int,int,int,int)),
             this,SLOT(reshow(int,int,int,int)));
     connect(this,SIGNAL(ShowNameSignal(QString)),
             mASCW,SLOT(ShowNameSlot(QString)));
-}
 }
 
 AdministratorMainWindow::~AdministratorMainWindow()

@@ -2,11 +2,14 @@
 #include "ui_usermainwindow.h"
 #include <QDebug>
 
-UserMainWindow::UserMainWindow(QWidget *parent) :
+UserMainWindow::UserMainWindow(CCMIS* c,QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::UserMainWindow)
 {
     ui->setupUi(this);
+
+    mCCMIS = c;
+    User* u = mCCMIS->GetUserByNum(mCCMIS->GetUserNum());
 
     //时间显示
     QTimer *timer = new QTimer(this);
@@ -22,7 +25,7 @@ UserMainWindow::UserMainWindow(QWidget *parent) :
     connect(this,SIGNAL(ShowMoneySignal(double)),
             mUSW,SLOT(ShowMoneySlot(double)));
 
-    mURW = new UserRechargeWindow;
+    mURW = new UserRechargeWindow(mCCMIS);
     connect(mURW,SIGNAL(BackMainWindow(int,int,int,int)),
             this,SLOT(reshow(int,int,int,int)));
     connect(this,SIGNAL(ShowNameSignal(QString)),
@@ -30,9 +33,8 @@ UserMainWindow::UserMainWindow(QWidget *parent) :
     connect(this,SIGNAL(ShowMoneySignal(double)),
             mURW,SLOT(ShowMoneySlot(double)));
 
-    mCCMIS = new CCMIS();
-    User* u = mCCMIS->GetUserByNum(mCCMIS->GetUserNum());
-    ui->welcomeLabel->setText(QString(str2qstr(u->name) + "同学， 欢迎您！"));
+
+    //ui->welcomeLabel->setText(QString(str2qstr(u->name) + "同学， 欢迎您！"));
 }
 
 UserMainWindow::~UserMainWindow()

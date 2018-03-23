@@ -43,9 +43,9 @@ QString Info_Table::GetNameByNum(CCMIS* ccmis_system,int num)
     User* temp_user = ccmis_system->GetUserByNum(num);
     Shop* temp_shop = ccmis_system->GetShopByNum(num);
     if(temp_shop)
-        return QString::fromStdString(temp_shop->name);
+        return temp_shop->name;
     else if(temp_user)
-        return QString::fromStdString(temp_user->name);
+        return temp_user->name;
     else
         return QString::fromStdString("用户不存在");
 }

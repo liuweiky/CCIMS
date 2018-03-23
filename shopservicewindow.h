@@ -24,7 +24,7 @@ public slots:
 
 private slots:
     //重新显示主界面：X，Y，宽，长
-    void reshow(int,int,int,int);
+
     void on_BackButton_clicked();
     void on_WorkButton_clicked();
 

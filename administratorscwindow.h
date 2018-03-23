@@ -2,6 +2,9 @@
 #define ADMINISTRATORSCWINDOW_H
 
 #include <QMainWindow>
+#include <QDate>
+#include <QTime>
+#include <QTimer>
 
 namespace Ui {
 class AdministratorSCWindow;

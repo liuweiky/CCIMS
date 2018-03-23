@@ -18,7 +18,7 @@ class UserRechargeWindow : public QMainWindow
     Q_OBJECT
 
 public:
-    explicit UserRechargeWindow(QWidget *parent = 0);
+    explicit UserRechargeWindow(CCMIS* c, QWidget *parent = 0);
     ~UserRechargeWindow();
 
 public slots:
@@ -29,7 +29,6 @@ public slots:
 
 private slots:
     //重新显示主界面：X，Y，宽，长
-    void reshow(int,int,int,int);
     void on_BackButton_clicked();
     void on_WorkButton_clicked();
 

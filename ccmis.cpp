@@ -163,7 +163,7 @@ bool CCMIS::ReadUser(string filename)
             User* u = new User();
 
             u->number = array.get<jsonxx::Object>(i).get<jsonxx::Number>(JSON_KEY_NUMBER);
-            u->name = array.get<jsonxx::Object>(i).get<jsonxx::String>(JSON_KEY_NAME);
+            u->name = QString::fromStdString(array.get<jsonxx::Object>(i).get<jsonxx::String>(JSON_KEY_NAME));
             u->password = array.get<jsonxx::Object>(i).get<jsonxx::String>(JSON_KEY_PASSWORD);
             u->balance = array.get<jsonxx::Object>(i).get<jsonxx::Number>(JSON_KEY_BALANCE);
             u->coupon = array.get<jsonxx::Object>(i).get<jsonxx::Number>(JSON_KEY_COUPON);
@@ -222,7 +222,7 @@ bool CCMIS::ReadShop(string filename)
             Shop* s = new Shop();
 
             s->number = array.get<jsonxx::Object>(i).get<jsonxx::Number>(JSON_KEY_NUMBER);
-            s->name = array.get<jsonxx::Object>(i).get<jsonxx::String>(JSON_KEY_NAME);
+            s->name = QString::fromStdString(array.get<jsonxx::Object>(i).get<jsonxx::String>(JSON_KEY_NAME));
             s->password = array.get<jsonxx::Object>(i).get<jsonxx::String>(JSON_KEY_PASSWORD);
 
             s->next = mShop->next;

@@ -177,7 +177,7 @@
              </spacer>
             </item>
             <item>
-             <widget class="QLabel" name="Money_2">
+             <widget class="QLabel" name="Money">
               <property name="minimumSize">
                <size>
                 <width>81</width>
@@ -206,7 +206,7 @@
              </spacer>
             </item>
             <item>
-             <widget class="QLabel" name="Coupon_2">
+             <widget class="QLabel" name="Coupon">
               <property name="minimumSize">
                <size>
                 <width>81</width>
@@ -590,7 +590,7 @@
      <x>0</x>
      <y>0</y>
      <width>1000</width>
-     <height>22</height>
+     <height>23</height>
     </rect>
    </property>
   </widget>

@@ -20,7 +20,7 @@ class UserMainWindow : public QMainWindow
     Q_OBJECT
 
 public:
-    explicit UserMainWindow(QWidget *parent = 0);
+    explicit UserMainWindow(CCMIS* c,QWidget *parent = 0);
     QString str2qstr(const string str); //处理中文乱码
     string qstr2str(const QString qstr);
     ~UserMainWindow();
@@ -48,8 +48,8 @@ signals:
 private:
     Ui::UserMainWindow *ui;
     CCMIS* mCCMIS;
-    UserRechargeWindow mURW;
-    UserSearchWindow mUSW;
+    UserRechargeWindow* mURW;
+    UserSearchWindow* mUSW;
 };
 
 #endif // USERMAINWINDOW_H
