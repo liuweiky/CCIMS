@@ -20,7 +20,7 @@
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <layout class="QGridLayout" name="gridLayout_2">
+   <layout class="QGridLayout" name="gridLayout_4">
     <item row="0" column="0">
      <layout class="QVBoxLayout" name="verticalLayout">
       <item>
@@ -88,7 +88,7 @@
      </spacer>
     </item>
     <item row="1" column="0" colspan="3">
-     <layout class="QHBoxLayout" name="horizontalLayout_8">
+     <layout class="QHBoxLayout" name="horizontalLayout_2">
       <item>
        <spacer name="horizontalSpacer_13">
         <property name="orientation">
@@ -103,59 +103,138 @@
        </spacer>
       </item>
       <item>
-       <layout class="QGridLayout" name="gridLayout">
-        <property name="verticalSpacing">
-         <number>80</number>
-        </property>
+       <layout class="QGridLayout" name="gridLayout_2">
         <item row="0" column="0" colspan="2">
-         <layout class="QHBoxLayout" name="horizontalLayout">
-          <item>
-           <spacer name="horizontalSpacer">
-            <property name="orientation">
-             <enum>Qt::Horizontal</enum>
-            </property>
-            <property name="sizeHint" stdset="0">
-             <size>
-              <width>40</width>
-              <height>20</height>
-             </size>
-            </property>
-           </spacer>
+         <layout class="QGridLayout" name="gridLayout">
+          <property name="verticalSpacing">
+           <number>30</number>
+          </property>
+          <item row="0" column="0">
+           <layout class="QHBoxLayout" name="horizontalLayout">
+            <item>
+             <spacer name="horizontalSpacer">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>40</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+            <item>
+             <widget class="QLabel" name="UserName">
+              <property name="minimumSize">
+               <size>
+                <width>0</width>
+                <height>50</height>
+               </size>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>16777215</width>
+                <height>50</height>
+               </size>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">font: 36pt &quot;.SF NS Text&quot;;</string>
+              </property>
+              <property name="text">
+               <string>UserName</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <spacer name="horizontalSpacer_2">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>40</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+           </layout>
           </item>
-          <item>
-           <widget class="QLabel" name="UserName">
-            <property name="minimumSize">
-             <size>
-              <width>0</width>
-              <height>50</height>
-             </size>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>16777215</width>
-              <height>50</height>
-             </size>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">font: 36pt &quot;.SF NS Text&quot;;</string>
-            </property>
-            <property name="text">
-             <string>UserName</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <spacer name="horizontalSpacer_2">
-            <property name="orientation">
-             <enum>Qt::Horizontal</enum>
-            </property>
-            <property name="sizeHint" stdset="0">
-             <size>
-              <width>40</width>
-              <height>20</height>
-             </size>
-            </property>
-           </spacer>
+          <item row="1" column="0">
+           <layout class="QHBoxLayout" name="horizontalLayout_10">
+            <item>
+             <spacer name="horizontalSpacer_17">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>40</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+            <item>
+             <widget class="QLabel" name="Money_2">
+              <property name="minimumSize">
+               <size>
+                <width>81</width>
+                <height>28</height>
+               </size>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">font: 20pt &quot;.SF NS Text&quot;;</string>
+              </property>
+              <property name="text">
+               <string>余额：？元</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <spacer name="horizontalSpacer_18">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>40</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+            <item>
+             <widget class="QLabel" name="Coupon_2">
+              <property name="minimumSize">
+               <size>
+                <width>81</width>
+                <height>28</height>
+               </size>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">font: 20pt &quot;.SF NS Text&quot;;</string>
+              </property>
+              <property name="text">
+               <string>劵：？元</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <spacer name="horizontalSpacer_19">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>40</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+           </layout>
           </item>
          </layout>
         </item>

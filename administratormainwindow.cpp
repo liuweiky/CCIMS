@@ -14,19 +14,16 @@ AdministratorMainWindow::AdministratorMainWindow(QWidget *parent) :
     timer->start(500);
 
     //窗口跳转
-    mSSearchW = new ShopSearchWindow;
-    connect(mSSearchW,SIGNAL(BackMainWindow(int,int,int,int)),
+    mALW = new AdministratorLeadWindow;
+    connect(mALW,SIGNAL(BackMainWindow(int,int,int,int)),
             this,SLOT(reshow(int,int,int,int)));
     connect(this,SIGNAL(ShowNameSignal(QString)),
-            mSSearchW,SLOT(ShowNameSlot(QString)));
-    connect(this,SIGNAL(ShowMoneySignal(double)),
-            mSSearchW,SLOT(ShowMoneySlot(double)));
 
-    mSServiceW = new ShopServiceWindow;
-    connect(mSServiceW,SIGNAL(BackMainWindow(int,int,int,int)),
+    mASCW = new AdministratorSCWindow;
+    connect(mASCW,SIGNAL(BackMainWindow(int,int,int,int)),
             this,SLOT(reshow(int,int,int,int)));
     connect(this,SIGNAL(ShowNameSignal(QString)),
-            mSServiceW,SLOT(ShowNameSlot(QString)));
+            mASCW,SLOT(ShowNameSlot(QString)));
 }
 }
 
@@ -34,3 +31,46 @@ AdministratorMainWindow::~AdministratorMainWindow()
 {
     delete ui;
 }
+
+void AdministratorMainWindow::showtime()
+{
+    QDate date = QDate::currentDate();
+    QTime time = QTime::currentTime();
+    QString txtTime =date.toString("yyyy/MM/dd")+time.toString(" hh:mm:ss");
+    ui->Time->display(txtTime);
+}
+
+void AdministratorMainWindow::ShowNameSlot(QString txtname)
+{
+    ui->UserName->setText(txtname);
+}
+
+
+void AdministratorMainWindow::reshow(int x,int y,int w,int l){
+    this->setGeometry(x,y,w,l);
+    this->show();
+}
+
+void AdministratorMainWindow::on_BackButton_clicked()
+{
+    BackMainWindow(this->x(),this->y(),this->width(),this->height());
+    this->close();
+}
+
+void AdministratorMainWindow::on_ImportButton_clicked()
+{
+    mALW->setGeometry(this->x(),this->y(),this->width(),this->height());
+    mALW->show();
+    ShowNameSignal(ui->UserName->text());
+    this->hide();
+}
+
+void AdministratorMainWindow::on_WorkButton_clicked()
+{
+    mASCW->setGeometry(this->x(),this->y(),this->width(),this->height());
+    mASCW->show();
+    ShowNameSignal(ui->UserName->text());
+    this->hide();
+}
+
+

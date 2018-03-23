@@ -2,6 +2,12 @@
 #define USERRECHARGEWINDOW_H
 
 #include <QMainWindow>
+#include <QDate>
+#include <QTime>
+#include <QTimer>
+#include <QMessageBox>
+
+#include "ccmis.h"
 
 namespace Ui {
 class UserRechargeWindow;
@@ -15,8 +21,25 @@ public:
     explicit UserRechargeWindow(QWidget *parent = 0);
     ~UserRechargeWindow();
 
+public slots:
+    void showtime();
+    void ShowNameSlot(QString);
+    void ShowMoneySlot(double);
+    void ShowCouponSlot(double);
+
+private slots:
+    //重新显示主界面：X，Y，宽，长
+    void reshow(int,int,int,int);
+    void on_BackButton_clicked();
+    void on_WorkButton_clicked();
+
+signals:
+    //返回主界面：X，Y，宽，长
+    void BackMainWindow(int,int,int,int);
+
 private:
     Ui::UserRechargeWindow *ui;
+    CCMIS* mCCMIS;
 };
 
 #endif // USERRECHARGEWINDOW_H

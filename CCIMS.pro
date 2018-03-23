@@ -32,18 +32,14 @@ SOURCES += \
     info_table.cpp \
     shopmainwindow.cpp \
     usermainwindow.cpp \
-    rechargewindow.cpp \
     shopsearchwindow.cpp \
     shopservicewindow.cpp \
     placemainwindow.cpp \
     administratormainwindow.cpp \
     administratorleadwindow.cpp \
     administratorscwindow.cpp \
-    shopsfwindow.cpp \
-    administratorsfwindow.cpp \
     usersearchwindow.cpp \
-    userrechargewindow.cpp \
-    usersfwindow.cpp
+    userrechargewindow.cpp
 
 HEADERS += \
     mainwindow.h \
@@ -55,15 +51,12 @@ HEADERS += \
     info_table.h \
     shopmainwindow.h \
     usermainwindow.h \
-    rechargewindow.h \
     shopsearchwindow.h \
     shopservicewindow.h \
     placemainwindow.h \
     administratormainwindow.h \
     administratorleadwindow.h \
     administratorscwindow.h \
-    shopsfwindow.h \
-    administratorsfwindow.h \
     usersearchwindow.h \
     userrechargewindow.h \
     usersfwindow.h
@@ -73,15 +66,11 @@ FORMS += \
     info_table.ui \
     shopmainwindow.ui \
     usermainwindow.ui \
-    rechargewindow.ui \
     shopsearchwindow.ui \
     shopservicewindow.ui \
     placemainwindow.ui \
     administratormainwindow.ui \
     administratorleadwindow.ui \
     administratorscwindow.ui \
-    shopsfwindow.ui \
-    administratorsfwindow.ui \
     usersearchwindow.ui \
-    userrechargewindow.ui \
-    usersfwindow.ui
+    userrechargewindow.ui

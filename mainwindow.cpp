@@ -7,10 +7,30 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 
+    mUMW = new UserMainWindow;
+    connect(mUMW,SIGNAL(BackMainWindow(int,int,int,int)),
+            this,SLOT(reshow(int,int,int,int)));
+    connect(this,SIGNAL(ShowNameSignal(QString)),
+            mUMW,SLOT(ShowNameSlot(QString)));
+    connect(this,SIGNAL(ShowMoneySignal(double)),
+            mUMW,SLOT(ShowMoneySlot(double)));
+    connect(this,SIGNAL(ShowCouponSignal(double)),
+            mUMW,SLOT(ShowCouponSlot(double)));
+    mPMW = new PlaceMainWindow;
+    connect(mPMW,SIGNAL(BackMainWindow(int,int,int,int)),
+            this,SLOT(reshow(int,int,int,int)));
+    connect(this,SIGNAL(ShowNameSignal(QString)),
+            mPMW,SLOT(ShowNameSlot(QString)));
     mSMW = new ShopMainWindow;
     connect(mSMW,SIGNAL(BackMainWindow(int,int,int,int)),
             this,SLOT(reshow(int,int,int,int)));
-    connect(this,SIGNAL(ShowNameSignal(QString)),mSMW,SLOT(ShowNameSlot(QString)));
+    connect(this,SIGNAL(ShowNameSignal(QString)),
+            mSMW,SLOT(ShowNameSlot(QString)));
+    mAMW = new AdministratorMainWindow;
+    connect(mAMW,SIGNAL(BackMainWindow(int,int,int,int)),
+            this,SLOT(reshow(int,int,int,int)));
+    connect(this,SIGNAL(ShowNameSignal(QString)),
+            mAMW,SLOT(ShowNameSlot(QString)));
 
     mCCMIS = new CCMIS();
 
@@ -43,17 +63,21 @@ void MainWindow::on_pushButton_clicked()
         if (number <= CCMIS::SUPERUSER_END)
         {
             msg.setText(tr("登录成功！\n 你是：管理员"));
-            Info_Table* AllInfo = new Info_Table(mCCMIS);
-            AllInfo->show();
+            mAMW->setGeometry(this->x(),this->y(),this->width(),this->height());
+            mAMW->show();
         } else if (number <= CCMIS::SHOP_END){
             msg.setText(tr("登录成功！\n 你是：店家"));
             mSMW->setGeometry(this->x(),this->y(),this->width(),this->height());
             mSMW->show();
         } else {
             msg.setText(tr("登录成功！\n 你是：学生/教职工"));
-            UserMainWindow* umw = new UserMainWindow(mCCMIS);
-            umw->show();
+            mUMW->setGeometry(this->x(),this->y(),this->width(),this->height());
+            mUMW->show();
+            //这里要给余额和劵
+            ShowMoneySignal(98);
+            ShowMoneySignal(233);
         }
+
     //这里需要用户名
     ShowNameSignal("陆子旭");
 
@@ -61,7 +85,6 @@ void MainWindow::on_pushButton_clicked()
 
         //msg.exec();
     } else {
-
          //可以有错误提示音
         QMessageBox::warning(this, tr("警告！"),
                            tr("用户名或密码错误！"),

@@ -7,12 +7,14 @@
 #include <QMessageBox>
 #include <QDesktopWidget>
 
-#include "ccmis.h"
-
-#include "shopmainwindow.h"
-#include "info_table.h"
 #include "usermainwindow.h"
+#include "placemainwindow.h"
+#include "shopmainwindow.h"
+#include "administratormainwindow.h"
 
+#include "info_table.h"
+
+#include "ccmis.h"
 
 namespace Ui {
 class MainWindow;
@@ -35,11 +37,16 @@ signals:
     //返回主界面：X，Y，宽，长
     void BackMainWindow(int,int,int,int);
     void ShowNameSignal(QString);
+    void ShowMoneySignal(double);
+    void ShowCouponSignal(double);
 
 private:
     Ui::MainWindow *ui;
     CCMIS* mCCMIS;
+    UserMainWindow *mUMW;
+    PlaceMainWindow *mPMW;
     ShopMainWindow *mSMW;
+    AdministratorMainWindow *mAMW;
 };
 
 #endif // MAINWINDOW_H

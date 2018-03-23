@@ -36,7 +36,6 @@ signals:
     //返回主界面：X，Y，宽，长
     void BackMainWindow(int,int,int,int);
     void ShowNameSignal(QString);
-    void ShowMoneySignal(double);
 
 private:
     Ui::ShopMainWindow *ui;

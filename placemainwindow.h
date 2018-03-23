@@ -21,7 +21,6 @@ public:
 public slots:
     void showtime();
     void ShowNameSlot(QString);
-    void ShowMoneySlot(double);
 
 private slots:
     void on_BackButton_clicked();

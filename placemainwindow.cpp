@@ -31,11 +31,6 @@ void PlaceMainWindow::ShowNameSlot(QString txtname)
     ui->UserName->setText(txtname);
 }
 
-void PlaceMainWindow::ShowMoneySlot(double money)
-{
-    ui->money->setText("总盈利:"+QString::number(money)+"元");
-}
-
 void PlaceMainWindow::on_BackButton_clicked()
 {
     BackMainWindow(this->x(),this->y(),this->width(),this->height());

@@ -29,17 +29,18 @@ private slots:
     //重新显示主界面：X，Y，宽，长
     void reshow(int,int,int,int);
     void on_BackButton_clicked();
-    void on_SearchButton_clicked();
+    void on_ImportButton_clicked();
     void on_WorkButton_clicked();
 
 signals:
     //返回主界面：X，Y，宽，长
     void BackMainWindow(int,int,int,int);
     void ShowNameSignal(QString);
-    void ShowMoneySignal(double);
 
 private:
     Ui::AdministratorMainWindow *ui;
+    AdministratorLeadWindow *mALW;
+    AdministratorSCWindow *mASCW;
 };
 
 #endif // ADMINISTRATORMAINWINDOW_H

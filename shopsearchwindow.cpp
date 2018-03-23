@@ -32,11 +32,6 @@ void ShopSearchWindow::ShowNameSlot(QString txtname)
     ui->UserName->setText(txtname);
 }
 
-void ShopSearchWindow::ShowMoneySlot(double money)
-{
-    ui->money->setText("总盈利:"+QString::number(money)+"元");
-}
-
 void ShopSearchWindow::on_BackButton_clicked()
 {
     BackMainWindow(this->x(),this->y(),this->width(),this->height());
