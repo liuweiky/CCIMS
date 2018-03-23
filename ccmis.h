@@ -14,6 +14,7 @@ using namespace std;
 #include "shop.h"
 #include "user.h"
 #include "jsonxx.h"
+#include "common_funcs.h"
 
 
 
@@ -93,6 +94,8 @@ public:
 
     bool WriteUser(string filename);
 
+
+    QString ReadAllFileToQString(string filename);
     bool ReadShop(string filename);     //读入整个商户表文件
     bool ReadUser(string filename);     //读入整个用户表文件
 
@@ -107,6 +110,8 @@ public:
 
     User* GetUserByNum(int num);    //通过卡号获取用户指针
     Shop* GetShopByNum(int num);    //通过卡号获取商户指针
+    QString GetAllNameByNum(int num);
+
 
     int NewTransaction(int onum, int inum, int mon);   //新建消费交易记录，先减少onum的余额，增加inum的余额（可选），并生成流水号、info，插入到表，更新user.json、info.json，返回是否交易成功，money要乘以100
     bool NewRefund(Information* tempinf);   //撤销某条交易信息

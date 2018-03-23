@@ -12,16 +12,16 @@ Info_Table::Info_Table(CCMIS* ccmis_system,QWidget *parent) :
     ui->tableWidget->setColumnCount(7);
     ui->tableWidget->setRowCount(ccmis_system->GetTotalInfoNumber());
     QStringList Info_Header;
-    Info_Header << " 日期 "<<"时间"<<"出账卡号"<<"入账卡号"<<"出账用户名"<<"入账用户名"<<"交易金额";
+    Info_Header << " 日期 "<<"时间"<<"出账卡号"<<"出账用户名"<<"入账卡号"<<"入账用户名"<<"交易金额";
 
     ui->tableWidget->setHorizontalHeaderLabels(Info_Header);
     ui->tableWidget->setColumnWidth(0,150);
-    ui->tableWidget->setColumnWidth(1,150);
-    ui->tableWidget->setColumnWidth(2,100);
+    ui->tableWidget->setColumnWidth(1,100);
+    ui->tableWidget->setColumnWidth(2,80);
     ui->tableWidget->setColumnWidth(3,100);
-    ui->tableWidget->setColumnWidth(4,100);
-    ui->tableWidget->setColumnWidth(5,300);
-    ui->tableWidget->setColumnWidth(6,150);
+    ui->tableWidget->setColumnWidth(4,80);
+    ui->tableWidget->setColumnWidth(5,170);
+    ui->tableWidget->setColumnWidth(6,100);
 
     Information* iter =ccmis_system->GetInfoPointer()->next;
     int  row_index = 0;
@@ -38,24 +38,14 @@ Info_Table::~Info_Table()
     delete ui;
 }
 
-QString Info_Table::GetNameByNum(CCMIS* ccmis_system,int num)
-{
-    User* temp_user = ccmis_system->GetUserByNum(num);
-    Shop* temp_shop = ccmis_system->GetShopByNum(num);
-    if(temp_shop)
-        return temp_shop->name;
-    else if(temp_user)
-        return temp_user->name;
-    else
-        return QString::fromStdString("用户不存在");
-}
+
 
 
 void Info_Table::PrintOneInfo(CCMIS* ccmis_system,Information* OneLineInfo,int IndexOfRow)
 {
     QString UserName,ShopName;
-    UserName = GetNameByNum(ccmis_system,OneLineInfo->Onumber);
-    ShopName = GetNameByNum(ccmis_system,OneLineInfo->Inumber);
+    UserName = ccmis_system->GetAllNameByNum(OneLineInfo->Onumber);
+    ShopName = ccmis_system->GetAllNameByNum(OneLineInfo->Inumber);
 
     QString Date,Time,Money;
     QString year,month,day,hour,min,sec;
@@ -70,9 +60,9 @@ void Info_Table::PrintOneInfo(CCMIS* ccmis_system,Information* OneLineInfo,int I
     MoneyFloat = (OneLineInfo->money)%100;
     MoneyInt = (OneLineInfo->money - MoneyFloat)/100;
 
-    Date = year + ' / ' + month + ' / '+ day;
-    Time = hour + ' / ' + min + ' / ' + sec;
-    Money = QString::number(MoneyInt) + ' .' + QString::number(MoneyFloat);
+    Date = year + " - " + month + " - "+ day;
+    Time = hour + ":" + min + ":" + sec;
+    Money = QString::number(MoneyInt) + "." + QString::number(MoneyFloat);
 
     ui->tableWidget->setItem(IndexOfRow,0,new QTableWidgetItem(Date));
     ui->tableWidget->setItem(IndexOfRow,1,new QTableWidgetItem(Time));

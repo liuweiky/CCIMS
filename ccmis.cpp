@@ -1,6 +1,8 @@
 #include "ccmis.h"
 #include <QFile>
 #include "common_funcs.h"
+#include <QTextStream>
+#include <QDebug>
 const string CCMIS::USER_FILE_NAME  = "user.json";
 const string CCMIS::SHOP_FILE_NAME  = "shop.json";
 const string CCMIS::INFO_FILE_NAME  = "info.json";
@@ -109,56 +111,103 @@ CCMIS::CCMIS()
 
 bool CCMIS::WriteUser(string filename)
 {
+    QFile fileOut(COMMON_FUNCS::UTF8ToQString(filename));
+    if(!fileOut.open(QIODevice::WriteOnly|QIODevice::Text)){
+        qDebug("Could not open the file for WRITING! \n");
+        return false;
+    }
+
+
     jsonxx::Array array;
 
-    ofstream out(USER_FILE_NAME);
+//    ofstream out(USER_FILE_NAME);
 
-    if (!out.is_open())
-        return false;
+//    if (!out.is_open())
+//        return false;
 
     User* u = mUser->next;
     while (u != NULL) {
-        //cout<<u->number<<"\t"<<u->name<<"\t"<<u->password<<endl;
-
         jsonxx::Object obj;
-
         obj << JSON_KEY_NUMBER << u->number;
         obj << JSON_KEY_NAME << COMMON_FUNCS::ToUTF8String(u->name);
         obj << JSON_KEY_PASSWORD << u->password;
         obj << JSON_KEY_BALANCE << u->balance;
         obj << JSON_KEY_COUPON << u->coupon;
-
         array << obj;
-
         u=u->next;
     }
+    QString allJsonArray = COMMON_FUNCS::UTF8ToQString(array.json());
+    QTextStream streamFileOut(&fileOut);
+    streamFileOut.setCodec("UTF-8");
+    streamFileOut<<allJsonArray;
+    streamFileOut.flush();
+    fileOut.close();
 
+    /*
     out << array.json();
-    out.close();
+    out.close();*/
     return true;
 }
+
+QString CCMIS::ReadAllFileToQString(string filename){
+    QFile fileReadIn(COMMON_FUNCS::UTF8ToQString(filename));
+    if(!fileReadIn.open(QIODevice::ReadOnly | QIODevice::Text)){
+        qDebug("Could not open the file for reading \n");
+        return QString("");
+        //QString("").isEmpty();  //结果为true判定用
+    }
+    QString allLine;
+    QTextStream readInSteam(&fileReadIn);
+    while (!readInSteam.atEnd()) {
+        QString line = readInSteam.readLine();
+        allLine +=line;
+    }
+    fileReadIn.close();
+    return allLine;
+
+
+
+
+
+
+
+
+}
+
+
+
+
+
+
 bool CCMIS::ReadUser(string filename)
 {
     /**by liuvv*/
-    ifstream in(filename);
+    //change by wangzl using qfile, coding with utf-8
 
-    if (in.is_open())
-    {
+   // ifstream in(filename);
+
+    QString fileALLReadIn = ReadAllFileToQString(filename);
+    if (!fileALLReadIn.isEmpty())
+    {/*
         ostringstream tmp;
         tmp << in.rdbuf();
         string s;
         s = tmp.str();
         in.close();
 
-        //cout<<s;
+        //cout<<s;*/
+
 
         jsonxx::Array array;
 
-        array.parse(s); //解析 json
+       // array.parse(s);
+        //解析 json
+        string  cstr = string((const char *)fileALLReadIn.toLocal8Bit());
+          array.parse(cstr);
 
-        //cout<<array.json();
 
-        for (int i = 0; i < array.size(); i++)  //迭代构造
+
+        for (size_t i = 0; i < array.size(); i++)  //迭代构造
         {
             User* u = new User();
 
@@ -199,21 +248,27 @@ bool CCMIS::ReadUser(string filename)
 bool CCMIS::ReadShop(string filename)
 {
     /**by liuvv*/
-    ifstream in(filename);
+    //change by wangzl using qfile, coding with utf-8
 
-    if (in.is_open())
+   // ifstream in(filename);
+
+    QString fileALLReadIn = ReadAllFileToQString(filename);
+
+    if (!fileALLReadIn.isEmpty())
     {
-        ostringstream tmp;
-        tmp << in.rdbuf();
-        string s;
-        s = tmp.str();
-        in.close();
+//        ostringstream tmp;
+//        tmp << in.rdbuf();
+//        string s;
+//        s = tmp.str();
+//        in.close();
 
-        //cout<<s;
+//        //cout<<s;
 
-        jsonxx::Array array;
+       jsonxx::Array array;
 
-        array.parse(s); //解析 json
+        //array.parse(s); //解析 json
+      string  cstr = string((const char *)fileALLReadIn.toLocal8Bit());
+        array.parse(cstr);
 
         //cout<<array.json();
 
@@ -318,10 +373,15 @@ bool CCMIS::WriteInf(string filename)
 {
     jsonxx::Array array;
 
-    ofstream out(INFO_FILE_NAME);
+    QFile fileOut(COMMON_FUNCS::UTF8ToQString(filename));
+    if(!fileOut.open(QIODevice::WriteOnly|QIODevice::Text)){
+       qDebug("Could not open the file for WRITING!\n");
+       return false;
+    }
+//    ofstream out(INFO_FILE_NAME);
 
-    if (!out.is_open())
-        return false;
+//    if (!out.is_open())
+//        return false;
 
     Information* i = mInfo->next;
     while (i != NULL) {
@@ -343,28 +403,35 @@ bool CCMIS::WriteInf(string filename)
         i=i->next;
     }
 
-    out << array.json();
-    out.close();
+    QString allJsonArray = COMMON_FUNCS::UTF8ToQString(array.json());
+    QTextStream streamFileOut(&fileOut);
+    streamFileOut.setCodec("UTF-8");
+    streamFileOut<<allJsonArray;
+    streamFileOut.flush();
+    fileOut.close();
+//    out << array.json();
+//    out.close();
     return true;
 }
 
+
 bool CCMIS::ReadInf(string filename)
 {
-    ifstream in(filename);
-
-    if (in.is_open())
+//    ifstream in(filename);
+     QString fileALLReadIn = ReadAllFileToQString(filename);
+    if (!fileALLReadIn.isEmpty())
     {
-        ostringstream tmp;
-        tmp << in.rdbuf();
-        string s;
-        s = tmp.str();
-        in.close();
+//        ostringstream tmp;
+//        tmp << in.rdbuf();
+//        string s;
+//        s = tmp.str();
+//        in.close();
 
         //cout<<s;
 
         jsonxx::Array array;
 
-        array.parse(s); //解析 json
+        array.parse(COMMON_FUNCS::ToUTF8String(fileALLReadIn)); //解析 json
 
         //cout<<array.json();
 
@@ -536,6 +603,35 @@ Shop* CCMIS::GetShopByNum(int num)
 
 
 }
+
+
+QString CCMIS::GetAllNameByNum(int num)
+{
+    switch (num) {
+    case 0:
+        return QString::fromUtf8("总入账账户");
+        break;
+    case 1:
+        return QString::fromUtf8("充值账户");
+    case 2:
+        return QString::fromUtf8("返补助账户");
+    default:
+    {
+        User* temp_user = GetUserByNum(num);
+        Shop* temp_shop = GetShopByNum(num);
+        if(temp_shop)
+            return temp_shop->name;
+        else if(temp_user)
+            return temp_user->name;
+        else
+            return QString::fromUtf8("用户不存在");
+        break;
+    }
+    }
+
+}
+
+
 
 int CCMIS::GetTotalCanteenConsumptionByDay(int year, int month, int day, int num)
 {

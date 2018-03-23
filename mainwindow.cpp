@@ -67,8 +67,8 @@ void MainWindow::on_pushButton_clicked()
             msg.setText(tr("登录成功！\n 你是：管理员"));
             Info_Table* info = new Info_Table(mCCMIS);
             info->show();
-//            mAMW->setGeometry(this->x(),this->y(),this->width(),this->height());
-//            mAMW->show();
+//           mAMW->setGeometry(this->x(),this->y(),this->width(),this->height());
+//           mAMW->show();
         } else if (number <= CCMIS::SHOP_END){
             msg.setText(tr("登录成功！\n 你是：店家"));
             mSMW->setGeometry(this->x(),this->y(),this->width(),this->height());

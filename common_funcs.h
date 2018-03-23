@@ -13,9 +13,10 @@ public:
     // QString(Unicode) -> std::string (UTF8)
     static string ToUTF8String(const QString& qstr)
     {
-        QByteArray arr = qstr.toUtf8();
-        string cstr = arr.data();
-        return cstr;
+//        QByteArray arr = qstr.toUtf8();
+//        string cstr = arr.data();
+//        return cstr;
+        return string((const char *)qstr.toLocal8Bit());
     }
 
     // std::string (UTF8) -> QString(Unicode)
