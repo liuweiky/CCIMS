@@ -95,7 +95,7 @@ public:
     bool WriteUser(string filename);
 
 
-    QString ReadAllFileToQString(string filename);
+    string ReadAllFileToQString(string filename);
     bool ReadShop(string filename);     //读入整个商户表文件
     bool ReadUser(string filename);     //读入整个用户表文件
 

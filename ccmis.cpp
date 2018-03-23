@@ -149,27 +149,26 @@ bool CCMIS::WriteUser(string filename)
     return true;
 }
 
-QString CCMIS::ReadAllFileToQString(string filename){
+string CCMIS::ReadAllFileToQString(string filename){
+
     QFile fileReadIn(COMMON_FUNCS::UTF8ToQString(filename));
     if(!fileReadIn.open(QIODevice::ReadOnly | QIODevice::Text)){
         qDebug("Could not open the file for reading \n");
-        return QString("");
-        //QString("").isEmpty();  //结果为true判定用
+        return string("");
+        //String("").Empty();  //结果为true判定用
     }
     QString allLine;
     QTextStream readInSteam(&fileReadIn);
+    readInSteam.setCodec("UTF-8");
     while (!readInSteam.atEnd()) {
         QString line = readInSteam.readLine();
+        line += '\n';
         allLine +=line;
     }
+
     fileReadIn.close();
-    return allLine;
-
-
-
-
-
-
+    string  cstr = allLine.toStdString();
+    return cstr;
 
 
 }
@@ -186,8 +185,8 @@ bool CCMIS::ReadUser(string filename)
 
    // ifstream in(filename);
 
-    QString fileALLReadIn = ReadAllFileToQString(filename);
-    if (!fileALLReadIn.isEmpty())
+    string fileALLReadIn = ReadAllFileToQString(filename);
+    if (!fileALLReadIn.empty())
     {/*
         ostringstream tmp;
         tmp << in.rdbuf();
@@ -202,8 +201,8 @@ bool CCMIS::ReadUser(string filename)
 
        // array.parse(s);
         //解析 json
-        string  cstr = string((const char *)fileALLReadIn.toLocal8Bit());
-          array.parse(cstr);
+
+        array.parse(fileALLReadIn);
 
 
 
@@ -252,9 +251,8 @@ bool CCMIS::ReadShop(string filename)
 
    // ifstream in(filename);
 
-    QString fileALLReadIn = ReadAllFileToQString(filename);
-
-    if (!fileALLReadIn.isEmpty())
+    string fileALLReadIn = ReadAllFileToQString(filename);
+    if (!fileALLReadIn.empty())
     {
 //        ostringstream tmp;
 //        tmp << in.rdbuf();
@@ -267,8 +265,8 @@ bool CCMIS::ReadShop(string filename)
        jsonxx::Array array;
 
         //array.parse(s); //解析 json
-      string  cstr = string((const char *)fileALLReadIn.toLocal8Bit());
-        array.parse(cstr);
+
+        array.parse(fileALLReadIn);
 
         //cout<<array.json();
 
@@ -418,8 +416,8 @@ bool CCMIS::WriteInf(string filename)
 bool CCMIS::ReadInf(string filename)
 {
 //    ifstream in(filename);
-     QString fileALLReadIn = ReadAllFileToQString(filename);
-    if (!fileALLReadIn.isEmpty())
+    string fileALLReadIn = ReadAllFileToQString(filename);
+    if (!fileALLReadIn.empty())
     {
 //        ostringstream tmp;
 //        tmp << in.rdbuf();
@@ -431,7 +429,7 @@ bool CCMIS::ReadInf(string filename)
 
         jsonxx::Array array;
 
-        array.parse(COMMON_FUNCS::ToUTF8String(fileALLReadIn)); //解析 json
+        array.parse(fileALLReadIn); //解析 json
 
         //cout<<array.json();
 
