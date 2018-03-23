@@ -9,6 +9,8 @@
 #include "shopsearchwindow.h"
 #include "shopservicewindow.h"
 
+#include "ccmis.h"
+
 namespace Ui {
 class ShopMainWindow;
 }
@@ -18,7 +20,7 @@ class ShopMainWindow : public QMainWindow
     Q_OBJECT
 
 public:
-    explicit ShopMainWindow(QWidget *parent = 0);
+    explicit ShopMainWindow(CCMIS* c, QWidget *parent = 0);
     ~ShopMainWindow();
 
 public slots:
@@ -38,6 +40,7 @@ signals:
     void ShowNameSignal(QString);
 
 private:
+    CCMIS* mCCMIS;
     Ui::ShopMainWindow *ui;
     ShopSearchWindow *mSSearchW;
     ShopServiceWindow *mSServiceW;

@@ -23,7 +23,7 @@ MainWindow::MainWindow(QWidget *parent) :
             this,SLOT(reshow(int,int,int,int)));
     connect(this,SIGNAL(ShowNameSignal(QString)),
             mPMW,SLOT(ShowNameSlot(QString)));
-    mSMW = new ShopMainWindow;
+    mSMW = new ShopMainWindow(mCCMIS);
     connect(mSMW,SIGNAL(BackMainWindow(int,int,int,int)),
             this,SLOT(reshow(int,int,int,int)));
     connect(this,SIGNAL(ShowNameSignal(QString)),
@@ -47,7 +47,7 @@ MainWindow::~MainWindow()
 }
 
 void MainWindow::reshow(int x,int y,int w,int l){
-    this->setGeometry(x,y,w,l);
+    //this->setGeometry(x,y,w,l);
     this->show();
 }
 
@@ -65,17 +65,24 @@ void MainWindow::on_pushButton_clicked()
         if (number <= CCMIS::SUPERUSER_END)
         {
             msg.setText(tr("登录成功！\n 你是：管理员"));
+<<<<<<< HEAD
             Info_Table* info = new Info_Table(mCCMIS);
             info->show();
 //           mAMW->setGeometry(this->x(),this->y(),this->width(),this->height());
 //           mAMW->show();
+=======
+//            Info_Table* info = new Info_Table(mCCMIS);
+//            info->show();
+            mAMW->setGeometry(this->x(),this->y(),this->width(),this->height());
+            mAMW->show();
+>>>>>>> 4e2e154e9684eb60af387959fc0e3c85d45b76cd
         } else if (number <= CCMIS::SHOP_END){
             msg.setText(tr("登录成功！\n 你是：店家"));
-            mSMW->setGeometry(this->x(),this->y(),this->width(),this->height());
+            //mSMW->setGeometry(this->x(),this->y(),this->width(),this->height());
             mSMW->show();
         } else {
             msg.setText(tr("登录成功！\n 你是：学生/教职工"));
-            mUMW->setGeometry(this->x(),this->y(),this->width(),this->height());
+            //mUMW->setGeometry(this->x(),this->y(),this->width(),this->height());
             mUMW->show();
             //这里要给余额和劵
             ShowMoneySignal(98);

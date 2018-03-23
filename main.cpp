@@ -2,19 +2,14 @@
 
 #include <QApplication>
 
-#include "ccmis.h"
-
 #include "mainwindow.h"
-#include "placemainwindow.h"
-#include "shopmainwindow.h"
+
+#include "ccmis.h"
 
 int main(int argc, char *argv[])
 {
-
     QApplication a(argc, argv);
     MainWindow w;
     w.show();
-
-
     return a.exec();
 }

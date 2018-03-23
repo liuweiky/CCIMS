@@ -6,6 +6,8 @@
 #include <QTime>
 #include <QTimer>
 
+#include "ccmis.h"
+
 namespace Ui {
 class ShopServiceWindow;
 }
@@ -15,7 +17,7 @@ class ShopServiceWindow : public QMainWindow
     Q_OBJECT
 
 public:
-    explicit ShopServiceWindow(QWidget *parent = 0);
+    explicit ShopServiceWindow(CCMIS* c, QWidget *parent = 0);
     ~ShopServiceWindow();
 
 public slots:
@@ -33,6 +35,7 @@ signals:
     void BackMainWindow(int,int,int,int);
 
 private:
+    CCMIS* mCCMIS;
     Ui::ShopServiceWindow *ui;
 };
 
