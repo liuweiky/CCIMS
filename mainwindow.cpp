@@ -23,7 +23,7 @@ MainWindow::MainWindow(QWidget *parent) :
             this,SLOT(reshow(int,int,int,int)));
     connect(this,SIGNAL(ShowNameSignal(QString)),
             mPMW,SLOT(ShowNameSlot(QString)));
-    mSMW = new ShopMainWindow;
+    mSMW = new ShopMainWindow(mCCMIS);
     connect(mSMW,SIGNAL(BackMainWindow(int,int,int,int)),
             this,SLOT(reshow(int,int,int,int)));
     connect(this,SIGNAL(ShowNameSignal(QString)),
