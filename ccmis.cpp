@@ -1,6 +1,6 @@
 #include "ccmis.h"
 #include <QFile>
-
+#include "common_funcs.h"
 const string CCMIS::USER_FILE_NAME  = "user.json";
 const string CCMIS::SHOP_FILE_NAME  = "shop.json";
 const string CCMIS::INFO_FILE_NAME  = "info.json";
@@ -123,7 +123,7 @@ bool CCMIS::WriteUser(string filename)
         jsonxx::Object obj;
 
         obj << JSON_KEY_NUMBER << u->number;
-        obj << JSON_KEY_NAME << u->name;
+        obj << JSON_KEY_NAME << COMMON_FUNCS::ToUTF8String(u->name);
         obj << JSON_KEY_PASSWORD << u->password;
         obj << JSON_KEY_BALANCE << u->balance;
         obj << JSON_KEY_COUPON << u->coupon;
@@ -163,7 +163,7 @@ bool CCMIS::ReadUser(string filename)
             User* u = new User();
 
             u->number = array.get<jsonxx::Object>(i).get<jsonxx::Number>(JSON_KEY_NUMBER);
-            u->name = QString::fromStdString(array.get<jsonxx::Object>(i).get<jsonxx::String>(JSON_KEY_NAME));
+            u->name = COMMON_FUNCS::UTF8ToQString(array.get<jsonxx::Object>(i).get<jsonxx::String>(JSON_KEY_NAME));
             u->password = array.get<jsonxx::Object>(i).get<jsonxx::String>(JSON_KEY_PASSWORD);
             u->balance = array.get<jsonxx::Object>(i).get<jsonxx::Number>(JSON_KEY_BALANCE);
             u->coupon = array.get<jsonxx::Object>(i).get<jsonxx::Number>(JSON_KEY_COUPON);
@@ -222,7 +222,7 @@ bool CCMIS::ReadShop(string filename)
             Shop* s = new Shop();
 
             s->number = array.get<jsonxx::Object>(i).get<jsonxx::Number>(JSON_KEY_NUMBER);
-            s->name = QString::fromStdString(array.get<jsonxx::Object>(i).get<jsonxx::String>(JSON_KEY_NAME));
+            s->name = COMMON_FUNCS::UTF8ToQString(array.get<jsonxx::Object>(i).get<jsonxx::String>(JSON_KEY_NAME));
             s->password = array.get<jsonxx::Object>(i).get<jsonxx::String>(JSON_KEY_PASSWORD);
 
             s->next = mShop->next;

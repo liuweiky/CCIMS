@@ -59,7 +59,8 @@ HEADERS += \
     administratorscwindow.h \
     usersearchwindow.h \
     userrechargewindow.h \
-    usersfwindow.h
+    usersfwindow.h \
+    common_funcs.h
 
 FORMS += \
     mainwindow.ui \
