@@ -170,7 +170,7 @@
            </widget>
           </item>
           <item>
-           <widget class="QLineEdit" name="UserNameLineEdit">
+           <widget class="QLineEdit" name="CardNumLineEdit">
             <property name="minimumSize">
              <size>
               <width>390</width>
@@ -247,7 +247,7 @@
            </widget>
           </item>
           <item>
-           <widget class="QLineEdit" name="UserNameLineEdit_2">
+           <widget class="QLineEdit" name="MoneyLineEdit">
             <property name="minimumSize">
              <size>
               <width>390</width>
@@ -467,7 +467,7 @@
      <x>0</x>
      <y>0</y>
      <width>1000</width>
-     <height>22</height>
+     <height>23</height>
     </rect>
    </property>
   </widget>

@@ -1,11 +1,13 @@
 #include "shopmainwindow.h"
 #include "ui_shopmainwindow.h"
 
-ShopMainWindow::ShopMainWindow(QWidget *parent) :
+ShopMainWindow::ShopMainWindow(CCMIS* c, QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::ShopMainWindow)
 {
     ui->setupUi(this);
+
+    mCCMIS = c;
 
     //时间显示
     QTimer *timer = new QTimer(this);
@@ -19,7 +21,7 @@ ShopMainWindow::ShopMainWindow(QWidget *parent) :
     connect(this,SIGNAL(ShowNameSignal(QString)),
             mSSearchW,SLOT(ShowNameSlot(QString)));
 
-    mSServiceW = new ShopServiceWindow;
+    mSServiceW = new ShopServiceWindow(mCCMIS);
     connect(mSServiceW,SIGNAL(BackMainWindow(int,int,int,int)),
             this,SLOT(reshow(int,int,int,int)));
     connect(this,SIGNAL(ShowNameSignal(QString)),
