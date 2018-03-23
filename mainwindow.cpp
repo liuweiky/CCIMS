@@ -47,7 +47,7 @@ MainWindow::~MainWindow()
 }
 
 void MainWindow::reshow(int x,int y,int w,int l){
-    this->setGeometry(x,y,w,l);
+    //this->setGeometry(x,y,w,l);
     this->show();
 }
 
@@ -71,11 +71,11 @@ void MainWindow::on_pushButton_clicked()
             mAMW->show();
         } else if (number <= CCMIS::SHOP_END){
             msg.setText(tr("登录成功！\n 你是：店家"));
-            mSMW->setGeometry(this->x(),this->y(),this->width(),this->height());
+            //mSMW->setGeometry(this->x(),this->y(),this->width(),this->height());
             mSMW->show();
         } else {
             msg.setText(tr("登录成功！\n 你是：学生/教职工"));
-            mUMW->setGeometry(this->x(),this->y(),this->width(),this->height());
+            //mUMW->setGeometry(this->x(),this->y(),this->width(),this->height());
             mUMW->show();
             //这里要给余额和劵
             ShowMoneySignal(98);
