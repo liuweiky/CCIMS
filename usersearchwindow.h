@@ -1,4 +1,4 @@
-#ifndef USERSEARCHWINDOW_H
+ #ifndef USERSEARCHWINDOW_H
 #define USERSEARCHWINDOW_H
 
 #include <QMainWindow>

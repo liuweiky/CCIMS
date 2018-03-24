@@ -85,6 +85,8 @@ public:
     CCMIS();
     ~CCMIS() {}
 
+    static void CopyOneInfo(const Information* src,Information* dst);
+
     bool ReadInf(string filename);          //读入整个信息表文件
     bool WriteInf(string filename);         //写出整个信息表文件
     void ClearInf();                        //清空整个信息表
@@ -99,10 +101,7 @@ public:
     bool ReadShop(string filename);     //读入整个商户表文件
     bool ReadUser(string filename);     //读入整个用户表文件
 
-    void SearchNumber(int id);      //根据卡号输出信息
-    void SearchSubsidy(int id);     //根据补贴输出信息
-    void SearchTime(int startdate, int startime,
-                    int finishdate, int finishtime);  //根据时间输出信息
+
 
     int GetTotalCanteenConsumptionByDay(int year, int month, int day,int num); //获取当日食堂消费额
     int GetTotalCanteenAndMarketConsumptionByDay(int year, int month, int day,int num);     //获取当日食堂超市消费额
@@ -131,6 +130,17 @@ public:
     unsigned int GetTotalShopNumber();
 
 
+    void SearchNumber(int id);      //根据卡号输出信息
+   // void SearchSubsidy(int id);     //根据补贴输出信息
+    void SearchTime(int startdate, int startime,
+                    int finishdate, int finishtime);  //根据时间输出信息
+
+    //默认返回所有补贴信息
+    Information* SearchInfoByInum(int inum = 0, unsigned long start_date_num = 0,unsigned int start_time_num = 0 ,
+                                     unsigned long finish_date_num = 99999999 ,unsigned int finish_time_num = 9999 );
+
+    Information* SearchInfoByOnum(int onum = 2, unsigned long start_date_num = 0,unsigned int start_time_num = 0 ,
+                                     unsigned long finish_date_num = 99999999 ,unsigned int finish_time_num = 9999 );
 
     bool CheckPassword(string password);
 

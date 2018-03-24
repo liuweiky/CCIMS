@@ -340,6 +340,10 @@ string CCMIS::GenerateTag(int onum, int inum, int mon)
     return tag;
 }
 
+
+
+
+
 void CCMIS::InsertInf(Information* tempinf)
 {
     tempinf->next = mInfo->next;
@@ -536,6 +540,72 @@ unsigned int CCMIS::GetTotalShopNumber()
 {
     return totalShopCount;
 }
+
+
+
+//默认统计补贴信息 onum=2
+Information* CCMIS::SearchInfoByOnum(int onum , unsigned long start_date_num,unsigned int start_time_num ,
+                                     unsigned long finish_date_num ,unsigned int finish_time_num )
+{
+    Information* filter_info_list = new Information();
+    filter_info_list->next = NULL;
+
+    Information* info = mInfo->next;
+
+    unsigned long long start   = start_date_num *  1000000 + start_time_num;
+    unsigned long long finish  = finish_date_num * 1000000 + finish_time_num;
+    while(info!=NULL){
+
+        if( info->Onumber == onum ){
+            unsigned long  info_date = Date::DateToNum(info->year,info->month,info->day);
+            unsigned int info_time = Time::TimeToNum(info->hour,info->minute);
+            unsigned long long  info_cur = info_date * 1000000 + info_time;
+            if( info_cur>=start && info_cur <=finish ){
+                    Information* filtered_one_info = new Information();
+                    Information::CopyOneInfo(info,filtered_one_info);
+                    filtered_one_info->next = filter_info_list->next;
+                    filter_info_list -> next = filtered_one_info;
+            }
+        }
+        info = info->next;
+
+    }
+    return filter_info_list;
+}
+
+Information* CCMIS::SearchInfoByInum(int inum, unsigned long start_date_num,unsigned int start_time_num,
+                                     unsigned long finish_date_num,unsigned int finish_time_num)
+{
+    Information* filter_info_list = new Information();
+    filter_info_list->next = NULL;
+
+    Information* info = mInfo->next;
+
+    unsigned long long start   = start_date_num *  1000000 + start_time_num;
+    unsigned long long finish  = finish_date_num * 1000000 + finish_time_num;
+    while(info!=NULL){
+
+        if( info->Inumber == inum ){
+            unsigned long  info_date = Date::DateToNum(info->year,info->month,info->day);
+            unsigned int info_time = Time::TimeToNum(info->hour,info->minute);
+            unsigned long long  info_cur = info_date * 1000000 + info_time;
+            if( info_cur>=start && info_cur <=finish ){
+                    Information* filtered_one_info = new Information();
+                    Information::CopyOneInfo(info,filtered_one_info);
+                    filtered_one_info->next = filter_info_list->next;
+                    filter_info_list -> next = filtered_one_info;
+            }
+        }
+        info = info->next;
+
+    }
+    return filter_info_list;
+
+}
+
+
+
+
 
 
 void CCMIS::DeleteInf(Information *tempinf)
