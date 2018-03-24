@@ -47,7 +47,7 @@ void Info_Table::PrintOneInfo(CCMIS* ccmis_system,Information* OneLineInfo,int I
     UserName = ccmis_system->GetAllNameByNum(OneLineInfo->Onumber);
     ShopName = ccmis_system->GetAllNameByNum(OneLineInfo->Inumber);
 
-    QString Date,Time,Money;
+    QString Date,Time,Money,ONumber;
     QString year,month,day,hour,min,sec;
     year=QString::number(OneLineInfo->year);
     month =QString::number(OneLineInfo->month).sprintf("%02d",OneLineInfo->month);
@@ -64,9 +64,11 @@ void Info_Table::PrintOneInfo(CCMIS* ccmis_system,Information* OneLineInfo,int I
     Time = hour + ":" + min + ":" + sec;
     Money = QString::number(MoneyInt) + "." + QString::number(MoneyFloat);
 
+    ONumber =QString::number(OneLineInfo->Onumber).sprintf("%04d",OneLineInfo->Onumber);
+
     ui->tableWidget->setItem(IndexOfRow,0,new QTableWidgetItem(Date));
     ui->tableWidget->setItem(IndexOfRow,1,new QTableWidgetItem(Time));
-    ui->tableWidget->setItem(IndexOfRow,2,new QTableWidgetItem(QString::number(OneLineInfo->Onumber)));
+    ui->tableWidget->setItem(IndexOfRow,2,new QTableWidgetItem(ONumber));
     ui->tableWidget->setItem(IndexOfRow,3,new QTableWidgetItem(UserName));
     ui->tableWidget->setItem(IndexOfRow,4,new QTableWidgetItem(QString::number(OneLineInfo->Inumber)));
     ui->tableWidget->setItem(IndexOfRow,5,new QTableWidgetItem(ShopName));
