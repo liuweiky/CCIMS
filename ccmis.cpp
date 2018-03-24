@@ -166,12 +166,14 @@ bool CCMIS::WriteUser(string filename)
 
 string CCMIS::ReadAllFileToQString(string filename){
 
-    QFile fileReadIn(COMMON_FUNCS::UTF8ToQString(filename));
+    QFile fileReadIn(QString::fromStdString(filename));
+    //QFile fileReadIn("user.json");
     if(!fileReadIn.open(QIODevice::ReadOnly | QIODevice::Text)){
         qDebug("Could not open the file for reading \n");
         return string("");
         //String("").Empty();  //结果为true判定用
     }
+
     QString allLine;
     QTextStream readInSteam(&fileReadIn);
     readInSteam.setCodec("UTF-8");
