@@ -121,8 +121,6 @@ public:
             default:
                 break;
             }
-            mCCMIS->WriteInf(CCMIS::INFO_FILE_NAME);
-            mCCMIS->WriteUser(CCMIS::USER_FILE_NAME);
         }
         JsonThread(CCMIS* c, int t): mCCMIS(c), type(t){}
     private:
