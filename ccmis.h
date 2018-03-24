@@ -87,19 +87,28 @@ public:
 
     static void CopyOneInfo(const Information* src,Information* dst);
 
+    string ReadAllFileToQString(string filename); //读取文件至std::string
+
+
     bool ReadInf(string filename);          //读入整个信息表文件
-    bool WriteInf(string filename);         //写出整个信息表文件
+    //bool WriteInf(string filename,Information* info_list);         //写出整个信息表文件
+    bool ReadUser(string filename);     //读入整个用户表文件
+    bool WriteUser(string filename,User* user_list);
+    bool ReadShop(string filename);     //读入整个商户表文件
+    bool WriteShop(string filename,Shop* shop_list);
+
+
+
     void ClearInf();                        //清空整个信息表
     void InsertInf(Information* tempinf);      //添加单个信息表
     void DeleteInf(Information* tempinf);   //删除单个信息表
     void ChangeInf(Information* beforeinf, Information* afterinf);//改变单个信息表
 
-    bool WriteUser(string filename);
 
 
-    string ReadAllFileToQString(string filename);
-    bool ReadShop(string filename);     //读入整个商户表文件
-    bool ReadUser(string filename);     //读入整个用户表文件
+
+
+
 
 
 
