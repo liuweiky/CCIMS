@@ -51,5 +51,41 @@ void ShopServiceWindow::on_WorkButton_clicked()
     int onum = ui->CardNumLineEdit->text().toInt();
     int money = ui->MoneyLineEdit->text().toDouble() * 100; //*100
 
-    cout << mCCMIS->NewTransaction(onum, mCCMIS->GetUserNum(), money);
+    //mCCMIS->NewTransaction(onum, mCCMIS->GetUserNum(), money);
+
+    switch (mCCMIS->NewTransaction(onum, mCCMIS->GetUserNum(), money)) {
+    case -1:
+        QMessageBox::warning(this, tr("警告！"),
+                           tr("没有该用户！"),
+                           QMessageBox::Yes);
+        break;
+    case -2:
+        QMessageBox::warning(this, tr("警告！"),
+                           tr("商铺不存在！"),
+                           QMessageBox::Yes);
+        break;
+    case -3:
+        QMessageBox::warning(this, tr("警告！"),
+                           tr("单日额度已用尽！"),
+                           QMessageBox::Yes);
+        break;
+    case -4:
+        QMessageBox::warning(this, tr("警告！"),
+                           tr("余额不足！"),
+                           QMessageBox::Yes);
+        break;
+    case -5:
+        QMessageBox::warning(this, tr("警告！"),
+                           tr("金额不能小于 0！"),
+                           QMessageBox::Yes);
+        break;
+    case 0:
+        QMessageBox::information(this, tr("信息！"),
+                           tr("交易成功！"),
+                           QMessageBox::Yes);
+        break;
+    default:
+
+        break;
+    }
 }

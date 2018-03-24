@@ -5,6 +5,7 @@
 #include <QDate>
 #include <QTime>
 #include <QTimer>
+#include <QMessageBox>
 
 #include "ccmis.h"
 

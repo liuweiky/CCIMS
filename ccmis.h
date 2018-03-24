@@ -8,6 +8,7 @@
 #include <string>
 #include <time.h>
 #include <QString>
+#include <QThread>
 
 using namespace std;
 #include "information.h"
@@ -82,8 +83,52 @@ public:
     static const int GROUP_MARKET;
     static const int GROUP_BATH;
 
+    static const int THREAD_TYPE_W_USER;
+    static const int THREAD_TYPE_W_INFO;
+    static const int THREAD_TYPE_W_SHOP;
+
+    static const int THREAD_TYPE_R_USER;
+    static const int THREAD_TYPE_R_INFO;
+    static const int THREAD_TYPE_R_SHOP;
+
     CCMIS();
     ~CCMIS() {}
+
+    class JsonThread: public QThread
+    {
+    public:
+        virtual void run()
+        {
+            switch (type) {
+            case -1:
+                mCCMIS->ReadInf(mCCMIS->INFO_FILE_NAME);
+                break;
+            case -2:
+                mCCMIS->ReadShop(mCCMIS->SHOP_FILE_NAME);
+                break;
+            case -3:
+                mCCMIS->ReadUser(mCCMIS->USER_FILE_NAME);
+                break;
+            case 1:
+                mCCMIS->WriteInf(mCCMIS->INFO_FILE_NAME);
+                break;
+            case 2:
+
+                break;
+            case 3:
+                mCCMIS->WriteUser(mCCMIS->USER_FILE_NAME);
+                break;
+            default:
+                break;
+            }
+            mCCMIS->WriteInf(CCMIS::INFO_FILE_NAME);
+            mCCMIS->WriteUser(CCMIS::USER_FILE_NAME);
+        }
+        JsonThread(CCMIS* c, int t): mCCMIS(c), type(t){}
+    private:
+        int type;
+        CCMIS* mCCMIS;
+    };
 
     static void CopyOneInfo(const Information* src,Information* dst);
 
