@@ -52,6 +52,15 @@ const int CCMIS::GROUP_CANTEEN = 1;
 const int CCMIS::GROUP_MARKET = 2;
 const int CCMIS::GROUP_BATH = 3;
 
+const int CCMIS::THREAD_TYPE_R_INFO = -1;
+const int CCMIS::THREAD_TYPE_R_SHOP = -2;
+const int CCMIS::THREAD_TYPE_R_USER = -3;
+
+
+const int CCMIS::THREAD_TYPE_W_INFO = 1;
+const int CCMIS::THREAD_TYPE_W_SHOP = 2;
+const int CCMIS::THREAD_TYPE_W_USER = 3;
+
 CCMIS::CCMIS()
 {
     mUserNumber = -1;
@@ -67,6 +76,10 @@ CCMIS::CCMIS()
     totalInfoCount = 0;
     totalShopCount = 0;
     totalUserCount = 0;
+
+    JsonThread* jthread = new JsonThread(this, THREAD_TYPE_R_INFO);
+
+    jthread->start();   //TODO: Need to send message when finished.
 
     if (!ReadUser(USER_FILE_NAME))  //判断打开文件是否成功
     {
@@ -85,10 +98,12 @@ CCMIS::CCMIS()
     //InsertInf(BuildInfo(6998, 1101, 1500));
     //WriteInf(INFO_FILE_NAME);
 
-    if (!ReadInf(INFO_FILE_NAME))
+    /*if (!ReadInf(INFO_FILE_NAME))
     {
         cout << "Open " + INFO_FILE_NAME + " failed.";
-    }
+    }*/
+
+
 
     cout<<GetTotalCanteenConsumptionByDay(2018,1,3,4001)<<endl;
     cout<<GetUserByNum(4000)<<endl;
@@ -787,10 +802,15 @@ int CCMIS::NewTransaction(int onum, int inum, int mon)
                 return MESSAGE_TRANSACTION_BALANCE_NOT_ENOUGH;
 
             u->balance -= mon;
-            WriteUser(USER_FILE_NAME);
+            //WriteUser(USER_FILE_NAME);
             Information* info = BuildInfo(onum, inum, mon);
             InsertInf(info);
-            WriteInf(INFO_FILE_NAME);
+            //WriteInf(INFO_FILE_NAME);
+
+            JsonThread* jthread = new JsonThread(this, THREAD_TYPE_W_USER);
+            jthread->start();
+            jthread = new JsonThread(this, THREAD_TYPE_W_INFO);
+            jthread->start();
 
             if (u->number >= USER_TEA_EMP_BEGIN && u->number <= USER_TEA_EMP_END && mon > 2000)   //教职工单次消费超20
             {
@@ -809,10 +829,15 @@ int CCMIS::NewTransaction(int onum, int inum, int mon)
                 return MESSAGE_TRANSACTION_BALANCE_NOT_ENOUGH;
 
             u->balance -= mon;
-            WriteUser(USER_FILE_NAME);
+            //WriteUser(USER_FILE_NAME);
             Information* info = BuildInfo(onum, inum, mon);
             InsertInf(info);
-            WriteInf(INFO_FILE_NAME);
+            //WriteInf(INFO_FILE_NAME);
+
+            JsonThread* jthread = new JsonThread(this, THREAD_TYPE_W_USER);
+            jthread->start();
+            jthread = new JsonThread(this, THREAD_TYPE_W_INFO);
+            jthread->start();
 
             return MESSAGE_TRANSACTION_SUCCESS;
         }
@@ -837,10 +862,15 @@ int CCMIS::NewTransaction(int onum, int inum, int mon)
             u->balance -= mon;
         }
 
-        WriteUser(USER_FILE_NAME);
+        //WriteUser(USER_FILE_NAME);
         Information* info = BuildInfo(onum, inum, mon);
         InsertInf(info);
-        WriteInf(INFO_FILE_NAME);
+        //WriteInf(INFO_FILE_NAME);
+
+        JsonThread* jthread = new JsonThread(this, THREAD_TYPE_W_USER);
+        jthread->start();
+        jthread = new JsonThread(this, THREAD_TYPE_W_INFO);
+        jthread->start();
 
         return MESSAGE_TRANSACTION_SUCCESS;
     }
