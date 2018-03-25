@@ -53,11 +53,11 @@ emp_arr = [int(x) for x in user_arr if ((x > 6000) and (x < 7000))]
 
 #生成随机数函数
 def RandomMinAndSec():
-    return random.randint(0, 60)
+    return random.randint(0, 59)
 
 
 def RandomHour():
-    return random.randint(1, 24)
+    return random.randint(0, 23)
 
 
 def RandomMoneyDinning():
@@ -124,7 +124,7 @@ def MakeOneAllowance(OnePaymentDict, PaymentList):
     tmp_pay_dict = copy.deepcopy(OnePaymentDict)
     tmp_pay_dict['second'] = tmp_pay_dict['second'] + 1
 
-    tmp_pay_dict['onumber'] = int(9002)
+    tmp_pay_dict['onumber'] = int(2)
     tmp_pay_dict['inumber'] = OnePaymentDict['onumber']
     tmp_pay_dict['money'] = int(500)
     money_str = str(500).zfill(5)
