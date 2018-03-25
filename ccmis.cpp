@@ -91,18 +91,21 @@ CCMIS::CCMIS()
         cout << "Open " + SHOP_FILE_NAME + " failed.";
     }
 
-    WriteUser("testuser.json");
+
+    //WriteUser("testuser.json");
 
     //GenerateTag(6998, 1101, 1500);
 
     //InsertInf(BuildInfo(6998, 1101, 1500));
     //WriteInf(INFO_FILE_NAME);
 
-//    if (!ReadInf(INFO_FILE_NAME))
-//    {
-//        cout << "Open " + INFO_FILE_NAME + " failed.";
-//    }
+    if (!ReadInf(INFO_FILE_NAME))
+    {
+        cout << "Open " + INFO_FILE_NAME + " failed.";
+    }
 
+    Information* test  = SearchInfoByInum(1201);
+    WriteInf("3216.json",test);
 //    WriteInf("test.json");
 
     cout<<GetTotalCanteenConsumptionByDay(2018,1,3,4001)<<endl;

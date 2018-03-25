@@ -5,7 +5,8 @@
 #include <QDate>
 #include <QTime>
 #include <QTimer>
-
+#include "ccmis.h"
+#include <qtablewidget.h>
 namespace Ui {
 class ShopSearchWindow;
 }
@@ -15,8 +16,10 @@ class ShopSearchWindow : public QMainWindow
     Q_OBJECT
 
 public:
-    explicit ShopSearchWindow(QWidget *parent = 0);
+    explicit ShopSearchWindow(CCMIS* ccmis_sys,QWidget *parent = 0);
     ~ShopSearchWindow();
+    QTableWidget* GetWholeShopSearchTable();
+    void ShowOneInfo(QTableWidget* shop_table, Information* one_info,int row_index);
 
 public slots:
     void showtime();
@@ -32,6 +35,7 @@ signals:
 
 private:
     Ui::ShopSearchWindow *ui;
+    CCMIS *mCCMIS;
 };
 
 #endif // SHOPSEARCHWINDOW_H

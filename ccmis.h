@@ -128,7 +128,7 @@ public:
         CCMIS* mCCMIS;
     };
 
-    static void CopyOneInfo(const Information* src,Information* dst);
+
 
     string ReadAllFileToQString(string filename); //读取文件至std::string
 

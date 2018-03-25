@@ -15,7 +15,7 @@ ShopMainWindow::ShopMainWindow(CCMIS* c, QWidget *parent) :
     timer->start(500);
 
     //窗口跳转
-    mSSearchW = new ShopSearchWindow;
+    mSSearchW = new ShopSearchWindow(mCCMIS);
     connect(mSSearchW,SIGNAL(BackMainWindow(int,int,int,int)),
             this,SLOT(reshow(int,int,int,int)));
     connect(this,SIGNAL(ShowNameSignal(QString)),

@@ -7,12 +7,22 @@ AdministratorSCWindow::AdministratorSCWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 
+    //表格显示
+
+
+
+
+
     //时间显示
     QTimer *timer = new QTimer(this);
     connect(timer,SIGNAL(timeout()),this,SLOT(showtime()));
     timer->start(500);
 
 }
+
+
+
+
 
 AdministratorSCWindow::~AdministratorSCWindow()
 {

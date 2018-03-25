@@ -3,7 +3,7 @@
 
 
 #include <string>
-
+#include <QString>
 struct Information
 {
     std::string tag; //流水号
@@ -35,6 +35,31 @@ static void CopyOneInfo(const Information* src,Information* dst)
     }
 
 
-};
 
+static QString InfoToDateStr(Information* one_info)
+{
+    QString year=QString::number(one_info->year);
+    QString month =QString::number(one_info->month).sprintf("%02d",one_info->month);
+    QString day =QString::number(one_info->day).sprintf("%02d",one_info->day);
+    return QString(year + " - " + month + " - "+ day);
+}
+
+static  QString InfoToTimeStr(Information* one_info)
+{
+    QString hour =QString::number(one_info->hour).sprintf("%02d",one_info->hour);
+    QString min = QString::number(one_info->minute).sprintf("%02d",one_info->minute);
+    QString sec = QString::number(one_info->second).sprintf("%02d",one_info->second);
+    return QString(hour + ":" + min + ":" + sec);
+}
+
+static QString InfoToMoneyStr(Information* one_info)
+{
+    unsigned int MoneyInt,MoneyFloat;
+    MoneyFloat = (one_info->money)%100;
+    MoneyInt =   (one_info->money)/100;
+    return QString(QString::number(MoneyInt) + "." +
+                   QString::number(MoneyFloat).sprintf("%02d",MoneyFloat));
+}
+
+};
 #endif // INFORMATION_H
