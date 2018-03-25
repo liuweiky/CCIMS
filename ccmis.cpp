@@ -91,19 +91,19 @@ CCMIS::CCMIS()
         cout << "Open " + SHOP_FILE_NAME + " failed.";
     }
 
-    //WriteUser(USER_FILE_NAME);
+    WriteUser("testuser.json");
 
     //GenerateTag(6998, 1101, 1500);
 
     //InsertInf(BuildInfo(6998, 1101, 1500));
     //WriteInf(INFO_FILE_NAME);
 
-    /*if (!ReadInf(INFO_FILE_NAME))
-    {
-        cout << "Open " + INFO_FILE_NAME + " failed.";
-    }*/
+//    if (!ReadInf(INFO_FILE_NAME))
+//    {
+//        cout << "Open " + INFO_FILE_NAME + " failed.";
+//    }
 
-
+//    WriteInf("test.json");
 
     cout<<GetTotalCanteenConsumptionByDay(2018,1,3,4001)<<endl;
     cout<<GetUserByNum(4000)<<endl;
@@ -202,7 +202,7 @@ bool CCMIS::SaveJsonArrToFile(const jsonxx::Array& ToSaveJson,string filename)
 }
 
 
-//应该用多态用模板，下面这三个函数，怕吕帅而已。。。
+//应该用多态用模板，下面这六个函数，怕吕帅而已。。。
 bool CCMIS::WriteShop(string filename,Shop* shop_list)
 {
     jsonxx::Array shop_json = LinkListToJson(shop_list);
@@ -421,6 +421,7 @@ bool CCMIS::ReadInf(string filename)
     } else {
         return false;
     }
+    this->WriteInf("test.json");
 }
 
 

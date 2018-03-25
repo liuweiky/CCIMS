@@ -134,11 +134,8 @@ public:
 
 
     jsonxx::Array LinkListToJson(User* user_list);
-
     jsonxx::Array LinkListToJson(Information* info_list);
-
     jsonxx::Array LinkListToJson(Shop* shop_list);
-
     bool SaveJsonArrToFile(const jsonxx::Array& ToSaveJson,string filename);
 
 
