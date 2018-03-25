@@ -126,12 +126,6 @@ CCMIS::CCMIS()
 
 bool CCMIS::WriteUser(string filename)
 {
-    QFile fileOut(COMMON_FUNCS::UTF8ToQString(filename));
-    if(!fileOut.open(QIODevice::WriteOnly|QIODevice::Text)){
-        qDebug("Could not open the file for WRITING! \n");
-        return false;
-    }
-
 
     jsonxx::Array array;
 
@@ -152,6 +146,13 @@ bool CCMIS::WriteUser(string filename)
         u=u->next;
     }
     QString allJsonArray = COMMON_FUNCS::UTF8ToQString(array.json());
+
+    QFile fileOut(COMMON_FUNCS::UTF8ToQString(filename));
+    if(!fileOut.open(QIODevice::WriteOnly|QIODevice::Text)){
+        qDebug("Could not open the file for WRITING! \n");
+        return false;
+    }
+
     QTextStream streamFileOut(&fileOut);
     streamFileOut.setCodec("UTF-8");
     streamFileOut<<allJsonArray;
@@ -392,11 +393,6 @@ bool CCMIS::WriteInf(string filename)
 {
     jsonxx::Array array;
 
-    QFile fileOut(COMMON_FUNCS::UTF8ToQString(filename));
-    if(!fileOut.open(QIODevice::WriteOnly|QIODevice::Text)){
-       qDebug("Could not open the file for WRITING!\n");
-       return false;
-    }
 //    ofstream out(INFO_FILE_NAME);
 
 //    if (!out.is_open())
@@ -423,6 +419,13 @@ bool CCMIS::WriteInf(string filename)
     }
 
     QString allJsonArray = COMMON_FUNCS::UTF8ToQString(array.json());
+
+    QFile fileOut(COMMON_FUNCS::UTF8ToQString(filename));
+    if(!fileOut.open(QIODevice::WriteOnly|QIODevice::Text)){
+       qDebug("Could not open the file for WRITING!\n");
+       return false;
+    }
+
     QTextStream streamFileOut(&fileOut);
     streamFileOut.setCodec("UTF-8");
     streamFileOut<<allJsonArray;
@@ -766,11 +769,16 @@ int CCMIS::NewSubsidy(User* u)
     if (u->number >= USER_TEA_EMP_BEGIN && u->number <= USER_TEA_EMP_END)   //教职工单次消费超20
     {
         u->balance += 500;
-        WriteUser(USER_FILE_NAME);
+        //WriteUser(USER_FILE_NAME);
 
         Information* info = BuildInfo(2, u->number, 500);
         InsertInf(info);
-        WriteInf(INFO_FILE_NAME);
+        //WriteInf(INFO_FILE_NAME);
+
+        JsonThread* jthread = new JsonThread(this, THREAD_TYPE_W_USER);
+        jthread->start();
+        jthread = new JsonThread(this, THREAD_TYPE_W_INFO);
+        jthread->start();
     }
 
 }
@@ -809,14 +817,14 @@ int CCMIS::NewTransaction(int onum, int inum, int mon)
             InsertInf(info);
             //WriteInf(INFO_FILE_NAME);
 
-            JsonThread* jthread = new JsonThread(this, THREAD_TYPE_W_USER);
-            jthread->start();
-            jthread = new JsonThread(this, THREAD_TYPE_W_INFO);
-            jthread->start();
-
             if (u->number >= USER_TEA_EMP_BEGIN && u->number <= USER_TEA_EMP_END && mon > 2000)   //教职工单次消费超20
             {
                 NewSubsidy(u);
+            } else {
+                JsonThread* jthread = new JsonThread(this, THREAD_TYPE_W_USER);
+                jthread->start();
+                jthread = new JsonThread(this, THREAD_TYPE_W_INFO);
+                jthread->start();
             }
 
             return MESSAGE_TRANSACTION_SUCCESS;
@@ -895,8 +903,13 @@ bool CCMIS::NewRefund(Information *tempinf)
     u->balance += tempinf->money;
     DeleteInf(tempinf);
 
-    WriteUser(USER_FILE_NAME);
-    WriteInf(INFO_FILE_NAME);
+    //WriteUser(USER_FILE_NAME);
+    //WriteInf(INFO_FILE_NAME);
+
+    JsonThread* jthread = new JsonThread(this, THREAD_TYPE_W_USER);
+    jthread->start();
+    jthread = new JsonThread(this, THREAD_TYPE_W_INFO);
+    jthread->start();
 
     return true;
 }
@@ -913,5 +926,12 @@ bool CCMIS::NewRecharge(int num, int money)
     Information* info = BuildInfo(1, num, money);
     InsertInf(info);
 
-    return WriteUser(USER_FILE_NAME) && WriteInf(INFO_FILE_NAME);
+    JsonThread* jthread = new JsonThread(this, THREAD_TYPE_W_USER);
+    jthread->start();
+    jthread = new JsonThread(this, THREAD_TYPE_W_INFO);
+    jthread->start();
+
+    //return WriteUser(USER_FILE_NAME) && WriteInf(INFO_FILE_NAME);
+
+    return true;
 }
