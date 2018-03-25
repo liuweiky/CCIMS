@@ -136,11 +136,11 @@ public:
 
 
     bool ReadInf(string filename);          //读入整个信息表文件
-    //bool WriteInf(string filename,Information* info_list);         //写出整个信息表文件
+    bool WriteInf(string filename);         //写出整个信息表文件
     bool ReadUser(string filename);     //读入整个用户表文件
-    bool WriteUser(string filename,User* user_list);
+    bool WriteUser(string filename);
     bool ReadShop(string filename);     //读入整个商户表文件
-    bool WriteShop(string filename,Shop* shop_list);
+    bool WriteShop(string filename);
 
 
 
