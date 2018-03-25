@@ -20,7 +20,8 @@ for i in range(len(shop)):
 shop_arr = [int(x) for x in shop_arr if (x > 0)]
 shop_arr = [int(x) for x in shop_arr if (x % 100 != 0)]
 
-bath_arr = [int(x) for x in shop_arr if (x > 3000) and (x < 4000)]
+bath_arr = [int(x) for x in shop_arr if (x > 3000) and (x < 4000) and (x / 10 % 10 < 5)]
+bath_coupon_arr = [int(x) for x in shop_arr if (x > 3000) and (x < 4000) and (x / 10 % 10 >= 5)]
 din_arr = [int(x) for x in shop_arr if (x > 1000) and (x < 2000)]
 shop_arr = [int(x) for x in shop_arr if (x > 2000) and (x < 3000)]
 
@@ -96,6 +97,28 @@ def MakeOnePayment(DateTime, Onumber, Inumber, Money):
         'tag': tmp_tag
     }
 
+def MakeOnePaymentForBath(DateTime, Onumber, Inumber, Money, hour, min, sec):
+
+    money_str = str(Money).zfill(5)
+    hour_str = str(hour).zfill(2)
+    min_str = str(min).zfill(2)
+    sec_str = str(sec).zfill(2)
+
+    tmp_tag = DateTime[0:4] +DateTime[5:7]+ DateTime[8:10]+  hour_str + min_str + sec_str \
+                + str(Onumber) + str(Inumber) +  money_str
+    return {
+        'year': int(DateTime[0:4]),
+        'month': int(DateTime[5:7]),
+        'day': int(DateTime[8:10]),
+        'hour': int(hour),
+        'minute': int(min),
+        'second': int(sec),
+        'onumber': int(Onumber),
+        'inumber': int(Inumber),
+        'money': int(Money),
+        'tag': tmp_tag
+    }
+
 
 def MakeOneAllowance(OnePaymentDict, PaymentList):
     tmp_pay_dict = copy.deepcopy(OnePaymentDict)
@@ -121,12 +144,20 @@ def datelist(beginDate, endDate):
 
 whole_date_arr = datelist('2018-01-01', '2018-03-01')
 
+def current_month(day):
+    if day <= 30:
+        return 0
+    elif day <= 59:
+        return 1
+    return 2
 
 def one_stu_whole_payments(stu_index):
+    one_stu_bath_coupon_money = [10000, 10000, 10000]
     one_stu_din_shop_money = [0 for x in range(len(whole_date_arr))]
     one_stu_payment = []
 
     for i in range(len(whole_date_arr)):
+
         Temp_Dinning_Money = RandomMoneyDinning()
         while True:
             if (Temp_Dinning_Money + one_stu_din_shop_money[i] < 10000):
@@ -149,10 +180,38 @@ def one_stu_whole_payments(stu_index):
                 break
         if (random.randint(0, 1)):
             Temp_Bath_Money = RandomMoneyBath()
-            tmp_payment = MakeOnePayment(whole_date_arr[i], stu_arr[stu_index],
-                                         int(random.choice(bath_arr)),
-                                         Temp_Bath_Money)
-            one_stu_payment.append(tmp_payment)
+
+            if (one_stu_bath_coupon_money[current_month(i)] > Temp_Bath_Money):
+                tmp_payment = MakeOnePayment(whole_date_arr[i], stu_arr[stu_index],
+                                            int(random.choice(bath_coupon_arr)),
+                                            Temp_Bath_Money)
+                one_stu_bath_coupon_money[current_month(i)] -= Temp_Bath_Money
+                one_stu_payment.append(tmp_payment)
+            else:
+                #保持同一笔交易时间一致
+                tmp_hour = RandomHour()
+                tmp_min = RandomMinAndSec()
+                tmp_sec = RandomMinAndSec()
+
+                money_to_shop = Temp_Bath_Money - one_stu_bath_coupon_money[current_month(i)]
+                shopnum = int(random.choice(bath_arr))
+                if one_stu_bath_coupon_money[current_month(i)] > 0:
+                    tmp_payment = MakeOnePaymentForBath(whole_date_arr[i], stu_arr[stu_index],
+                                                        shopnum + 50,
+                                                        one_stu_bath_coupon_money[current_month(i)],
+                                                        tmp_hour,
+                                                        tmp_min,
+                                                        tmp_sec)
+                    one_stu_payment.append(tmp_payment)
+
+                tmp_payment = MakeOnePaymentForBath(whole_date_arr[i], stu_arr[stu_index],
+                                                    shopnum,
+                                                    money_to_shop,
+                                                    tmp_hour,
+                                                    tmp_min,
+                                                    tmp_sec)
+                one_stu_payment.append(tmp_payment)
+                one_stu_bath_coupon_money[current_month(i)] = 0
     return one_stu_payment
 
 
