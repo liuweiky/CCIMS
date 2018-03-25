@@ -66,7 +66,7 @@ void ShopServiceWindow::on_WorkButton_clicked()
         break;
     case -3:
         QMessageBox::warning(this, tr("警告！"),
-                           tr("单日额度已用尽！"),
+                           tr("单日额度已用尽或超过单笔限制！"),
                            QMessageBox::Yes);
         break;
     case -4:
