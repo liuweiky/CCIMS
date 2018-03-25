@@ -124,17 +124,11 @@ CCMIS::CCMIS()
 //    cout << "transaction complete...\n";
 }
 
-bool CCMIS::WriteUser(string filename)
+jsonxx::Array CCMIS::LinkListToJson(User* user_list)
 {
-
     jsonxx::Array array;
 
-//    ofstream out(USER_FILE_NAME);
-
-//    if (!out.is_open())
-//        return false;
-
-    User* u = mUser->next;
+    User* u = user_list->next;
     while (u != NULL) {
         jsonxx::Object obj;
         obj << JSON_KEY_NUMBER << u->number;
@@ -145,7 +139,53 @@ bool CCMIS::WriteUser(string filename)
         array << obj;
         u=u->next;
     }
-    QString allJsonArray = COMMON_FUNCS::UTF8ToQString(array.json());
+    return array;
+}
+
+jsonxx::Array CCMIS::LinkListToJson(Information* info_list)
+{
+    jsonxx::Array array;
+
+    Information* i = info_list->next;
+    while (i != NULL) {
+        jsonxx::Object obj;
+
+        obj << JSON_KEY_TAG << i->tag;
+        obj << JSON_KEY_YEAR << i->year;
+        obj << JSON_KEY_MONTH << i->month;
+        obj << JSON_KEY_DAY << i->day;
+        obj << JSON_KEY_HOUR << i->hour;
+        obj << JSON_KEY_MINUTE << i->minute;
+        obj << JSON_KEY_SECOND << i->second;
+        obj << JSON_KEY_ONUMBER << i->Onumber;
+        obj << JSON_KEY_INUMBER << i->Inumber;
+        obj << JSON_KEY_MONEY << i->money;
+        array << obj;
+        i=i->next;
+    }
+    return array;
+}
+
+jsonxx::Array CCMIS::LinkListToJson(Shop* shop_list)
+{
+    jsonxx::Array array;
+
+    Shop* s = shop_list->next;
+    while (s != NULL) {
+        jsonxx::Object obj;
+
+        obj << JSON_KEY_NUMBER << s->number;
+        obj << JSON_KEY_NAME << s->name;
+        obj << JSON_KEY_PASSWORD << s->password;
+        array << obj;
+        s=s->next;
+    }
+    return array;
+}
+
+bool CCMIS::SaveJsonArrToFile(const jsonxx::Array& ToSaveJson,string filename)
+{
+    QString allJsonArray = COMMON_FUNCS::UTF8ToQString(ToSaveJson.json());
 
     QFile fileOut(COMMON_FUNCS::UTF8ToQString(filename));
     if(!fileOut.open(QIODevice::WriteOnly|QIODevice::Text)){
@@ -158,17 +198,74 @@ bool CCMIS::WriteUser(string filename)
     streamFileOut<<allJsonArray;
     streamFileOut.flush();
     fileOut.close();
-
-    /*
-    out << array.json();
-    out.close();*/
     return true;
 }
 
+
+//应该用多态用模板，下面这三个函数，怕吕帅而已。。。
+bool CCMIS::WriteShop(string filename,Shop* shop_list)
+{
+    jsonxx::Array shop_json = LinkListToJson(shop_list);
+    if(SaveJsonArrToFile(shop_json,filename))
+        return true;
+    return false;
+}
+
+bool CCMIS::WriteInf(string filename,Information* info_list)
+{
+
+    jsonxx::Array info_json = LinkListToJson(info_list);
+    if(SaveJsonArrToFile(info_json,filename))
+        return true;
+    return false;
+}
+
+
+bool CCMIS::WriteUser(string filename,User* user_list)
+{
+    jsonxx::Array user_json = LinkListToJson(user_list);
+    if(SaveJsonArrToFile(user_json,filename))
+        return true;
+    return false;
+}
+
+bool CCMIS::WriteShop(string filename)
+{
+    jsonxx::Array shop_json = LinkListToJson(mShop);
+    if(SaveJsonArrToFile(shop_json,filename))
+        return true;
+    return false;
+}
+
+bool CCMIS::WriteInf(string filename)
+{
+
+    jsonxx::Array info_json = LinkListToJson(mInfo);
+    if(SaveJsonArrToFile(info_json,filename))
+        return true;
+    return false;
+}
+
+
+bool CCMIS::WriteUser(string filename)
+{
+    jsonxx::Array user_json = LinkListToJson(mUser);
+    if(SaveJsonArrToFile(user_json,filename))
+        return true;
+    return false;
+}
+
+
+
+
+
+
+
+//没解决utf8编码问题。。。
 string CCMIS::ReadAllFileToQString(string filename){
 
     QFile fileReadIn(QString::fromStdString(filename));
-    //QFile fileReadIn("user.json");
+
     if(!fileReadIn.open(QIODevice::ReadOnly | QIODevice::Text)){
         qDebug("Could not open the file for reading \n");
         return string("");
@@ -187,8 +284,6 @@ string CCMIS::ReadAllFileToQString(string filename){
     fileReadIn.close();
     string  cstr = allLine.toStdString();
     return cstr;
-
-
 }
 
 
@@ -200,30 +295,12 @@ bool CCMIS::ReadUser(string filename)
 {
     /**by liuvv*/
     //change by wangzl using qfile, coding with utf-8
-
-   // ifstream in(filename);
-
     string fileALLReadIn = ReadAllFileToQString(filename);
-    if (!fileALLReadIn.empty())
-    {/*
-        ostringstream tmp;
-        tmp << in.rdbuf();
-        string s;
-        s = tmp.str();
-        in.close();
-
-        //cout<<s;*/
-
-
+    if (!fileALLReadIn.empty()){
         jsonxx::Array array;
 
-       // array.parse(s);
         //解析 json
-
         array.parse(fileALLReadIn);
-
-
-
         for (size_t i = 0; i < array.size(); i++)  //迭代构造
         {
             User* u = new User();
@@ -266,36 +343,18 @@ bool CCMIS::ReadShop(string filename)
 {
     /**by liuvv*/
     //change by wangzl using qfile, coding with utf-8
-
-   // ifstream in(filename);
-
     string fileALLReadIn = ReadAllFileToQString(filename);
-    if (!fileALLReadIn.empty())
-    {
-//        ostringstream tmp;
-//        tmp << in.rdbuf();
-//        string s;
-//        s = tmp.str();
-//        in.close();
+    if (!fileALLReadIn.empty()){
+        jsonxx::Array array;
 
-//        //cout<<s;
-
-       jsonxx::Array array;
-
-        //array.parse(s); //解析 json
-
+        //解析 json
         array.parse(fileALLReadIn);
-
-        //cout<<array.json();
-
         for (int i = 0; i < array.size(); i++)  //迭代构造
         {
             Shop* s = new Shop();
-
             s->number = array.get<jsonxx::Object>(i).get<jsonxx::Number>(JSON_KEY_NUMBER);
             s->name = COMMON_FUNCS::UTF8ToQString(array.get<jsonxx::Object>(i).get<jsonxx::String>(JSON_KEY_NAME));
             s->password = array.get<jsonxx::Object>(i).get<jsonxx::String>(JSON_KEY_PASSWORD);
-
             s->next = mShop->next;
             mShop->next = s;
 
@@ -314,6 +373,56 @@ bool CCMIS::ReadShop(string filename)
         return false;
     }
 }
+
+bool CCMIS::ReadInf(string filename)
+{
+    string fileALLReadIn = ReadAllFileToQString(filename);
+    if (!fileALLReadIn.empty()){
+        jsonxx::Array array;
+        array.parse(fileALLReadIn); //解析 json
+        for (int i = 0; i < array.size(); i++)  //迭代构造
+        {
+            Information* info = new Information();
+
+            info->tag = array.get<jsonxx::Object>(i).get<jsonxx::String>(JSON_KEY_TAG);
+            info->year = array.get<jsonxx::Object>(i).get<jsonxx::Number>(JSON_KEY_YEAR);
+            info->month = array.get<jsonxx::Object>(i).get<jsonxx::Number>(JSON_KEY_MONTH);
+            info->day = array.get<jsonxx::Object>(i).get<jsonxx::Number>(JSON_KEY_DAY);
+            info->hour = array.get<jsonxx::Object>(i).get<jsonxx::Number>(JSON_KEY_HOUR);
+            info->minute = array.get<jsonxx::Object>(i).get<jsonxx::Number>(JSON_KEY_MINUTE);
+            info->second = array.get<jsonxx::Object>(i).get<jsonxx::Number>(JSON_KEY_SECOND);
+            info->Inumber= array.get<jsonxx::Object>(i).get<jsonxx::Number>(JSON_KEY_INUMBER);
+            info->Onumber= array.get<jsonxx::Object>(i).get<jsonxx::Number>(JSON_KEY_ONUMBER);
+            info->money= array.get<jsonxx::Object>(i).get<jsonxx::Number>(JSON_KEY_MONEY);
+
+            info->next = mInfo->next;
+            mInfo->next = info;
+            //统计记录数目
+            totalInfoCount++;
+        }
+
+        /*Information* info = mInfo->next;    //验证数据
+        while (info != NULL) {
+            cout
+                 <<info->tag<<"\t"
+                 <<info->year<<"\t"
+                 <<info->month<<"\t"
+                 <<info->day<<"\t"
+                 <<info->hour<<"\t"
+                 <<info->minute<<"\t"
+                 <<info->second<<"\t"
+                 <<info->Inumber<<"\t"
+                 <<info->Onumber<<"\t"
+                 <<info->money<<endl;
+            info=info->next;
+        }*/
+
+        return true;
+    } else {
+        return false;
+    }
+}
+
 
 string CCMIS::GenerateTag(int onum, int inum, int mon)
 {
@@ -389,116 +498,8 @@ Information* CCMIS::BuildInfo(int onum, int inum, int mon)
     info->next = NULL;
 }
 
-bool CCMIS::WriteInf(string filename)
-{
-    jsonxx::Array array;
-
-//    ofstream out(INFO_FILE_NAME);
-
-//    if (!out.is_open())
-//        return false;
-
-    Information* i = mInfo->next;
-    while (i != NULL) {
-        jsonxx::Object obj;
-
-        obj << JSON_KEY_TAG << i->tag;
-        obj << JSON_KEY_YEAR << i->year;
-        obj << JSON_KEY_MONTH << i->month;
-        obj << JSON_KEY_DAY << i->day;
-        obj << JSON_KEY_HOUR << i->hour;
-        obj << JSON_KEY_MINUTE << i->minute;
-        obj << JSON_KEY_SECOND << i->second;
-        obj << JSON_KEY_ONUMBER << i->Onumber;
-        obj << JSON_KEY_INUMBER << i->Inumber;
-        obj << JSON_KEY_MONEY << i->money;
-
-        array << obj;
-
-        i=i->next;
-    }
-
-    QString allJsonArray = COMMON_FUNCS::UTF8ToQString(array.json());
-
-    QFile fileOut(COMMON_FUNCS::UTF8ToQString(filename));
-    if(!fileOut.open(QIODevice::WriteOnly|QIODevice::Text)){
-       qDebug("Could not open the file for WRITING!\n");
-       return false;
-    }
-
-    QTextStream streamFileOut(&fileOut);
-    streamFileOut.setCodec("UTF-8");
-    streamFileOut<<allJsonArray;
-    streamFileOut.flush();
-    fileOut.close();
-//    out << array.json();
-//    out.close();
-    return true;
-}
 
 
-bool CCMIS::ReadInf(string filename)
-{
-//    ifstream in(filename);
-    string fileALLReadIn = ReadAllFileToQString(filename);
-    if (!fileALLReadIn.empty())
-    {
-//        ostringstream tmp;
-//        tmp << in.rdbuf();
-//        string s;
-//        s = tmp.str();
-//        in.close();
-
-        //cout<<s;
-
-        jsonxx::Array array;
-
-        array.parse(fileALLReadIn); //解析 json
-
-        //cout<<array.json();
-
-        for (int i = 0; i < array.size(); i++)  //迭代构造
-        {
-            Information* info = new Information();
-
-            info->tag = array.get<jsonxx::Object>(i).get<jsonxx::String>(JSON_KEY_TAG);
-            info->year = array.get<jsonxx::Object>(i).get<jsonxx::Number>(JSON_KEY_YEAR);
-            info->month = array.get<jsonxx::Object>(i).get<jsonxx::Number>(JSON_KEY_MONTH);
-            info->day = array.get<jsonxx::Object>(i).get<jsonxx::Number>(JSON_KEY_DAY);
-            info->hour = array.get<jsonxx::Object>(i).get<jsonxx::Number>(JSON_KEY_HOUR);
-            info->minute = array.get<jsonxx::Object>(i).get<jsonxx::Number>(JSON_KEY_MINUTE);
-            info->second = array.get<jsonxx::Object>(i).get<jsonxx::Number>(JSON_KEY_SECOND);
-            info->Inumber= array.get<jsonxx::Object>(i).get<jsonxx::Number>(JSON_KEY_INUMBER);
-            info->Onumber= array.get<jsonxx::Object>(i).get<jsonxx::Number>(JSON_KEY_ONUMBER);
-            info->money= array.get<jsonxx::Object>(i).get<jsonxx::Number>(JSON_KEY_MONEY);
-
-            info->next = mInfo->next;
-            mInfo->next = info;
-            //统计记录数目
-            totalInfoCount++;
-        }
-
-        /*Information* info = mInfo->next;    //验证数据
-        while (info != NULL) {
-            cout
-                 <<info->tag<<"\t"
-                 <<info->year<<"\t"
-                 <<info->month<<"\t"
-                 <<info->day<<"\t"
-                 <<info->hour<<"\t"
-                 <<info->minute<<"\t"
-                 <<info->second<<"\t"
-                 <<info->Inumber<<"\t"
-                 <<info->Onumber<<"\t"
-                 <<info->money<<endl;
-            info=info->next;
-        }*/
-
-        return true;
-    } else {
-        return false;
-    }
-}
 
 bool CCMIS::CheckPassword(string password)
 {
