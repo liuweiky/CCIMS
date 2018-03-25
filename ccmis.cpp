@@ -185,7 +185,7 @@ jsonxx::Array CCMIS::LinkListToJson(Shop* shop_list)
 
 bool CCMIS::SaveJsonArrToFile(const jsonxx::Array& ToSaveJson,string filename)
 {
-    QString allJsonArray = COMMON_FUNCS::UTF8ToQString(ToSaveJson.json());
+    QString allJsonArray = QString::fromLocal8Bit(ToSaveJson.json().data());
 
     QFile fileOut(COMMON_FUNCS::UTF8ToQString(filename));
     if(!fileOut.open(QIODevice::WriteOnly|QIODevice::Text)){
