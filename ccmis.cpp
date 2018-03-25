@@ -871,15 +871,17 @@ int CCMIS::NewTransaction(int onum, int inum, int mon)
             } else {    //否则先扣coupon，再扣balance
                 u->balance -= (mon - u->coupon);
 
-                Information* info = BuildInfo(onum, inum + 50, u->coupon);    //转券账户
-                InsertInf(info);
+                if (u->coupon != 0)
+                {
+                    Information* info = BuildInfo(onum, inum + 50, u->coupon);    //转券账户
+                    InsertInf(info);
 
-                info = BuildInfo(onum, inum, mon - u->coupon);    //转普通账户
+                }
+
+                Information* info = BuildInfo(onum, inum, mon - u->coupon);    //转普通账户
                 InsertInf(info);
 
                 u->coupon = 0;
-
-
             }
         } else {
             u->balance -= mon;
