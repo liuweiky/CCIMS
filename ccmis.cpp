@@ -507,6 +507,7 @@ bool CCMIS::CheckPassword(string password)
 
     if (mUserNumber < 4000) //店家登录
     {
+        if (mUserNumber / 1000 == GROUP_BATH && (mUserNumber / 10) % 10 >= 5) return false; //禁止登录洗漱券账户
         Shop* s = mShop->next;
         while (s != NULL) {
             if (s->number == mUserNumber)
@@ -864,18 +865,28 @@ int CCMIS::NewTransaction(int onum, int inum, int mon)
             if (u->coupon >= mon)   //洗漱券余额超过 mon
             {
                 u->coupon -= mon;
+
+                Information* info = BuildInfo(onum, inum + 50, mon);    //转券账户
+                InsertInf(info);
             } else {    //否则先扣coupon，再扣balance
                 u->balance -= (mon - u->coupon);
 
+                Information* info = BuildInfo(onum, inum + 50, u->coupon);    //转券账户
+                InsertInf(info);
+
+                info = BuildInfo(onum, inum, mon - u->coupon);    //转普通账户
+                InsertInf(info);
+
                 u->coupon = 0;
+
+
             }
         } else {
             u->balance -= mon;
         }
 
         //WriteUser(USER_FILE_NAME);
-        Information* info = BuildInfo(onum, inum, mon);
-        InsertInf(info);
+
         //WriteInf(INFO_FILE_NAME);
 
         JsonThread* jthread = new JsonThread(this, THREAD_TYPE_W_USER);
@@ -901,7 +912,15 @@ bool CCMIS::NewRefund(Information *tempinf)
     if (u == NULL)
         return false;
 
-    u->balance += tempinf->money;
+    if (    //券消费
+            tempinf->Inumber / 1000 == GROUP_BATH &&
+            (tempinf->Inumber / 10) % 10 >= 5)
+    {
+        u->coupon += tempinf->money;
+    } else {
+        u->balance += tempinf->money;
+    }
+
     DeleteInf(tempinf);
 
     //WriteUser(USER_FILE_NAME);
