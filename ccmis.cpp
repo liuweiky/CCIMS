@@ -733,7 +733,9 @@ QString CCMIS::GetAllNameByNum(int num)
 
 }
 
-
+QString CCMIS::GetCurrentUserName(){
+    return this->GetAllNameByNum(mUserNumber);
+}
 
 int CCMIS::GetTotalCanteenConsumptionByDay(int year, int month, int day, int num)
 {
@@ -955,6 +957,10 @@ int CCMIS::GetUserNum()
 {
     return mUserNumber;
 }
+
+
+
+
 
 bool CCMIS::NewRecharge(int num, int money)
 {

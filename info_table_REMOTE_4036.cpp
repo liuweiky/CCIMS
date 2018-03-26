@@ -9,7 +9,6 @@ Info_Table::Info_Table(CCMIS* ccmis_system,QWidget *parent) :
 {
     mCCMIS = ccmis_system;
     ui->setupUi(this);
-    mCurrentItem = -1;
     int user_num = mCCMIS->GetUserNum();
     //设置按钮
 
@@ -293,82 +292,8 @@ void Info_Table::Table_Filtered_By_Date(QTableWidget* table,QDate* start_date,QD
 }
 
 
-void Info_Table::on_tableWidget_itemClicked(QTableWidgetItem *item)
-{
-    mCurrentItem = item->row();
-}
-
-void Info_Table::on_DeleteButton_clicked()
-{
-    if (mCurrentItem != -1)
-    {
-        QString tag = "";
-        QString date = ui->tableWidget->item(mCurrentItem, 0)->text().replace(QString("-"),QString(""));
-        QString time = ui->tableWidget->item(mCurrentItem, 1)->text().replace(QString(":"),QString(""));
-        QString inum = ui->tableWidget->item(mCurrentItem, 2)->text();
-        QString onum = QString::number ( mCCMIS->GetUserNum());
-        int money = ui->tableWidget->item(mCurrentItem, 4)->text().toDouble()*100;
-
-        tag = date + time + onum + inum;
-
-        if (money < 10)
-        {
-            tag += "0000" + QString::number (money);
-        } else if (money < 100)
-        {
-            tag += "000" + QString::number (money);
-        } else if (money < 1000)
-        {
-            tag += "00" + QString::number (money);
-        } else if (money < 10000)
-        {
-            tag += "0" + QString::number (money);
-        } else {
-            tag += QString::number (money);
-        }
 
 
-        qDebug()<<tag;
-
-        Information* info = mCCMIS->GetInfoByTag(tag);
-
-        if (info == NULL)
-        {
-            tag = date + time + onum + inum;
-            money = ui->tableWidget->item(mCurrentItem, 4)->text().toDouble()*100 + 1;  //防止出现double转int被去尾
-
-            tag = date + time + onum + inum;
-
-            if (money < 10)
-            {
-                tag += "0000" + QString::number (money);
-            } else if (money < 100)
-            {
-                tag += "000" + QString::number (money);
-            } else if (money < 1000)
-            {
-                tag += "00" + QString::number (money);
-            } else if (money < 10000)
-            {
-                tag += "0" + QString::number (money);
-            } else {
-                tag += QString::number (money);
-            }
-
-            qDebug()<<tag;
-            info = mCCMIS->GetInfoByTag(tag);
-        }
-
-        mCCMIS->NewRefund(info);
-        ui->tableWidget->removeRow(mCurrentItem);
-        mCurrentItem = -1;
-
-        QMessageBox::information(this, tr("提示"),
-                           tr("删除成功！"),
-                           QMessageBox::Yes);
-    }
-}
-	
 void Info_Table::on_toExcelButton_clicked()
 {
     QString filename(mCCMIS->GetCurrentUserName());

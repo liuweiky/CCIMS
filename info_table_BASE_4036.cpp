@@ -9,7 +9,6 @@ Info_Table::Info_Table(CCMIS* ccmis_system,QWidget *parent) :
 {
     mCCMIS = ccmis_system;
     ui->setupUi(this);
-    mCurrentItem = -1;
     int user_num = mCCMIS->GetUserNum();
     //设置按钮
 
@@ -40,15 +39,10 @@ Info_Table::Info_Table(CCMIS* ccmis_system,QWidget *parent) :
             SLOT(onFinishDateChanged(QDate)));
 
 
-    connect(ui->toExcelButton,SIGNAL(pressed()),
-            SLOT(on_toExcelButton_clicked()));
-    connect(ui->Search,SIGNAL(clicked(bool)),
-            SLOT(on_Search_clicked()));
-    connect(ui->Reset,SIGNAL(clicked(bool)),
-            SLOT(on_Reset_clicked()));
+
 
     GetWholeOneUserSearchTable( ui->tableWidget,user_num);
-    //Table_Filtered_By_Date(ui->tableWidget, new QDate(2018,2,10), new QDate(2018,2,15));
+    Table_Filtered_By_Date(ui->tableWidget, new QDate(2018,2,10), new QDate(2018,2,15));
 }
 
 
@@ -82,7 +76,6 @@ void Info_Table::onStartDateChanged(const QDate &date)
     this->Start_Date->setDate(date.year(),date.month(),date.day());
 
     this->Finish_Date_Edit->setMinimumDate(date);
-
 }
 
 void Info_Table::onFinishDateChanged(const QDate &date)
@@ -91,7 +84,6 @@ void Info_Table::onFinishDateChanged(const QDate &date)
     this->Finish_Date->setDate(date.year(),date.month(),date.day());
     qDebug() << "FinishDateTime : " << date;
     this->Start_Date_Edit->setMaximumDate(date);
-
 }
 
 
@@ -269,7 +261,7 @@ void Info_Table::ShowSameInumOneInfo(QTableWidget *qtable,Information* one_info,
 
 void Info_Table::on_Search_clicked()
 {
-    Table_Filtered_By_Date(ui->tableWidget, Start_Date,Finish_Date);
+
 }
 
 void Info_Table::Table_Filtered_By_Date(QTableWidget* table,QDate* start_date,QDate* finish_date)
@@ -281,7 +273,7 @@ void Info_Table::Table_Filtered_By_Date(QTableWidget* table,QDate* start_date,QD
         QTableWidgetItem *item = table->item( i, 0 );
         QDate one_date = QDate::fromString (item->text(),"yyyy-MM-dd" );
         //qDebug()<<one_date;
-        if( (one_date >= (*start_date)) && (one_date <= (*finish_date)))
+        if( (one_date >= (*start_date)) && (one_date <(*finish_date)))
 
         { qDebug()<<one_date;
             match = true;
@@ -293,90 +285,4 @@ void Info_Table::Table_Filtered_By_Date(QTableWidget* table,QDate* start_date,QD
 }
 
 
-void Info_Table::on_tableWidget_itemClicked(QTableWidgetItem *item)
-{
-    mCurrentItem = item->row();
-}
 
-void Info_Table::on_DeleteButton_clicked()
-{
-    if (mCurrentItem != -1)
-    {
-        QString tag = "";
-        QString date = ui->tableWidget->item(mCurrentItem, 0)->text().replace(QString("-"),QString(""));
-        QString time = ui->tableWidget->item(mCurrentItem, 1)->text().replace(QString(":"),QString(""));
-        QString inum = ui->tableWidget->item(mCurrentItem, 2)->text();
-        QString onum = QString::number ( mCCMIS->GetUserNum());
-        int money = ui->tableWidget->item(mCurrentItem, 4)->text().toDouble()*100;
-
-        tag = date + time + onum + inum;
-
-        if (money < 10)
-        {
-            tag += "0000" + QString::number (money);
-        } else if (money < 100)
-        {
-            tag += "000" + QString::number (money);
-        } else if (money < 1000)
-        {
-            tag += "00" + QString::number (money);
-        } else if (money < 10000)
-        {
-            tag += "0" + QString::number (money);
-        } else {
-            tag += QString::number (money);
-        }
-
-
-        qDebug()<<tag;
-
-        Information* info = mCCMIS->GetInfoByTag(tag);
-
-        if (info == NULL)
-        {
-            tag = date + time + onum + inum;
-            money = ui->tableWidget->item(mCurrentItem, 4)->text().toDouble()*100 + 1;  //防止出现double转int被去尾
-
-            tag = date + time + onum + inum;
-
-            if (money < 10)
-            {
-                tag += "0000" + QString::number (money);
-            } else if (money < 100)
-            {
-                tag += "000" + QString::number (money);
-            } else if (money < 1000)
-            {
-                tag += "00" + QString::number (money);
-            } else if (money < 10000)
-            {
-                tag += "0" + QString::number (money);
-            } else {
-                tag += QString::number (money);
-            }
-
-            qDebug()<<tag;
-            info = mCCMIS->GetInfoByTag(tag);
-        }
-
-        mCCMIS->NewRefund(info);
-        ui->tableWidget->removeRow(mCurrentItem);
-        mCurrentItem = -1;
-
-        QMessageBox::information(this, tr("提示"),
-                           tr("删除成功！"),
-                           QMessageBox::Yes);
-    }
-}
-	
-void Info_Table::on_toExcelButton_clicked()
-{
-    QString filename(mCCMIS->GetCurrentUserName());
-
-    COMMON_FUNCS::Table2Excel(ui->tableWidget,filename+"的消费信息");
-}
-
-void Info_Table::on_Reset_clicked()
-{
-    GetWholeOneUserSearchTable( ui->tableWidget,mCCMIS->GetUserNum());
-}
