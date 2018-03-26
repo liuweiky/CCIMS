@@ -79,6 +79,10 @@ void MainWindow::on_pushButton_clicked()
             mSMW->show();
         } else {
             msg.setText(tr("登录成功！\n 你是：学生/教职工"));
+
+            Info_Table* info = new Info_Table(mCCMIS);
+            info->show();
+
             //mUMW->setGeometry(this->x(),this->y(),this->width(),this->height());
             mUMW->show();
             //这里要给余额和劵
