@@ -26,8 +26,8 @@
   <widget class="QCheckBox" name="checkBox">
    <property name="geometry">
     <rect>
-     <x>320</x>
-     <y>80</y>
+     <x>30</x>
+     <y>100</y>
      <width>91</width>
      <height>19</height>
     </rect>
@@ -41,25 +41,25 @@
     <rect>
      <x>530</x>
      <y>30</y>
-     <width>93</width>
-     <height>28</height>
+     <width>111</width>
+     <height>31</height>
     </rect>
    </property>
    <property name="text">
-    <string>PushButton</string>
+    <string>日期筛选</string>
    </property>
   </widget>
   <widget class="QPushButton" name="Reset">
    <property name="geometry">
     <rect>
-     <x>720</x>
+     <x>710</x>
      <y>30</y>
-     <width>93</width>
-     <height>28</height>
+     <width>111</width>
+     <height>31</height>
     </rect>
    </property>
    <property name="text">
-    <string>PushButton</string>
+    <string>复原显示全部</string>
    </property>
   </widget>
   <widget class="QDateEdit" name="start">
@@ -80,6 +80,19 @@
      <width>110</width>
      <height>22</height>
     </rect>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="toExcelButton">
+   <property name="geometry">
+    <rect>
+     <x>30</x>
+     <y>20</y>
+     <width>191</width>
+     <height>61</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>导出表格至EXCEL</string>
    </property>
   </widget>
  </widget>

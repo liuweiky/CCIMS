@@ -39,10 +39,15 @@ Info_Table::Info_Table(CCMIS* ccmis_system,QWidget *parent) :
             SLOT(onFinishDateChanged(QDate)));
 
 
-
+    connect(ui->toExcelButton,SIGNAL(pressed()),
+            SLOT(on_toExcelButton_clicked()));
+    connect(ui->Search,SIGNAL(clicked(bool)),
+            SLOT(on_Search_clicked()));
+    connect(ui->Reset,SIGNAL(clicked(bool)),
+            SLOT(on_Reset_clicked()));
 
     GetWholeOneUserSearchTable( ui->tableWidget,user_num);
-    Table_Filtered_By_Date(ui->tableWidget, new QDate(2018,2,10), new QDate(2018,2,15));
+    //Table_Filtered_By_Date(ui->tableWidget, new QDate(2018,2,10), new QDate(2018,2,15));
 }
 
 
@@ -76,6 +81,7 @@ void Info_Table::onStartDateChanged(const QDate &date)
     this->Start_Date->setDate(date.year(),date.month(),date.day());
 
     this->Finish_Date_Edit->setMinimumDate(date);
+
 }
 
 void Info_Table::onFinishDateChanged(const QDate &date)
@@ -84,6 +90,7 @@ void Info_Table::onFinishDateChanged(const QDate &date)
     this->Finish_Date->setDate(date.year(),date.month(),date.day());
     qDebug() << "FinishDateTime : " << date;
     this->Start_Date_Edit->setMaximumDate(date);
+
 }
 
 
@@ -261,7 +268,7 @@ void Info_Table::ShowSameInumOneInfo(QTableWidget *qtable,Information* one_info,
 
 void Info_Table::on_Search_clicked()
 {
-
+    Table_Filtered_By_Date(ui->tableWidget, Start_Date,Finish_Date);
 }
 
 void Info_Table::Table_Filtered_By_Date(QTableWidget* table,QDate* start_date,QDate* finish_date)
@@ -273,7 +280,7 @@ void Info_Table::Table_Filtered_By_Date(QTableWidget* table,QDate* start_date,QD
         QTableWidgetItem *item = table->item( i, 0 );
         QDate one_date = QDate::fromString (item->text(),"yyyy-MM-dd" );
         //qDebug()<<one_date;
-        if( (one_date >= (*start_date)) && (one_date <(*finish_date)))
+        if( (one_date >= (*start_date)) && (one_date <= (*finish_date)))
 
         { qDebug()<<one_date;
             match = true;
@@ -286,3 +293,15 @@ void Info_Table::Table_Filtered_By_Date(QTableWidget* table,QDate* start_date,QD
 
 
 
+
+void Info_Table::on_toExcelButton_clicked()
+{
+    QString filename(mCCMIS->GetCurrentUserName());
+
+    COMMON_FUNCS::Table2Excel(ui->tableWidget,filename+"的消费信息");
+}
+
+void Info_Table::on_Reset_clicked()
+{
+    GetWholeOneUserSearchTable( ui->tableWidget,mCCMIS->GetUserNum());
+}

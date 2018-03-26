@@ -60,6 +60,8 @@ public slots:
    void onFinishDateChanged(const QDate &date);
 private slots:
    void on_Search_clicked();
+   void on_toExcelButton_clicked();
+   void on_Reset_clicked();
 };
 
 #endif // INFO_TABLE_H
