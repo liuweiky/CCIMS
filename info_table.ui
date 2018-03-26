@@ -36,26 +36,6 @@
     <string>CheckBox</string>
    </property>
   </widget>
-  <widget class="QDateTimeEdit" name="start">
-   <property name="geometry">
-    <rect>
-     <x>520</x>
-     <y>80</y>
-     <width>194</width>
-     <height>22</height>
-    </rect>
-   </property>
-  </widget>
-  <widget class="QDateTimeEdit" name="finish">
-   <property name="geometry">
-    <rect>
-     <x>730</x>
-     <y>80</y>
-     <width>194</width>
-     <height>22</height>
-    </rect>
-   </property>
-  </widget>
   <widget class="QPushButton" name="Search">
    <property name="geometry">
     <rect>
@@ -80,6 +60,26 @@
    </property>
    <property name="text">
     <string>PushButton</string>
+   </property>
+  </widget>
+  <widget class="QDateEdit" name="start">
+   <property name="geometry">
+    <rect>
+     <x>530</x>
+     <y>70</y>
+     <width>110</width>
+     <height>22</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QDateEdit" name="finish">
+   <property name="geometry">
+    <rect>
+     <x>710</x>
+     <y>70</y>
+     <width>110</width>
+     <height>22</height>
+    </rect>
    </property>
   </widget>
  </widget>

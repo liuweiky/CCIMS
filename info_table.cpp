@@ -27,59 +27,61 @@ Info_Table::Info_Table(CCMIS* ccmis_system,QWidget *parent) :
 
 
     //日期筛选
-    Start_Date_Time_Edit = ui->start;
-    Finish_Date_Time_Edit = ui->finish;
-
-    connect(Start_Date_Time_Edit,SIGNAL(dateTimeChanged(QDateTime)),
-            SLOT(onStartDateTimeChanged(QDateTime)));
-    connect(Finish_Date_Time_Edit,SIGNAL(dateTimeChanged(QDateTime)),
-            SLOT(onFinishDateTimeChanged(QDateTime)));
+    //Start_Date_Edit = new QDateEdit(this);
+    //Finish_Date_Edit = new QDateEdit(this);
+    Start_Date_Edit = ui->start;
+    Finish_Date_Edit = ui->finish;
+    SetStartFinishRange(Start_Date_Edit,Finish_Date_Edit);
+    connect(Start_Date_Edit,SIGNAL(dateChanged(QDate)),
+            SLOT(onStartDateChanged(QDate)));
+    connect(Finish_Date_Edit,SIGNAL(dateChanged(QDate)),
+            SLOT(onFinishDateChanged(QDate)));
 
 
 
 
     GetWholeOneUserSearchTable( ui->tableWidget,user_num);
+    Table_Filtered_By_Date(ui->tableWidget);
 }
 
 
 
 
-void Info_Table::SetStartFinishRange(QDateTimeEdit* start_edit,QDateTimeEdit* finish_edit)
+void Info_Table::SetStartFinishRange(QDateEdit* start_edit,QDateEdit* finish_edit)
 {
     QDate start_date(2018,1,1);
-    QTime start_time(0,0,0);
-    QDateTime start_d_t(start_date,start_time);
+
+
 
     //起始时间范围限制
-    start_edit->setDateTime(start_d_t);
-    start_edit->setMaximumDateTime(QDateTime::currentDateTime());
-    start_edit->setMinimumDateTime(start_d_t);
+    start_edit->setDate(start_date);
+    start_edit->setMaximumDate(QDate::currentDate());
+    start_edit->setMinimumDate(start_date);
 
     //结束时间范围限制
-    finish_edit->setDateTime(QDateTime::currentDateTime());
-    finish_edit->setMaximumDateTime(QDateTime::currentDateTime());
-    finish_edit->setMinimumDateTime(start_d_t);
+    finish_edit->setDate(QDate::currentDate());
+    finish_edit->setMaximumDate(QDate::currentDate());
+    finish_edit->setMinimumDate(start_date);
 
 
     //弹出框
-    start_edit->setCalendarPopup(true);
-    finish_edit->setCalendarPopup(true);  // 日历弹出
+    //start_edit->setCalendarPopup(true);
+    //finish_edit->setCalendarPopup(true);  // 日历弹出
 }
 
-void Info_Table::onStartDateTimeChanged(const QDateTime &dateTime)
+void Info_Table::onStartDateChanged(const QDate &date)
 {
-    qDebug() << "StartDateTime : " << dateTime;
-    this->Start_Date_Time->setDate(dateTime.date());
-    this->Start_Date_Time->setTime(dateTime.time());
+   std::cout << "StartDateTime : " << date;
+    this->Start_Date->setDate(date.year(),date.month(),date.day());
 
-    this->Finish_Date_Time_Edit->setMinimumDateTime(dateTime);
+    this->Finish_Date_Edit->setMinimumDate(date);
 }
-void Info_Table::onFinishDateTimeChanged(const QDateTime &dateTime)
+
+void Info_Table::onFinishDateChanged(const QDate &date)
 {
-    qDebug() << "FinishDateTime : " << dateTime;
-    this->Finish_Date_Time->setDate(dateTime.date());
-    this->Finish_Date_Time->setTime(dateTime.time());
-    this->Start_Date_Time_Edit->setMaximumDateTime(dateTime);
+    std::cout << "FinishDateTime : " << date;
+    this->Finish_Date->setDate(date.year(),date.month(),date.day());
+    this->Start_Date_Edit->setMaximumDate(date);
 }
 
 
@@ -253,4 +255,30 @@ void Info_Table::ShowSameInumOneInfo(QTableWidget *qtable,Information* one_info,
     qtable->setItem(row_index,4,new QTableWidgetItem(Money));
     row_index++;
 }
+
+
+void Info_Table::on_Search_clicked()
+{
+
+}
+
+void Info_Table::Table_Filtered_By_Date(QTableWidget* table,QDate* start_date,QDate* finish_date)
+{
+
+    for( int i = 0; i < table->rowCount(); ++i )
+    {
+        bool match = false;
+        QTableWidgetItem *item = table->item( i, 0 );
+        QDate one_date = QDate::fromString (item->text(),"yyyy-MM-dd" );
+        if( (one_date >= (*start_date)) && (one_date <(*finish_date)))
+        {
+            match = true;
+            break;
+        }
+        table->setRowHidden( i, !match );
+     }
+
+}
+
+
 

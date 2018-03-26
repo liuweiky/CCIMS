@@ -36,24 +36,30 @@ public:
 
 
      //日期控件 设置
-     void SetStartFinishRange(QDateTimeEdit* start_edit,QDateTimeEdit* finish_edit);
+     void SetStartFinishRange(QDateEdit* start_edit,QDateEdit* finish_edit);
 
+
+     void Table_Filtered_By_Date(QTableWidget* table,QDate* start_date = new QDate(2018,2,10),
+                                                     QDate* finish_date = new QDate(2018,2,15));
 private:
     Ui::Info_Table *ui;
     CCMIS* mCCMIS;
 
     QCheckBox* CheckForSubsidy;
-    QDateTimeEdit* Start_Date_Time_Edit;
-    QDateTimeEdit* Finish_Date_Time_Edit;
-public:
-    QDateTime* Start_Date_Time;
-    QDateTime* Finish_Date_Time;
+    QDateEdit* Start_Date_Edit;
+    QDateEdit* Finish_Date_Edit;
+
+    QDate* Start_Date;
+    QDate* Finish_Date;
 
 public slots:
 
     void on_Check_Button_StateChoose(int state);
-   void onStartDateTimeChanged(const QDateTime &dateTime);
-   void onFinishDateTimeChanged(const QDateTime &dateTime);
+
+   void onStartDateChanged(const QDate &date);
+   void onFinishDateChanged(const QDate &date);
+private slots:
+   void on_Search_clicked();
 };
 
 #endif // INFO_TABLE_H
