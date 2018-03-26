@@ -6,6 +6,8 @@
 #include "ccmis.h"
 #include <QButtonGroup>
 #include <QCheckBox>
+#include "information.h"
+#include <QDateTimeEdit>
 namespace Ui {
 class Info_Table;
 }
@@ -31,18 +33,27 @@ public:
     //同一个出账账号 表格
     void ShowSameInumOneInfo(QTableWidget *qtable,Information* one_info, int &row_index);
      void GetWholeOneShopSearchTable(QTableWidget* qtable, int inum);
+
+
+     //日期控件 设置
+     void SetStartFinishRange(QDateTimeEdit* start_edit,QDateTimeEdit* finish_edit);
+
 private:
     Ui::Info_Table *ui;
     CCMIS* mCCMIS;
-    QButtonGroup *BtnForSubsidy;
-    QCheckBox* CheckForSubsidy;
 
+    QCheckBox* CheckForSubsidy;
+    QDateTimeEdit* Start_Date_Time_Edit;
+    QDateTimeEdit* Finish_Date_Time_Edit;
+public:
+    QDateTime* Start_Date_Time;
+    QDateTime* Finish_Date_Time;
 
 public slots:
-    void onRadionClickedBtn();
+
     void on_Check_Button_StateChoose(int state);
-private slots:
-    void on_radioButton_pressed();
+   void onStartDateTimeChanged(const QDateTime &dateTime);
+   void onFinishDateTimeChanged(const QDateTime &dateTime);
 };
 
 #endif // INFO_TABLE_H

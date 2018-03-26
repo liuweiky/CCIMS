@@ -11,16 +11,7 @@ Info_Table::Info_Table(CCMIS* ccmis_system,QWidget *parent) :
     ui->setupUi(this);
     int user_num = mCCMIS->GetUserNum();
     //设置按钮
-//    BtnForSubsidy  =new QButtonGroup(this);
-//    BtnForSubsidy->addButton(ui->radioButton,1);
-//    ui->radioButton->setChecked(false);
 
-
-
-
-    //设置关联
-//    connect(ui->radioButton,SIGNAL(clicked()),this,
-//                                   SLOT(onRadionClickedBtn()));
 
 
     CheckForSubsidy = ui->checkBox;
@@ -34,8 +25,65 @@ Info_Table::Info_Table(CCMIS* ccmis_system,QWidget *parent) :
     connect(CheckForSubsidy,SIGNAL(stateChanged(int)),SLOT(on_Check_Button_StateChoose(int)));
 
 
+
+    //日期筛选
+    Start_Date_Time_Edit = ui->start;
+    Finish_Date_Time_Edit = ui->finish;
+
+    connect(Start_Date_Time_Edit,SIGNAL(dateTimeChanged(QDateTime)),
+            SLOT(onStartDateTimeChanged(QDateTime)));
+    connect(Finish_Date_Time_Edit,SIGNAL(dateTimeChanged(QDateTime)),
+            SLOT(onFinishDateTimeChanged(QDateTime)));
+
+
+
+
     GetWholeOneUserSearchTable( ui->tableWidget,user_num);
 }
+
+
+
+
+void Info_Table::SetStartFinishRange(QDateTimeEdit* start_edit,QDateTimeEdit* finish_edit)
+{
+    QDate start_date(2018,1,1);
+    QTime start_time(0,0,0);
+    QDateTime start_d_t(start_date,start_time);
+
+    //起始时间范围限制
+    start_edit->setDateTime(start_d_t);
+    start_edit->setMaximumDateTime(QDateTime::currentDateTime());
+    start_edit->setMinimumDateTime(start_d_t);
+
+    //结束时间范围限制
+    finish_edit->setDateTime(QDateTime::currentDateTime());
+    finish_edit->setMaximumDateTime(QDateTime::currentDateTime());
+    finish_edit->setMinimumDateTime(start_d_t);
+
+
+    //弹出框
+    start_edit->setCalendarPopup(true);
+    finish_edit->setCalendarPopup(true);  // 日历弹出
+}
+
+void Info_Table::onStartDateTimeChanged(const QDateTime &dateTime)
+{
+    qDebug() << "StartDateTime : " << dateTime;
+    this->Start_Date_Time->setDate(dateTime.date());
+    this->Start_Date_Time->setTime(dateTime.time());
+
+    this->Finish_Date_Time_Edit->setMinimumDateTime(dateTime);
+}
+void Info_Table::onFinishDateTimeChanged(const QDateTime &dateTime)
+{
+    qDebug() << "FinishDateTime : " << dateTime;
+    this->Finish_Date_Time->setDate(dateTime.date());
+    this->Finish_Date_Time->setTime(dateTime.time());
+    this->Start_Date_Time_Edit->setMaximumDateTime(dateTime);
+}
+
+
+
 
 void Info_Table::on_Check_Button_StateChoose(int state)
 {
@@ -60,16 +108,7 @@ Info_Table::~Info_Table()
     delete ui;
 }
 
-void Info_Table::onRadionClickedBtn()
-{
-    int user_num = mCCMIS->GetUserNum();
-    if(user_num >= CCMIS::USER_TEA_EMP_BEGIN
-            && user_num <= CCMIS::USER_TEA_EMP_END)
-        GetWholeOneUserSubsidyTable(ui->tableWidget,user_num);
-    else
-        qDebug()<<"不符合被补助条件";
-    return;
-}
+
 
 //补助表格
 void Info_Table::GetWholeOneUserSubsidyTable(QTableWidget* qtable,int inum)
@@ -137,8 +176,12 @@ void Info_Table::GetWholeOneUserSearchTable(QTableWidget* qtable,int onum)
 void Info_Table::ShowSameOnumOneInfo(QTableWidget *qtable,Information* one_info,int& row_index)
 {
    QString Name = mCCMIS->GetAllNameByNum(one_info->Inumber);
-   QString Date = Information::InfoToDateStr(one_info);
-   QString Time = Information::InfoToTimeStr(one_info);
+   QDateTime info_date_time = Information::InfoToDateTime(one_info);
+
+   QString Date = info_date_time.toString("yyyy-MM-dd");
+
+
+   QString Time = info_date_time.toString("hh:mm:ss");
    QString Money = Information::InfoToMoneyStr(one_info);
    qtable->insertRow(row_index);
 
@@ -211,7 +254,3 @@ void Info_Table::ShowSameInumOneInfo(QTableWidget *qtable,Information* one_info,
     row_index++;
 }
 
-void Info_Table::on_radioButton_pressed()
-{
-    
-}
