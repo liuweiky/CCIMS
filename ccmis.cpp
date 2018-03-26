@@ -249,6 +249,14 @@ bool CCMIS::WriteInf(string filename)
     return false;
 }
 
+void CCMIS::WriteInfForDel()
+{
+
+    JsonThread* jthread = new JsonThread(this, THREAD_TYPE_W_USER);
+    jthread->start();
+    jthread = new JsonThread(this, THREAD_TYPE_W_INFO);
+    jthread->start();
+}
 
 bool CCMIS::WriteUser(string filename)
 {
@@ -908,6 +916,9 @@ int CCMIS::NewTransaction(int onum, int inum, int mon)
 
 bool CCMIS::NewRefund(Information *tempinf)
 {
+    if (tempinf == NULL)
+        return false;
+
     User* u = mUser->next;
     while (u != NULL) {
         if (u->number == tempinf->Onumber)
@@ -960,4 +971,16 @@ bool CCMIS::NewRecharge(int num, int money)
     //return WriteUser(USER_FILE_NAME) && WriteInf(INFO_FILE_NAME);
 
     return true;
+}
+
+Information* CCMIS::GetInfoByTag(QString tag)
+{
+    Information* i = mInfo->next;
+    while (i != NULL) {
+        if (i->tag.compare(COMMON_FUNCS::ToUTF8String(tag)) == 0){
+            return i;
+        }
+        i = i->next;
+    }
+    return NULL;
 }

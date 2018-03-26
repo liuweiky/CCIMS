@@ -8,6 +8,7 @@
 #include <QCheckBox>
 #include "information.h"
 #include <QDateTimeEdit>
+#include <QMessageBox>
 namespace Ui {
 class Info_Table;
 }
@@ -42,6 +43,9 @@ public:
      void Table_Filtered_By_Date(QTableWidget* table,QDate* start_date ,
                                                      QDate* finish_date);
 private:
+
+     int mCurrentItem;
+
     Ui::Info_Table *ui;
     CCMIS* mCCMIS;
 
@@ -60,6 +64,8 @@ public slots:
    void onFinishDateChanged(const QDate &date);
 private slots:
    void on_Search_clicked();
+   void on_tableWidget_itemClicked(QTableWidgetItem *item);
+   void on_DeleteButton_clicked();
 };
 
 #endif // INFO_TABLE_H

@@ -151,7 +151,7 @@ public:
     bool WriteShop(string filename);
     bool WriteShop(string filename, Shop *shop_list);
 
-
+    void WriteInfForDel();
 
     void ClearInf();                        //清空整个信息表
     void InsertInf(Information* tempinf);      //添加单个信息表
@@ -197,6 +197,8 @@ public:
    // void SearchSubsidy(int id);     //根据补贴输出信息
     void SearchTime(int startdate, int startime,
                     int finishdate, int finishtime);  //根据时间输出信息
+
+    Information* GetInfoByTag(QString tag);
 
     //默认返回所有补贴信息
     Information* SearchInfoByInum(int inum = 0, unsigned long start_date_num = 0,unsigned int start_time_num = 0 ,
