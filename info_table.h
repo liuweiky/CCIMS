@@ -39,8 +39,8 @@ public:
      void SetStartFinishRange(QDateEdit* start_edit,QDateEdit* finish_edit);
 
 
-     void Table_Filtered_By_Date(QTableWidget* table,QDate* start_date = new QDate(2018,2,10),
-                                                     QDate* finish_date = new QDate(2018,2,15));
+     void Table_Filtered_By_Date(QTableWidget* table,QDate* start_date ,
+                                                     QDate* finish_date);
 private:
     Ui::Info_Table *ui;
     CCMIS* mCCMIS;

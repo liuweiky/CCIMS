@@ -12,7 +12,8 @@ Info_Table::Info_Table(CCMIS* ccmis_system,QWidget *parent) :
     int user_num = mCCMIS->GetUserNum();
     //设置按钮
 
-
+    Start_Date = new QDate();
+    Finish_Date = new QDate();
 
     CheckForSubsidy = ui->checkBox;
     CheckForSubsidy->setText("显示补助");
@@ -41,7 +42,7 @@ Info_Table::Info_Table(CCMIS* ccmis_system,QWidget *parent) :
 
 
     GetWholeOneUserSearchTable( ui->tableWidget,user_num);
-    Table_Filtered_By_Date(ui->tableWidget);
+    Table_Filtered_By_Date(ui->tableWidget, new QDate(2018,2,10), new QDate(2018,2,15));
 }
 
 
@@ -65,13 +66,13 @@ void Info_Table::SetStartFinishRange(QDateEdit* start_edit,QDateEdit* finish_edi
 
 
     //弹出框
-    //start_edit->setCalendarPopup(true);
-    //finish_edit->setCalendarPopup(true);  // 日历弹出
+    start_edit->setCalendarPopup(true);
+    finish_edit->setCalendarPopup(true);  // 日历弹出
 }
 
 void Info_Table::onStartDateChanged(const QDate &date)
 {
-   std::cout << "StartDateTime : " << date;
+   qDebug() << "StartDateTime : " << date;
     this->Start_Date->setDate(date.year(),date.month(),date.day());
 
     this->Finish_Date_Edit->setMinimumDate(date);
@@ -79,8 +80,9 @@ void Info_Table::onStartDateChanged(const QDate &date)
 
 void Info_Table::onFinishDateChanged(const QDate &date)
 {
-    std::cout << "FinishDateTime : " << date;
+    qDebug() << "FinishDateTime : " << date;
     this->Finish_Date->setDate(date.year(),date.month(),date.day());
+    qDebug() << "FinishDateTime : " << date;
     this->Start_Date_Edit->setMaximumDate(date);
 }
 
@@ -270,10 +272,12 @@ void Info_Table::Table_Filtered_By_Date(QTableWidget* table,QDate* start_date,QD
         bool match = false;
         QTableWidgetItem *item = table->item( i, 0 );
         QDate one_date = QDate::fromString (item->text(),"yyyy-MM-dd" );
+        //qDebug()<<one_date;
         if( (one_date >= (*start_date)) && (one_date <(*finish_date)))
-        {
+
+        { qDebug()<<one_date;
             match = true;
-            break;
+           // break;
         }
         table->setRowHidden( i, !match );
      }
