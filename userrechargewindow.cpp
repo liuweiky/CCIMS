@@ -17,6 +17,8 @@ UserRechargeWindow::UserRechargeWindow(CCMIS* c, QWidget *parent):
     QRegExp regx("[0-9]+$");    //正则表达式，只允许输入0~9
     QValidator *validator = new QRegExpValidator(regx, ui->moneyLineEdit);
     ui->moneyLineEdit->setValidator(validator);
+
+
 }
 
 UserRechargeWindow::~UserRechargeWindow()
@@ -27,6 +29,14 @@ UserRechargeWindow::~UserRechargeWindow()
 
 void UserRechargeWindow::showtime()
 {
+    //或者大改，或者只能在这个定时刷新函数内更新用户名（因为构造函数只会调用一次，过早构造了这个窗口，而CCMIS此时未初始化用户（-1），会导致空指针，且无法再次调用构造函数。。。
+    if (mCCMIS->GetUserByNum(mCCMIS->GetUserNum()) != NULL)
+    {
+        ui->UserName->setText(mCCMIS->GetUserByNum(mCCMIS->GetUserNum())->name);
+        ui->Money->setText(QString::number(double(mCCMIS->GetUserByNum(mCCMIS->GetUserNum())->balance)/100));
+        ui->Coupon->setText(QString::number(double(mCCMIS->GetUserByNum(mCCMIS->GetUserNum())->coupon)/100));
+    }
+
     QDate date = QDate::currentDate();
     QTime time = QTime::currentTime();
     QString txtTime =date.toString("yyyy/MM/dd")+time.toString(" hh:mm:ss");
