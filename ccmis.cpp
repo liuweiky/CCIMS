@@ -10,6 +10,8 @@
 #endif
 
 //自定义常量
+const string CCMIS::BACKBUTTON_PICTURE_NAME = "BackButton.png";
+
 const string CCMIS::USER_FILE_NAME  = "user.json";
 const string CCMIS::SHOP_FILE_NAME  = "shop.json";
 const string CCMIS::INFO_FILE_NAME  = "info.json";
@@ -272,9 +274,7 @@ bool CCMIS::WriteUser(string filename)
     return false;
 }
 
-
-//没解决utf8编码问题。。。
-string CCMIS::ReadAllFileToQString(string filename)
+QString CCMIS::FilenameCorrect(string filename)
 {
     //跨平台处理
     QString finalfilename;
@@ -288,15 +288,21 @@ string CCMIS::ReadAllFileToQString(string filename)
         finalfilename += QString::fromStdString(filename);
         break;
     default:
+        finalfilename = QString::fromStdString(filename);
         qDebug("Could not run in this platform \n");
         break;
     }
+    return finalfilename;
+}
 
+//没解决utf8编码问题。。。
+string CCMIS::ReadAllFileToQString(string filename)
+{
     //读取文件
-    QFile fileReadIn(finalfilename);
+    QFile fileReadIn(FilenameCorrect(filename));
     if(!fileReadIn.open(QIODevice::ReadOnly | QIODevice::Text)){
         qDebug ("Could not open the file for reading:") ;
-        qDebug (qPrintable(finalfilename));
+        qDebug (qPrintable(FilenameCorrect(filename)));
         qDebug ("\n") ;
         return string("");
         //String("").Empty();  //结果为true判定用

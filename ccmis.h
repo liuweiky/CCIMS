@@ -44,6 +44,8 @@ public:
     static const unsigned int PLATFORM_JUDGE;
 
     //自定义常量
+    static const string BACKBUTTON_PICTURE_NAME;
+
     static const string USER_FILE_NAME;
     static const string SHOP_FILE_NAME;
     static const string INFO_FILE_NAME;
@@ -140,8 +142,8 @@ public:
         CCMIS* mCCMIS;
     };
 
-
-    string ReadAllFileToQString(string filename); //读取文件至std::string
+    QString FilenameCorrect(string filename);       //应对不同平台输出文件路径
+    string ReadAllFileToQString(string filename);   //读取文件至std::string
 
     jsonxx::Array LinkListToJson(User* user_list);
     jsonxx::Array LinkListToJson(Information* info_list);

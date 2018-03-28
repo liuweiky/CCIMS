@@ -25,6 +25,14 @@ UserRechargeWindow::UserRechargeWindow(CCMIS *c, QWidget *parent):
             + "元";
     ui->Coupon->setText(Coupon);
 
+    //图片导入
+    QIcon icon;
+    std::string str = mCCMIS->FilenameCorrect
+            (mCCMIS->BACKBUTTON_PICTURE_NAME).toStdString();
+    const char* address = str.c_str();  //转地址QString到char*
+    icon.addFile(tr(address));
+    ui->BackButton->setIcon(icon);
+
     QRegExp regx("[0-9]+$");    //正则表达式，只允许输入0~9
     QValidator *validator = new QRegExpValidator(regx, ui->moneyLineEdit);
     ui->moneyLineEdit->setValidator(validator);

@@ -24,6 +24,15 @@ UserSearchWindow::UserSearchWindow(CCMIS *c, QWidget *parent) :
             (double(mCCMIS->GetUserByNum(mCCMIS->GetUserNum())->coupon)/100,'f',2)
             + "元";
     ui->Coupon->setText(Coupon);
+
+    //图片导入
+    QIcon icon;
+    std::string str = mCCMIS->FilenameCorrect
+            (mCCMIS->BACKBUTTON_PICTURE_NAME).toStdString();
+    const char* address = str.c_str();  //转地址QString到char*
+    icon.addFile(tr(address));
+    ui->BackButton->setIcon(icon);
+
 }
 
 UserSearchWindow::~UserSearchWindow()
