@@ -14,6 +14,9 @@ AdministratorSCWindow::AdministratorSCWindow(CCMIS *c, QWidget *parent) :
     connect(timer,SIGNAL(timeout()),this,SLOT(showtime()));
     timer->start(500);
 
+    //基本信息展示
+    ui->UserName->setText(mCCMIS->GetCurrentUserName());
+
     //表格显示
 
 }

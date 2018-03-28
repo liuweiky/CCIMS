@@ -172,10 +172,11 @@ public:
     int GetTotalCanteenAndMarketConsumptionByDay
     (int year, int month, int day,int num);     //获取当日食堂超市消费额
 
-    User* GetUserByNum(int num);        //通过卡号获取用户指针
-    Shop* GetShopByNum(int num);        //通过卡号获取商户指针
-    QString GetAllNameByNum(int num);   //通过卡号得到用户名？
-    QString GetCurrentUserName();       //获取当前用户名？
+    User*   GetUserByNum(int num);          //通过卡号获取用户指针
+    Shop*   GetShopByNum(int num);          //通过卡号获取商户指针
+    QString GetAllNameByNum(int num);       //通过卡号得到用户名？
+        int GetUserNum();                   //获取当前用户流水号
+    QString GetCurrentUserName();           //获取当前用户名
 
     //新建消费交易记录，先减少onum的余额，增加inum的余额（可选），
     //并生成流水号、info，插入到表，更新user.json、info.json，
@@ -211,17 +212,20 @@ public:
 
     //默认返回所有补贴信息
     Information* SearchInfoByInum
-    (int inum = 0, unsigned long start_date_num = 0,unsigned int start_time_num = 0 ,
-     unsigned long finish_date_num = 99999999 ,unsigned int finish_time_num = 9999 );
+    (int inum = 0, unsigned long start_date_num = 0,
+     unsigned int start_time_num = 0 ,
+     unsigned long finish_date_num = 99999999,
+     unsigned int finish_time_num = 9999 );
 
     Information* SearchInfoByOnum
-    (int onum = 2, unsigned long start_date_num = 0,unsigned int start_time_num = 0 ,
-     unsigned long finish_date_num = 99999999 ,unsigned int finish_time_num = 9999 );
+    (int onum = 2, unsigned long start_date_num = 0,
+     unsigned int start_time_num = 0 ,
+     unsigned long finish_date_num = 99999999,
+     unsigned int finish_time_num = 9999 );
 
     bool CheckPassword(string password);
 
     void SetUserNumber(int n);
-    int GetUserNum();
 };
 
 #endif // CCMIS_H

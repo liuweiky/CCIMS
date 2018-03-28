@@ -14,6 +14,9 @@ ShopServiceWindow::ShopServiceWindow(CCMIS *c, QWidget *parent) :
     connect(timer,SIGNAL(timeout()),this,SLOT(showtime()));
     timer->start(500);
 
+    //基本信息展示
+    ui->UserName->setText(mCCMIS->GetCurrentUserName());
+
     QRegExp regx("[0-9]+$");    //正则表达式，只允许输入0~9
     QValidator *validator = new QRegExpValidator(regx, ui->CardNumLineEdit);
     ui->CardNumLineEdit->setValidator(validator);
