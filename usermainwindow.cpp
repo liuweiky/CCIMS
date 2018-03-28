@@ -82,3 +82,17 @@ void UserMainWindow::on_WorkButton_clicked()
     mURW->show();
     this->hide();
 }
+
+void UserMainWindow::refreshUi()
+{
+    //基本信息展示
+    ui->UserName->setText(mCCMIS->GetCurrentUserName());
+    QString Money = "余额：" + QString::number
+            (double(mCCMIS->GetUserByNum(mCCMIS->GetUserNum())->balance)/100,'f',2)
+            + "元";
+    ui->Money->setText(Money);
+    QString Coupon = "劵：" + QString::number
+            (double(mCCMIS->GetUserByNum(mCCMIS->GetUserNum())->coupon)/100,'f',2)
+            + "元";
+    ui->Coupon->setText(Coupon);
+}
