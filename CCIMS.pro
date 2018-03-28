@@ -40,7 +40,8 @@ SOURCES += \
     administratorleadwindow.cpp \
     administratorscwindow.cpp \
     usersearchwindow.cpp \
-    userrechargewindow.cpp
+    userrechargewindow.cpp \
+    table_funcs.cpp
 
 HEADERS += \
     mainwindow.h \
@@ -61,7 +62,8 @@ HEADERS += \
     usersearchwindow.h \
     userrechargewindow.h \
     usersfwindow.h \
-    common_funcs.h
+    common_funcs.h \
+    table_funcs.h
 
 FORMS += \
     mainwindow.ui \
