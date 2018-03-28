@@ -295,8 +295,9 @@ string CCMIS::ReadAllFileToQString(string filename)
     //读取文件
     QFile fileReadIn(finalfilename);
     if(!fileReadIn.open(QIODevice::ReadOnly | QIODevice::Text)){
-        qDebug << "Could not open" << qPrintable(finalfilename)
-                  << " the file for reading \n";
+        qDebug ("Could not open the file for reading:") ;
+        qDebug (qPrintable(finalfilename));
+        qDebug ("\n") ;
         return string("");
         //String("").Empty();  //结果为true判定用
     }

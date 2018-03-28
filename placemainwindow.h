@@ -6,6 +6,8 @@
 #include <QTime>
 #include <QTimer>
 
+#include "ccmis.h"
+
 namespace Ui {
 class PlaceMainWindow;
 }
@@ -15,7 +17,7 @@ class PlaceMainWindow : public QMainWindow
     Q_OBJECT
 
 public:
-    explicit PlaceMainWindow(QWidget *parent = 0);
+    explicit PlaceMainWindow(CCMIS*, QWidget *parent = 0);
     ~PlaceMainWindow();
 
 public slots:
@@ -32,6 +34,7 @@ signals:
 
 private:
     Ui::PlaceMainWindow *ui;
+    CCMIS* mCCMIS;
 };
 
 #endif // PLACEMAINWINDOW_H

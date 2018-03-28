@@ -2,7 +2,7 @@
 #include "ui_usermainwindow.h"
 #include <QDebug>
 
-UserMainWindow::UserMainWindow(CCMIS* c,QWidget *parent) :
+UserMainWindow::UserMainWindow(CCMIS* c, QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::UserMainWindow)
 {

@@ -1,11 +1,13 @@
 #include "placemainwindow.h"
 #include "ui_placemainwindow.h"
 
-PlaceMainWindow::PlaceMainWindow(QWidget *parent) :
+PlaceMainWindow::PlaceMainWindow(CCMIS* c, QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::PlaceMainWindow)
 {
     ui->setupUi(this);
+
+    mCCMIS = c;
 
     //时间显示
     QTimer *timer = new QTimer(this);

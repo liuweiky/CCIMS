@@ -1,12 +1,13 @@
 #include "administratormainwindow.h"
 #include "ui_administratormainwindow.h"
 
-AdministratorMainWindow::AdministratorMainWindow(QWidget *parent) :
+AdministratorMainWindow::AdministratorMainWindow(CCMIS* c, QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::AdministratorMainWindow)
 {
     ui->setupUi(this);
 
+    mCCMIS = c;
 
     //时间显示
     QTimer *timer = new QTimer(this);
