@@ -17,20 +17,12 @@ class PlaceMainWindow : public QMainWindow
     Q_OBJECT
 
 public:
-    explicit PlaceMainWindow(CCMIS*, QWidget *parent = 0);
+    explicit PlaceMainWindow(CCMIS* c, QWidget *parent = 0);
     ~PlaceMainWindow();
 
-public slots:
-    void showtime();
-    void ShowNameSlot(QString);
-
 private slots:
+    void showtime();
     void on_BackButton_clicked();
-
-signals:
-    //返回主界面：X，Y，宽，长
-    void BackMainWindow(int,int,int,int);
-    void ShowNameSignal(QString);
 
 private:
     Ui::PlaceMainWindow *ui;

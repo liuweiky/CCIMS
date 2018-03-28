@@ -6,6 +6,8 @@
 #include <QTime>
 #include <QTimer>
 
+#include "ccmis.h"
+
 namespace Ui {
 class AdministratorSCWindow;
 }
@@ -15,23 +17,16 @@ class AdministratorSCWindow : public QMainWindow
     Q_OBJECT
 
 public:
-    explicit AdministratorSCWindow(QWidget *parent = 0);
+    explicit AdministratorSCWindow(CCMIS* c, QWidget *parent = 0);
     ~AdministratorSCWindow();
 
-public slots:
-    void showtime();
-    void ShowNameSlot(QString);
-
 private slots:
+    void showtime();
     void on_BackButton_clicked();
-
-signals:
-    //返回主界面：X，Y，宽，长
-    void BackMainWindow(int,int,int,int);
-    void ShowNameSignal(QString);
 
 private:
     Ui::AdministratorSCWindow *ui;
+    CCMIS *mCCMIS;
 };
 
 #endif // ADMINISTRATORSCWINDOW_H

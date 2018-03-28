@@ -1,11 +1,12 @@
 #include "shopservicewindow.h"
 #include "ui_shopservicewindow.h"
 
-ShopServiceWindow::ShopServiceWindow(CCMIS* c, QWidget *parent) :
+ShopServiceWindow::ShopServiceWindow(CCMIS *c, QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::ShopServiceWindow)
 {
     ui->setupUi(this);
+
     mCCMIS = c;
 
     //时间显示
@@ -35,14 +36,10 @@ void ShopServiceWindow::showtime()
     ui->Time->display(txtTime);
 }
 
-void ShopServiceWindow::ShowNameSlot(QString txtname)
-{
-    ui->UserName->setText(txtname);
-}
-
 void ShopServiceWindow::on_BackButton_clicked()
 {
-    BackMainWindow(this->x(),this->y(),this->width(),this->height());
+    parentWidget()->setGeometry(this->x(),this->y(),this->width(),this->height());
+    parentWidget()->show();
     this->close();
 }
 
@@ -85,7 +82,6 @@ void ShopServiceWindow::on_WorkButton_clicked()
                            QMessageBox::Yes);
         break;
     default:
-
         break;
     }
 }

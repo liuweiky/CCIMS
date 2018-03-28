@@ -31,7 +31,8 @@ void MainWindow::on_pushButton_clicked()
     {
         if (number <= CCMIS::SUPERUSER_END) {
             //管理员
-            AdministratorMainWindow *mAMW = new AdministratorMainWindow(mCCMIS);
+            AdministratorMainWindow *mAMW =
+                    new AdministratorMainWindow(mCCMIS,this);
             mAMW->setGeometry(this->x(),this->y(),this->width(),this->height());
             mAMW->show();
 
@@ -40,16 +41,16 @@ void MainWindow::on_pushButton_clicked()
         } else if (number <= CCMIS::SHOP_END) {
             //这里还需筛选
             //场所（总商家）
-            PlaceMainWindow *mPMW = new PlaceMainWindow(mCCMIS);
+            PlaceMainWindow *mPMW = new PlaceMainWindow(mCCMIS,this);
             mPMW->setGeometry(this->x(),this->y(),this->width(),this->height());
             mPMW->show();
             //商家
-            ShopMainWindow *mSMW = new ShopMainWindow(mCCMIS);
+            ShopMainWindow *mSMW = new ShopMainWindow(mCCMIS,this);
             mSMW->setGeometry(this->x(),this->y(),this->width(),this->height());
             mSMW->show();
         } else {
             //用户
-            UserMainWindow *mUMW = new UserMainWindow(mCCMIS);
+            UserMainWindow *mUMW = new UserMainWindow(mCCMIS,this);
             mUMW->setGeometry(this->x(),this->y(),this->width(),this->height());
             mUMW->show();
         }

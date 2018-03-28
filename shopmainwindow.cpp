@@ -13,19 +13,6 @@ ShopMainWindow::ShopMainWindow(CCMIS* c, QWidget *parent) :
     QTimer *timer = new QTimer(this);
     connect(timer,SIGNAL(timeout()),this,SLOT(showtime()));
     timer->start(500);
-
-    //窗口跳转
-    mSSearchW = new ShopSearchWindow(mCCMIS);
-    connect(mSSearchW,SIGNAL(BackMainWindow(int,int,int,int)),
-            this,SLOT(reshow(int,int,int,int)));
-    connect(this,SIGNAL(ShowNameSignal(QString)),
-            mSSearchW,SLOT(ShowNameSlot(QString)));
-
-    mSServiceW = new ShopServiceWindow(mCCMIS);
-    connect(mSServiceW,SIGNAL(BackMainWindow(int,int,int,int)),
-            this,SLOT(reshow(int,int,int,int)));
-    connect(this,SIGNAL(ShowNameSignal(QString)),
-            mSServiceW,SLOT(ShowNameSlot(QString)));
 }
 
 ShopMainWindow::~ShopMainWindow()
@@ -41,35 +28,25 @@ void ShopMainWindow::showtime()
     ui->Time->display(txtTime);
 }
 
-void ShopMainWindow::ShowNameSlot(QString txtname)
-{
-    ui->UserName->setText(txtname);
-}
-
-
-void ShopMainWindow::reshow(int x,int y,int w,int l){
-    this->setGeometry(x,y,w,l);
-    this->show();
-}
-
 void ShopMainWindow::on_BackButton_clicked()
 {
-    BackMainWindow(this->x(),this->y(),this->width(),this->height());
+    parentWidget()->setGeometry(this->x(),this->y(),this->width(),this->height());
+    parentWidget()->show();
     this->close();
 }
 
 void ShopMainWindow::on_SearchButton_clicked()
 {
-    mSSearchW->setGeometry(this->x(),this->y(),this->width(),this->height());
-    mSSearchW->show();
-    ShowNameSignal(ui->UserName->text());
+    ShopSearchWindow *mASeaW = new ShopSearchWindow(mCCMIS,this);
+    mASeaW->setGeometry(this->x(),this->y(),this->width(),this->height());
+    mASeaW->show();
     this->hide();
 }
 
 void ShopMainWindow::on_WorkButton_clicked()
 {
-    mSServiceW->setGeometry(this->x(),this->y(),this->width(),this->height());
-    mSServiceW->show();
-    ShowNameSignal(ui->UserName->text());
+    ShopServiceWindow *mASerW = new ShopServiceWindow(mCCMIS,this);
+    mASerW->setGeometry(this->x(),this->y(),this->width(),this->height());
+    mASerW->show();
     this->hide();
 }

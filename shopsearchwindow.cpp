@@ -1,19 +1,22 @@
 #include "shopsearchwindow.h"
 #include "ui_shopsearchwindow.h"
 #include "information.h"
-ShopSearchWindow::ShopSearchWindow(CCMIS* ccmis_sys,QWidget *parent) :
+ShopSearchWindow::ShopSearchWindow(CCMIS *c, QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::ShopSearchWindow)
 {
     ui->setupUi(this);
-    mCCMIS = ccmis_sys;
 
-    //表格显示
-    ui->tableWidget = GetWholeShopSearchTable();
+    mCCMIS = c;
+
     //时间显示
     QTimer *timer = new QTimer(this);
     connect(timer,SIGNAL(timeout()),this,SLOT(showtime()));
     timer->start(500);
+
+    //表格显示
+    ui->tableWidget = GetWholeShopSearchTable();
+
     //名字显示
 
 }
@@ -79,15 +82,9 @@ void ShopSearchWindow::showtime()
     ui->Time->display(txtTime);
 }
 
-void ShopSearchWindow::ShowNameSlot(QString txtname)
-{
-
-    int thisShopNum = mCCMIS->GetUserNum();
-    ui->UserName->setText(mCCMIS->GetAllNameByNum(thisShopNum));
-}
-
 void ShopSearchWindow::on_BackButton_clicked()
 {
-    BackMainWindow(this->x(),this->y(),this->width(),this->height());
+    parentWidget()->setGeometry(this->x(),this->y(),this->width(),this->height());
+    parentWidget()->show();
     this->close();
 }

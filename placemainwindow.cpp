@@ -28,13 +28,9 @@ void PlaceMainWindow::showtime()
     ui->Time->display(txtTime);
 }
 
-void PlaceMainWindow::ShowNameSlot(QString txtname)
-{
-    ui->UserName->setText(txtname);
-}
-
 void PlaceMainWindow::on_BackButton_clicked()
 {
-    BackMainWindow(this->x(),this->y(),this->width(),this->height());
+    parentWidget()->setGeometry(this->x(),this->y(),this->width(),this->height());
+    parentWidget()->show();
     this->close();
 }

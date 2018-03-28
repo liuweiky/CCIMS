@@ -21,20 +21,10 @@ public:
     explicit UserRechargeWindow(CCMIS* c, QWidget *parent = 0);
     ~UserRechargeWindow();
 
-public slots:
-    void showtime();
-    void ShowNameSlot(QString);
-    void ShowMoneySlot(double);
-    void ShowCouponSlot(double);
-
 private slots:
-    //重新显示主界面：X，Y，宽，长
+    void showtime();
     void on_BackButton_clicked();
     void on_WorkButton_clicked();
-
-signals:
-    //返回主界面：X，Y，宽，长
-    void BackMainWindow(int,int,int,int);
 
 private:
     Ui::UserRechargeWindow *ui;

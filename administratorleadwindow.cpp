@@ -1,11 +1,13 @@
 #include "administratorleadwindow.h"
 #include "ui_administratorleadwindow.h"
 
-AdministratorLeadWindow::AdministratorLeadWindow(QWidget *parent) :
+AdministratorLeadWindow::AdministratorLeadWindow(CCMIS *c, QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::AdministratorLeadWindow)
 {
     ui->setupUi(this);
+
+    mCCMIS = c;
 
     //时间显示
     QTimer *timer = new QTimer(this);
@@ -28,7 +30,8 @@ void AdministratorLeadWindow::showtime()
 
 void AdministratorLeadWindow::on_BackButton_clicked()
 {
-    BackMainWindow(this->x(),this->y(),this->width(),this->height());
+    parentWidget()->setGeometry(this->x(),this->y(),this->width(),this->height());
+    parentWidget()->show();
     this->close();
 }
 

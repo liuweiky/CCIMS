@@ -21,13 +21,8 @@ public:
     explicit ShopServiceWindow(CCMIS* c, QWidget *parent = 0);
     ~ShopServiceWindow();
 
-public slots:
-    void showtime();
-    void ShowNameSlot(QString);
-
 private slots:
-    //重新显示主界面：X，Y，宽，长
-
+    void showtime();
     void on_BackButton_clicked();
     void on_WorkButton_clicked();
 
@@ -36,8 +31,8 @@ signals:
     void BackMainWindow(int,int,int,int);
 
 private:
-    CCMIS* mCCMIS;
     Ui::ShopServiceWindow *ui;
+    CCMIS* mCCMIS;
 };
 
 #endif // SHOPSERVICEWINDOW_H

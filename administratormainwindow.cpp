@@ -14,18 +14,6 @@ AdministratorMainWindow::AdministratorMainWindow(CCMIS* c, QWidget *parent) :
     connect(timer,SIGNAL(timeout()),this,SLOT(showtime()));
     timer->start(500);
 
-    //窗口跳转
-    mALW = new AdministratorLeadWindow;
-    connect(mALW,SIGNAL(BackMainWindow(int,int,int,int)),
-            this,SLOT(reshow(int,int,int,int)));
-    /*connect(this,SIGNAL(ShowNameSignal(QString)),
-             mALW,SLOT(ShowNameSlot(QString)));*/
-
-    mASCW = new AdministratorSCWindow;
-    connect(mASCW,SIGNAL(BackMainWindow(int,int,int,int)),
-            this,SLOT(reshow(int,int,int,int)));
-    connect(this,SIGNAL(ShowNameSignal(QString)),
-            mASCW,SLOT(ShowNameSlot(QString)));
 }
 
 AdministratorMainWindow::~AdministratorMainWindow()
@@ -41,37 +29,25 @@ void AdministratorMainWindow::showtime()
     ui->Time->display(txtTime);
 }
 
-void AdministratorMainWindow::ShowNameSlot(QString txtname)
-{
-    ui->UserName->setText(txtname);
-}
-
-
-void AdministratorMainWindow::reshow(int x,int y,int w,int l){
-    this->setGeometry(x,y,w,l);
-    this->show();
-}
-
 void AdministratorMainWindow::on_BackButton_clicked()
 {
-    BackMainWindow(this->x(),this->y(),this->width(),this->height());
+    parentWidget()->setGeometry(this->x(),this->y(),this->width(),this->height());
+    parentWidget()->show();
     this->close();
 }
 
 void AdministratorMainWindow::on_ImportButton_clicked()
 {
+    AdministratorLeadWindow *mALW = new AdministratorLeadWindow(mCCMIS,this);
     mALW->setGeometry(this->x(),this->y(),this->width(),this->height());
     mALW->show();
-    ShowNameSignal(ui->UserName->text());
     this->hide();
 }
 
 void AdministratorMainWindow::on_WorkButton_clicked()
 {
+    AdministratorSCWindow *mASCW = new AdministratorSCWindow(mCCMIS,this);
     mASCW->setGeometry(this->x(),this->y(),this->width(),this->height());
     mASCW->show();
-    ShowNameSignal(ui->UserName->text());
     this->hide();
 }
-
-
