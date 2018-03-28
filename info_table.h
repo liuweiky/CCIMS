@@ -1,14 +1,17 @@
 #ifndef INFO_TABLE_H
 #define INFO_TABLE_H
+
 #include <QTableWidgetItem>
 #include <QWidget>
 #include <QTableWidget>
-#include "ccmis.h"
 #include <QButtonGroup>
 #include <QCheckBox>
-#include "information.h"
 #include <QDateTimeEdit>
 #include <QMessageBox>
+
+#include "ccmis.h"
+#include "information.h"
+
 namespace Ui {
 class Info_Table;
 }
@@ -33,7 +36,7 @@ public:
 
     //同一个出账账号 表格
     void ShowSameInumOneInfo(QTableWidget *qtable,Information* one_info, int &row_index);
-     void GetWholeOneShopSearchTable(QTableWidget* qtable, int inum);
+    void GetWholeOneShopSearchTable(QTableWidget* qtable, int inum);
 
 
      //日期控件 设置
@@ -58,7 +61,7 @@ private:
 
 public slots:
 
-    void on_Check_Button_StateChoose(int state);
+   void on_Check_Button_StateChoose(int state);
 
    void onStartDateChanged(const QDate &date);
    void onFinishDateChanged(const QDate &date);
@@ -68,7 +71,7 @@ private slots:
    void on_tableWidget_itemClicked(QTableWidgetItem *item);
    void on_DeleteButton_clicked();
    
-   void on_toExcelButton_clicked();
+//   void on_toExcelButton_clicked();
    void on_Reset_clicked();
 };
 

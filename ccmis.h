@@ -6,11 +6,17 @@
 #include <stdlib.h>
 #include <time.h>
 #include <string>
-#include <time.h>
+
 #include <QString>
 #include <QThread>
+#include <QFile>
+#include <QTextStream>
+#include <QDebug>
+#include <QtGlobal>         //判断平台
+#include <QCoreApplication> //读取路径
 
 using namespace std;
+
 #include "information.h"
 #include "shop.h"
 #include "user.h"
@@ -23,17 +29,21 @@ class CCMIS
 {
 
 private:
-    Information*    mInfo;//信息表头结点
-    Shop*   mShop;        //商店表头结点
-    User*   mUser;        //用户表头结点
-    int mUserNumber;    //当前登陆用户的用户号
+    Information*    mInfo;  //信息表头结点
+    Shop*           mShop;  //商店表头结点
+    User*           mUser;  //用户表头结点
+    int mUserNumber;        //当前登陆用户的用户号
 
-    unsigned int totalUserCount;    //用户数统计 下同
+    //总数统计
+    unsigned int totalUserCount;
     unsigned int totalShopCount;
     unsigned int totalInfoCount;
 
 public:
+    //跨平台判断
+    static const unsigned int PLATFORM_JUDGE;
 
+    //自定义常量
     static const string USER_FILE_NAME;
     static const string SHOP_FILE_NAME;
     static const string INFO_FILE_NAME;
@@ -94,6 +104,7 @@ public:
     CCMIS();
     ~CCMIS() {}
 
+    //传文件线程
     class JsonThread: public QThread
     {
     public:
@@ -123,28 +134,26 @@ public:
             }
         }
         JsonThread(CCMIS* c, int t): mCCMIS(c), type(t){}
+
     private:
         int type;
         CCMIS* mCCMIS;
     };
 
 
-
     string ReadAllFileToQString(string filename); //读取文件至std::string
-
 
     jsonxx::Array LinkListToJson(User* user_list);
     jsonxx::Array LinkListToJson(Information* info_list);
     jsonxx::Array LinkListToJson(Shop* shop_list);
     bool SaveJsonArrToFile(const jsonxx::Array& ToSaveJson,string filename);
 
-
     //写入文件的话，默认一个参数是私有成员变量链表 写进文件
     //注意！默认参数不允许是类内成员变量，原因是编译期无法确定内容，只有静态变量可以当默认参数
     bool ReadInf(string filename);                                  //读入整个信息表文件
     bool WriteInf(string filename);                                 //写出minfo表文件
     bool WriteInf(string filename, Information *info_list);         //写出指定信息表文件
-    bool ReadUser(string filename);                                //下同
+    bool ReadUser(string filename);                                 //下同
     bool WriteUser(string filename);
     bool WriteUser(string filename, User *user_list);
     bool ReadShop(string filename);
@@ -153,39 +162,39 @@ public:
 
     void WriteInfForDel();
 
-    void ClearInf();                        //清空整个信息表
-    void InsertInf(Information* tempinf);      //添加单个信息表
-    void DeleteInf(Information* tempinf);   //删除单个信息表
-    void ChangeInf(Information* beforeinf, Information* afterinf);//改变单个信息表
+    void ClearInf();                                                //清空整个信息表
+    void InsertInf(Information* tempinf);                           //添加单个信息表
+    void DeleteInf(Information* tempinf);                           //删除单个信息表
+    void ChangeInf(Information* beforeinf, Information* afterinf);  //改变单个信息表
 
+    int GetTotalCanteenConsumptionByDay
+    (int year, int month, int day,int num);     //获取当日食堂消费额
+    int GetTotalCanteenAndMarketConsumptionByDay
+    (int year, int month, int day,int num);     //获取当日食堂超市消费额
 
+    User* GetUserByNum(int num);        //通过卡号获取用户指针
+    Shop* GetShopByNum(int num);        //通过卡号获取商户指针
+    QString GetAllNameByNum(int num);   //通过卡号得到用户名？
+    QString GetCurrentUserName();       //获取当前用户名？
 
-
-
-
-
-
-
-    int GetTotalCanteenConsumptionByDay(int year, int month, int day,int num); //获取当日食堂消费额
-    int GetTotalCanteenAndMarketConsumptionByDay(int year, int month, int day,int num);     //获取当日食堂超市消费额
-
-
-    User* GetUserByNum(int num);    //通过卡号获取用户指针
-    Shop* GetShopByNum(int num);    //通过卡号获取商户指针
-    QString GetAllNameByNum(int num);
-    QString GetCurrentUserName();
-
-
-    int NewTransaction(int onum, int inum, int mon);   //新建消费交易记录，先减少onum的余额，增加inum的余额（可选），并生成流水号、info，插入到表，更新user.json、info.json，返回是否交易成功，money要乘以100
+    //新建消费交易记录，先减少onum的余额，增加inum的余额（可选），
+    //并生成流水号、info，插入到表，更新user.json、info.json，
+    //返回是否交易成功，money要乘以100
+    int NewTransaction(int onum, int inum, int mon);
     bool NewRefund(Information* tempinf);   //撤销某条交易信息
-    int NewSubsidy(User* u);  //新建补贴交易
+    int NewSubsidy(User* u);                //新建补贴交易
     bool NewRecharge(int num, int money);   //新建充值记录
 
-    string GenerateTag(int onum, int inum, int mon);    //根据当前时间生成流水号，money要乘以100
-    string GenerateTag(int year, int month, int day, int hour, int min, int sec, int onum, int inum, int mon);    //手动生成流水号，money要乘以100
+    //根据当前时间生成流水号，money要乘以100
+    string GenerateTag(int onum, int inum, int mon);
+    //手动生成流水号，money要乘以100
+    string GenerateTag(int year, int month, int day, int hour,
+                       int min, int sec, int onum, int inum, int mon);
 
-    Information* BuildInfo(int onum, int inum, int mon);    //money要乘以100
-    Information* BuildInfo(int year, int month, int day, int hour, int min, int sec, int onum, int inum, int mon);
+    //money要乘以100
+    Information* BuildInfo(int onum, int inum, int mon);
+    Information* BuildInfo(int year, int month, int day, int hour,
+                           int min, int sec, int onum, int inum, int mon);
 
     Information* GetInfoPointer();
 
@@ -194,19 +203,20 @@ public:
     unsigned int GetTotalShopNumber();
 
 
-    void SearchNumber(int id);      //根据卡号输出信息
-   // void SearchSubsidy(int id);     //根据补贴输出信息
+    void SearchNumber(int id);                          //根据卡号输出信息
     void SearchTime(int startdate, int startime,
-                    int finishdate, int finishtime);  //根据时间输出信息
+                    int finishdate, int finishtime);    //根据时间输出信息
 
     Information* GetInfoByTag(QString tag);
 
     //默认返回所有补贴信息
-    Information* SearchInfoByInum(int inum = 0, unsigned long start_date_num = 0,unsigned int start_time_num = 0 ,
-                                     unsigned long finish_date_num = 99999999 ,unsigned int finish_time_num = 9999 );
+    Information* SearchInfoByInum
+    (int inum = 0, unsigned long start_date_num = 0,unsigned int start_time_num = 0 ,
+     unsigned long finish_date_num = 99999999 ,unsigned int finish_time_num = 9999 );
 
-    Information* SearchInfoByOnum(int onum = 2, unsigned long start_date_num = 0,unsigned int start_time_num = 0 ,
-                                     unsigned long finish_date_num = 99999999 ,unsigned int finish_time_num = 9999 );
+    Information* SearchInfoByOnum
+    (int onum = 2, unsigned long start_date_num = 0,unsigned int start_time_num = 0 ,
+     unsigned long finish_date_num = 99999999 ,unsigned int finish_time_num = 9999 );
 
     bool CheckPassword(string password);
 

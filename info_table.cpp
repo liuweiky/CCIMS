@@ -369,12 +369,12 @@ void Info_Table::on_DeleteButton_clicked()
     }
 }
 	
-void Info_Table::on_toExcelButton_clicked()
-{
-    QString filename(mCCMIS->GetCurrentUserName());
+//void Info_Table::on_toExcelButton_clicked()
+//{
+//    QString filename(mCCMIS->GetCurrentUserName());
 
-    COMMON_FUNCS::Table2Excel(ui->tableWidget,filename+"的消费信息");
-}
+//    COMMON_FUNCS::Table2Excel(ui->tableWidget,filename+"的消费信息");
+//}
 
 void Info_Table::on_Reset_clicked()
 {

@@ -1,8 +1,15 @@
 #include "ccmis.h"
-#include <QFile>
-#include "common_funcs.h"
-#include <QTextStream>
-#include <QDebug>
+
+//跨平台判断
+#ifdef Q_OS_WIN32
+    const unsigned int CCMIS::PLATFORM_JUDGE = 0;
+#elif defined (Q_OS_MAC)
+    const unsigned int CCMIS::PLATFORM_JUDGE = 1;
+#else
+    const unsigned int CCMIS::PLATFORM_JUDGE = 2;
+#endif
+
+//自定义常量
 const string CCMIS::USER_FILE_NAME  = "user.json";
 const string CCMIS::SHOP_FILE_NAME  = "shop.json";
 const string CCMIS::INFO_FILE_NAME  = "info.json";
@@ -56,13 +63,13 @@ const int CCMIS::THREAD_TYPE_R_INFO = -1;
 const int CCMIS::THREAD_TYPE_R_SHOP = -2;
 const int CCMIS::THREAD_TYPE_R_USER = -3;
 
-
 const int CCMIS::THREAD_TYPE_W_INFO = 1;
 const int CCMIS::THREAD_TYPE_W_SHOP = 2;
 const int CCMIS::THREAD_TYPE_W_USER = 3;
 
 CCMIS::CCMIS()
 {
+    //初始化
     mUserNumber = -1;
 
     mInfo = new Information();
@@ -79,6 +86,7 @@ CCMIS::CCMIS()
 
     JsonThread* jthread = new JsonThread(this, THREAD_TYPE_R_INFO);
 
+    //读文件线程开启
     jthread->start();   //TODO: Need to send message when finished.
 
     if (!ReadUser(USER_FILE_NAME))  //判断打开文件是否成功
@@ -106,10 +114,9 @@ CCMIS::CCMIS()
 
 //    Information* test  = SearchInfoByInum(1201);
 //    WriteInf("3216.json",test);
-////    WriteInf("test.json");
 
-    cout<<GetTotalCanteenConsumptionByDay(2018,1,3,4001)<<endl;
-    cout<<GetUserByNum(4000)<<endl;
+//    cout<<GetTotalCanteenConsumptionByDay(2018,1,3,4001)<<endl;
+//    cout<<GetUserByNum(4000)<<endl;
 
 //    cout << "start transaction...\n";
 //    time_t timep;
@@ -118,7 +125,6 @@ CCMIS::CCMIS()
 //    strftime(timestr, sizeof(timestr), "%Y-%m-%d %H:%M:%S",localtime(&timep));
 //    cout<<"start: "<<timestr<<endl;
 //    cout << NewTransaction(4001, 3101, 2500)<<endl;
-
 
 //    time (&timep);
 //    strftime(timestr, sizeof(timestr), "%Y-%m-%d %H:%M:%S",localtime(&timep));
@@ -267,18 +273,30 @@ bool CCMIS::WriteUser(string filename)
 }
 
 
-
-
-
-
-
 //没解决utf8编码问题。。。
-string CCMIS::ReadAllFileToQString(string filename){
+string CCMIS::ReadAllFileToQString(string filename)
+{
+    //跨平台处理
+    QString finalfilename;
+    switch (PLATFORM_JUDGE) {
+    case 0:
+        finalfilename = QString::fromStdString(filename);
+        break;
+    case 1:
+        finalfilename = QCoreApplication::applicationDirPath();
+        finalfilename.chop(24);
+        finalfilename += QString::fromStdString(filename);
+        break;
+    default:
+        qDebug("Could not run in this platform \n");
+        break;
+    }
 
-    QFile fileReadIn(QString::fromStdString(filename));
-
+    //读取文件
+    QFile fileReadIn(finalfilename);
     if(!fileReadIn.open(QIODevice::ReadOnly | QIODevice::Text)){
-        qDebug("Could not open the file for reading \n");
+        qDebug << "Could not open" << qPrintable(finalfilename)
+                  << " the file for reading \n";
         return string("");
         //String("").Empty();  //结果为true判定用
     }
@@ -298,10 +316,6 @@ string CCMIS::ReadAllFileToQString(string filename){
 }
 
 
-
-
-
-
 bool CCMIS::ReadUser(string filename)
 {
     /**by liuvv*/
@@ -316,11 +330,17 @@ bool CCMIS::ReadUser(string filename)
         {
             User* u = new User();
 
-            u->number = array.get<jsonxx::Object>(i).get<jsonxx::Number>(JSON_KEY_NUMBER);
-            u->name = COMMON_FUNCS::UTF8ToQString(array.get<jsonxx::Object>(i).get<jsonxx::String>(JSON_KEY_NAME));
-            u->password = array.get<jsonxx::Object>(i).get<jsonxx::String>(JSON_KEY_PASSWORD);
-            u->balance = array.get<jsonxx::Object>(i).get<jsonxx::Number>(JSON_KEY_BALANCE);
-            u->coupon = array.get<jsonxx::Object>(i).get<jsonxx::Number>(JSON_KEY_COUPON);
+            u->number = array.get<jsonxx::Object>(i).
+                    get<jsonxx::Number>(JSON_KEY_NUMBER);
+            u->name = COMMON_FUNCS::UTF8ToQString
+                    (array.get<jsonxx::Object>(i).
+                     get<jsonxx::String>(JSON_KEY_NAME));
+            u->password = array.get<jsonxx::Object>(i).
+                    get<jsonxx::String>(JSON_KEY_PASSWORD);
+            u->balance = array.get<jsonxx::Object>(i).
+                    get<jsonxx::Number>(JSON_KEY_BALANCE);
+            u->coupon = array.get<jsonxx::Object>(i).
+                    get<jsonxx::Number>(JSON_KEY_COUPON);
 
             /**DON NOT DELETE THE ANNOTATION RASHLY!!!*/
             /*u->balance = (rand() % (100000 - 0 + 1)) + 0;
@@ -333,14 +353,15 @@ bool CCMIS::ReadUser(string filename)
 
             u->next = mUser->next;
             mUser->next = u;
-            //统计用户数
-            totalUserCount++;
 
+            totalUserCount++;   //统计用户数
         }
 
-        User* u = mUser->next;    //验证数据
+        //验证数据
+        User* u = mUser->next;
         while (u != NULL) {
-            cout<<u->number<<"\t"<<u->name<<"\t"<<u->password<<"\t"<<u->balance<<"\t"<<u->coupon<<endl;
+            cout<<u->number<<"\t"<<u->name<<"\t"<<u->password
+               <<"\t"<<u->balance<<"\t"<<u->coupon<<endl;
             u=u->next;
         }
 
@@ -363,17 +384,24 @@ bool CCMIS::ReadShop(string filename)
         for (int i = 0; i < array.size(); i++)  //迭代构造
         {
             Shop* s = new Shop();
-            s->number = array.get<jsonxx::Object>(i).get<jsonxx::Number>(JSON_KEY_NUMBER);
-            s->name = COMMON_FUNCS::UTF8ToQString(array.get<jsonxx::Object>(i).get<jsonxx::String>(JSON_KEY_NAME));
-            s->password = array.get<jsonxx::Object>(i).get<jsonxx::String>(JSON_KEY_PASSWORD);
+
+            s->number = array.get<jsonxx::Object>(i).
+                    get<jsonxx::Number>(JSON_KEY_NUMBER);
+            s->name = COMMON_FUNCS::UTF8ToQString
+                    (array.get<jsonxx::Object>(i).
+                     get<jsonxx::String>(JSON_KEY_NAME));
+            s->password = array.get<jsonxx::Object>(i).
+                    get<jsonxx::String>(JSON_KEY_PASSWORD);
+
             s->next = mShop->next;
             mShop->next = s;
 
-            //统计商铺数
-            totalShopCount++;
+
+            totalShopCount++;   //统计商铺数
         }
 
-        Shop* sh = mShop->next;    //验证数据
+        //验证数据
+        Shop* sh = mShop->next;
         while (sh != NULL) {
             cout<<sh->number<<"\t"<<sh->name<<"\t"<<sh->password<<endl;
             sh=sh->next;
@@ -388,31 +416,43 @@ bool CCMIS::ReadShop(string filename)
 bool CCMIS::ReadInf(string filename)
 {
     string fileALLReadIn = ReadAllFileToQString(filename);
+
     if (!fileALLReadIn.empty()){
         jsonxx::Array array;
-        array.parse(fileALLReadIn); //解析 json
+        array.parse(fileALLReadIn);             //解析 json
         for (int i = 0; i < array.size(); i++)  //迭代构造
         {
             Information* info = new Information();
 
-            info->tag = array.get<jsonxx::Object>(i).get<jsonxx::String>(JSON_KEY_TAG);
-            info->year = array.get<jsonxx::Object>(i).get<jsonxx::Number>(JSON_KEY_YEAR);
-            info->month = array.get<jsonxx::Object>(i).get<jsonxx::Number>(JSON_KEY_MONTH);
-            info->day = array.get<jsonxx::Object>(i).get<jsonxx::Number>(JSON_KEY_DAY);
-            info->hour = array.get<jsonxx::Object>(i).get<jsonxx::Number>(JSON_KEY_HOUR);
-            info->minute = array.get<jsonxx::Object>(i).get<jsonxx::Number>(JSON_KEY_MINUTE);
-            info->second = array.get<jsonxx::Object>(i).get<jsonxx::Number>(JSON_KEY_SECOND);
-            info->Inumber= array.get<jsonxx::Object>(i).get<jsonxx::Number>(JSON_KEY_INUMBER);
-            info->Onumber= array.get<jsonxx::Object>(i).get<jsonxx::Number>(JSON_KEY_ONUMBER);
-            info->money= array.get<jsonxx::Object>(i).get<jsonxx::Number>(JSON_KEY_MONEY);
+            info->tag = array.get<jsonxx::Object>(i).
+                    get<jsonxx::String>(JSON_KEY_TAG);
+            info->year = array.get<jsonxx::Object>(i).
+                    get<jsonxx::Number>(JSON_KEY_YEAR);
+            info->month = array.get<jsonxx::Object>(i).
+                    get<jsonxx::Number>(JSON_KEY_MONTH);
+            info->day = array.get<jsonxx::Object>(i).
+                    get<jsonxx::Number>(JSON_KEY_DAY);
+            info->hour = array.get<jsonxx::Object>(i).
+                    get<jsonxx::Number>(JSON_KEY_HOUR);
+            info->minute = array.get<jsonxx::Object>(i).
+                    get<jsonxx::Number>(JSON_KEY_MINUTE);
+            info->second = array.get<jsonxx::Object>(i).
+                    get<jsonxx::Number>(JSON_KEY_SECOND);
+            info->Inumber= array.get<jsonxx::Object>(i).
+                    get<jsonxx::Number>(JSON_KEY_INUMBER);
+            info->Onumber= array.get<jsonxx::Object>(i).
+                    get<jsonxx::Number>(JSON_KEY_ONUMBER);
+            info->money= array.get<jsonxx::Object>(i).
+                    get<jsonxx::Number>(JSON_KEY_MONEY);
 
             info->next = mInfo->next;
             mInfo->next = info;
-            //统计记录数目
-            totalInfoCount++;
+
+            totalInfoCount++;   //统计记录数目
         }
 
-        /*Information* info = mInfo->next;    //验证数据
+        //验证数据
+        /*Information* info = mInfo->next;
         while (info != NULL) {
             cout
                  <<info->tag<<"\t"
@@ -435,7 +475,6 @@ bool CCMIS::ReadInf(string filename)
     this->WriteInf("test.json");
 }
 
-
 string CCMIS::GenerateTag(int onum, int inum, int mon)
 {
     time_t tt = time(NULL);
@@ -444,11 +483,16 @@ string CCMIS::GenerateTag(int onum, int inum, int mon)
     /**TIME*/
     string tag = to_string(t->tm_year + 1900);
 
-    tag += t->tm_mon + 1 < 10 ? "0" + to_string(t->tm_mon + 1) : to_string(t->tm_mon + 1);
-    tag += t->tm_mday < 10 ? "0" + to_string(t->tm_mday) : to_string(t->tm_mday);
-    tag += t->tm_hour < 10 ? "0" + to_string(t->tm_hour) : to_string(t->tm_hour);
-    tag += t->tm_min < 10 ? "0" + to_string(t->tm_min) : to_string(t->tm_min);
-    tag += t->tm_sec < 10 ? "0" + to_string(t->tm_sec) : to_string(t->tm_sec);
+    tag += t->tm_mon + 1 < 10 ? "0" + to_string(t->tm_mon + 1)
+                              : to_string(t->tm_mon + 1);
+    tag += t->tm_mday < 10 ? "0" + to_string(t->tm_mday)
+                           : to_string(t->tm_mday);
+    tag += t->tm_hour < 10 ? "0" + to_string(t->tm_hour)
+                           : to_string(t->tm_hour);
+    tag += t->tm_min < 10 ? "0" + to_string(t->tm_min)
+                          : to_string(t->tm_min);
+    tag += t->tm_sec < 10 ? "0" + to_string(t->tm_sec)
+                          : to_string(t->tm_sec);
 
     /**I/O NUMBER*/
     tag += onum < 1000 ? "000" + to_string(onum) : to_string(onum);
@@ -476,10 +520,6 @@ string CCMIS::GenerateTag(int onum, int inum, int mon)
 
     return tag;
 }
-
-
-
-
 
 void CCMIS::InsertInf(Information* tempinf)
 {
@@ -510,16 +550,16 @@ Information* CCMIS::BuildInfo(int onum, int inum, int mon)
     info->next = NULL;
 }
 
-
-
-
 bool CCMIS::CheckPassword(string password)
 {
     if (mUserNumber == -1) return false;    //用户名未初始化
 
     if (mUserNumber < 4000) //店家登录
     {
-        if (mUserNumber / 1000 == GROUP_BATH && (mUserNumber / 10) % 10 >= 5) return false; //禁止登录洗漱券账户
+        //禁止登录洗漱券账户
+        if (mUserNumber / 1000 == GROUP_BATH &&
+                (mUserNumber / 10) % 10 >= 5) return false;
+
         Shop* s = mShop->next;
         while (s != NULL) {
             if (s->number == mUserNumber)
@@ -573,11 +613,10 @@ unsigned int CCMIS::GetTotalShopNumber()
     return totalShopCount;
 }
 
-
-
 //默认统计补贴信息 onum=2
-Information* CCMIS::SearchInfoByOnum(int onum , unsigned long start_date_num,unsigned int start_time_num ,
-                                     unsigned long finish_date_num ,unsigned int finish_time_num )
+Information* CCMIS::SearchInfoByOnum
+(int onum , unsigned long start_date_num,unsigned int start_time_num ,
+ unsigned long finish_date_num ,unsigned int finish_time_num )
 {
     Information* filter_info_list = new Information();
     filter_info_list->next = NULL;
@@ -589,8 +628,10 @@ Information* CCMIS::SearchInfoByOnum(int onum , unsigned long start_date_num,uns
     while(info!=NULL){
 
         if( info->Onumber == onum ){
-            unsigned long  info_date = Date::DateToNum(info->year,info->month,info->day);
-            unsigned int info_time = Time::TimeToNum(info->hour,info->minute);
+            unsigned long  info_date = Date::DateToNum
+                    (info->year,info->month,info->day);
+            unsigned int info_time = Time::TimeToNum
+                    (info->hour,info->minute);
             unsigned long long  info_cur = info_date * 1000000 + info_time;
             if( info_cur>=start && info_cur <=finish ){
                     Information* filtered_one_info = new Information();
@@ -605,8 +646,9 @@ Information* CCMIS::SearchInfoByOnum(int onum , unsigned long start_date_num,uns
     return filter_info_list;
 }
 
-Information* CCMIS::SearchInfoByInum(int inum, unsigned long start_date_num,unsigned int start_time_num,
-                                     unsigned long finish_date_num,unsigned int finish_time_num)
+Information* CCMIS::SearchInfoByInum
+(int inum, unsigned long start_date_num,unsigned int start_time_num,
+ unsigned long finish_date_num,unsigned int finish_time_num)
 {
     Information* filter_info_list = new Information();
     filter_info_list->next = NULL;
@@ -634,11 +676,6 @@ Information* CCMIS::SearchInfoByInum(int inum, unsigned long start_date_num,unsi
     return filter_info_list;
 
 }
-
-
-
-
-
 
 void CCMIS::DeleteInf(Information *tempinf)
 {
@@ -679,8 +716,6 @@ User* CCMIS::GetUserByNum(int num)
     }
 }
 
-
-
 Shop* CCMIS::GetShopByNum(int num)
 {
     if (
@@ -702,35 +737,31 @@ Shop* CCMIS::GetShopByNum(int num)
     } else {
         return NULL;
     }
-
-
 }
-
 
 QString CCMIS::GetAllNameByNum(int num)
 {
     switch (num) {
-    case 0:
-        return QString::fromUtf8("总入账账户");
-        break;
-    case 1:
-        return QString::fromUtf8("充值账户");
-    case 2:
-        return QString::fromUtf8("返补助账户");
-    default:
-    {
-        User* temp_user = GetUserByNum(num);
-        Shop* temp_shop = GetShopByNum(num);
-        if(temp_shop)
-            return temp_shop->name;
-        else if(temp_user)
-            return temp_user->name;
-        else
-            return QString::fromUtf8("用户不存在");
-        break;
+        case 0:
+            return QString::fromUtf8("总入账账户");
+            break;
+        case 1:
+            return QString::fromUtf8("充值账户");
+        case 2:
+            return QString::fromUtf8("返补助账户");
+        default:
+        {
+            User* temp_user = GetUserByNum(num);
+            Shop* temp_shop = GetShopByNum(num);
+            if(temp_shop)
+                return temp_shop->name;
+            else if(temp_user)
+                return temp_user->name;
+            else
+                return QString::fromUtf8("用户不存在");
+            break;
+        }
     }
-    }
-
 }
 
 QString CCMIS::GetCurrentUserName(){
@@ -758,7 +789,8 @@ int CCMIS::GetTotalCanteenConsumptionByDay(int year, int month, int day, int num
     return c;
 }
 
-int CCMIS::GetTotalCanteenAndMarketConsumptionByDay(int year, int month, int day, int num)
+int CCMIS::GetTotalCanteenAndMarketConsumptionByDay
+(int year, int month, int day, int num)
 {
     int c =0;
     Information* info = mInfo->next;
@@ -782,7 +814,8 @@ int CCMIS::GetTotalCanteenAndMarketConsumptionByDay(int year, int month, int day
 
 int CCMIS::NewSubsidy(User* u)
 {
-    if (u->number >= USER_TEA_EMP_BEGIN && u->number <= USER_TEA_EMP_END)   //教职工单次消费超20
+    if (u->number >= USER_TEA_EMP_BEGIN &&
+            u->number <= USER_TEA_EMP_END)   //教职工单次消费超20
     {
         u->balance += 500;
         //WriteUser(USER_FILE_NAME);
@@ -796,7 +829,6 @@ int CCMIS::NewSubsidy(User* u)
         jthread = new JsonThread(this, THREAD_TYPE_W_INFO);
         jthread->start();
     }
-
 }
 
 int CCMIS::NewTransaction(int onum, int inum, int mon)
@@ -806,20 +838,19 @@ int CCMIS::NewTransaction(int onum, int inum, int mon)
 
     User* u = GetUserByNum(onum);
     if (u == NULL)
-        return MESSAGE_TRANSACTION_NO_USER;   //学生、教职工号不存在，交易失败
+        return MESSAGE_TRANSACTION_NO_USER;     //学生、教职工号不存在，交易失败
 
     Shop* s = GetShopByNum(inum);
     if (s == NULL)
-        return MESSAGE_TRANSACTION_NO_SHOP;   //商号不存在，交易失败
+        return MESSAGE_TRANSACTION_NO_SHOP;     //商号不存在，交易失败
 
     time_t tt = time(NULL);
     tm* t= localtime(&tt);
 
-    if (inum / 1000 == GROUP_CANTEEN)   //收款方是食堂组
+    if (inum / 1000 == GROUP_CANTEEN)           //收款方是食堂组
     {
-        if (
-                mon > 5000 ||
-                GetTotalCanteenConsumptionByDay(t->tm_year + 1900, t->tm_mon + 1, t->tm_mday, onum) + mon > 10000)
+        if (mon > 5000 || GetTotalCanteenConsumptionByDay
+                (t->tm_year + 1900, t->tm_mon + 1, t->tm_mday, onum) + mon > 10000)
         {
             return MESSAGE_TRANSACTION_OVERFLOW;    //超过每笔消费或单日限制
         } else {    //交易条件具备，开始交易
@@ -833,7 +864,9 @@ int CCMIS::NewTransaction(int onum, int inum, int mon)
             InsertInf(info);
             //WriteInf(INFO_FILE_NAME);
 
-            if (u->number >= USER_TEA_EMP_BEGIN && u->number <= USER_TEA_EMP_END && mon > 2000)   //教职工单次消费超20
+            if (u->number >= USER_TEA_EMP_BEGIN &&
+                    u->number <= USER_TEA_EMP_END &&
+                    mon > 2000)   //教职工单次消费超20
             {
                 NewSubsidy(u);
             } else {
@@ -842,12 +875,11 @@ int CCMIS::NewTransaction(int onum, int inum, int mon)
                 jthread = new JsonThread(this, THREAD_TYPE_W_INFO);
                 jthread->start();
             }
-
             return MESSAGE_TRANSACTION_SUCCESS;
         }
     } else if (inum / 1000 == GROUP_MARKET) {   //收款方是超市组
-        if (
-                GetTotalCanteenAndMarketConsumptionByDay(t->tm_year + 1900, t->tm_mon + 1, t->tm_mday, onum) + mon > 10000)
+        if (GetTotalCanteenAndMarketConsumptionByDay
+                (t->tm_year + 1900, t->tm_mon + 1, t->tm_mday, onum) + mon > 10000)
         {
             return MESSAGE_TRANSACTION_OVERFLOW;    //超过单日限制
         } else {
@@ -887,12 +919,14 @@ int CCMIS::NewTransaction(int onum, int inum, int mon)
 
                 if (u->coupon != 0)
                 {
-                    Information* info = BuildInfo(onum, inum + 50, u->coupon);    //转券账户
+                    //转券账户
+                    Information* info = BuildInfo(onum, inum + 50, u->coupon);
                     InsertInf(info);
 
                 }
 
-                Information* info = BuildInfo(onum, inum, mon - u->coupon);    //转普通账户
+                //转普通账户
+                Information* info = BuildInfo(onum, inum, mon - u->coupon);
                 InsertInf(info);
 
                 u->coupon = 0;
