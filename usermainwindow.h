@@ -23,6 +23,7 @@ public:
     explicit UserMainWindow(CCMIS* c, QWidget *parent = 0);
     QString str2qstr(const string str); //处理中文乱码
     string qstr2str(const QString qstr);
+    void refreshUi();
     ~UserMainWindow();
 
 private slots:

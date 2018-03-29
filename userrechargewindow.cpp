@@ -14,16 +14,7 @@ UserRechargeWindow::UserRechargeWindow(CCMIS *c, QWidget *parent):
     connect(timer,SIGNAL(timeout()),this,SLOT(showtime()));
     timer->start(500);
 
-    //基本信息展示
-    ui->UserName->setText(mCCMIS->GetCurrentUserName());
-    QString Money = "余额：" + QString::number
-            (double(mCCMIS->GetUserByNum(mCCMIS->GetUserNum())->balance)/100,'f',2)
-            + "元";
-    ui->Money->setText(Money);
-    QString Coupon = "劵：" + QString::number
-            (double(mCCMIS->GetUserByNum(mCCMIS->GetUserNum())->coupon)/100,'f',2)
-            + "元";
-    ui->Coupon->setText(Coupon);
+    refreshUi();
 
     //图片导入
     QIcon icon;
@@ -72,13 +63,31 @@ void UserRechargeWindow::on_WorkButton_clicked()
     } else {
         if (mCCMIS->NewRecharge(mCCMIS->GetUserNum(), money))
         {
-            QMessageBox* msg = new QMessageBox();
+            QMessageBox* msg = new QMessageBox(this);
             msg->setText(tr("充值成功！"));
             msg->show();
         } else {
-            QMessageBox* msg = new QMessageBox();
+            QMessageBox* msg = new QMessageBox(this);
             msg->setText(tr("充值失败！"));
             msg->show();
         }
-    }
+    }   
+    refreshUi();    //更新余额等数据
+}
+
+void UserRechargeWindow::refreshUi()
+{
+    //基本信息展示
+    ui->UserName->setText(mCCMIS->GetCurrentUserName());
+    QString Money = "余额：" + QString::number
+            (double(mCCMIS->GetUserByNum(mCCMIS->GetUserNum())->balance)/100,'f',2)
+            + "元";
+    ui->Money->setText(Money);
+    QString Coupon = "劵：" + QString::number
+            (double(mCCMIS->GetUserByNum(mCCMIS->GetUserNum())->coupon)/100,'f',2)
+            + "元";
+    ui->Coupon->setText(Coupon);
+
+    UserMainWindow* u = (UserMainWindow*)parentWidget();    //更新父窗口A
+    u->refreshUi();
 }

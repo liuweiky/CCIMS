@@ -8,6 +8,7 @@
 #include <QMessageBox>
 
 #include "ccmis.h"
+#include "usermainwindow.h"
 
 namespace Ui {
 class UserRechargeWindow;
@@ -18,7 +19,8 @@ class UserRechargeWindow : public QMainWindow
     Q_OBJECT
 
 public:
-    explicit UserRechargeWindow(CCMIS* c, QWidget *parent = 0);
+    explicit UserRechargeWindow(CCMIS* c, QWidget *parent = 0);  
+    void refreshUi();
     ~UserRechargeWindow();
 
 private slots:
