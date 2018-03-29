@@ -9,9 +9,9 @@ UserRechargeWindow::UserRechargeWindow(CCMIS *c, QWidget *parent):
 
     mCCMIS = c;
 
-    //时间显示
+    //时间处理
     QTimer *timer = new QTimer(this);
-    connect(timer,SIGNAL(timeout()),this,SLOT(showtime()));
+    connect(timer,SIGNAL(timeout()),this,SLOT(time_dispose()));
     timer->start(500);
 
     refreshUi();
@@ -27,8 +27,6 @@ UserRechargeWindow::UserRechargeWindow(CCMIS *c, QWidget *parent):
     QRegExp regx("[0-9]+$");    //正则表达式，只允许输入0~9
     QValidator *validator = new QRegExpValidator(regx, ui->moneyLineEdit);
     ui->moneyLineEdit->setValidator(validator);
-
-
 }
 
 UserRechargeWindow::~UserRechargeWindow()
@@ -37,12 +35,11 @@ UserRechargeWindow::~UserRechargeWindow()
 }
 
 
-void UserRechargeWindow::showtime()
+void UserRechargeWindow::time_dispose()
 {
-    QDate date = QDate::currentDate();
-    QTime time = QTime::currentTime();
-    QString txtTime =date.toString("yyyy/MM/dd")+time.toString(" hh:mm:ss");
-    ui->Time->display(txtTime);
+    ui->Time->display(mCCMIS->ShowDateTime());
+    //月初刷新券
+    mCCMIS->CouponFresh();
 }
 
 void UserRechargeWindow::on_BackButton_clicked()

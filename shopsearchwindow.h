@@ -2,11 +2,12 @@
 #define SHOPSEARCHWINDOW_H
 
 #include <QMainWindow>
-#include <QDate>
-#include <QTime>
 #include <QTimer>
-#include "ccmis.h"
+
 #include <qtablewidget.h>
+
+#include "ccmis.h"
+
 namespace Ui {
 class ShopSearchWindow;
 }
@@ -22,7 +23,7 @@ public:
     void ShowOneInfo(QTableWidget* shop_table, Information* one_info,int row_index);
 
 private slots:
-    void showtime();
+    void time_dispose();
     void on_BackButton_clicked();
 
 private:

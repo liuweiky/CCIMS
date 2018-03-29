@@ -2,8 +2,6 @@
 #define ADMINISTRATORMAINWINDOW_H
 
 #include <QMainWindow>
-#include <QDate>
-#include <QTime>
 #include <QTimer>
 
 #include "administratorleadwindow.h"
@@ -24,7 +22,7 @@ public:
     ~AdministratorMainWindow();
 
 private slots:
-    void showtime();
+    void time_dispose();
     void on_BackButton_clicked();
     void on_ImportButton_clicked();
     void on_WorkButton_clicked();

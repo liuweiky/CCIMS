@@ -206,7 +206,7 @@ bool CCMIS::SaveJsonArrToFile(const jsonxx::Array& ToSaveJson,string filename)
 
     QTextStream streamFileOut(&fileOut);
     streamFileOut.setCodec("UTF-8");
-    streamFileOut<<allJsonArray;
+    streamFileOut << allJsonArray;
     streamFileOut.flush();
     fileOut.close();
     return true;
@@ -776,7 +776,7 @@ QString CCMIS::GetCurrentUserName(){
 }
 
 User*   CCMIS::GetCurrentUser(){
-    return GetShopByNum(mUserNumber);
+    return GetUserByNum(mUserNumber);
 }
 Shop*   CCMIS::GetCurrentShop(){
     return GetShopByNum(mUserNumber);
@@ -939,7 +939,6 @@ int CCMIS::NewTransaction(int onum, int inum, int mon)
                     //转券账户
                     Information* info = BuildInfo(onum, inum + 50, u->coupon);
                     InsertInf(info);
-
                 }
 
                 //转普通账户
@@ -1040,4 +1039,29 @@ Information* CCMIS::GetInfoByTag(QString tag)
         i = i->next;
     }
     return NULL;
+}
+
+QString CCMIS::ShowDateTime(){
+    QDate date = QDate::currentDate();
+    QTime time = QTime::currentTime();
+    QString txt =date.toString("yyyy/MM/dd")+time.toString(" hh:mm:ss");
+    return txt;
+}
+
+void CCMIS::CouponFresh(){
+    User* u = mUser->next;
+    QDateTime *datetime = QDateTime::currentDateTime();
+
+    if (datetime->date()->day() == 1
+        && datetime->time()->hour() == 0
+        && datetime->time()->minute() == 0
+        && datetime->time()->second() == 0){
+        while (u !=NULL) {
+            if (num >= USER_BEGIN && num < USER_TEA_EMP_BEGIN){
+                u->coupon = 10000;
+            }
+            u = u->next;
+        }
+        WriteUser(USER_FILE_NAME);
+    }
 }

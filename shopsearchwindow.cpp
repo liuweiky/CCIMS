@@ -9,9 +9,9 @@ ShopSearchWindow::ShopSearchWindow(CCMIS *c, QWidget *parent) :
 
     mCCMIS = c;
 
-    //时间显示
+    //时间处理
     QTimer *timer = new QTimer(this);
-    connect(timer,SIGNAL(timeout()),this,SLOT(showtime()));
+    connect(timer,SIGNAL(timeout()),this,SLOT(time_dispose()));
     timer->start(500);
 
     //基本信息展示
@@ -82,12 +82,11 @@ void ShopSearchWindow::ShowOneInfo(QTableWidget* shop_table,Information* one_inf
     shop_table->setItem(row_index,4,new QTableWidgetItem(Money));
 }
 
-void ShopSearchWindow::showtime()
+void ShopSearchWindow::time_dispose()
 {
-    QDate date = QDate::currentDate();
-    QTime time = QTime::currentTime();
-    QString txtTime =date.toString("yyyy/MM/dd")+time.toString(" hh:mm:ss");
-    ui->Time->display(txtTime);
+    ui->Time->display(mCCMIS->ShowDateTime());
+    //月初刷新券
+    mCCMIS->CouponFresh();
 }
 
 void ShopSearchWindow::on_BackButton_clicked()

@@ -9,6 +9,11 @@ MainWindow::MainWindow(QWidget *parent) :
 
     mCCMIS = new CCMIS();
 
+    //时间处理
+    QTimer *timer = new QTimer(this);
+    connect(timer,SIGNAL(timeout()),this,SLOT(time_dispose()));
+    timer->start(500);
+
     //正则表达式，只允许输入0~9
     QRegExp regx("[0-9]+$");
     QValidator *validator = new QRegExpValidator(regx, ui->UserNameLineEdit);
@@ -18,6 +23,12 @@ MainWindow::MainWindow(QWidget *parent) :
 MainWindow::~MainWindow()
 {
     delete ui;
+}
+
+void AdministratorLeadWindow::time_dispose()
+{
+    //月初刷新券
+    mCCMIS->CouponFresh();
 }
 
 void MainWindow::on_pushButton_clicked()

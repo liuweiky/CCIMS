@@ -2,6 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QTimer>
 #include <QDialog>
 #include <QMessageBox>
 #include <QDesktopWidget>
@@ -28,6 +29,7 @@ public:
     ~MainWindow();
 
 private slots:
+    void time_dispose();
     void on_pushButton_clicked();
 
 private:

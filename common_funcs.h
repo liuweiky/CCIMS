@@ -1,7 +1,6 @@
 #ifndef COMMON_FUNCS_H
 #define COMMON_FUNCS_H
 
-
 #include <QString>
 #include <QTextCodec>
 #include <string>
@@ -10,6 +9,7 @@
 #include <QDesktopServices>
 #include <QMessageBox>
 //#include <QAxObject>
+
 using std::string;
 
 struct Date

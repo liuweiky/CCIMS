@@ -12,6 +12,7 @@
 #include <QFile>
 #include <QTextStream>
 #include <QDebug>
+#include <QDateTime>
 #include <QtGlobal>         //判断平台
 #include <QCoreApplication> //读取路径
 
@@ -38,6 +39,11 @@ private:
     unsigned int totalUserCount;
     unsigned int totalShopCount;
     unsigned int totalInfoCount;
+
+    jsonxx::Array LinkListToJson(User* user_list);
+    jsonxx::Array LinkListToJson(Information* info_list);
+    jsonxx::Array LinkListToJson(Shop* shop_list);
+    bool SaveJsonArrToFile(const jsonxx::Array& ToSaveJson,string filename);
 
 public:
     //跨平台判断
@@ -145,11 +151,6 @@ public:
     QString FilenameCorrect(string filename);       //应对不同平台输出文件路径
     string ReadAllFileToQString(string filename);   //读取文件至std::string
 
-    jsonxx::Array LinkListToJson(User* user_list);
-    jsonxx::Array LinkListToJson(Information* info_list);
-    jsonxx::Array LinkListToJson(Shop* shop_list);
-    bool SaveJsonArrToFile(const jsonxx::Array& ToSaveJson,string filename);
-
     //写入文件的话，默认一个参数是私有成员变量链表 写进文件
     //注意！默认参数不允许是类内成员变量，原因是编译期无法确定内容，只有静态变量可以当默认参数
     bool ReadInf(string filename);                                  //读入整个信息表文件
@@ -231,6 +232,9 @@ public:
     bool CheckPassword(string password);
 
     void SetUserNumber(int n);
+
+    QString ShowDateTime();     //输出当前日期时间
+    void CouponFresh();         //月初刷新劵额
 };
 
 #endif // CCMIS_H

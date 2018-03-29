@@ -1,7 +1,6 @@
 #ifndef JSONXX_H
 #define JSONXX_H
 
-
 // -*- mode: c++; c-basic-offset: 4; -*-
 
 // Author: Hong Jiang <hong@hjiang.net>

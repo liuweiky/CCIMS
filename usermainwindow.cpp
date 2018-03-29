@@ -11,9 +11,9 @@ UserMainWindow::UserMainWindow(CCMIS* c, QWidget *parent) :
     mCCMIS = c;
 //    User* u = mCCMIS->GetUserByNum(mCCMIS->GetUserNum());
 
-    //时间显示
+    //时间处理
     QTimer *timer = new QTimer(this);
-    connect(timer,SIGNAL(timeout()),this,SLOT(showtime()));
+    connect(timer,SIGNAL(timeout()),this,SLOT(time_dispose()));
     timer->start(500);
 
     //基本信息展示
@@ -52,12 +52,11 @@ string UserMainWindow::qstr2str(const QString qstr)
     return string(cdata);
 }
 
-void UserMainWindow::showtime()
+void UserMainWindow::time_dispose()
 {
-    QDate date = QDate::currentDate();
-    QTime time = QTime::currentTime();
-    QString txtTime =date.toString("yyyy/MM/dd")+time.toString(" hh:mm:ss");
-    ui->Time->display(txtTime);
+    ui->Time->display(mCCMIS->ShowDateTime());
+    //月初刷新券
+    mCCMIS->CouponFresh();
 }
 
 void UserMainWindow::on_BackButton_clicked()

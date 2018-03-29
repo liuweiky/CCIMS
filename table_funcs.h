@@ -12,7 +12,6 @@
 #include<QDateTime>
 #include"ccmis.h"
 
-template<class Table_Type>
 class Table_Parent
 {
 private:
@@ -113,7 +112,7 @@ public:
                CCMIS* ccmis_sys);
     void init_Table_Header();
     void init_Subsidy_Header();
-}
+};
 
 
 
