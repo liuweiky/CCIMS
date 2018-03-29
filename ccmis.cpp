@@ -523,9 +523,11 @@ unsigned int CCMIS::ImportInf(string filename)
                     get<jsonxx::Number>(JSON_KEY_ONUMBER);
             info->money= array.get<jsonxx::Object>(i).
                     get<jsonxx::Number>(JSON_KEY_MONEY);
-            //这里有问题。。
-            //统计记录数目
-            successnumber++;
+            if (NewTransaction(info->Onumber, info->Inumber, info->money,
+                               info->year, info->month, info->day,
+                               info->hour, info->minute, info->second) == 0) {
+                successnumber++;    //统计记录数目
+            }
         }
         return successnumber;
     } else {

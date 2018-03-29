@@ -161,6 +161,7 @@ public:
     //写入文件的话，默认一个参数是私有成员变量链表 写进文件
     //注意！默认参数不允许是类内成员变量，原因是编译期无法确定内容，只有静态变量可以当默认参数
     bool ReadInf(string filename);                          //读入整个信息表文件
+    //下面这个函数强行调用了写好的函数，导致没法判断原文件流水号是否正确！ by陆子旭
     unsigned int ImportInf(string filename);                //添加信息表文件信息（返回成功数）
     bool WriteInf(string filename);                         //写出minfo表文件
     bool WriteInf(string filename, Information *info_list); //写出指定信息表文件
