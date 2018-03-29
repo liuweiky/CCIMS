@@ -12,6 +12,7 @@
 //自定义常量
 const string CCMIS::BACKBUTTON_PICTURE_NAME = "BackButton.png";
 
+const string CCMIS::OUT_FILE_NAME   = "user.csv";
 const string CCMIS::USER_FILE_NAME  = "user.json";
 const string CCMIS::SHOP_FILE_NAME  = "shop.json";
 const string CCMIS::INFO_FILE_NAME  = "info.json";

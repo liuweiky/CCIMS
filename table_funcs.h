@@ -10,6 +10,7 @@
 #include<QDate>
 #include<QTableWidget>
 #include<QDateTime>
+
 #include"ccmis.h"
 
 class Table_Parent
@@ -41,8 +42,8 @@ public:
     void init_Subsidy_Header();
     void show_One_Info_Same_Num(Information*,int,int);
     void show_One_Info_All(Information*,int);
-    //跨平台问题，这个函数待实现
-    void export_Table_To_Excel();
+    //输出csv解决跨平台，得按照你自己的改
+    void export_Table_To_CSV();
 
 
     //纯虚函数 子类给出实现 负责表格头

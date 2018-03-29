@@ -1,7 +1,6 @@
 #include "table_funcs.h"
 
 
-
 //父类函数
 Table_Parent::Table_Parent
                (QTableWidget *table, QDateEdit* start_edit,
@@ -19,7 +18,7 @@ Table_Parent::Table_Parent
     init_Date_Edit();
 }
 
-Table_Parent::init_Date_Edit()
+void Table_Parent::init_Date_Edit()
 {
     QDate start_date(2018,1,1);
     mStart_Date = new QDate(start_date);
@@ -121,7 +120,28 @@ void Table_Parent::show_One_Info_All(Information *one_info, int row_index)
     row_index++;
 }
 
+void Table_Parent::export_Table_To_CSV(){
+    //打开.csv文件
+    QFile file(FilenameCorrect(OUT_FILE_NAME));
+    if(!file.open(QIODevice::WriteOnly | QIODevice::Text)) {
+        qDebug() << "Output file failed!";
+        return;
+    }
 
+    QTextStream out(&file);
+    QString str;
+    //获取表格内容
+    int row = ui.tableWidgetExcel->rowCount();//表格总行数
+    int col = ui.tableWidgetExcel->columnCount();
+    for(int i = 0; i < row; i ++) {
+        for(int j = 0; j < col; j++) {
+        str = ui.tableWidgetExcel->item(i, j)->text();
+        out << str << ",";// 写入文件
+        }
+        out << "\n";
+    }
+    file.close();
+}
 
 
 //父类槽函数

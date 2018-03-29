@@ -52,6 +52,7 @@ public:
     //自定义常量
     static const string BACKBUTTON_PICTURE_NAME;
 
+    static const string OUT_FILE_NAME;
     static const string USER_FILE_NAME;
     static const string SHOP_FILE_NAME;
     static const string INFO_FILE_NAME;
