@@ -29,7 +29,7 @@ public:
     ~MainWindow();
 
 private slots:
-    void time_dispose();
+    //void time_dispose();
     void on_pushButton_clicked();
 
 private:

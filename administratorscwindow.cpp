@@ -1,5 +1,6 @@
 #include "administratorscwindow.h"
 #include "ui_administratorscwindow.h"
+#include "table_funcs.h"
 
 AdministratorSCWindow::AdministratorSCWindow(CCMIS *c, QWidget *parent) :
     QMainWindow(parent),
@@ -26,6 +27,10 @@ AdministratorSCWindow::AdministratorSCWindow(CCMIS *c, QWidget *parent) :
     ui->BackButton->setIcon(icon);
 
     //表格显示
+    Admin_Table(ui->tableWidget,ui->StartDateEdit,ui->FinishDateEdit,
+                ui->filterButton,ui->resetButton,ui->OutputButton,mCCMIS,
+                ui->deletebutton,ui->insertButton,ui->alterButton,ui->checkForSubsidy);
+
 
 }
 

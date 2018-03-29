@@ -15,7 +15,7 @@
 
 class Table_Parent
 {
-private:
+protected:
     //控件类成员
     QTableWidget* mTable;
     QDateEdit* mStart_Edit;
@@ -36,6 +36,7 @@ public:
                  QDateEdit* finish_edit,QPushButton* filter_btn,
                  QPushButton* reset_btn, QPushButton* export_btn,
                  CCMIS* ccmis_sys);
+    ~Table_Parent();
 
     void init_Date_Edit();
     void Table_Filtered_By_Date();
@@ -48,6 +49,8 @@ public:
 
     //纯虚函数 子类给出实现 负责表格头
     virtual void init_Table_Header() = 0;
+
+    void connectSignalsSlots();
 
 
 //一些槽函数
@@ -66,6 +69,7 @@ protected slots:
 class Admin_Table : public Table_Parent
 {
 private:
+    QCheckBox* mSubsidy_Chk;
     //删 增 改
     QPushButton* mDelete_Btn;
     QPushButton* mInsert_Btn;
@@ -75,7 +79,8 @@ public:
                 QDateEdit* finish_edit,QPushButton* filter_btn,
                 QPushButton* reset_btn,QPushButton* export_btn,
                 CCMIS* ccmis_sys,QPushButton* delete_btn,
-                QPushButton* insert_btn,QPushButton* alter_btn);
+                QPushButton* insert_btn,QPushButton* alter_btn,
+                QCheckBox* subsidy_check);
     void init_Table_Header();
 };
 
@@ -105,12 +110,13 @@ public:
 class User_Table: public Table_Parent
 {
 private:
+    QCheckBox* mSubsidy_Chk;
     User* mCurrent_User;
 public:
     User_Table(QTableWidget *table, QDateEdit* start_edit,
                QDateEdit* finish_edit,QPushButton* filter_btn,
                QPushButton* reset_btn, QPushButton* export_btn,
-               CCMIS* ccmis_sys);
+               CCMIS* ccmis_sys,QCheckBox* subsidy_check);
     void init_Table_Header();
     void init_Subsidy_Header();
 };
