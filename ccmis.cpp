@@ -775,6 +775,16 @@ QString CCMIS::GetCurrentUserName(){
     return this->GetAllNameByNum(mUserNumber);
 }
 
+User*   CCMIS::GetCurrentUser(){
+    return GetShopByNum(mUserNumber);
+}
+Shop*   CCMIS::GetCurrentShop(){
+    return GetShopByNum(mUserNumber);
+}
+
+
+
+
 int CCMIS::GetTotalCanteenConsumptionByDay(int year, int month, int day, int num)
 {
     int c =0;

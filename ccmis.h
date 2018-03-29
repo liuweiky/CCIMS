@@ -179,6 +179,9 @@ public:
     QString GetAllNameByNum(int num);       //通过卡号得到用户名？
         int GetUserNum();                   //获取当前用户流水号
     QString GetCurrentUserName();           //获取当前用户名
+    User*   GetCurrentUser();
+    Shop*   GetCurrentShop();
+
 
     //新建消费交易记录，先减少onum的余额，增加inum的余额（可选），
     //并生成流水号、info，插入到表，更新user.json、info.json，

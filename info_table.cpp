@@ -54,45 +54,45 @@ Info_Table::Info_Table(CCMIS* ccmis_system,QWidget *parent) :
 
 
 
-void Info_Table::SetStartFinishRange(QDateEdit* start_edit,QDateEdit* finish_edit)
-{
-    QDate start_date(2018,1,1);
+//void Info_Table::SetStartFinishRange(QDateEdit* start_edit,QDateEdit* finish_edit)
+//{
+//    QDate start_date(2018,1,1);
 
 
 
-    //起始时间范围限制
-    start_edit->setDate(start_date);
-    start_edit->setMaximumDate(QDate::currentDate());
-    start_edit->setMinimumDate(start_date);
+//    //起始时间范围限制
+//    start_edit->setDate(start_date);
+//    start_edit->setMaximumDate(QDate::currentDate());
+//    start_edit->setMinimumDate(start_date);
 
-    //结束时间范围限制
-    finish_edit->setDate(QDate::currentDate());
-    finish_edit->setMaximumDate(QDate::currentDate());
-    finish_edit->setMinimumDate(start_date);
+//    //结束时间范围限制
+//    finish_edit->setDate(QDate::currentDate());
+//    finish_edit->setMaximumDate(QDate::currentDate());
+//    finish_edit->setMinimumDate(start_date);
 
 
-    //弹出框
-    start_edit->setCalendarPopup(true);
-    finish_edit->setCalendarPopup(true);  // 日历弹出
-}
+//    //弹出框
+//    start_edit->setCalendarPopup(true);
+//    finish_edit->setCalendarPopup(true);  // 日历弹出
+//}
 
-void Info_Table::onStartDateChanged(const QDate &date)
-{
-   qDebug() << "StartDateTime : " << date;
-    this->Start_Date->setDate(date.year(),date.month(),date.day());
+//void Info_Table::onStartDateChanged(const QDate &date)
+//{
+//   qDebug() << "StartDateTime : " << date;
+//    this->Start_Date->setDate(date.year(),date.month(),date.day());
 
-    this->Finish_Date_Edit->setMinimumDate(date);
+//    this->Finish_Date_Edit->setMinimumDate(date);
 
-}
+//}
 
-void Info_Table::onFinishDateChanged(const QDate &date)
-{
-    qDebug() << "FinishDateTime : " << date;
-    this->Finish_Date->setDate(date.year(),date.month(),date.day());
-    qDebug() << "FinishDateTime : " << date;
-    this->Start_Date_Edit->setMaximumDate(date);
+//void Info_Table::onFinishDateChanged(const QDate &date)
+//{
+//    qDebug() << "FinishDateTime : " << date;
+//    this->Finish_Date->setDate(date.year(),date.month(),date.day());
+//    qDebug() << "FinishDateTime : " << date;
+//    this->Start_Date_Edit->setMaximumDate(date);
 
-}
+//}
 
 
 
@@ -267,30 +267,30 @@ void Info_Table::ShowSameInumOneInfo(QTableWidget *qtable,Information* one_info,
 }
 
 
-void Info_Table::on_Search_clicked()
-{
-    Table_Filtered_By_Date(ui->tableWidget, Start_Date,Finish_Date);
-}
+//void Info_Table::on_Search_clicked()
+//{
+//    Table_Filtered_By_Date(ui->tableWidget, Start_Date,Finish_Date);
+//}
 
-void Info_Table::Table_Filtered_By_Date(QTableWidget* table,QDate* start_date,QDate* finish_date)
-{
+//void Info_Table::Table_Filtered_By_Date(QTableWidget* table,QDate* start_date,QDate* finish_date)
+//{
 
-    for( int i = 0; i < table->rowCount(); ++i )
-    {
-        bool match = false;
-        QTableWidgetItem *item = table->item( i, 0 );
-        QDate one_date = QDate::fromString (item->text(),"yyyy-MM-dd" );
-        //qDebug()<<one_date;
-        if( (one_date >= (*start_date)) && (one_date <= (*finish_date)))
+//    for( int i = 0; i < table->rowCount(); ++i )
+//    {
+//        bool match = false;
+//        QTableWidgetItem *item = table->item( i, 0 );
+//        QDate one_date = QDate::fromString (item->text(),"yyyy-MM-dd" );
+//        //qDebug()<<one_date;
+//        if( (one_date >= (*start_date)) && (one_date <= (*finish_date)))
 
-        { qDebug()<<one_date;
-            match = true;
-           // break;
-        }
-        table->setRowHidden( i, !match );
-     }
+//        { qDebug()<<one_date;
+//            match = true;
+//           // break;
+//        }
+//        table->setRowHidden( i, !match );
+//     }
 
-}
+//}
 
 
 void Info_Table::on_tableWidget_itemClicked(QTableWidgetItem *item)
