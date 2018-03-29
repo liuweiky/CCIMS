@@ -40,10 +40,16 @@ private:
     unsigned int totalShopCount;
     unsigned int totalInfoCount;
 
+    //数据链表导出为json
     jsonxx::Array LinkListToJson(User* user_list);
     jsonxx::Array LinkListToJson(Information* info_list);
     jsonxx::Array LinkListToJson(Shop* shop_list);
+
+    //json导出到文件
     bool SaveJsonArrToFile(const jsonxx::Array& ToSaveJson,string filename);
+
+    //判断前项时间是否小于后项
+    bool TimeBool(Information* beforetime, Information* aftertime);
 
 public:
     //跨平台判断
@@ -154,10 +160,11 @@ public:
 
     //写入文件的话，默认一个参数是私有成员变量链表 写进文件
     //注意！默认参数不允许是类内成员变量，原因是编译期无法确定内容，只有静态变量可以当默认参数
-    bool ReadInf(string filename);                                  //读入整个信息表文件
-    bool WriteInf(string filename);                                 //写出minfo表文件
-    bool WriteInf(string filename, Information *info_list);         //写出指定信息表文件
-    bool ReadUser(string filename);                                 //下同
+    bool ReadInf(string filename);                          //读入整个信息表文件
+    unsigned int ImportInf(string filename);                //添加信息表文件信息（返回成功数）
+    bool WriteInf(string filename);                         //写出minfo表文件
+    bool WriteInf(string filename, Information *info_list); //写出指定信息表文件
+    bool ReadUser(string filename);                         //下同
     bool WriteUser(string filename);
     bool WriteUser(string filename, User *user_list);
     bool ReadShop(string filename);
@@ -181,14 +188,17 @@ public:
     QString GetAllNameByNum(int num);       //通过卡号得到用户名？
         int GetUserNum();                   //获取当前用户流水号
     QString GetCurrentUserName();           //获取当前用户名
-    User*   GetCurrentUser();
-    Shop*   GetCurrentShop();
+    User*   GetCurrentUser();               //获取当前用户结点
+    Shop*   GetCurrentShop();               //获取当前商店结点
 
 
     //新建消费交易记录，先减少onum的余额，增加inum的余额（可选），
     //并生成流水号、info，插入到表，更新user.json、info.json，
     //返回是否交易成功，money要乘以100
-    int NewTransaction(int onum, int inum, int mon);
+    //加了时间，不需要默认-1 by陆子旭
+    int NewTransaction(int onum, int inum, int mon,
+                       int year = -1, int month= -1, int day= -1,
+                       int hour= -1, int min= -1, int sec= -1);
     bool NewRefund(Information* tempinf);   //撤销某条交易信息
     int NewSubsidy(User* u);                //新建补贴交易
     bool NewRecharge(int num, int money);   //新建充值记录
@@ -200,9 +210,9 @@ public:
                        int min, int sec, int onum, int inum, int mon);
 
     //money要乘以100
-    Information* BuildInfo(int onum, int inum, int mon);
-    Information* BuildInfo(int year, int month, int day, int hour,
-                           int min, int sec, int onum, int inum, int mon);
+    Information* BuildInfo(int onum, int inum, int mon,
+                           int year = -1, int month= -1, int day= -1,
+                           int hour= -1, int min= -1, int sec= -1);
 
     Information* GetInfoPointer();
 
