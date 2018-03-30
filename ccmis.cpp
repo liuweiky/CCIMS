@@ -451,6 +451,7 @@ bool CCMIS::ReadInf(string filename)
 
             totalInfoCount++;   //统计记录数目
         }
+    }
 
         //验证数据
         /*Information* info = mInfo->next;
@@ -469,6 +470,7 @@ bool CCMIS::ReadInf(string filename)
             info=info->next;
         }*/
 
+<<<<<<< HEAD
 
         return true;
 
@@ -512,6 +514,48 @@ bool CCMIS::ReadInf(string filename)
     }
 
 }
+=======
+        return true;
+
+//    if (!fileALLReadIn.empty()){
+//        jsonxx::Array array;
+//        array.parse(fileALLReadIn);             //解析 json
+//        for (unsigned long i = 0; i < array.size(); i++)  //迭代构造
+//        {
+//            //构造信息
+//            Information* info = new Information();
+//            info->tag = array.get<jsonxx::Object>(i).
+//                    get<jsonxx::String>(JSON_KEY_TAG);
+//            info->year = array.get<jsonxx::Object>(i).
+//                    get<jsonxx::Number>(JSON_KEY_YEAR);
+//            info->month = array.get<jsonxx::Object>(i).
+//                    get<jsonxx::Number>(JSON_KEY_MONTH);
+//            info->day = array.get<jsonxx::Object>(i).
+//                    get<jsonxx::Number>(JSON_KEY_DAY);
+//            info->hour = array.get<jsonxx::Object>(i).
+//                    get<jsonxx::Number>(JSON_KEY_HOUR);
+//            info->minute = array.get<jsonxx::Object>(i).
+//                    get<jsonxx::Number>(JSON_KEY_MINUTE);
+//            info->second = array.get<jsonxx::Object>(i).
+//                    get<jsonxx::Number>(JSON_KEY_SECOND);
+//            info->Inumber= array.get<jsonxx::Object>(i).
+//                    get<jsonxx::Number>(JSON_KEY_INUMBER);
+//            info->Onumber= array.get<jsonxx::Object>(i).
+//                    get<jsonxx::Number>(JSON_KEY_ONUMBER);
+//            info->money= array.get<jsonxx::Object>(i).
+//                    get<jsonxx::Number>(JSON_KEY_MONEY);
+//            if (NewTransaction(info->Onumber, info->Inumber, info->money,
+//                               info->year, info->month, info->day,
+//                               info->hour, info->minute, info->second) == 0) {
+//                successnumber++;    //统计记录数目
+//            }
+//        }
+//        return successnumber;
+//    } else {
+//        return false;
+//    }
+//    this->WriteInf("test.json");
+>>>>>>> 609dd06632c5654b8d11997e79323756789c0f64
 }
 
 string CCMIS::GenerateTag(int onum, int inum, int mon)
@@ -562,10 +606,13 @@ string CCMIS::GenerateTag(int onum, int inum, int mon)
 
 void CCMIS::InsertInf(Information* tempinf)
 {
+<<<<<<< HEAD
 
     tempinf->next = mInfo->next;
     mInfo->next = tempinf;
 
+=======
+>>>>>>> 609dd06632c5654b8d11997e79323756789c0f64
     Information* in = mInfo;
 
     while (in->next != NULL && Information::InfoToDateTime(in->next) < Information::InfoToDateTime(tempinf)) {
@@ -583,7 +630,10 @@ Information* CCMIS::BuildInfo(int onum, int inum, int mon)
     Information* info = new Information();
     info->tag = GenerateTag(onum, inum, mon);
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 609dd06632c5654b8d11997e79323756789c0f64
     time_t tt = time(NULL);
     tm* t= localtime(&tt);
 
@@ -594,6 +644,7 @@ Information* CCMIS::BuildInfo(int onum, int inum, int mon)
     info->minute = t->tm_min;
     info->second = t->tm_sec;
 
+<<<<<<< HEAD
 
     if (year == -1){
         time_t tt = time(NULL);
@@ -613,6 +664,8 @@ Information* CCMIS::BuildInfo(int onum, int inum, int mon)
         info->second= sec;
     }
 
+=======
+>>>>>>> 609dd06632c5654b8d11997e79323756789c0f64
     info->Onumber = onum;
     info->Inumber = inum;
     info->money = mon;
@@ -929,6 +982,7 @@ int CCMIS::NewTransaction(int onum, int inum, int mon)
     if (s == NULL)
         return MESSAGE_TRANSACTION_NO_SHOP;     //商号不存在，交易失败
 
+<<<<<<< HEAD
 
     time_t tt = time(NULL);
     tm* t= localtime(&tt);
@@ -944,6 +998,11 @@ int CCMIS::NewTransaction(int onum, int inum, int mon)
         sec = t->tm_sec;
     }
 
+=======
+    time_t tt = time(NULL);
+    tm* t= localtime(&tt);
+
+>>>>>>> 609dd06632c5654b8d11997e79323756789c0f64
 
     if (inum / 1000 == GROUP_CANTEEN)           //收款方是食堂组
     {
@@ -1130,7 +1189,10 @@ QString CCMIS::ShowDateTime(){
     return txt;
 }
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 609dd06632c5654b8d11997e79323756789c0f64
 //void CCMIS::CouponFresh(){
 //    User* u = mUser->next;
 //    QDateTime *datetime = QDateTime::currentDateTime();
@@ -1146,6 +1208,7 @@ QString CCMIS::ShowDateTime(){
 //            u = u->next;
 //        }
 //        WriteUser(USER_FILE_NAME);
+<<<<<<< HEAD
 
 void CCMIS::CouponFresh(){
     User* u = mUser->next;
@@ -1164,6 +1227,8 @@ void CCMIS::CouponFresh(){
         WriteUser(USER_FILE_NAME);
     }
 }
+=======
+>>>>>>> 609dd06632c5654b8d11997e79323756789c0f64
 
 //void CCMIS::CloseTxt(QCloseEvent *event){
 //    if (QMessageBox::information
