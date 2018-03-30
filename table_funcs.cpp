@@ -122,10 +122,10 @@ void Table_Parent::show_One_Info_All(Information *one_info, int row_index)
     mTable->setItem(row_index,1,new QTableWidgetItem(Time));
 
     mTable->setItem(row_index,2,new QTableWidgetItem(OutNumStr));
-    mTable->setItem(row_index,2,new QTableWidgetItem(OutName));
-    mTable->setItem(row_index,2,new QTableWidgetItem(InName));
-    mTable->setItem(row_index,2,new QTableWidgetItem(InNumStr));
-    mTable->setItem(row_index,4,new QTableWidgetItem(Money));
+    mTable->setItem(row_index,3,new QTableWidgetItem(OutName));
+    mTable->setItem(row_index,4,new QTableWidgetItem(InName));
+    mTable->setItem(row_index,5,new QTableWidgetItem(InNumStr));
+    mTable->setItem(row_index,6,new QTableWidgetItem(Money));
 
     row_index++;
 }
@@ -226,7 +226,7 @@ Admin_Table::Admin_Table
 void Admin_Table::init_Table_Header()
 {
    mTable->clear();
-   mTable->setColumnCount(5);
+   mTable->setColumnCount(7);
    mTable->setHorizontalHeaderLabels(
           QStringList()<<"日期" <<"时间" <<"出账号"<<"出账账户"
                        <<"入账号"<<"入账账户"<<"金额");

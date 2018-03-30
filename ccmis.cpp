@@ -1050,6 +1050,7 @@ int CCMIS::NewTransaction(int onum, int inum, int mon,
 
 bool CCMIS::NewRefund(Information *tempinf)
 {
+    qDebug()<<tempinf;
     if (tempinf == NULL)
         return false;
 
