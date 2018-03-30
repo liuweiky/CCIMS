@@ -6,6 +6,7 @@ UserRechargeWindow::UserRechargeWindow(CCMIS *c, QWidget *parent):
     ui(new Ui::UserRechargeWindow)
 {
     ui->setupUi(this);
+    this->setAttribute(Qt::WA_DeleteOnClose,true);
 
     mCCMIS = c;
 

@@ -3,6 +3,7 @@
 //#include "user.h"
 //#include "shop.h"
 //#include <QDebug>
+<<<<<<< HEAD
 //Info_Table::Info_Table(CCMIS* ccmis_system,QWidget *parent) :
 //    QWidget(parent),
 //    ui(new Ui::Info_Table)
@@ -50,6 +51,56 @@
 //    GetWholeOneUserSearchTable( ui->tableWidget,user_num);
 //    //Table_Filtered_By_Date(ui->tableWidget, new QDate(2018,2,10), new QDate(2018,2,15));
 //}
+=======
+////Info_Table::Info_Table(CCMIS* ccmis_system,QWidget *parent) :
+////    QWidget(parent),
+////    ui(new Ui::Info_Table)
+////{
+////    mCCMIS = ccmis_system;
+////    ui->setupUi(this);
+////    this->setAttribute(Qt::WA_DeleteOnClose,true);
+////    mCurrentItem = -1;
+////    int user_num = mCCMIS->GetUserNum();
+////    //设置按钮
+
+////    Start_Date = new QDate();
+////    Finish_Date = new QDate();
+
+////    CheckForSubsidy = ui->checkBox;
+////    CheckForSubsidy->setText("显示补助");
+////    if(user_num >= CCMIS::USER_TEA_EMP_BEGIN
+////            && user_num <= CCMIS::USER_TEA_EMP_END)
+////        CheckForSubsidy->setCheckable(true);
+////    else
+////        CheckForSubsidy->setCheckable(false);
+
+////    connect(CheckForSubsidy,SIGNAL(stateChanged(int)),SLOT(on_Check_Button_StateChoose(int)));
+
+
+
+////    //日期筛选
+////    //Start_Date_Edit = new QDateEdit(this);
+////    //Finish_Date_Edit = new QDateEdit(this);
+////    Start_Date_Edit = ui->start;
+////    Finish_Date_Edit = ui->finish;
+////    SetStartFinishRange(Start_Date_Edit,Finish_Date_Edit);
+////    connect(Start_Date_Edit,SIGNAL(dateChanged(QDate)),
+////            SLOT(onStartDateChanged(QDate)));
+////    connect(Finish_Date_Edit,SIGNAL(dateChanged(QDate)),
+////            SLOT(onFinishDateChanged(QDate)));
+
+
+////    connect(ui->toExcelButton,SIGNAL(pressed()),
+////            SLOT(on_toExcelButton_clicked()));
+////    connect(ui->Search,SIGNAL(clicked(bool)),
+////            SLOT(on_Search_clicked()));
+////    connect(ui->Reset,SIGNAL(clicked(bool)),
+////            SLOT(on_Reset_clicked()));
+
+////    GetWholeOneUserSearchTable( ui->tableWidget,user_num);
+////    //Table_Filtered_By_Date(ui->tableWidget, new QDate(2018,2,10), new QDate(2018,2,15));
+////}
+>>>>>>> 6b386681a79039c4d40ab0365c51c9d8cead6eb9
 
 
 

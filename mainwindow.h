@@ -32,6 +32,9 @@ private slots:
     void time_dispose();
     void on_pushButton_clicked();
 
+protected:
+    void closeEvent(QCloseEvent *event) override;
+
 private:
     Ui::MainWindow *ui;
     CCMIS* mCCMIS;

@@ -6,6 +6,7 @@ ShopSearchWindow::ShopSearchWindow(CCMIS *c, QWidget *parent) :
     ui(new Ui::ShopSearchWindow)
 {
     ui->setupUi(this);
+    this->setAttribute(Qt::WA_DeleteOnClose,true);
 
     mCCMIS = c;
 
@@ -26,7 +27,43 @@ ShopSearchWindow::ShopSearchWindow(CCMIS *c, QWidget *parent) :
     ui->BackButton->setIcon(icon);
 
     //表格显示
+<<<<<<< HEAD
     mShopTable = new Shop_Table(ui->tableWidget,ui->s)
+=======
+    ui->tableWidget = GetWholeShopSearchTable();
+}
+
+ShopSearchWindow::~ShopSearchWindow()
+{
+    delete ui;
+}
+
+
+QTableWidget* ShopSearchWindow::GetWholeShopSearchTable()
+{
+    QTableWidget* SSTable = new QTableWidget();
+    //设置表头
+    SSTable->setColumnCount(5);
+    SSTable->setHorizontalHeaderLabels(
+                QStringList()<<"日期" <<"时间" <<"卡号"<<"姓名"<<"金额");
+    //设置列宽
+    SSTable->setColumnWidth(0,120);
+    SSTable->setColumnWidth(1,100);
+    SSTable->setColumnWidth(2,50);
+    SSTable->setColumnWidth(3,100);
+    SSTable->setColumnWidth(4,100);
+
+
+    int RowCount = SSTable->rowCount();
+
+    Information* iter = mCCMIS->GetInfoPointer() ->next;
+    while(iter!=NULL){
+        if((int)iter->Inumber == mCCMIS->GetUserNum())
+            ShowOneInfo(SSTable,iter,RowCount);
+        iter  = iter->next;
+        RowCount++;
+    }
+>>>>>>> 6b386681a79039c4d40ab0365c51c9d8cead6eb9
 
     connect(mAdminTable->mStart_Edit,SIGNAL(dateChanged(QDate)),
             SLOT(mAdminTable->on_Start_Date_Changed(QDate);));
