@@ -50,9 +50,9 @@ void AdministratorLeadWindow::on_WorkButton_clicked()
     QString txt = ui->AddressLine->text();
     QMessageBox* msg = new QMessageBox(this);
 
-    int number = ImportInf(txt.toStdString());
+    int number = mCCMIS->ImportInf(txt.toStdString());
     if (number > 0){
-        msg->setText(tr("导入成功！导入"+QString::number(number,10)+"条信息"));
+        msg->setText(QString::fromUtf8("导入成功！导入 ")+QString::number(number,10)+QString::fromUtf8(" 条信息"));
     }else{
         msg->setText(tr("导入失败！"));
     }

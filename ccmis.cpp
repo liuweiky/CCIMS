@@ -603,13 +603,14 @@ Information* CCMIS::BuildInfo(int onum, int inum, int mon,
     info->tag = GenerateTag(onum, inum, mon);
 
     if (year == -1){
-        QDateTime *datetime = QDateTime::currentDateTime();
-        info->year  = datetime->date()->year();
-        info->month = datetime->date()->month();
-        info->day   = datetime->date()->year();
-        info->hour  = datetime->time()->hour();
-        info->minute= datetime->time()->minute();
-        info->second= datetime->time()->second();
+        time_t tt = time(NULL);
+        tm* t= localtime(&tt);
+        info->year = t->tm_year + 1900;
+        info->month = t->tm_mon + 1;
+        info->day = t->tm_mday;
+        info->hour = t->tm_hour;
+        info->minute = t->tm_min;
+        info->second = t->tm_sec;
     }else {
         info->year  = year;
         info->month = month;
@@ -932,13 +933,14 @@ int CCMIS::NewTransaction(int onum, int inum, int mon,
         return MESSAGE_TRANSACTION_NO_SHOP;     //商号不存在，交易失败
 
     if (year == -1){
-        QDateTime *datetime = QDateTime::currentDateTime();
-        year    = datetime->date()->year();
-        month   = datetime->date()->month();
-        day     = datetime->date()->year();
-        hour    = datetime->time()->hour();
-        min     = datetime->time()->minute();
-        sec     = datetime->time()->second();
+        time_t tt = time(NULL);
+        tm* t= localtime(&tt);
+        year = t->tm_year + 1900;
+        month = t->tm_mon + 1;
+        day = t->tm_mday;
+        hour = t->tm_hour;
+        min = t->tm_min;
+        sec = t->tm_sec;
     }
 
     if (inum / 1000 == GROUP_CANTEEN)           //收款方是食堂组
