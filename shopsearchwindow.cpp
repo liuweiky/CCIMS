@@ -58,13 +58,6 @@ ShopSearchWindow::~ShopSearchWindow()
 
 
 
-ShopSearchWindow::~ShopSearchWindow()
-{
-    delete ui;
-}
-
-
-
 void ShopSearchWindow::time_dispose()
 {
     ui->Time->display(mCCMIS->ShowDateTime());
