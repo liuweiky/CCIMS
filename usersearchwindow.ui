@@ -47,7 +47,7 @@
           </property>
           <property name="icon">
            <iconset>
-            <normaloff>../../../Downloads/返回.png</normaloff>../../../Downloads/返回.png</iconset>
+            <normaloff>../../Downloads/返回.png</normaloff>../../Downloads/返回.png</iconset>
           </property>
          </widget>
         </item>
@@ -266,6 +266,20 @@
           <property name="verticalSpacing">
            <number>50</number>
           </property>
+          <item row="3" column="0">
+           <widget class="QCheckBox" name="SubsidyCheck">
+            <property name="text">
+             <string>补助查看</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="0">
+           <widget class="QPushButton" name="ResetButton">
+            <property name="text">
+             <string>复原</string>
+            </property>
+           </widget>
+          </item>
           <item row="1" column="0">
            <layout class="QHBoxLayout" name="horizontalLayout_6">
             <item>
@@ -298,7 +312,7 @@
              </widget>
             </item>
             <item>
-             <widget class="QDateTimeEdit" name="FinishTime">
+             <widget class="QDateEdit" name="FinishDateEdit">
               <property name="minimumSize">
                <size>
                 <width>0</width>
@@ -328,7 +342,7 @@
             </item>
            </layout>
           </item>
-          <item row="2" column="0">
+          <item row="4" column="0">
            <layout class="QHBoxLayout" name="horizontalLayout_7">
             <item>
              <spacer name="horizontalSpacer_11">
@@ -344,7 +358,7 @@
              </spacer>
             </item>
             <item>
-             <widget class="QPushButton" name="SearchButton">
+             <widget class="QPushButton" name="FilterButton">
               <property name="minimumSize">
                <size>
                 <width>0</width>
@@ -370,7 +384,7 @@
                <string notr="true">font: 20pt &quot;.SF NS Text&quot;;</string>
               </property>
               <property name="text">
-               <string>搜索</string>
+               <string>筛选</string>
               </property>
              </widget>
             </item>
@@ -388,7 +402,7 @@
              </spacer>
             </item>
             <item>
-             <widget class="QPushButton" name="OutputButton">
+             <widget class="QPushButton" name="ExportButton">
               <property name="minimumSize">
                <size>
                 <width>0</width>
@@ -465,7 +479,7 @@
              </widget>
             </item>
             <item>
-             <widget class="QDateTimeEdit" name="StartTime">
+             <widget class="QDateEdit" name="StartDateEdit">
               <property name="minimumSize">
                <size>
                 <width>0</width>
@@ -597,7 +611,7 @@
      <x>0</x>
      <y>0</y>
      <width>1000</width>
-     <height>22</height>
+     <height>26</height>
     </rect>
    </property>
   </widget>

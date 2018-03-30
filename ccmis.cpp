@@ -213,79 +213,53 @@ bool CCMIS::SaveJsonArrToFile(const jsonxx::Array& ToSaveJson,string filename)
     return true;
 }
 
-<<<<<<< HEAD
-=======
-bool CCMIS::TimeBool(Information* beforetime, Information* aftertime){
-    if (beforetime->year < aftertime->year) {
-        return true;
-    }else if (beforetime->year == aftertime->year) {
-        if (beforetime->month < aftertime->month) {
-            return true;
-        }else if (beforetime->month == aftertime->month) {
-            if (beforetime->day < aftertime->day) {
-                return true;
-            }else if (beforetime->day == aftertime->day) {
-                if (beforetime->hour < aftertime->hour) {
-                    return true;
-                }else if (beforetime->hour == aftertime->hour) {
-                    if (beforetime->minute < aftertime->minute) {
-                        return true;
-                    }else if (beforetime->minute == aftertime->minute) {
-                        if (beforetime->second < aftertime->second) {
-                            return true;
-                        }
-                    }
-                }
-            }
-        }
-    }
-    return false;
-}
->>>>>>> 6b386681a79039c4d40ab0365c51c9d8cead6eb9
+
 
 //应该用多态用模板，下面这六个函数，怕吕帅而已。。。
 bool CCMIS::WriteShop(string filename,Shop* shop_list)
 {
-    jsonxx::Array shop_json = LinkListToJson(shop_list);
+    jsonxx::Array shop_json;
+    if(shop_list == NULL)
+        shop_json = LinkListToJson(mShop);
+    else
+        shop_json = LinkListToJson(shop_list);
+
     if(SaveJsonArrToFile(shop_json,filename))
         return true;
-    return false;
+    else
+        return false;
 }
 
 bool CCMIS::WriteInf(string filename,Information* info_list)
 {
 
-    jsonxx::Array info_json = LinkListToJson(info_list);
+    jsonxx::Array info_json;
+    if(info_list == NULL)
+        info_json = LinkListToJson(mInfo);
+    else
+        info_json = LinkListToJson(info_list);
+
     if(SaveJsonArrToFile(info_json,filename))
         return true;
-    return false;
+    else
+        return false;
 }
 
 
 bool CCMIS::WriteUser(string filename,User* user_list)
 {
-    jsonxx::Array user_json = LinkListToJson(user_list);
+    jsonxx::Array user_json;
+    if(user_list == NULL)
+        user_json = LinkListToJson(mUser);
+    else
+        user_json = LinkListToJson(user_list);
+
     if(SaveJsonArrToFile(user_json,filename))
         return true;
-    return false;
+    else
+        return false;
 }
 
-bool CCMIS::WriteShop(string filename)
-{
-    jsonxx::Array shop_json = LinkListToJson(mShop);
-    if(SaveJsonArrToFile(shop_json,filename))
-        return true;
-    return false;
-}
-
-bool CCMIS::WriteInf(string filename)
-{
-
-    jsonxx::Array info_json = LinkListToJson(mInfo);
-    if(SaveJsonArrToFile(info_json,filename))
-        return true;
-    return false;
-}
 
 void CCMIS::WriteInfForDel()
 {
@@ -296,13 +270,6 @@ void CCMIS::WriteInfForDel()
     jthread->start();
 }
 
-bool CCMIS::WriteUser(string filename)
-{
-    jsonxx::Array user_json = LinkListToJson(mUser);
-    if(SaveJsonArrToFile(user_json,filename))
-        return true;
-    return false;
-}
 
 QString CCMIS::FilenameCorrect(string filename)
 {
@@ -325,7 +292,7 @@ QString CCMIS::FilenameCorrect(string filename)
     return finalfilename;
 }
 
-//没解决utf8编码问题。。。
+
 string CCMIS::ReadAllFileToQString(string filename)
 {
     //读取文件

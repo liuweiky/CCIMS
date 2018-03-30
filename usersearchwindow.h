@@ -5,7 +5,7 @@
 #include <QTimer>
 
 #include "ccmis.h"
-
+#include "table_funcs.h"
 namespace Ui {
 class UserSearchWindow;
 }
@@ -25,6 +25,7 @@ private slots:
 private:
     Ui::UserSearchWindow *ui;
     CCMIS* mCCMIS;
+    User_Table* mUserTable;
 };
 
 #endif // USERSEARCHWINDOW_H

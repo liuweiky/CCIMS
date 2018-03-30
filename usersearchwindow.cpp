@@ -34,6 +34,27 @@ UserSearchWindow::UserSearchWindow(CCMIS *c, QWidget *parent) :
     icon.addFile(tr(address));
     ui->BackButton->setIcon(icon);
 
+
+    //表格显示
+    mUserTable = new User_Table(ui->tableWidget,ui->StartDateEdit,
+                                ui->FinishDateEdit,ui->FilterButton,
+                                ui->ResetButton,ui->ExportButton,
+                                mCCMIS,ui->SubsidyCheck);
+    connect(mUserTable->mStart_Edit,SIGNAL(dateChanged(QDate)),
+            SLOT(mUserTable->on_Start_Date_Changed(QDate);));
+
+    connect(mUserTable->mFinish_Edit,SIGNAL(dateChanged(QDate)),
+            SLOT(mUserTable->on_Finish_Date_Changed(QDate);));
+    connect(mUserTable->mFilter_Btn,SIGNAL(clicked(bool)),
+            SLOT(mUserTable->on_Filter_clicked();));
+    connect(mUserTable->mReset_Btn,SIGNAL(clicked(bool)),
+            SLOT(mUserTable->on_Reset_clicked();));
+    connect(mUserTable->mExport_Btn,SIGNAL(pressed()),
+            SLOT(mUserTable->on_Export_pressed();));
+
+    connect(mUserTable->mSubsidy_Chck,SIGNAL(stateChanged(int)),
+            SLOT(mUserTable->on_Subsidy_Check_User(int)));
+
 }
 
 UserSearchWindow::~UserSearchWindow()

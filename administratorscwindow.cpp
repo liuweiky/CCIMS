@@ -47,7 +47,7 @@ AdministratorSCWindow::AdministratorSCWindow(CCMIS *c, QWidget *parent) :
             SLOT(mAdminTable->on_Export_pressed();));
 
     connect(mAdminTable->mSubsidy_Chck,SIGNAL(stateChanged(int)),
-            SLOT(mAdminTable->on_Subsidy_Check_Admin(int);));
+            SLOT(mAdminTable->on_Subsidy_Check_Admin(int)));
 
 
 }
