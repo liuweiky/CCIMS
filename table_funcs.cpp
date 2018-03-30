@@ -1,5 +1,5 @@
 #include "table_funcs.h"
-#include <QHeaderView>
+
 
 //父类函数
 Table_Parent::Table_Parent
@@ -17,14 +17,6 @@ Table_Parent::Table_Parent
     mCCMIS = ccmis_sys;
     init_Date_Edit();
 }
-
-Table_Parent::~Table_Parent()
-{
-    delete mStart_Date;
-    delete mFinish_Date;
-}
-
-
 
 void Table_Parent::init_Date_Edit()
 {
@@ -69,12 +61,10 @@ void Table_Parent::Table_Filtered_By_Date()
 //父类的补助查看，可以查看全部的补助信息
 void Table_Parent::init_Subsidy_Header()
 {
-    mTable->clear();
     mTable->setColumnCount(5);
     mTable->setHorizontalHeaderLabels(
            QStringList()<<"日期" <<"时间" <<"入帐号"<<"被补助人"<<"金额");
-    QHeaderView* headerView = mTable->horizontalHeader();
-    headerView->setSectionResizeMode(QHeaderView::Stretch);
+    mTable->horizontalHeader()->setResizeMode(QHeaderView::Stretch); //自适应列宽
     int RowCount = 0;
     Information* iter = mCCMIS->GetInfoPointer() ->next;
     while(iter!=NULL){
@@ -131,10 +121,8 @@ void Table_Parent::show_One_Info_All(Information *one_info, int row_index)
 }
 
 void Table_Parent::export_Table_To_CSV(){
-    QString fileName = QFileDialog::getSaveFileName(mTable, "保存",
-               QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation),
-               "CSV 文件(*.csv)");
-    QFile file(fileName);
+    //打开.csv文件
+    QFile file(FilenameCorrect(OUT_FILE_NAME));
     if(!file.open(QIODevice::WriteOnly | QIODevice::Text)) {
         qDebug() << "Output file failed!";
         return;
@@ -143,24 +131,17 @@ void Table_Parent::export_Table_To_CSV(){
     QTextStream out(&file);
     QString str;
     //获取表格内容
-    int row = mTable->rowCount();//表格总行数
-    int col = mTable->columnCount();
+    int row = ui.tableWidgetExcel->rowCount();//表格总行数
+    int col = ui.tableWidgetExcel->columnCount();
     for(int i = 0; i < row; i ++) {
         for(int j = 0; j < col; j++) {
-        str = mTable->item(i, j)->text();
+        str = ui.tableWidgetExcel->item(i, j)->text();
         out << str << ",";// 写入文件
         }
         out << "\n";
     }
     file.close();
 }
-
-
-void Table_Parent::connectSignalsSlots()
-{
-
-}
-
 
 
 //父类槽函数
@@ -183,9 +164,9 @@ void Table_Parent::on_Filter_clicked()
     Table_Filtered_By_Date();
 }
 
-void Table_Parent::on_Export_pressed()
+void on_Export_pressed()
 {
-    export_Table_To_CSV();
+    return;
 }
 
 void Table_Parent::on_tableWidget_itemClicked(QTableWidgetItem *item)
@@ -193,10 +174,7 @@ void Table_Parent::on_tableWidget_itemClicked(QTableWidgetItem *item)
     mCurrent_Row_Index = item->row();
 }
 
-void Table_Parent::on_Reset_clicked()
-{
-    init_Table_Header();
-}
+
 
 
 
@@ -210,12 +188,10 @@ Admin_Table::Admin_Table
              QDateEdit* finish_edit,QPushButton* filter_btn,
              QPushButton* reset_btn, QPushButton* export_btn,
              CCMIS* ccmis_sys,QPushButton* delete_btn,
-             QPushButton *insert_btn, QPushButton *alter_btn,
-             QCheckBox* subsidy_check)
+             QPushButton *insert_btn, QPushButton *alter_btn)
         :Table_Parent(table, start_edit,finish_edit,filter_btn,
                     reset_btn, export_btn,ccmis_sys)
 {
-    mSubsidy_Chk = subsidy_check;
     mDelete_Btn = delete_btn;
     mInsert_Btn = insert_btn;
     mAlter_Btn  = alter_btn;
@@ -225,13 +201,11 @@ Admin_Table::Admin_Table
 
 void Admin_Table::init_Table_Header()
 {
-   mTable->clear();
    mTable->setColumnCount(5);
    mTable->setHorizontalHeaderLabels(
           QStringList()<<"日期" <<"时间" <<"出账号"<<"出账账户"
                        <<"入账号"<<"入账账户"<<"金额");
-   QHeaderView* headerView = mTable->horizontalHeader();
-   headerView->setSectionResizeMode(QHeaderView::Stretch);
+   mTable->horizontalHeader()->setResizeMode(QHeaderView::Stretch); //自适应列宽
 
    int RowCount = 0;
    Information* iter = mCCMIS->GetInfoPointer() ->next;
@@ -265,12 +239,10 @@ Shop_Table::Shop_Table(QTableWidget *table, QDateEdit* start_edit,
 
 void Shop_Table::init_Table_Header()
 {
-    mTable->clear();
    mTable->setColumnCount(5);
    mTable->setHorizontalHeaderLabels(
           QStringList()<<"日期" <<"时间" <<"出账号"<<"出账账户"<<"金额");
-   QHeaderView* headerView = mTable->horizontalHeader();
-   headerView->setSectionResizeMode(QHeaderView::Stretch);
+   mTable->horizontalHeader()->setResizeMode(QHeaderView::Stretch); //自适应列宽
 
    int RowCount = 0;
    Information* iter = mCCMIS->GetInfoPointer() ->next;
@@ -291,23 +263,21 @@ void Shop_Table::init_Table_Header()
 User_Table::User_Table(QTableWidget *table, QDateEdit* start_edit,
                        QDateEdit* finish_edit, QPushButton* filter_btn,
                        QPushButton* reset_btn, QPushButton* export_btn,
-                       CCMIS* ccmis_sys, QCheckBox *subsidy_check)
+                       CCMIS* ccmis_sys)
         :Table_Parent(table, start_edit,finish_edit,filter_btn,
                     reset_btn, export_btn,ccmis_sys)
 {
-    mSubsidy_Chk = subsidy_check;
     mCurrent_User = mCCMIS->GetCurrentUser();
     init_Table_Header();
 }
 
 void User_Table::init_Table_Header()
 {
-    mTable->clear();
    mTable->setColumnCount(5);
    mTable->setHorizontalHeaderLabels(
           QStringList()<<"日期" <<"时间" <<"入账号"<<"入账账户"<<"金额");
-   QHeaderView* headerView = mTable->horizontalHeader();
-   headerView->setSectionResizeMode(QHeaderView::Stretch);
+   mTable->horizontalHeader()->setResizeMode(QHeaderView::Stretch); //自适应列宽
+
    int RowCount = 0;
    Information* iter = mCCMIS->GetInfoPointer() ->next;
    while(iter!=NULL){
@@ -320,12 +290,10 @@ void User_Table::init_Table_Header()
 //用户类下的补助查看，只能查看自己的补助
 void  User_Table::init_Subsidy_Header()
 {
-    mTable->clear();
     mTable->setColumnCount(5);
     mTable->setHorizontalHeaderLabels(
            QStringList()<<"日期" <<"时间" <<"入帐号"<<"被补助人"<<"金额");
-    QHeaderView* headerView = mTable->horizontalHeader();
-    headerView->setSectionResizeMode(QHeaderView::Stretch);
+    mTable->horizontalHeader()->setResizeMode(QHeaderView::Stretch); //自适应列宽
     int mCurrent_User_Num = mCCMIS->GetUserNum();
     int RowCount = 0;
     Information* iter = mCCMIS->GetInfoPointer() ->next;

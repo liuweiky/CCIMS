@@ -1051,19 +1051,18 @@ QString CCMIS::ShowDateTime(){
 
 void CCMIS::CouponFresh(){
     User* u = mUser->next;
-    QDateTime *datetime = new  QDateTime(QDateTime::currentDateTime());
+    QDateTime *datetime = QDateTime::currentDateTime();
 
-    //实际上 时间比较一句话就够了，Qt重载了……这里有bug
-//    if (datetime->date()->day() == 1
-//        && datetime->time()->hour() == 0
-//        && datetime->time()->minute() == 0
-//        && datetime->time()->second() == 0){
-//        while (u !=NULL) {
-//            if (num >= USER_BEGIN && num < USER_TEA_EMP_BEGIN){
-//                u->coupon = 10000;
-//            }
-//            u = u->next;
-//        }
-//        WriteUser(USER_FILE_NAME);
-//    }
+    if (datetime->date()->day() == 1
+        && datetime->time()->hour() == 0
+        && datetime->time()->minute() == 0
+        && datetime->time()->second() == 0){
+        while (u !=NULL) {
+            if (num >= USER_BEGIN && num < USER_TEA_EMP_BEGIN){
+                u->coupon = 10000;
+            }
+            u = u->next;
+        }
+        WriteUser(USER_FILE_NAME);
+    }
 }
