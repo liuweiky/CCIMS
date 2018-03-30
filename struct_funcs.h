@@ -53,5 +53,4 @@ struct User
 
 
 
-
 #endif // STRUCT_FUNCS_H

@@ -1091,6 +1091,10 @@ QString CCMIS::ShowDateTime(){
     QString txt = date.toString("yyyy/MM/dd")+time.toString(" hh:mm:ss");
     return txt;
 }
+void CCMIS::CouponFresh(){
+    //留空……后面调用的的太多了
+}
+
 
 //void CCMIS::CouponFresh(){
 //    User* u = mUser->next;

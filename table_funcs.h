@@ -74,11 +74,12 @@ public:
     QPushButton* mAlter_Btn;
     QCheckBox* mSubsidy_Chck;
 
-    Admin_Table(QTableWidget *table,QDateEdit* start_edit,
-                QDateEdit* finish_edit,QPushButton* filter_btn,
-                QPushButton* reset_btn,QPushButton* export_btn,
-                CCMIS* ccmis_sys,QPushButton* delete_btn,
-                QPushButton* insert_btn,QPushButton* alter_btn);
+    Admin_Table(QTableWidget *table, QDateEdit* start_edit,
+     QDateEdit* finish_edit,QPushButton* filter_btn,
+     QPushButton* reset_btn, QPushButton* export_btn,
+     CCMIS* ccmis_sys,QPushButton* delete_btn,
+     QPushButton *insert_btn, QPushButton *alter_btn,
+     QCheckBox *subsidy_check);
     void init_Table_Header();
 protected slots:
     void on_Subsidy_Check_Admin(int);

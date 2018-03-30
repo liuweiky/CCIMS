@@ -1,6 +1,6 @@
 #include "table_funcs.h"
 #include <qobject.h>
-
+#include <QHeaderView>
 //父类函数
 Table_Parent::Table_Parent
                (QTableWidget *table, QDateEdit* start_edit,
@@ -68,7 +68,7 @@ void Table_Parent::init_Subsidy_Header()
     mTable->setColumnCount(5);
     mTable->setHorizontalHeaderLabels(
            QStringList()<<"日期" <<"时间" <<"入帐号"<<"被补助人"<<"金额");
-    mTable->horizontalHeader()->setResizeMode(QHeaderView::Stretch); //自适应列宽
+    mTable->horizontalHeader()->setStretchLastSection(true); //就是这个地方
     int RowCount = 0;
     Information* iter = mCCMIS->GetInfoPointer() ->next;
     while(iter!=NULL){
@@ -126,7 +126,7 @@ void Table_Parent::show_One_Info_All(Information *one_info, int row_index)
 
 void Table_Parent::export_Table_To_CSV(){
     //打开.csv文件
-    QFile file(FilenameCorrect(OUT_FILE_NAME));
+    QFile file("table.csv");
     if(!file.open(QIODevice::WriteOnly | QIODevice::Text)) {
         qDebug() << "Output file failed!";
         return;
@@ -135,11 +135,11 @@ void Table_Parent::export_Table_To_CSV(){
     QTextStream out(&file);
     QString str;
     //获取表格内容
-    int row = ui.tableWidgetExcel->rowCount();//表格总行数
-    int col = ui.tableWidgetExcel->columnCount();
+    int row = mTable->rowCount();//表格总行数
+    int col = mTable->columnCount();
     for(int i = 0; i < row; i ++) {
         for(int j = 0; j < col; j++) {
-        str = ui.tableWidgetExcel->item(i, j)->text();
+        str = mTable->item(i, j)->text();
         out << str << ",";// 写入文件
         }
         out << "\n";
@@ -212,7 +212,7 @@ void Admin_Table::init_Table_Header()
    mTable->setHorizontalHeaderLabels(
           QStringList()<<"日期" <<"时间" <<"出账号"<<"出账账户"
                        <<"入账号"<<"入账账户"<<"金额");
-   mTable->horizontalHeader()->setResizeMode(QHeaderView::Stretch); //自适应列宽
+    mTable->horizontalHeader()->setStretchLastSection(true); //就是这个地方
 
    int RowCount = 0;
    Information* iter = mCCMIS->GetInfoPointer() ->next;
@@ -259,7 +259,7 @@ void Shop_Table::init_Table_Header()
    mTable->setColumnCount(5);
    mTable->setHorizontalHeaderLabels(
           QStringList()<<"日期" <<"时间" <<"出账号"<<"出账账户"<<"金额");
-   mTable->horizontalHeader()->setResizeMode(QHeaderView::Stretch); //自适应列宽
+    mTable->horizontalHeader()->setStretchLastSection(true); //就是这个地方
 
    int RowCount = 0;
    Information* iter = mCCMIS->GetInfoPointer() ->next;
@@ -294,8 +294,7 @@ void User_Table::init_Table_Header()
    mTable->setColumnCount(5);
    mTable->setHorizontalHeaderLabels(
           QStringList()<<"日期" <<"时间" <<"入账号"<<"入账账户"<<"金额");
-   mTable->horizontalHeader()->setResizeMode(QHeaderView::Stretch); //自适应列宽
-
+    mTable->horizontalHeader()->setStretchLastSection(true); //就是这个地方
    int RowCount = 0;
    Information* iter = mCCMIS->GetInfoPointer() ->next;
    while(iter!=NULL){
@@ -311,7 +310,7 @@ void  User_Table::init_Subsidy_Header()
     mTable->setColumnCount(5);
     mTable->setHorizontalHeaderLabels(
            QStringList()<<"日期" <<"时间" <<"入帐号"<<"被补助人"<<"金额");
-    mTable->horizontalHeader()->setResizeMode(QHeaderView::Stretch); //自适应列宽
+    mTable->horizontalHeader()->setStretchLastSection(true); //就是这个地方
     int mCurrent_User_Num = mCCMIS->GetUserNum();
     int RowCount = 0;
     Information* iter = mCCMIS->GetInfoPointer() ->next;

@@ -1,9 +1,8 @@
 #include "struct_funcs.h"
 
 
-static QString InfoToMoneyStr(Information* one_info)
-static QDateTime InfoToDateTime(Information* one_info)
-static void CopyOneInfo(const Information* src,Information* dst)
+
+ void Information::CopyOneInfo(const Information* src,Information* dst)
 {
     dst->year  =src->year;
     dst->month = src->month;
@@ -20,7 +19,7 @@ static void CopyOneInfo(const Information* src,Information* dst)
 }
 
 
-static QDateTime InfoToDateTime(Information* one_info)
+QDateTime Information::InfoToDateTime(Information* one_info)
 {
     QDate* info_date = new QDate(one_info->year,one_info->month,one_info->day);
     QTime* info_time = new QTime(one_info->hour,one_info->minute,one_info->second);
@@ -31,7 +30,7 @@ static QDateTime InfoToDateTime(Information* one_info)
 
 
 
-static QString InfoToMoneyStr(Information* one_info)
+QString Information::InfoToMoneyStr(Information* one_info)
 {
     unsigned int MoneyInt,MoneyFloat;
     MoneyFloat = (one_info->money)%100;
