@@ -64,7 +64,6 @@ HEADERS += \
 
 FORMS += \
     mainwindow.ui \
-    info_table.ui \
     shopmainwindow.ui \
     usermainwindow.ui \
     shopsearchwindow.ui \
