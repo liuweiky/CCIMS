@@ -479,8 +479,7 @@ bool CCMIS::ReadInf(string filename)
             info->money= array.get<jsonxx::Object>(i).
                     get<jsonxx::Number>(JSON_KEY_MONEY);
 
-            info->next = mInfo->next;
-            mInfo->next = info;
+            InsertInf(info);
 
             totalInfoCount++;   //统计记录数目
         }
@@ -583,14 +582,14 @@ string CCMIS::GenerateTag(int onum, int inum, int mon)
 
 void CCMIS::InsertInf(Information* tempinf)
 {
-    Information* temp = mInfo;   //标记比较结点
+    Information* in = mInfo;
 
-    //判断插入位置
-    while (temp->next && TimeBool(temp->next, tempinf)) {
-        temp = temp->next;
+    while (in->next != NULL && Information::InfoToDateTime(in->next) < Information::InfoToDateTime(tempinf)) {
+        in = in->next;
     }
-    tempinf->next = temp->next;
-    temp->next = tempinf;
+
+    tempinf->next = in->next;
+    in->next = tempinf;
 
     totalInfoCount++;
 }
