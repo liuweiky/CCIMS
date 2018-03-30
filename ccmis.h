@@ -148,7 +148,7 @@ public:
                 break;
             }
         }
-        JsonThread(CCMIS* c, int t): mCCMIS(c), type(t){}
+        JsonThread(CCMIS* c, int t): type(t), mCCMIS(c){}
 
     private:
         int type;

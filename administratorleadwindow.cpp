@@ -31,12 +31,12 @@ AdministratorLeadWindow::~AdministratorLeadWindow()
     delete ui;
 }
 
-//void AdministratorLeadWindow::time_dispose()
-//{
-//    ui->Time->display(mCCMIS->ShowDateTime());
-//    //月初刷新券
-//    mCCMIS->CouponFresh();
-//}
+void AdministratorLeadWindow::time_dispose()
+{
+    ui->Time->display(mCCMIS->ShowDateTime());
+    //月初刷新券
+    mCCMIS->CouponFresh();
+}
 
 void AdministratorLeadWindow::on_BackButton_clicked()
 {

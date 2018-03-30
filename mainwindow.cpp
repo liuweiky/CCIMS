@@ -25,7 +25,7 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-void AdministratorLeadWindow::time_dispose()
+void MainWindow::time_dispose()
 {
     //月初刷新券
     mCCMIS->CouponFresh();

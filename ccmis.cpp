@@ -1126,25 +1126,24 @@ Information* CCMIS::GetInfoByTag(QString tag)
 QString CCMIS::ShowDateTime(){
     QDate date = QDate::currentDate();
     QTime time = QTime::currentTime();
-    QString txt =date.toString("yyyy/MM/dd")+time.toString(" hh:mm:ss");
+    QString txt = date.toString("yyyy/MM/dd")+time.toString(" hh:mm:ss");
     return txt;
 }
 
 void CCMIS::CouponFresh(){
     User* u = mUser->next;
-    QDateTime *datetime = new  QDateTime(QDateTime::currentDateTime());
+    QDateTime *datetime = new QDateTime(QDateTime::currentDateTime());
 
-    //实际上 时间比较一句话就够了，Qt重载了……这里有bug
-//    if (datetime->date()->day() == 1
-//        && datetime->time()->hour() == 0
-//        && datetime->time()->minute() == 0
-//        && datetime->time()->second() == 0){
-//        while (u !=NULL) {
-//            if (num >= USER_BEGIN && num < USER_TEA_EMP_BEGIN){
-//                u->coupon = 10000;
-//            }
-//            u = u->next;
-//        }
-//        WriteUser(USER_FILE_NAME);
-//    }
+    if (datetime->date().day() == 1
+        && datetime->time().hour() == 0
+        && datetime->time().minute() == 0
+        && datetime->time().second() == 0){
+        while (u !=NULL) {
+            if (u->number >= USER_BEGIN && u->number < USER_TEA_EMP_BEGIN){
+                u->coupon = 10000;
+            }
+            u = u->next;
+        }
+        WriteUser(USER_FILE_NAME);
+    }
 }
