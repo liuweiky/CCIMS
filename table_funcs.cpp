@@ -1,5 +1,5 @@
 #include "table_funcs.h"
-
+#include <qobject.h>
 
 //父类函数
 Table_Parent::Table_Parent
@@ -56,6 +56,16 @@ void Table_Parent::Table_Filtered_By_Date()
      }
 
 }
+
+
+
+void Table_Parent::connect_Sig_To_Slots_Parent()
+{
+
+}
+
+
+
 
 
 //父类的补助查看，可以查看全部的补助信息

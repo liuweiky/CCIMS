@@ -30,7 +30,6 @@ SOURCES += \
     mainwindow.cpp \
     jsonxx.cpp \
     ccmis.cpp \
-    info_table.cpp \
     shopmainwindow.cpp \
     usermainwindow.cpp \
     shopsearchwindow.cpp \
@@ -41,16 +40,13 @@ SOURCES += \
     administratorscwindow.cpp \
     usersearchwindow.cpp \
     userrechargewindow.cpp \
-    table_funcs.cpp
+    table_funcs.cpp \
+    struct_funcs.cpp
 
 HEADERS += \
     mainwindow.h \
     jsonxx.h \
-    user.h \
-    shop.h \
-    information.h \
     ccmis.h \
-    info_table.h \
     shopmainwindow.h \
     usermainwindow.h \
     shopsearchwindow.h \
@@ -63,7 +59,8 @@ HEADERS += \
     userrechargewindow.h \
     usersfwindow.h \
     common_funcs.h \
-    table_funcs.h
+    table_funcs.h \
+    struct_funcs.h
 
 FORMS += \
     mainwindow.ui \
