@@ -40,9 +40,9 @@ static void CopyOneInfo(const Information* src,Information* dst)
 
 static QDateTime InfoToDateTime(Information* one_info)
 {
-    QDate* info_date = new QDate(one_info->year,one_info->month,one_info->day);
-    QTime* info_time = new QTime(one_info->hour,one_info->minute,one_info->second);
-    return QDateTime((*info_date),(*info_time));
+    QDate info_date = QDate(one_info->year,one_info->month,one_info->day);
+    QTime info_time = QTime(one_info->hour,one_info->minute,one_info->second);
+    return QDateTime(info_date,info_time);
 }
 
 
