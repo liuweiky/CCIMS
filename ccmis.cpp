@@ -213,76 +213,53 @@ bool CCMIS::SaveJsonArrToFile(const jsonxx::Array& ToSaveJson,string filename)
     return true;
 }
 
-bool CCMIS::TimeBool(Information* beforetime, Information* aftertime){
-    if (beforetime->year < aftertime->year) {
-        return true;
-    }else if (beforetime->year = aftertime->year) {
-        if (beforetime->month < aftertime->month) {
-            return true;
-        }else if (beforetime->month = aftertime->month) {
-            if (beforetime->day < aftertime->day) {
-                return true;
-            }else if (beforetime->day = aftertime->day) {
-                if (beforetime->hour < aftertime->hour) {
-                    return true;
-                }else if (beforetime->hour = aftertime->hour) {
-                    if (beforetime->minute < aftertime->minute) {
-                        return true;
-                    }else if (beforetime->minute = aftertime->minute) {
-                        if (beforetime->second < aftertime->second) {
-                            return true;
-                        }
-                    }
-                }
-            }
-        }
-    }
-    return false;
-}
+
 
 //应该用多态用模板，下面这六个函数，怕吕帅而已。。。
 bool CCMIS::WriteShop(string filename,Shop* shop_list)
 {
-    jsonxx::Array shop_json = LinkListToJson(shop_list);
+    jsonxx::Array shop_json;
+    if(shop_list == NULL)
+        shop_json = LinkListToJson(mShop);
+    else
+        shop_json = LinkListToJson(shop_list);
+
     if(SaveJsonArrToFile(shop_json,filename))
         return true;
-    return false;
+    else
+        return false;
 }
 
 bool CCMIS::WriteInf(string filename,Information* info_list)
 {
 
-    jsonxx::Array info_json = LinkListToJson(info_list);
+    jsonxx::Array info_json;
+    if(info_list == NULL)
+        info_json = LinkListToJson(mInfo);
+    else
+        info_json = LinkListToJson(info_list);
+
     if(SaveJsonArrToFile(info_json,filename))
         return true;
-    return false;
+    else
+        return false;
 }
 
 
 bool CCMIS::WriteUser(string filename,User* user_list)
 {
-    jsonxx::Array user_json = LinkListToJson(user_list);
+    jsonxx::Array user_json;
+    if(user_list == NULL)
+        user_json = LinkListToJson(mUser);
+    else
+        user_json = LinkListToJson(user_list);
+
     if(SaveJsonArrToFile(user_json,filename))
         return true;
-    return false;
+    else
+        return false;
 }
 
-bool CCMIS::WriteShop(string filename)
-{
-    jsonxx::Array shop_json = LinkListToJson(mShop);
-    if(SaveJsonArrToFile(shop_json,filename))
-        return true;
-    return false;
-}
-
-bool CCMIS::WriteInf(string filename)
-{
-
-    jsonxx::Array info_json = LinkListToJson(mInfo);
-    if(SaveJsonArrToFile(info_json,filename))
-        return true;
-    return false;
-}
 
 void CCMIS::WriteInfForDel()
 {
@@ -293,13 +270,6 @@ void CCMIS::WriteInfForDel()
     jthread->start();
 }
 
-bool CCMIS::WriteUser(string filename)
-{
-    jsonxx::Array user_json = LinkListToJson(mUser);
-    if(SaveJsonArrToFile(user_json,filename))
-        return true;
-    return false;
-}
 
 QString CCMIS::FilenameCorrect(string filename)
 {
@@ -322,15 +292,13 @@ QString CCMIS::FilenameCorrect(string filename)
     return finalfilename;
 }
 
-//没解决utf8编码问题。。。
+
 string CCMIS::ReadAllFileToQString(string filename)
 {
     //读取文件
     QFile fileReadIn(FilenameCorrect(filename));
     if(!fileReadIn.open(QIODevice::ReadOnly | QIODevice::Text)){
-        qDebug ("Could not open the file for reading:") ;
-        qDebug (qPrintable(FilenameCorrect(filename)));
-        qDebug ("\n") ;
+        qDebug ("Could not open the file for reading /n");
         return string("");
         //String("").Empty();  //结果为true判定用
     }
@@ -415,7 +383,7 @@ bool CCMIS::ReadShop(string filename)
 
         //解析 json
         array.parse(fileALLReadIn);
-        for (int i = 0; i < array.size(); i++)  //迭代构造
+        for (unsigned long i = 0; i < array.size(); i++)  //迭代构造
         {
             Shop* s = new Shop();
 
@@ -454,7 +422,7 @@ bool CCMIS::ReadInf(string filename)
     if (!fileALLReadIn.empty()){
         jsonxx::Array array;
         array.parse(fileALLReadIn);             //解析 json
-        for (int i = 0; i < array.size(); i++)  //迭代构造
+        for (unsigned long i = 0; i < array.size(); i++)  //迭代构造
         {
             Information* info = new Information();
 
@@ -483,22 +451,31 @@ bool CCMIS::ReadInf(string filename)
 
             totalInfoCount++;   //统计记录数目
         }
+
+        //验证数据
+        /*Information* info = mInfo->next;
+        while (info != NULL) {
+            cout
+                 <<info->tag<<"\t"
+                 <<info->year<<"\t"
+                 <<info->month<<"\t"
+                 <<info->day<<"\t"
+                 <<info->hour<<"\t"
+                 <<info->minute<<"\t"
+                 <<info->second<<"\t"
+                 <<info->Inumber<<"\t"
+                 <<info->Onumber<<"\t"
+                 <<info->money<<endl;
+            info=info->next;
+        }*/
+
+<<<<<<< HEAD
         return true;
-    } else {
-        return false;
-    }
-}
-
-unsigned int CCMIS::ImportInf(string filename)
-{
-    unsigned successnumber(0);  //成功插入信息数目
-
-    string fileALLReadIn = ReadAllFileToQString(filename);
-
+=======
     if (!fileALLReadIn.empty()){
         jsonxx::Array array;
         array.parse(fileALLReadIn);             //解析 json
-        for (int i = 0; i < array.size(); i++)  //迭代构造
+        for (unsigned long i = 0; i < array.size(); i++)  //迭代构造
         {
             //构造信息
             Information* info = new Information();
@@ -529,9 +506,11 @@ unsigned int CCMIS::ImportInf(string filename)
             }
         }
         return successnumber;
+>>>>>>> 6b386681a79039c4d40ab0365c51c9d8cead6eb9
     } else {
-        return 0;
+        return false;
     }
+    this->WriteInf("test.json");
 }
 
 string CCMIS::GenerateTag(int onum, int inum, int mon)
@@ -582,6 +561,10 @@ string CCMIS::GenerateTag(int onum, int inum, int mon)
 
 void CCMIS::InsertInf(Information* tempinf)
 {
+<<<<<<< HEAD
+    tempinf->next = mInfo->next;
+    mInfo->next = tempinf;
+=======
     Information* in = mInfo;
 
     while (in->next != NULL && Information::InfoToDateTime(in->next) < Information::InfoToDateTime(tempinf)) {
@@ -591,16 +574,27 @@ void CCMIS::InsertInf(Information* tempinf)
     tempinf->next = in->next;
     in->next = tempinf;
 
+>>>>>>> 6b386681a79039c4d40ab0365c51c9d8cead6eb9
     totalInfoCount++;
 }
 
-Information* CCMIS::BuildInfo(int onum, int inum, int mon,
-                               int year, int month, int day,
-                               int hour, int min, int sec)
+Information* CCMIS::BuildInfo(int onum, int inum, int mon)
 {
     Information* info = new Information();
     info->tag = GenerateTag(onum, inum, mon);
 
+<<<<<<< HEAD
+    time_t tt = time(NULL);
+    tm* t= localtime(&tt);
+
+    info->year = t->tm_year + 1900;
+    info->month = t->tm_mon + 1;
+    info->day = t->tm_mday;
+    info->hour = t->tm_hour;
+    info->minute = t->tm_min;
+    info->second = t->tm_sec;
+
+=======
     if (year == -1){
         time_t tt = time(NULL);
         tm* t= localtime(&tt);
@@ -618,11 +612,14 @@ Information* CCMIS::BuildInfo(int onum, int inum, int mon,
         info->minute= min;
         info->second= sec;
     }
+>>>>>>> 6b386681a79039c4d40ab0365c51c9d8cead6eb9
     info->Onumber = onum;
     info->Inumber = inum;
     info->money = mon;
 
     info->next = NULL;
+
+    return info;
 }
 
 bool CCMIS::CheckPassword(string password)
@@ -702,7 +699,7 @@ Information* CCMIS::SearchInfoByOnum
     unsigned long long finish  = finish_date_num * 1000000 + finish_time_num;
     while(info!=NULL){
 
-        if( info->Onumber == onum ){
+        if((int)info->Onumber == onum ){
             unsigned long  info_date = Date::DateToNum
                     (info->year,info->month,info->day);
             unsigned int info_time = Time::TimeToNum
@@ -734,7 +731,7 @@ Information* CCMIS::SearchInfoByInum
     unsigned long long finish  = finish_date_num * 1000000 + finish_time_num;
     while(info!=NULL){
 
-        if( info->Inumber == inum ){
+        if((int)info->Inumber == inum ){
             unsigned long  info_date = Date::DateToNum(info->year,info->month,info->day);
             unsigned int info_time = Time::TimeToNum(info->hour,info->minute);
             unsigned long long  info_cur = info_date * 1000000 + info_time;
@@ -860,10 +857,10 @@ int CCMIS::GetTotalCanteenConsumptionByDay(int year, int month, int day, int num
     while (info != NULL) {
         if (
                 info->Inumber / 1000 == GROUP_CANTEEN &&
-                info->year == year &&
-                info->month == month &&
-                info->day == day &&
-                info->Onumber == num)
+                info->year == (unsigned int)year &&
+                info->month == (unsigned int)month &&
+                info->day == (unsigned int)day &&
+                info->Onumber == (unsigned int)num)
         {
             c += info->money;
         }
@@ -883,10 +880,10 @@ int CCMIS::GetTotalCanteenAndMarketConsumptionByDay
         if (
                 (info->Inumber / 1000 == GROUP_CANTEEN ||
                  info->Inumber / 1000 == GROUP_MARKET) &&
-                info->year == year &&
-                info->month == month &&
-                info->day == day &&
-                info->Onumber == num)
+                info->year == (unsigned int)year &&
+                info->month == (unsigned int)month &&
+                info->day == (unsigned int)day &&
+                info->Onumber == (unsigned int)num)
         {
             c += info->money;
         }
@@ -913,12 +910,13 @@ int CCMIS::NewSubsidy(User* u)
         jthread->start();
         jthread = new JsonThread(this, THREAD_TYPE_W_INFO);
         jthread->start();
+        return MESSAGE_TRANSACTION_SUCCESS;
+    }else{
+        return MESSAGE_TRANSACTION_UNKNOWN;
     }
 }
 
-int CCMIS::NewTransaction(int onum, int inum, int mon,
-                          int year, int month, int day,
-                          int hour, int min, int sec)
+int CCMIS::NewTransaction(int onum, int inum, int mon)
 {
     if (mon <= 0)
         return MESSAGE_TRANSACTION_MONEY_LOWER_THAN_ZERO;
@@ -931,6 +929,10 @@ int CCMIS::NewTransaction(int onum, int inum, int mon,
     if (s == NULL)
         return MESSAGE_TRANSACTION_NO_SHOP;     //商号不存在，交易失败
 
+<<<<<<< HEAD
+    time_t tt = time(NULL);
+    tm* t= localtime(&tt);
+=======
     if (year == -1){
         time_t tt = time(NULL);
         tm* t= localtime(&tt);
@@ -941,11 +943,12 @@ int CCMIS::NewTransaction(int onum, int inum, int mon,
         min = t->tm_min;
         sec = t->tm_sec;
     }
+>>>>>>> 6b386681a79039c4d40ab0365c51c9d8cead6eb9
 
     if (inum / 1000 == GROUP_CANTEEN)           //收款方是食堂组
     {
         if (mon > 5000 || GetTotalCanteenConsumptionByDay
-                (year, month, day, onum) + mon > 10000)
+                (t->tm_year + 1900, t->tm_mon + 1, t->tm_mday, onum) + mon > 10000)
         {
             return MESSAGE_TRANSACTION_OVERFLOW;    //超过每笔消费或单日限制
         } else {    //交易条件具备，开始交易
@@ -955,8 +958,7 @@ int CCMIS::NewTransaction(int onum, int inum, int mon,
 
             u->balance -= mon;
             //WriteUser(USER_FILE_NAME);
-            Information* info = BuildInfo(onum, inum, mon, year,
-                                          month, day, hour, min, sec);
+            Information* info = BuildInfo(onum, inum, mon);
             InsertInf(info);
             //WriteInf(INFO_FILE_NAME);
 
@@ -975,7 +977,7 @@ int CCMIS::NewTransaction(int onum, int inum, int mon,
         }
     } else if (inum / 1000 == GROUP_MARKET) {   //收款方是超市组
         if (GetTotalCanteenAndMarketConsumptionByDay
-                (year, month, day, onum) + mon > 10000)
+                (t->tm_year + 1900, t->tm_mon + 1, t->tm_mday, onum) + mon > 10000)
         {
             return MESSAGE_TRANSACTION_OVERFLOW;    //超过单日限制
         } else {
@@ -984,8 +986,7 @@ int CCMIS::NewTransaction(int onum, int inum, int mon,
 
             u->balance -= mon;
             //WriteUser(USER_FILE_NAME);
-            Information* info = BuildInfo(onum, inum, mon, year,
-                                          month, day, hour, min, sec);
+            Information* info = BuildInfo(onum, inum, mon);
             InsertInf(info);
             //WriteInf(INFO_FILE_NAME);
 
@@ -1009,8 +1010,7 @@ int CCMIS::NewTransaction(int onum, int inum, int mon,
             {
                 u->coupon -= mon;
 
-                Information* info = BuildInfo(onum, inum + 50, mon, year,
-                                              month, day, hour, min, sec);    //转券账户
+                Information* info = BuildInfo(onum, inum + 50, mon);    //转券账户
                 InsertInf(info);
             } else {    //否则先扣coupon，再扣balance
                 u->balance -= (mon - u->coupon);
@@ -1018,14 +1018,12 @@ int CCMIS::NewTransaction(int onum, int inum, int mon,
                 if (u->coupon != 0)
                 {
                     //转券账户
-                    Information* info = BuildInfo(onum, inum + 50, u->coupon, year,
-                                                  month, day, hour, min, sec);
+                    Information* info = BuildInfo(onum, inum + 50, u->coupon);
                     InsertInf(info);
                 }
 
                 //转普通账户
-                Information* info = BuildInfo(onum, inum, mon - u->coupon, year,
-                                              month, day, hour, min, sec);
+                Information* info = BuildInfo(onum, inum, mon - u->coupon);
                 InsertInf(info);
 
                 u->coupon = 0;
@@ -1045,6 +1043,7 @@ int CCMIS::NewTransaction(int onum, int inum, int mon,
 
         return MESSAGE_TRANSACTION_SUCCESS;
     }
+
     return MESSAGE_TRANSACTION_UNKNOWN; //未知错误
 }
 
@@ -1056,7 +1055,7 @@ bool CCMIS::NewRefund(Information *tempinf)
 
     User* u = mUser->next;
     while (u != NULL) {
-        if (u->number == tempinf->Onumber)
+        if (u->number == (int)tempinf->Onumber)
             break;
         u = u->next;
     }
@@ -1127,15 +1126,15 @@ Information* CCMIS::GetInfoByTag(QString tag)
 QString CCMIS::ShowDateTime(){
     QDate date = QDate::currentDate();
     QTime time = QTime::currentTime();
-    QString txt =date.toString("yyyy/MM/dd")+time.toString(" hh:mm:ss");
+    QString txt = date.toString("yyyy/MM/dd")+time.toString(" hh:mm:ss");
     return txt;
 }
 
-void CCMIS::CouponFresh(){
-    User* u = mUser->next;
-    QDateTime *datetime = new  QDateTime(QDateTime::currentDateTime());
+<<<<<<< HEAD
+//void CCMIS::CouponFresh(){
+//    User* u = mUser->next;
+//    QDateTime *datetime = QDateTime::currentDateTime();
 
-    //实际上 时间比较一句话就够了，Qt重载了……这里有bug
 //    if (datetime->date()->day() == 1
 //        && datetime->time()->hour() == 0
 //        && datetime->time()->minute() == 0
@@ -1147,5 +1146,33 @@ void CCMIS::CouponFresh(){
 //            u = u->next;
 //        }
 //        WriteUser(USER_FILE_NAME);
-//    }
+=======
+void CCMIS::CouponFresh(){
+    User* u = mUser->next;
+    QDateTime *datetime = new QDateTime(QDateTime::currentDateTime());
+
+    if (datetime->date().day() == 1
+        && datetime->time().hour() == 0
+        && datetime->time().minute() == 0
+        && datetime->time().second() == 0){
+        while (u !=NULL) {
+            if (u->number >= USER_BEGIN && u->number < USER_TEA_EMP_BEGIN){
+                u->coupon = 10000;
+            }
+            u = u->next;
+        }
+        WriteUser(USER_FILE_NAME);
+    }
 }
+
+//void CCMIS::CloseTxt(QCloseEvent *event){
+//    if (QMessageBox::information
+//            (this, QObject::tr("关闭"),
+//             QObject::tr("退了就别回来了，这里到处都是BUG"),
+//             QObject::tr("好的"), QObject::tr("我再待一会"), 0, 1) == 0) {
+//        event->accept();
+//    }else {
+//        event->ignore();
+>>>>>>> 6b386681a79039c4d40ab0365c51c9d8cead6eb9
+//    }
+//}

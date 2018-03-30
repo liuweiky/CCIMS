@@ -25,7 +25,7 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-void AdministratorLeadWindow::time_dispose()
+void MainWindow::time_dispose()
 {
     //月初刷新券
     mCCMIS->CouponFresh();
@@ -33,6 +33,22 @@ void AdministratorLeadWindow::time_dispose()
 
 void MainWindow::on_pushButton_clicked()
 {
+    //进度条
+    int i = 0;
+    QProgressDialog *progressDlg = new
+            QProgressDialog(QStringLiteral("正在载入文件......"),
+                            QStringLiteral("等待"),0,10000,this);
+    progressDlg->setWindowModality(Qt::WindowModal);
+    //如果运行时间小于3，进度条就不会显示（测试时请置0）
+    progressDlg->setMinimumDuration(3);
+    progressDlg->setWindowTitle(QStringLiteral("请稍候"));
+    while (i < 10000) {
+        //这里可以添加进度前进的活动；初步构想是先获取文件大小，近似拟合时间，
+        //当完成时直接置满结束，但暂时没看懂读文件线程怎么操作的
+        i++;
+        progressDlg->setValue(i);
+    }
+
     //获取帐号
     int number = ui->UserNameLineEdit->text().toInt();
     mCCMIS->SetUserNumber(number);
@@ -50,15 +66,17 @@ void MainWindow::on_pushButton_clicked()
 //            Info_Table* info = new Info_Table(mCCMIS);
 //            info->show();
         } else if (number <= CCMIS::SHOP_END) {
-            //这里还需筛选
-            //场所（总商家）
-            PlaceMainWindow *mPMW = new PlaceMainWindow(mCCMIS,this);
-            mPMW->setGeometry(this->x(),this->y(),this->width(),this->height());
-            mPMW->show();
-            //商家
-            ShopMainWindow *mSMW = new ShopMainWindow(mCCMIS,this);
-            mSMW->setGeometry(this->x(),this->y(),this->width(),this->height());
-            mSMW->show();
+            if (number%100 == 0){
+                //场所（总商家）
+                PlaceMainWindow *mPMW = new PlaceMainWindow(mCCMIS,this);
+                mPMW->setGeometry(this->x(),this->y(),this->width(),this->height());
+                mPMW->show();
+            }else {
+                //商家
+                ShopMainWindow *mSMW = new ShopMainWindow(mCCMIS,this);
+                mSMW->setGeometry(this->x(),this->y(),this->width(),this->height());
+                mSMW->show();
+            }
         } else {
             //用户
             UserMainWindow *mUMW = new UserMainWindow(mCCMIS,this);
@@ -76,5 +94,17 @@ void MainWindow::on_pushButton_clicked()
         ui->UserNameLineEdit->clear();
         ui->PasswordLineEdit->clear();
         ui->UserNameLineEdit->setFocus();
+    }
+}
+
+void MainWindow::closeEvent(QCloseEvent *event)
+{
+    if (QMessageBox::information
+            (this, QObject::tr("关闭"),
+             QObject::tr("退了就别回来了，这里到处都是BUG"),
+             QObject::tr("好的"), QObject::tr("我再待一会"), 0, 1) == 0) {
+        event->accept();
+    }else {
+        event->ignore();
     }
 }

@@ -6,6 +6,7 @@
 #include <QDialog>
 #include <QMessageBox>
 #include <QDesktopWidget>
+#include <QProgressDialog>
 
 #include "usermainwindow.h"
 #include "placemainwindow.h"
@@ -29,8 +30,12 @@ public:
     ~MainWindow();
 
 private slots:
-    //void time_dispose();
+    void time_dispose();
     void on_pushButton_clicked();
+
+protected:
+    void closeEvent(QCloseEvent *event) override;
+    //这里我mac直接关出现一次提示，command+Q出现两次，目前不知为何
 
 private:
     Ui::MainWindow *ui;

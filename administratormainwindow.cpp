@@ -6,6 +6,7 @@ AdministratorMainWindow::AdministratorMainWindow(CCMIS* c, QWidget *parent) :
     ui(new Ui::AdministratorMainWindow)
 {
     ui->setupUi(this);
+    this->setAttribute(Qt::WA_DeleteOnClose,true);
 
     mCCMIS = c;
 

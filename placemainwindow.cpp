@@ -6,6 +6,7 @@ PlaceMainWindow::PlaceMainWindow(CCMIS* c, QWidget *parent) :
     ui(new Ui::PlaceMainWindow)
 {
     ui->setupUi(this);
+    this->setAttribute(Qt::WA_DeleteOnClose,true);
 
     mCCMIS = c;
 

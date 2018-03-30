@@ -5,7 +5,7 @@
 #include <QTimer>
 
 #include "ccmis.h"
-
+#include "table_funcs.h"
 namespace Ui {
 class AdministratorSCWindow;
 }
@@ -17,6 +17,7 @@ class AdministratorSCWindow : public QMainWindow
 public:
     explicit AdministratorSCWindow(CCMIS* c, QWidget *parent = 0);
     ~AdministratorSCWindow();
+    void connect_SIG_With_SLOTS();
 
 private slots:
     void time_dispose();
@@ -30,6 +31,7 @@ private:
     int mCurrentItem;
     Ui::AdministratorSCWindow *ui;
     CCMIS *mCCMIS;
+    Admin_Table* mAdminTable;
 };
 
 #endif // ADMINISTRATORSCWINDOW_H

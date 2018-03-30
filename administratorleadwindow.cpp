@@ -6,6 +6,7 @@ AdministratorLeadWindow::AdministratorLeadWindow(CCMIS *c, QWidget *parent) :
     ui(new Ui::AdministratorLeadWindow)
 {
     ui->setupUi(this);
+    this->setAttribute(Qt::WA_DeleteOnClose,true);
 
     mCCMIS = c;
 
@@ -31,12 +32,12 @@ AdministratorLeadWindow::~AdministratorLeadWindow()
     delete ui;
 }
 
-//void AdministratorLeadWindow::time_dispose()
-//{
-//    ui->Time->display(mCCMIS->ShowDateTime());
-//    //月初刷新券
-//    mCCMIS->CouponFresh();
-//}
+void AdministratorLeadWindow::time_dispose()
+{
+    ui->Time->display(mCCMIS->ShowDateTime());
+    //月初刷新券
+    mCCMIS->CouponFresh();
+}
 
 void AdministratorLeadWindow::on_BackButton_clicked()
 {
@@ -47,6 +48,8 @@ void AdministratorLeadWindow::on_BackButton_clicked()
 
 void AdministratorLeadWindow::on_WorkButton_clicked()
 {
+<<<<<<< HEAD
+=======
     QString txt = ui->AddressLine->text();
     QMessageBox* msg = new QMessageBox(this);
 
@@ -56,6 +59,6 @@ void AdministratorLeadWindow::on_WorkButton_clicked()
     }else{
         msg->setText(tr("导入失败！"));
     }
+>>>>>>> 6b386681a79039c4d40ab0365c51c9d8cead6eb9
 
-    msg->show();
 }
