@@ -21,6 +21,102 @@
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QGridLayout" name="gridLayout_3">
+    <item row="0" column="3">
+     <widget class="QPushButton" name="DeleteButton">
+      <property name="text">
+       <string>删除</string>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="4">
+     <widget class="QPushButton" name="AlterButton">
+      <property name="text">
+       <string>修改</string>
+      </property>
+     </widget>
+    </item>
+    <item row="4" column="4">
+     <layout class="QVBoxLayout" name="verticalLayout_2">
+      <item>
+       <spacer name="verticalSpacer_2">
+        <property name="orientation">
+         <enum>Qt::Vertical</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>20</width>
+          <height>40</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item>
+       <layout class="QHBoxLayout" name="horizontalLayout_5">
+        <item>
+         <spacer name="horizontalSpacer_8">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>40</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item>
+         <widget class="QLCDNumber" name="Time">
+          <property name="minimumSize">
+           <size>
+            <width>140</width>
+            <height>20</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>140</width>
+            <height>20</height>
+           </size>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">font: 13pt &quot;Arial&quot;;</string>
+          </property>
+          <property name="frameShape">
+           <enum>QFrame::NoFrame</enum>
+          </property>
+          <property name="digitCount">
+           <number>19</number>
+          </property>
+          <property name="segmentStyle">
+           <enum>QLCDNumber::Flat</enum>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+     </layout>
+    </item>
+    <item row="0" column="2">
+     <widget class="QPushButton" name="InsertButton">
+      <property name="text">
+       <string>增加</string>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="1">
+     <spacer name="verticalSpacer_3">
+      <property name="orientation">
+       <enum>Qt::Vertical</enum>
+      </property>
+      <property name="sizeHint" stdset="0">
+       <size>
+        <width>20</width>
+        <height>96</height>
+       </size>
+      </property>
+     </spacer>
+    </item>
     <item row="0" column="0">
      <layout class="QVBoxLayout" name="verticalLayout">
       <item>
@@ -47,7 +143,7 @@
           </property>
           <property name="icon">
            <iconset>
-            <normaloff>../../../Downloads/返回.png</normaloff>../../../Downloads/返回.png</iconset>
+            <normaloff>../../Downloads/返回.png</normaloff>../../Downloads/返回.png</iconset>
           </property>
          </widget>
         </item>
@@ -81,20 +177,7 @@
       </item>
      </layout>
     </item>
-    <item row="0" column="1">
-     <spacer name="verticalSpacer_3">
-      <property name="orientation">
-       <enum>Qt::Vertical</enum>
-      </property>
-      <property name="sizeHint" stdset="0">
-       <size>
-        <width>20</width>
-        <height>96</height>
-       </size>
-      </property>
-     </spacer>
-    </item>
-    <item row="1" column="0" colspan="4">
+    <item row="3" column="0" colspan="5">
      <layout class="QHBoxLayout" name="horizontalLayout_9">
       <item>
        <spacer name="horizontalSpacer_13">
@@ -181,7 +264,7 @@
              </spacer>
             </item>
             <item>
-             <widget class="QPushButton" name="OutputButton">
+             <widget class="QPushButton" name="ExportButton">
               <property name="minimumSize">
                <size>
                 <width>0</width>
@@ -242,7 +325,7 @@
              </spacer>
             </item>
             <item>
-             <widget class="QPushButton" name="SearchButton">
+             <widget class="QPushButton" name="FilterButton">
               <property name="minimumSize">
                <size>
                 <width>0</width>
@@ -268,7 +351,7 @@
                <string notr="true">font: 20pt &quot;.SF NS Text&quot;;</string>
               </property>
               <property name="text">
-               <string>搜索</string>
+               <string>筛选</string>
               </property>
              </widget>
             </item>
@@ -319,7 +402,7 @@
              </widget>
             </item>
             <item>
-             <widget class="QDateTimeEdit" name="FinishTime">
+             <widget class="QDateTimeEdit" name="FinishDateEdit">
               <property name="minimumSize">
                <size>
                 <width>0</width>
@@ -381,7 +464,7 @@
              </widget>
             </item>
             <item>
-             <widget class="QDateTimeEdit" name="StartTime">
+             <widget class="QDateTimeEdit" name="StartDateEdit">
               <property name="minimumSize">
                <size>
                 <width>0</width>
@@ -411,22 +494,6 @@
             </item>
            </layout>
           </item>
-          <item row="1" column="1" rowspan="2">
-           <widget class="QRadioButton" name="radioButton">
-            <property name="minimumSize">
-             <size>
-              <width>0</width>
-              <height>35</height>
-             </size>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">font: 24pt &quot;.SF NS Text&quot;;</string>
-            </property>
-            <property name="text">
-             <string>是否限定为补贴</string>
-            </property>
-           </widget>
-          </item>
           <item row="3" column="0" colspan="3">
            <widget class="QTableWidget" name="tableWidget">
             <property name="minimumSize">
@@ -440,6 +507,22 @@
               <width>800</width>
               <height>350</height>
              </size>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="1" rowspan="2">
+           <widget class="QCheckBox" name="CheckForSubsidy">
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>35</height>
+             </size>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">font: 24pt &quot;.SF NS Text&quot;;</string>
+            </property>
+            <property name="text">
+             <string>是否限定为补贴</string>
             </property>
            </widget>
           </item>
@@ -462,7 +545,7 @@
       </item>
      </layout>
     </item>
-    <item row="2" column="2">
+    <item row="4" column="2">
      <spacer name="verticalSpacer_4">
       <property name="orientation">
        <enum>Qt::Vertical</enum>
@@ -475,67 +558,12 @@
       </property>
      </spacer>
     </item>
-    <item row="2" column="3">
-     <layout class="QVBoxLayout" name="verticalLayout_2">
-      <item>
-       <spacer name="verticalSpacer_2">
-        <property name="orientation">
-         <enum>Qt::Vertical</enum>
-        </property>
-        <property name="sizeHint" stdset="0">
-         <size>
-          <width>20</width>
-          <height>40</height>
-         </size>
-        </property>
-       </spacer>
-      </item>
-      <item>
-       <layout class="QHBoxLayout" name="horizontalLayout_5">
-        <item>
-         <spacer name="horizontalSpacer_8">
-          <property name="orientation">
-           <enum>Qt::Horizontal</enum>
-          </property>
-          <property name="sizeHint" stdset="0">
-           <size>
-            <width>40</width>
-            <height>20</height>
-           </size>
-          </property>
-         </spacer>
-        </item>
-        <item>
-         <widget class="QLCDNumber" name="Time">
-          <property name="minimumSize">
-           <size>
-            <width>140</width>
-            <height>20</height>
-           </size>
-          </property>
-          <property name="maximumSize">
-           <size>
-            <width>140</width>
-            <height>20</height>
-           </size>
-          </property>
-          <property name="styleSheet">
-           <string notr="true">font: 13pt &quot;Arial&quot;;</string>
-          </property>
-          <property name="frameShape">
-           <enum>QFrame::NoFrame</enum>
-          </property>
-          <property name="digitCount">
-           <number>19</number>
-          </property>
-          <property name="segmentStyle">
-           <enum>QLCDNumber::Flat</enum>
-          </property>
-         </widget>
-        </item>
-       </layout>
-      </item>
-     </layout>
+    <item row="1" column="4">
+     <widget class="QPushButton" name="resetButton">
+      <property name="text">
+       <string>复原</string>
+      </property>
+     </widget>
     </item>
    </layout>
   </widget>
@@ -545,7 +573,7 @@
      <x>0</x>
      <y>0</y>
      <width>1000</width>
-     <height>22</height>
+     <height>26</height>
     </rect>
    </property>
   </widget>

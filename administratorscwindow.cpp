@@ -27,7 +27,32 @@ AdministratorSCWindow::AdministratorSCWindow(CCMIS *c, QWidget *parent) :
 
     //表格显示
 
+    mAdminTable = new Admin_Table(ui->tableWidget,ui->StartDateEdit,
+                                  ui->FinishDateEdit,ui->FilterButton,
+                                  ui->resetButton,ui->ExportButton,mCCMIS,
+                                  ui->DeleteButton,ui->InsertButton,
+                                  ui->AlterButton,ui->CheckForSubsidy);
+
+    connect(mAdminTable->mStart_Edit,SIGNAL(dateChanged(QDate)),
+            SLOT(mAdminTable->on_Start_Date_Changed(QDate);));
+
+    connect(mAdminTable->mFinish_Edit,SIGNAL(dateChanged(QDate)),
+            SLOT(mAdminTable->on_Finish_Date_Changed(QDate);));
+    connect(mAdminTable->mFilter_Btn,SIGNAL(clicked(bool)),
+            SLOT(mAdminTable->on_Filter_clicked();));
+    connect(mAdminTable->mReset_Btn,SIGNAL(clicked(bool)),
+            SLOT(mAdminTable->on_Reset_clicked();));
+    connect(mAdminTable->mExport_Btn,SIGNAL(pressed()),
+            SLOT(mAdminTable->on_Export_pressed();));
+
+    connect(mAdminTable->mSubsidy_Chck,SIGNAL(stateChanged(int)),
+            SLOT(mAdminTable->on_Subsidy_Check_Admin(int);));
+
+
 }
+
+
+
 
 AdministratorSCWindow::~AdministratorSCWindow()
 {

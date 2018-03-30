@@ -7,7 +7,7 @@
 #include <qtablewidget.h>
 
 #include "ccmis.h"
-
+#include "table_funcs.h"
 namespace Ui {
 class ShopSearchWindow;
 }
@@ -29,6 +29,7 @@ private slots:
 private:
     Ui::ShopSearchWindow *ui;
     CCMIS *mCCMIS;
+    Shop_Table* mShopTable;
 };
 
 #endif // SHOPSEARCHWINDOW_H

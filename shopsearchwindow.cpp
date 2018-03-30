@@ -26,7 +26,23 @@ ShopSearchWindow::ShopSearchWindow(CCMIS *c, QWidget *parent) :
     ui->BackButton->setIcon(icon);
 
     //表格显示
-    ui->tableWidget = GetWholeShopSearchTable();
+    mShopTable = new Shop_Table(ui->tableWidget,ui->s)
+
+    connect(mAdminTable->mStart_Edit,SIGNAL(dateChanged(QDate)),
+            SLOT(mAdminTable->on_Start_Date_Changed(QDate);));
+
+    connect(mAdminTable->mFinish_Edit,SIGNAL(dateChanged(QDate)),
+            SLOT(mAdminTable->on_Finish_Date_Changed(QDate);));
+    connect(mAdminTable->mFilter_Btn,SIGNAL(clicked(bool)),
+            SLOT(mAdminTable->on_Filter_clicked();));
+    connect(mAdminTable->mReset_Btn,SIGNAL(clicked(bool)),
+            SLOT(mAdminTable->on_Reset_clicked();));
+    connect(mAdminTable->mExport_Btn,SIGNAL(pressed()),
+            SLOT(mAdminTable->on_Export_pressed();));
+
+    connect(mAdminTable->mSubsidy_Chck,SIGNAL(stateChanged(int)),
+            SLOT(mAdminTable->on_Subsidy_Check_Admin(int);));
+
 }
 
 ShopSearchWindow::~ShopSearchWindow()

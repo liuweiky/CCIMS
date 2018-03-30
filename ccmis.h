@@ -18,9 +18,7 @@
 
 using namespace std;
 
-#include "information.h"
-#include "shop.h"
-#include "user.h"
+#include "struct_funcs.h"
 #include "jsonxx.h"
 #include "common_funcs.h"
 
@@ -155,14 +153,11 @@ public:
     //写入文件的话，默认一个参数是私有成员变量链表 写进文件
     //注意！默认参数不允许是类内成员变量，原因是编译期无法确定内容，只有静态变量可以当默认参数
     bool ReadInf(string filename);                                  //读入整个信息表文件
-    bool WriteInf(string filename);                                 //写出minfo表文件
-    bool WriteInf(string filename, Information *info_list);         //写出指定信息表文件
+    bool WriteInf(string filename, Information *info_list = NULL);         //写出指定信息表文件
     bool ReadUser(string filename);                                 //下同
-    bool WriteUser(string filename);
-    bool WriteUser(string filename, User *user_list);
+    bool WriteUser(string filename, User *user_list = NULL);
     bool ReadShop(string filename);
-    bool WriteShop(string filename);
-    bool WriteShop(string filename, Shop *shop_list);
+    bool WriteShop(string filename, Shop *shop_list =NULL);
 
     void WriteInfForDel();
 

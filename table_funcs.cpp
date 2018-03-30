@@ -16,6 +16,7 @@ Table_Parent::Table_Parent
     mExport_Btn = export_btn;
     mCCMIS = ccmis_sys;
     init_Date_Edit();
+
 }
 
 void Table_Parent::init_Date_Edit()
@@ -54,13 +55,6 @@ void Table_Parent::Table_Filtered_By_Date()
         }
         mTable->setRowHidden( i, !match );
      }
-
-}
-
-
-
-void Table_Parent::connect_Sig_To_Slots_Parent()
-{
 
 }
 
@@ -174,9 +168,9 @@ void Table_Parent::on_Filter_clicked()
     Table_Filtered_By_Date();
 }
 
-void on_Export_pressed()
+void Table_Parent::on_Export_pressed()
 {
-    return;
+    export_Table_To_CSV();
 }
 
 void Table_Parent::on_tableWidget_itemClicked(QTableWidgetItem *item)
@@ -198,10 +192,12 @@ Admin_Table::Admin_Table
              QDateEdit* finish_edit,QPushButton* filter_btn,
              QPushButton* reset_btn, QPushButton* export_btn,
              CCMIS* ccmis_sys,QPushButton* delete_btn,
-             QPushButton *insert_btn, QPushButton *alter_btn)
+             QPushButton *insert_btn, QPushButton *alter_btn,
+             QCheckBox *subsidy_check)
         :Table_Parent(table, start_edit,finish_edit,filter_btn,
                     reset_btn, export_btn,ccmis_sys)
 {
+    mSubsidy_Chck = subsidy_check;
     mDelete_Btn = delete_btn;
     mInsert_Btn = insert_btn;
     mAlter_Btn  = alter_btn;
@@ -227,7 +223,17 @@ void Admin_Table::init_Table_Header()
 }
 
 
-
+void Admin_Table::on_Subsidy_Check_Admin(int state)
+{
+    switch (state) {
+    case Qt::Checked:
+        init_Subsidy_Header();
+        break;
+    case Qt::Unchecked:
+        init_Table_Header();
+        break;
+    }
+}
 
 
 //Shop类子函数
@@ -273,10 +279,11 @@ void Shop_Table::init_Table_Header()
 User_Table::User_Table(QTableWidget *table, QDateEdit* start_edit,
                        QDateEdit* finish_edit, QPushButton* filter_btn,
                        QPushButton* reset_btn, QPushButton* export_btn,
-                       CCMIS* ccmis_sys)
+                       CCMIS* ccmis_sys, QCheckBox *subsidy_check)
         :Table_Parent(table, start_edit,finish_edit,filter_btn,
                     reset_btn, export_btn,ccmis_sys)
 {
+    mSubsidy_Chck = subsidy_check;
     mCurrent_User = mCCMIS->GetCurrentUser();
     init_Table_Header();
 }

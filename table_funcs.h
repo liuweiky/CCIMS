@@ -13,9 +13,11 @@
 
 #include"ccmis.h"
 
+#include"struct_funcs.h"
+
 class Table_Parent
 {
-private:
+public:
     //控件类成员
     QTableWidget* mTable;
     QDateEdit* mStart_Edit;
@@ -31,7 +33,7 @@ private:
 //不清楚是否合适
      int mCurrent_Row_Index = 0;
 
-public:
+
     Table_Parent(QTableWidget *table, QDateEdit* start_edit,
                  QDateEdit* finish_edit,QPushButton* filter_btn,
                  QPushButton* reset_btn, QPushButton* export_btn,
@@ -65,24 +67,27 @@ protected slots:
 
 class Admin_Table : public Table_Parent
 {
-private:
+public:
     //删 增 改
     QPushButton* mDelete_Btn;
     QPushButton* mInsert_Btn;
     QPushButton* mAlter_Btn;
-public:
+    QCheckBox* mSubsidy_Chck;
+
     Admin_Table(QTableWidget *table,QDateEdit* start_edit,
                 QDateEdit* finish_edit,QPushButton* filter_btn,
                 QPushButton* reset_btn,QPushButton* export_btn,
                 CCMIS* ccmis_sys,QPushButton* delete_btn,
                 QPushButton* insert_btn,QPushButton* alter_btn);
     void init_Table_Header();
+protected slots:
+    void on_Subsidy_Check_Admin(int);
 };
 
 
 class Shop_Table: public Table_Parent
 {
-private:
+public:
       Shop* mCurrent_Shop;
 
      //删 增 改 只能修改自己店铺相关的
@@ -90,7 +95,7 @@ private:
      QPushButton* mInsert_Btn;
      QPushButton* mAlter_Btn;
 
-public:
+
     Shop_Table(QTableWidget *table, QDateEdit* start_edit,
                QDateEdit* finish_edit,QPushButton* filter_btn,
                QPushButton* reset_btn, QPushButton* export_btn,
@@ -104,15 +109,18 @@ public:
 
 class User_Table: public Table_Parent
 {
-private:
-    User* mCurrent_User;
 public:
+    User* mCurrent_User;
+    QCheckBox* mSubsidy_Chck;
+
     User_Table(QTableWidget *table, QDateEdit* start_edit,
                QDateEdit* finish_edit,QPushButton* filter_btn,
                QPushButton* reset_btn, QPushButton* export_btn,
-               CCMIS* ccmis_sys);
+               CCMIS* ccmis_sys,QCheckBox* subsidy_check);
     void init_Table_Header();
     void init_Subsidy_Header();
+protected slots:
+    void on_Subsidy_Check_User(int);
 };
 
 
