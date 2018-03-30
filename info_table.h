@@ -10,7 +10,7 @@
 #include <QMessageBox>
 
 #include "ccmis.h"
-#include "information.h"
+
 
 namespace Ui {
 class Info_Table;
