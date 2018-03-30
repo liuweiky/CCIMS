@@ -7,6 +7,7 @@ UserMainWindow::UserMainWindow(CCMIS* c, QWidget *parent) :
     ui(new Ui::UserMainWindow)
 {
     ui->setupUi(this);
+    this->setAttribute(Qt::WA_DeleteOnClose,true);
 
     mCCMIS = c;
 //    User* u = mCCMIS->GetUserByNum(mCCMIS->GetUserNum());

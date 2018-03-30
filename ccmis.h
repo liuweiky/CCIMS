@@ -15,6 +15,7 @@
 #include <QDateTime>
 #include <QtGlobal>         //判断平台
 #include <QCoreApplication> //读取路径
+#include <QCloseEvent>      //窗口关闭
 
 using namespace std;
 
@@ -245,8 +246,10 @@ public:
 
     void SetUserNumber(int n);
 
-    QString ShowDateTime();     //输出当前日期时间
-    void CouponFresh();         //月初刷新劵额
+    //用于ui的函数
+    QString ShowDateTime();             //输出当前日期时间
+    void CouponFresh();                 //月初刷新劵额
+    //void CloseTxt(QCloseEvent *event);  //关闭窗口弹窗
 };
 
 #endif // CCMIS_H

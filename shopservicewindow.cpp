@@ -6,6 +6,7 @@ ShopServiceWindow::ShopServiceWindow(CCMIS *c, QWidget *parent) :
     ui(new Ui::ShopServiceWindow)
 {
     ui->setupUi(this);
+    this->setAttribute(Qt::WA_DeleteOnClose,true);
 
     mCCMIS = c;
 

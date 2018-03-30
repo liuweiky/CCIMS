@@ -9,6 +9,7 @@
 ////{
 ////    mCCMIS = ccmis_system;
 ////    ui->setupUi(this);
+////    this->setAttribute(Qt::WA_DeleteOnClose,true);
 ////    mCurrentItem = -1;
 ////    int user_num = mCCMIS->GetUserNum();
 ////    //设置按钮

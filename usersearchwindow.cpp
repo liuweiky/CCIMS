@@ -6,6 +6,7 @@ UserSearchWindow::UserSearchWindow(CCMIS *c, QWidget *parent) :
     ui(new Ui::UserSearchWindow)
 {
     ui->setupUi(this);
+    this->setAttribute(Qt::WA_DeleteOnClose,true);
 
     mCCMIS = c;
 

@@ -6,6 +6,7 @@ ShopSearchWindow::ShopSearchWindow(CCMIS *c, QWidget *parent) :
     ui(new Ui::ShopSearchWindow)
 {
     ui->setupUi(this);
+    this->setAttribute(Qt::WA_DeleteOnClose,true);
 
     mCCMIS = c;
 
@@ -54,7 +55,7 @@ QTableWidget* ShopSearchWindow::GetWholeShopSearchTable()
 
     Information* iter = mCCMIS->GetInfoPointer() ->next;
     while(iter!=NULL){
-        if(iter->Inumber == mCCMIS->GetUserNum())
+        if((int)iter->Inumber == mCCMIS->GetUserNum())
             ShowOneInfo(SSTable,iter,RowCount);
         iter  = iter->next;
         RowCount++;

@@ -330,7 +330,7 @@ void  User_Table::init_Subsidy_Header()
     int RowCount = 0;
     Information* iter = mCCMIS->GetInfoPointer() ->next;
     while(iter!=NULL){
-        if((iter->Onumber == 2)&& (iter->Inumber == mCurrent_User_Num))
+        if(((int)iter->Onumber == 2)&& (iter->Inumber == mCurrent_User_Num))
             show_One_Info_Same_Num(iter,RowCount,mCurrent_User_Num);
     }
     return;

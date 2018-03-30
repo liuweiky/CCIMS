@@ -216,19 +216,19 @@ bool CCMIS::SaveJsonArrToFile(const jsonxx::Array& ToSaveJson,string filename)
 bool CCMIS::TimeBool(Information* beforetime, Information* aftertime){
     if (beforetime->year < aftertime->year) {
         return true;
-    }else if (beforetime->year = aftertime->year) {
+    }else if (beforetime->year == aftertime->year) {
         if (beforetime->month < aftertime->month) {
             return true;
-        }else if (beforetime->month = aftertime->month) {
+        }else if (beforetime->month == aftertime->month) {
             if (beforetime->day < aftertime->day) {
                 return true;
-            }else if (beforetime->day = aftertime->day) {
+            }else if (beforetime->day == aftertime->day) {
                 if (beforetime->hour < aftertime->hour) {
                     return true;
-                }else if (beforetime->hour = aftertime->hour) {
+                }else if (beforetime->hour == aftertime->hour) {
                     if (beforetime->minute < aftertime->minute) {
                         return true;
-                    }else if (beforetime->minute = aftertime->minute) {
+                    }else if (beforetime->minute == aftertime->minute) {
                         if (beforetime->second < aftertime->second) {
                             return true;
                         }
@@ -328,9 +328,7 @@ string CCMIS::ReadAllFileToQString(string filename)
     //读取文件
     QFile fileReadIn(FilenameCorrect(filename));
     if(!fileReadIn.open(QIODevice::ReadOnly | QIODevice::Text)){
-        qDebug ("Could not open the file for reading:") ;
-        qDebug (qPrintable(FilenameCorrect(filename)));
-        qDebug ("\n") ;
+        qDebug ("Could not open the file for reading /n");
         return string("");
         //String("").Empty();  //结果为true判定用
     }
@@ -415,7 +413,7 @@ bool CCMIS::ReadShop(string filename)
 
         //解析 json
         array.parse(fileALLReadIn);
-        for (int i = 0; i < array.size(); i++)  //迭代构造
+        for (unsigned long i = 0; i < array.size(); i++)  //迭代构造
         {
             Shop* s = new Shop();
 
@@ -454,7 +452,7 @@ bool CCMIS::ReadInf(string filename)
     if (!fileALLReadIn.empty()){
         jsonxx::Array array;
         array.parse(fileALLReadIn);             //解析 json
-        for (int i = 0; i < array.size(); i++)  //迭代构造
+        for (unsigned long i = 0; i < array.size(); i++)  //迭代构造
         {
             Information* info = new Information();
 
@@ -498,7 +496,7 @@ unsigned int CCMIS::ImportInf(string filename)
     if (!fileALLReadIn.empty()){
         jsonxx::Array array;
         array.parse(fileALLReadIn);             //解析 json
-        for (int i = 0; i < array.size(); i++)  //迭代构造
+        for (unsigned long i = 0; i < array.size(); i++)  //迭代构造
         {
             //构造信息
             Information* info = new Information();
@@ -623,6 +621,8 @@ Information* CCMIS::BuildInfo(int onum, int inum, int mon,
     info->money = mon;
 
     info->next = NULL;
+
+    return info;
 }
 
 bool CCMIS::CheckPassword(string password)
@@ -702,7 +702,7 @@ Information* CCMIS::SearchInfoByOnum
     unsigned long long finish  = finish_date_num * 1000000 + finish_time_num;
     while(info!=NULL){
 
-        if( info->Onumber == onum ){
+        if((int)info->Onumber == onum ){
             unsigned long  info_date = Date::DateToNum
                     (info->year,info->month,info->day);
             unsigned int info_time = Time::TimeToNum
@@ -734,7 +734,7 @@ Information* CCMIS::SearchInfoByInum
     unsigned long long finish  = finish_date_num * 1000000 + finish_time_num;
     while(info!=NULL){
 
-        if( info->Inumber == inum ){
+        if((int)info->Inumber == inum ){
             unsigned long  info_date = Date::DateToNum(info->year,info->month,info->day);
             unsigned int info_time = Time::TimeToNum(info->hour,info->minute);
             unsigned long long  info_cur = info_date * 1000000 + info_time;
@@ -860,10 +860,10 @@ int CCMIS::GetTotalCanteenConsumptionByDay(int year, int month, int day, int num
     while (info != NULL) {
         if (
                 info->Inumber / 1000 == GROUP_CANTEEN &&
-                info->year == year &&
-                info->month == month &&
-                info->day == day &&
-                info->Onumber == num)
+                info->year == (unsigned int)year &&
+                info->month == (unsigned int)month &&
+                info->day == (unsigned int)day &&
+                info->Onumber == (unsigned int)num)
         {
             c += info->money;
         }
@@ -883,10 +883,10 @@ int CCMIS::GetTotalCanteenAndMarketConsumptionByDay
         if (
                 (info->Inumber / 1000 == GROUP_CANTEEN ||
                  info->Inumber / 1000 == GROUP_MARKET) &&
-                info->year == year &&
-                info->month == month &&
-                info->day == day &&
-                info->Onumber == num)
+                info->year == (unsigned int)year &&
+                info->month == (unsigned int)month &&
+                info->day == (unsigned int)day &&
+                info->Onumber == (unsigned int)num)
         {
             c += info->money;
         }
@@ -913,6 +913,9 @@ int CCMIS::NewSubsidy(User* u)
         jthread->start();
         jthread = new JsonThread(this, THREAD_TYPE_W_INFO);
         jthread->start();
+        return MESSAGE_TRANSACTION_SUCCESS;
+    }else{
+        return MESSAGE_TRANSACTION_UNKNOWN;
     }
 }
 
@@ -1055,7 +1058,7 @@ bool CCMIS::NewRefund(Information *tempinf)
 
     User* u = mUser->next;
     while (u != NULL) {
-        if (u->number == tempinf->Onumber)
+        if (u->number == (int)tempinf->Onumber)
             break;
         u = u->next;
     }
@@ -1147,3 +1150,14 @@ void CCMIS::CouponFresh(){
         WriteUser(USER_FILE_NAME);
     }
 }
+
+//void CCMIS::CloseTxt(QCloseEvent *event){
+//    if (QMessageBox::information
+//            (this, QObject::tr("关闭"),
+//             QObject::tr("退了就别回来了，这里到处都是BUG"),
+//             QObject::tr("好的"), QObject::tr("我再待一会"), 0, 1) == 0) {
+//        event->accept();
+//    }else {
+//        event->ignore();
+//    }
+//}
