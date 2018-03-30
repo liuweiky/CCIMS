@@ -1,6 +1,6 @@
 #include "shopsearchwindow.h"
 #include "ui_shopsearchwindow.h"
-
+#include "information.h"
 ShopSearchWindow::ShopSearchWindow(CCMIS *c, QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::ShopSearchWindow)
