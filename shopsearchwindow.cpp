@@ -27,6 +27,9 @@ ShopSearchWindow::ShopSearchWindow(CCMIS *c, QWidget *parent) :
     ui->BackButton->setIcon(icon);
 
     //表格显示
+<<<<<<< HEAD
+    mShopTable = new Shop_Table(ui->tableWidget,ui->s)
+=======
     ui->tableWidget = GetWholeShopSearchTable();
 }
 
@@ -60,28 +63,31 @@ QTableWidget* ShopSearchWindow::GetWholeShopSearchTable()
         iter  = iter->next;
         RowCount++;
     }
+>>>>>>> 6b386681a79039c4d40ab0365c51c9d8cead6eb9
 
-    return SSTable;
+    connect(mAdminTable->mStart_Edit,SIGNAL(dateChanged(QDate)),
+            SLOT(mAdminTable->on_Start_Date_Changed(QDate);));
 
+    connect(mAdminTable->mFinish_Edit,SIGNAL(dateChanged(QDate)),
+            SLOT(mAdminTable->on_Finish_Date_Changed(QDate);));
+    connect(mAdminTable->mFilter_Btn,SIGNAL(clicked(bool)),
+            SLOT(mAdminTable->on_Filter_clicked();));
+    connect(mAdminTable->mReset_Btn,SIGNAL(clicked(bool)),
+            SLOT(mAdminTable->on_Reset_clicked();));
+    connect(mAdminTable->mExport_Btn,SIGNAL(pressed()),
+            SLOT(mAdminTable->on_Export_pressed();));
 
+    connect(mAdminTable->mSubsidy_Chck,SIGNAL(stateChanged(int)),
+            SLOT(mAdminTable->on_Subsidy_Check_Admin(int);));
 
 }
 
-void ShopSearchWindow::ShowOneInfo(QTableWidget* shop_table,Information* one_info,int row_index)
+ShopSearchWindow::~ShopSearchWindow()
 {
-    QString UserName = mCCMIS->GetAllNameByNum(one_info->Onumber);
-    QString Date = Information::InfoToDateStr(one_info);
-    QString Time = Information::InfoToTimeStr(one_info);
-    QString Money = Information::InfoToMoneyStr(one_info);
-    shop_table->insertRow(row_index);
-
-    shop_table->setItem(row_index,0,new QTableWidgetItem(Date));
-    shop_table->setItem(row_index,2,
-                        new QTableWidgetItem(QString::number(one_info->Onumber)));
-
-    shop_table->setItem(row_index,3,new QTableWidgetItem(UserName));
-    shop_table->setItem(row_index,4,new QTableWidgetItem(Money));
+    delete ui;
 }
+
+
 
 void ShopSearchWindow::time_dispose()
 {

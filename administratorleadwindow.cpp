@@ -48,6 +48,8 @@ void AdministratorLeadWindow::on_BackButton_clicked()
 
 void AdministratorLeadWindow::on_WorkButton_clicked()
 {
+<<<<<<< HEAD
+=======
     QString txt = ui->AddressLine->text();
     QMessageBox* msg = new QMessageBox(this);
 
@@ -57,6 +59,6 @@ void AdministratorLeadWindow::on_WorkButton_clicked()
     }else{
         msg->setText(tr("导入失败！"));
     }
+>>>>>>> 6b386681a79039c4d40ab0365c51c9d8cead6eb9
 
-    msg->show();
 }
