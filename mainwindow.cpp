@@ -33,20 +33,28 @@ void MainWindow::time_dispose()
 
 void MainWindow::on_pushButton_clicked()
 {
-    //进度条
-    int i = 0;
-    QProgressDialog *progressDlg = new
-            QProgressDialog(QStringLiteral("正在载入文件......"),
-                            QStringLiteral("等待"),0,10000,this);
-    progressDlg->setWindowModality(Qt::WindowModal);
-    //如果运行时间小于3，进度条就不会显示（测试时请置0）
-    progressDlg->setMinimumDuration(3);
-    progressDlg->setWindowTitle(QStringLiteral("请稍候"));
-    while (i < 10000) {
-        //这里可以添加进度前进的活动；初步构想是先获取文件大小，近似拟合时间，
-        //当完成时直接置满结束，但暂时没看懂读文件线程怎么操作的
-        i++;
-        progressDlg->setValue(i);
+//    //进度条
+//    int i = 0;
+//    QProgressDialog *progressDlg = new
+//            QProgressDialog(QStringLiteral("正在载入文件......"),
+//                            QStringLiteral("等待"),0,10000,this);
+//    progressDlg->setWindowModality(Qt::WindowModal);
+//    //如果运行时间小于3，进度条就不会显示（测试时请置0）
+//    progressDlg->setMinimumDuration(3);
+//    progressDlg->setWindowTitle(QStringLiteral("请稍候"));
+//    while (i < 10000) {
+//        //这里可以添加进度前进的活动；初步构想是先获取文件大小，近似拟合时间，
+//        //当完成时直接置满结束，但暂时没看懂读文件线程怎么操作的
+//        i++;
+//        progressDlg->setValue(i);
+//    }
+
+    if (mCCMIS->GetCurrentReadThreadCount() > 0)
+    {
+        QMessageBox::warning(this, tr("警告！"),
+                             tr("数据尚未加载完成！"),
+                             QMessageBox::Ok);
+        return;
     }
 
     //获取帐号

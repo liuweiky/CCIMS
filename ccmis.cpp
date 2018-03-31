@@ -74,6 +74,8 @@ CCMIS::CCMIS()
 {
     //初始化
     mUserNumber = -1;
+    mReadThreadCount = 0;
+    mWriteThreadCount = 0;
 
     mInfo = new Information();
     mShop = new Shop();
@@ -134,6 +136,16 @@ CCMIS::CCMIS()
 //    cout<<"end: "<<timestr<<endl;
 
 //    cout << "transaction complete...\n";
+}
+
+int CCMIS::GetCurrentReadThreadCount()
+{
+    return mReadThreadCount;
+}
+
+int CCMIS::GetCurrentWriteThreadCount()
+{
+    return mWriteThreadCount;
 }
 
 jsonxx::Array CCMIS::LinkListToJson(User* user_list)
