@@ -20,7 +20,7 @@ public:
     explicit AdministratorSCWindow(CCMIS* c, QWidget *parent = 0);
     ~AdministratorSCWindow();
     void connect_SIG_With_SLOTS();
-    void ModItem(int year, int month, int day, int hour, int min, int sec, int onum, int inum, int money);
+    void UpdateItem();
 
 private slots:
     void time_dispose();

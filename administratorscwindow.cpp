@@ -98,7 +98,8 @@ void AdministratorSCWindow::on_InsertButton_clicked()
     aaw->show();
 }
 
-void AdministratorSCWindow::ModItem(int year, int month, int day, int hour, int min, int sec, int onum, int inum, int money)
+void AdministratorSCWindow::UpdateItem()
 {
-    mAdminTable->DelItem();
+    mAdminTable->mTable->clear();
+    mAdminTable->init_Table_Header();
 }

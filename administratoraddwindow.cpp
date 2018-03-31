@@ -48,6 +48,7 @@ void AdministratorAddWindow::on_AddButton_clicked()
     int min = qt.minute();
     int sec = qt.second();
 
+    AdministratorSCWindow* a = (AdministratorSCWindow*)parentWidget();
     //mCCMIS->NewTransaction(onum, mCCMIS->GetUserNum(), money);
 
     switch (mCCMIS->NewAdmTransaction(year, month, day, hour, min, sec, onum, inum, money)) {
@@ -80,11 +81,8 @@ void AdministratorAddWindow::on_AddButton_clicked()
         QMessageBox::information(this, tr("信息！"),
                            tr("创建成功！"),
                            QMessageBox::Yes);
-        if (isModify)
-        {
-            AdministratorSCWindow* a = (AdministratorSCWindow*)parentWidget();
-            a->ModItem(year, month, day, hour, min, sec, onum, inum, money);
-        }
+
+        a->UpdateItem();
         break;
     default:
         break;

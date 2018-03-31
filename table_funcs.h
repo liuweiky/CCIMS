@@ -104,7 +104,7 @@ public:
                QPushButton* reset_btn, QPushButton* export_btn,
                CCMIS* ccmis_sys);
     void init_Table_Header();
-    void DelItem();
+    void DelItem(){}
 };
 
 
