@@ -105,7 +105,7 @@ public:
                CCMIS* ccmis_sys,QPushButton* delete_btn,
                QPushButton* insert_btn,QPushButton* alter_btn);
     void init_Table_Header();
-    void DelItem();
+    void DelItem(){}
 };
 
 

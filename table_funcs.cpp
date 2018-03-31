@@ -87,6 +87,7 @@ void Table_Parent::show_One_Info_Same_Num(Information* one_info,int row_index,in
     QString Time = info_date_time.toString("hh:mm:ss");
     QString Money = Information::InfoToMoneyStr(one_info);
     QString NumStr = QString::number(inum_or_onum).sprintf("%04d",one_info->Onumber);
+    QString tag = QString::fromLocal8Bit(one_info->tag.data());
     mTable->insertRow(row_index);
 
 
@@ -95,6 +96,7 @@ void Table_Parent::show_One_Info_Same_Num(Information* one_info,int row_index,in
     mTable->setItem(row_index,2,new QTableWidgetItem(NumStr));
     mTable->setItem(row_index,3,new QTableWidgetItem(Name));
     mTable->setItem(row_index,4,new QTableWidgetItem(Money));
+    mTable->setItem(row_index,5,new QTableWidgetItem(tag));
     row_index++;
 }
 
@@ -109,6 +111,7 @@ void Table_Parent::show_One_Info_All(Information *one_info, int row_index)
     QString Date = info_date_time.toString("yyyy-MM-dd");
     QString Time = info_date_time.toString("hh:mm:ss");
     QString Money = Information::InfoToMoneyStr(one_info);
+    QString tag = QString::fromLocal8Bit(one_info->tag.data());
     //插入一行
     mTable->insertRow(row_index);
 
@@ -121,7 +124,7 @@ void Table_Parent::show_One_Info_All(Information *one_info, int row_index)
     mTable->setItem(row_index,4,new QTableWidgetItem(InName));
     mTable->setItem(row_index,5,new QTableWidgetItem(InNumStr));
     mTable->setItem(row_index,6,new QTableWidgetItem(Money));
-
+    mTable->setItem(row_index,7,new QTableWidgetItem(tag));
     row_index++;
 }
 
@@ -202,10 +205,10 @@ Admin_Table::Admin_Table
 void Admin_Table::init_Table_Header()
 {
    mTable->clear();
-   mTable->setColumnCount(7);
+   mTable->setColumnCount(8);
    mTable->setHorizontalHeaderLabels(
           QStringList()<<"日期" <<"时间" <<"出账号"<<"出账账户"
-                       <<"入账号"<<"入账账户"<<"金额");
+                       <<"入账号"<<"入账账户"<<"金额"<<"流水号");
     mTable->horizontalHeader()->setStretchLastSection(true); //就是这个地方
 
    int RowCount = 0;
@@ -221,62 +224,7 @@ void Admin_Table::DelItem()
 {
     if (mCurrentItemIndex != -1)
     {
-        QString tag = "";
-        QString date = mTable->item(mCurrentItemIndex, 0)->text().replace(QString("-"),QString(""));
-        QString time = mTable->item(mCurrentItemIndex, 1)->text().replace(QString(":"),QString(""));
-        QString onum = mTable->item(mCurrentItemIndex, 2)->text();
-        QString inum = mTable->item(mCurrentItemIndex, 5)->text();
-        int money = mTable->item(mCurrentItemIndex, 6)->text().toDouble()*100;
-
-        tag = date + time + onum + inum;
-
-        if (money < 10)
-        {
-            tag += "0000" + QString::number (money);
-        } else if (money < 100)
-        {
-            tag += "000" + QString::number (money);
-        } else if (money < 1000)
-        {
-            tag += "00" + QString::number (money);
-        } else if (money < 10000)
-        {
-            tag += "0" + QString::number (money);
-        } else {
-            tag += QString::number (money);
-        }
-
-
-        qDebug()<<tag;
-
-        Information* info = mCCMIS->GetInfoByTag(tag);
-
-        if (info == NULL)
-        {
-            tag = date + time + onum + inum;
-            money = mTable->item(mCurrentItemIndex, 6)->text().toDouble()*100 + 1;  //防止出现double转int被去尾
-
-            tag = date + time + onum + inum;
-
-            if (money < 10)
-            {
-                tag += "0000" + QString::number (money);
-            } else if (money < 100)
-            {
-                tag += "000" + QString::number (money);
-            } else if (money < 1000)
-            {
-                tag += "00" + QString::number (money);
-            } else if (money < 10000)
-            {
-                tag += "0" + QString::number (money);
-            } else {
-                tag += QString::number (money);
-            }
-
-            qDebug()<<tag;
-            info = mCCMIS->GetInfoByTag(tag);
-        }
+        Information* info = mCCMIS->GetInfoByTag(mTable->item(mCurrentItemIndex, 7)->text());
 
         mCCMIS->NewRefund(info);
         mTable->removeRow(mCurrentItemIndex);
@@ -288,91 +236,6 @@ void Admin_Table::DelItem()
 //                           QMessageBox::Yes);
     }
 }
-
-void Shop_Table::DelItem()
-{
-    if (mCurrentItemIndex != -1)
-    {
-        QString tag = "";
-        QString date = mTable->item(mCurrentItemIndex, 0)->text().replace(QString("-"),QString(""));
-        QString time = mTable->item(mCurrentItemIndex, 1)->text().replace(QString(":"),QString(""));
-        QString onum = mTable->item(mCurrentItemIndex, 2)->text();
-        QString inum = QString::number(mCurrent_Shop->number);
-        int money = mTable->item(mCurrentItemIndex, 4)->text().toDouble()*100;
-
-        tag = date + time + onum + inum;
-
-        if (money < 10)
-        {
-            tag += "0000" + QString::number (money);
-        } else if (money < 100)
-        {
-            tag += "000" + QString::number (money);
-        } else if (money < 1000)
-        {
-            tag += "00" + QString::number (money);
-        } else if (money < 10000)
-        {
-            tag += "0" + QString::number (money);
-        } else {
-            tag += QString::number (money);
-        }
-
-
-        qDebug()<<tag;
-
-        Information* info = mCCMIS->GetInfoByTag(tag);
-
-        if (info == NULL)
-        {
-            tag = date + time + onum + inum;
-            money = mTable->item(mCurrentItemIndex, 4)->text().toDouble()*100 + 1;  //防止出现double转int被去尾
-
-            tag = date + time + onum + inum;
-
-            if (money < 10)
-            {
-                tag += "0000" + QString::number (money);
-            } else if (money < 100)
-            {
-                tag += "000" + QString::number (money);
-            } else if (money < 1000)
-            {
-                tag += "00" + QString::number (money);
-            } else if (money < 10000)
-            {
-                tag += "0" + QString::number (money);
-            } else {
-                tag += QString::number (money);
-            }
-
-            qDebug()<<tag;
-            info = mCCMIS->GetInfoByTag(tag);
-        }
-
-        mCCMIS->NewRefund(info);
-        mTable->removeRow(mCurrentItemIndex);
-        mCurrentItemIndex = -1;
-
-        //Need parent pointer, or this may lead to window disappearance
-//        QMessageBox::information(NULL, tr("提示"),
-//                           tr("删除成功！"),
-//                           QMessageBox::Yes);
-    }
-}
-
-void Admin_Table::on_Subsidy_Check_Admin(int state)
-{
-    switch (state) {
-    case Qt::Checked:
-        init_Subsidy_Header();
-        break;
-    case Qt::Unchecked:
-        init_Table_Header();
-        break;
-    }
-}
-
 
 //Shop类子函数
 
@@ -393,9 +256,9 @@ Shop_Table::Shop_Table(QTableWidget *table, QDateEdit* start_edit,
 
 void Shop_Table::init_Table_Header()
 {
-   mTable->setColumnCount(5);
+   mTable->setColumnCount(6);
    mTable->setHorizontalHeaderLabels(
-          QStringList()<<"日期" <<"时间" <<"出账号"<<"出账账户"<<"金额");
+          QStringList()<<"日期" <<"时间" <<"出账号"<<"出账账户"<<"金额"<<"流水号");
     mTable->horizontalHeader()->setStretchLastSection(true); //就是这个地方
 
    int RowCount = 0;

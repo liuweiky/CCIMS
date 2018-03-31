@@ -814,6 +814,7 @@ void CCMIS::DeleteInf(Information *tempinf)
 
     if (i != NULL)
     {
+        qDebug()<<QString::fromLocal8Bit(i->tag.data());
         i->next = tempinf->next;
     }
 
