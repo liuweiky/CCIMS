@@ -56,7 +56,6 @@ void Table_Parent::Table_Filtered_By_Date()
         }
         mTable->setRowHidden( i, !match );
      }
-
 }
 
 
@@ -66,7 +65,7 @@ void Table_Parent::Table_Filtered_By_Date()
 //父类的补助查看，可以查看全部的补助信息
 void Table_Parent::init_Subsidy_Header()
 {
-    mTable->clear();
+
     mTable->setColumnCount(5);
     mTable->setHorizontalHeaderLabels(
            QStringList()<<"日期" <<"时间" <<"入帐号"<<"被补助人"<<"金额"<<"流水号");
@@ -171,8 +170,8 @@ void Table_Parent::on_Finish_Date_Changed(const QDate &date)
 
 void Table_Parent::on_Filter_clicked()
 {
-    //mTable->clear();
-    Table_Filtered_By_Date();
+
+    this->Table_Filtered_By_Date();
 }
 
 void Table_Parent::on_Export_pressed()
@@ -182,7 +181,7 @@ void Table_Parent::on_Export_pressed()
 
 void Table_Parent::on_Reset_clicked()
 {
-
+    this->mTable->clear();
     this->init_Table_Header();
 }
 
@@ -214,7 +213,7 @@ Admin_Table::Admin_Table
 
 void Admin_Table::init_Table_Header()
 {
-   mTable->clear();
+
    mTable->setColumnCount(8);
    mTable->setHorizontalHeaderLabels(
           QStringList()<<"日期" <<"时间" <<"出账号"<<"出账账户"
@@ -279,7 +278,7 @@ Shop_Table::Shop_Table(QTableWidget *table, QDateEdit* start_edit,
 
 void Shop_Table::init_Table_Header()
 {
-    mTable->clear();
+
    mTable->setColumnCount(6);
    mTable->setHorizontalHeaderLabels(
           QStringList()<<"日期" <<"时间" <<"出账号"<<"出账账户"<<"金额"<<"流水号");
@@ -318,7 +317,7 @@ User_Table::User_Table(QTableWidget *table, QDateEdit* start_edit,
 
 void User_Table::init_Table_Header()
 {
-    mTable->clear();
+
    mTable->setColumnCount(5);
    mTable->setHorizontalHeaderLabels(
           QStringList()<<"日期" <<"时间" <<"入账号"<<"入账账户"<<"金额");
@@ -337,7 +336,7 @@ void User_Table::init_Table_Header()
 //用户类下的补助查看，只能查看自己的补助
 void  User_Table::init_Subsidy_Header()
 {
-    mTable->clear();
+
     mTable->setColumnCount(5);
     mTable->setHorizontalHeaderLabels(
            QStringList()<<"日期" <<"时间" <<"入帐号"<<"被补助人"<<"金额"<<"流水号");
