@@ -17,6 +17,7 @@
 
 class Table_Parent: public QWidget
 {
+    Q_OBJECT
 public:
     //TODO: Need parent pointer……
     //控件类成员
@@ -68,6 +69,7 @@ public slots:
 
 class Admin_Table : public Table_Parent
 {
+    Q_OBJECT
 public:
     //删 增 改
     QPushButton* mDelete_Btn;
@@ -90,6 +92,7 @@ public slots:
 
 class Shop_Table: public Table_Parent
 {
+    Q_OBJECT
 public:
       Shop* mCurrent_Shop;
 
@@ -109,6 +112,7 @@ public:
 
 class User_Table: public Table_Parent
 {
+    Q_OBJECT
 public:
     User* mCurrent_User;
     QCheckBox* mSubsidy_Chck;
