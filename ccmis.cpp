@@ -805,7 +805,7 @@ void CCMIS::DeleteInf(Information *tempinf)
     if (tempinf == NULL)
         return;
 
-    Information* i = mInfo->next;
+    Information* i = mInfo;
     while (i != NULL) {
         if (i->next == tempinf)
             break;
@@ -816,11 +816,10 @@ void CCMIS::DeleteInf(Information *tempinf)
     {
         qDebug()<<QString::fromLocal8Bit(i->tag.data());
         i->next = tempinf->next;
+        delete tempinf;
+
+        totalInfoCount--;
     }
-
-    delete tempinf;
-
-    totalInfoCount--;
 }
 
 User* CCMIS::GetUserByNum(int num)
@@ -1202,7 +1201,7 @@ bool CCMIS::NewRefund(Information *tempinf)
 
     User* u = mUser->next;
     while (u != NULL) {
-        if (u->number == (int)tempinf->Onumber)
+        if (u->number == tempinf->Onumber)
             break;
         u = u->next;
     }
