@@ -17,7 +17,7 @@ Table_Parent::Table_Parent
     mCCMIS = ccmis_sys;
     init_Date_Edit();
 
-
+    mCurrentItemIndex = -1;
 }
 
 void Table_Parent::init_Date_Edit()
@@ -176,7 +176,7 @@ void Table_Parent::on_Export_pressed()
 
 void Table_Parent::on_tableWidget_itemClicked(QTableWidgetItem *item)
 {
-    mCurrent_Row_Index = item->row();
+    mCurrentItemIndex = item->row();
 }
 
 
@@ -223,6 +223,77 @@ void Admin_Table::init_Table_Header()
    return;
 }
 
+void Admin_Table::DelItem()
+{
+    if (mCurrentItemIndex != -1)
+    {
+        QString tag = "";
+        QString date = mTable->item(mCurrentItemIndex, 0)->text().replace(QString("-"),QString(""));
+        QString time = mTable->item(mCurrentItemIndex, 1)->text().replace(QString(":"),QString(""));
+        QString onum = mTable->item(mCurrentItemIndex, 2)->text();
+        QString inum = mTable->item(mCurrentItemIndex, 5)->text();
+        int money = mTable->item(mCurrentItemIndex, 6)->text().toDouble()*100;
+
+        tag = date + time + onum + inum;
+
+        if (money < 10)
+        {
+            tag += "0000" + QString::number (money);
+        } else if (money < 100)
+        {
+            tag += "000" + QString::number (money);
+        } else if (money < 1000)
+        {
+            tag += "00" + QString::number (money);
+        } else if (money < 10000)
+        {
+            tag += "0" + QString::number (money);
+        } else {
+            tag += QString::number (money);
+        }
+
+
+        qDebug()<<tag;
+
+        Information* info = mCCMIS->GetInfoByTag(tag);
+
+        if (info == NULL)
+        {
+            tag = date + time + onum + inum;
+            money = mTable->item(mCurrentItemIndex, 6)->text().toDouble()*100 + 1;  //防止出现double转int被去尾
+
+            tag = date + time + onum + inum;
+
+            if (money < 10)
+            {
+                tag += "0000" + QString::number (money);
+            } else if (money < 100)
+            {
+                tag += "000" + QString::number (money);
+            } else if (money < 1000)
+            {
+                tag += "00" + QString::number (money);
+            } else if (money < 10000)
+            {
+                tag += "0" + QString::number (money);
+            } else {
+                tag += QString::number (money);
+            }
+
+            qDebug()<<tag;
+            info = mCCMIS->GetInfoByTag(tag);
+        }
+
+        mCCMIS->NewRefund(info);
+        mTable->removeRow(mCurrentItemIndex);
+        mCurrentItemIndex = -1;
+
+        //Need parent pointer, or this may lead to window disappearance
+//        QMessageBox::information(NULL, tr("提示"),
+//                           tr("删除成功！"),
+//                           QMessageBox::Yes);
+    }
+}
 
 void Admin_Table::on_Subsidy_Check_Admin(int state)
 {

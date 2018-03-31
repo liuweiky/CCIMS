@@ -27,6 +27,8 @@ private slots:
 
     void on_tableWidget_itemClicked(QTableWidgetItem *item);
 
+    void on_DeleteButton_clicked();
+
 private:
     int mCurrentItem;
     Ui::AdministratorSCWindow *ui;

@@ -149,5 +149,10 @@ void AdministratorSCWindow::on_deletebutton_clicked()
 
 void AdministratorSCWindow::on_tableWidget_itemClicked(QTableWidgetItem *item)
 {
-    mCurrentItem = item->row();
+    mAdminTable->mCurrentItemIndex = item->row();
+}
+
+void AdministratorSCWindow::on_DeleteButton_clicked()
+{
+    mAdminTable->DelItem();
 }

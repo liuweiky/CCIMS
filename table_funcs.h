@@ -18,6 +18,7 @@
 class Table_Parent: public QWidget
 {
 public:
+    //TODO: Need parent pointer……
     //控件类成员
     QTableWidget* mTable;
     QDateEdit* mStart_Edit;
@@ -31,7 +32,7 @@ public:
 
     CCMIS* mCCMIS;
 //不清楚是否合适
-     int mCurrent_Row_Index = 0;
+     int mCurrentItemIndex;
 
 
     Table_Parent(QTableWidget *table, QDateEdit* start_edit,
@@ -50,7 +51,7 @@ public:
 
     //纯虚函数 子类给出实现 负责表格头
     virtual void init_Table_Header() = 0;
-
+    virtual void DelItem() = 0;
 
 //一些槽函数
 public slots:
@@ -81,6 +82,7 @@ public:
      QPushButton *insert_btn, QPushButton *alter_btn,
      QCheckBox *subsidy_check);
     void init_Table_Header();
+    void DelItem();
 protected slots:
     void on_Subsidy_Check_Admin(int);
 };
@@ -103,6 +105,7 @@ public:
                CCMIS* ccmis_sys,QPushButton* delete_btn,
                QPushButton* insert_btn,QPushButton* alter_btn);
     void init_Table_Header();
+    void DelItem(){}
 };
 
 
@@ -120,6 +123,7 @@ public:
                CCMIS* ccmis_sys,QCheckBox* subsidy_check);
     void init_Table_Header();
     void init_Subsidy_Header();
+    void DelItem(){}
 protected slots:
     void on_Subsidy_Check_User(int);
 };
