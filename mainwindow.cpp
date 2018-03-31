@@ -12,12 +12,17 @@ MainWindow::MainWindow(QWidget *parent) :
     //时间处理
     QTimer *timer = new QTimer(this);
     connect(timer,SIGNAL(timeout()),this,SLOT(time_dispose()));
+
     timer->start(500);
 
     //正则表达式，只允许输入0~9
     QRegExp regx("[0-9]+$");
     QValidator *validator = new QRegExpValidator(regx, ui->UserNameLineEdit);
     ui->UserNameLineEdit->setValidator(validator);
+
+    QTimer *timer_load = new QTimer(this);
+    connect(timer_load,SIGNAL(timeout()),this,SLOT(on_new_info_insert()));
+    timer_load->start(10);
 }
 
 MainWindow::~MainWindow()
@@ -29,6 +34,16 @@ void MainWindow::time_dispose()
 {
     //月初刷新券
     mCCMIS->CouponFresh();
+}
+
+void MainWindow::on_new_info_insert()
+{
+    ui->LoadStateLabel->setText(QString("已加载：")+QString::number(mCCMIS->GetTotalInfoNumber())+QString(" 条数据"));
+}
+
+void MainWindow::on_load_complete()
+{
+
 }
 
 void MainWindow::on_pushButton_clicked()

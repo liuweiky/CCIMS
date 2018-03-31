@@ -262,7 +262,6 @@ public:
     QString ShowDateTime();             //输出当前日期时间
     void CouponFresh();                 //月初刷新劵额
     //void CloseTxt(QCloseEvent *event);  //关闭窗口弹窗
-
 };
 
 #endif // CCMIS_H
