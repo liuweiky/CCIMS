@@ -87,6 +87,7 @@ public:
     void DelItem();
 public slots:
     void on_Subsidy_Check_Admin(int);
+
 };
 
 

@@ -77,7 +77,9 @@ void Table_Parent::init_Subsidy_Header()
             show_One_Info_Same_Num(iter,RowCount,iter->Inumber);
         iter = iter->next;
     }
+    RowCount = 0;
     return;
+
 }
 
 void Table_Parent::show_One_Info_Same_Num(Information* one_info,int row_index,int inum_or_onum)
@@ -181,6 +183,7 @@ void Table_Parent::on_Export_pressed()
 
 void Table_Parent::on_Reset_clicked()
 {
+   mTable->setRowCount(0);
     this->mTable->clear();
     this->init_Table_Header();
 }
@@ -226,6 +229,7 @@ void Admin_Table::init_Table_Header()
        show_One_Info_All(iter,RowCount);
        iter  = iter->next;
    }
+    RowCount = 0;
    return;
 }
 
