@@ -34,6 +34,9 @@ private:
     User*           mUser;  //用户表头结点
     int mUserNumber;        //当前登陆用户的用户号
 
+    int mReadThreadCount;
+    int mWriteThreadCount;
+
     //总数统计
     unsigned int totalUserCount;
     unsigned int totalShopCount;
@@ -112,6 +115,10 @@ public:
     CCMIS();
     ~CCMIS() {}
 
+
+    int GetCurrentReadThreadCount();
+    int GetCurrentWriteThreadCount();
+
     //传文件线程
     class JsonThread: public QThread
     {
@@ -120,26 +127,47 @@ public:
         {
             switch (type) {
             case -1:
+                qDebug() << "Read info thread start.";
+                mCCMIS->mReadThreadCount += 1;
                 mCCMIS->ReadInf(mCCMIS->INFO_FILE_NAME);
+                mCCMIS->mReadThreadCount -=1;
+                qDebug() << "Read info thread finished.";
                 break;
             case -2:
+                qDebug() << "Read shop thread start.";
+                mCCMIS->mReadThreadCount += 1;
                 mCCMIS->ReadShop(mCCMIS->SHOP_FILE_NAME);
+                mCCMIS->mReadThreadCount -=1;
+                qDebug() << "Read shop thread finished.";
                 break;
             case -3:
+                qDebug() << "Read user thread start.";
+                mCCMIS->mReadThreadCount += 1;
                 mCCMIS->ReadUser(mCCMIS->USER_FILE_NAME);
+                mCCMIS->mReadThreadCount -=1;
+                qDebug() << "Read user thread finished.";
                 break;
             case 1:
+                qDebug() << "Write info thread start.";
+                mCCMIS->mWriteThreadCount += 1;
                 mCCMIS->WriteInf(mCCMIS->INFO_FILE_NAME);
+                mCCMIS->mWriteThreadCount -= 1;
+                qDebug() << "Write info thread finished.";
                 break;
             case 2:
 
                 break;
             case 3:
+                qDebug() << "Write info thread start.";
+                mCCMIS->mWriteThreadCount += 1;
                 mCCMIS->WriteUser(mCCMIS->USER_FILE_NAME);
+                mCCMIS->mWriteThreadCount -= 1;
+                qDebug() << "Write info thread finished.";
                 break;
             default:
                 break;
             }
+
         }
         JsonThread(CCMIS* c, int t): type(t), mCCMIS(c){}
 
@@ -234,6 +262,7 @@ public:
     QString ShowDateTime();             //输出当前日期时间
     void CouponFresh();                 //月初刷新劵额
     //void CloseTxt(QCloseEvent *event);  //关闭窗口弹窗
+
 };
 
 #endif // CCMIS_H
