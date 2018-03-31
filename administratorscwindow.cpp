@@ -34,22 +34,28 @@ AdministratorSCWindow::AdministratorSCWindow(CCMIS *c, QWidget *parent) :
                                   ui->DeleteButton,ui->InsertButton,
                                   ui->AlterButton,ui->CheckForSubsidy);
 
-    connect(mAdminTable->mStart_Edit,SIGNAL(dateChanged(QDate)),
-            SLOT(mAdminTable->on_Start_Date_Changed(QDate);));
 
-    connect(mAdminTable->mFinish_Edit,SIGNAL(dateChanged(QDate)),
-            SLOT(mAdminTable->on_Finish_Date_Changed(QDate);));
-    connect(mAdminTable->mFilter_Btn,SIGNAL(clicked(bool)),
-            SLOT(mAdminTable->on_Filter_clicked();));
-    connect(mAdminTable->mReset_Btn,SIGNAL(clicked(bool)),
-            SLOT(mAdminTable->on_Reset_clicked();));
-    connect(mAdminTable->mExport_Btn,SIGNAL(pressed()),
-            SLOT(mAdminTable->on_Export_pressed();));
 
-    connect(mAdminTable->mSubsidy_Chck,SIGNAL(stateChanged(int)),
-            SLOT(mAdminTable->on_Subsidy_Check_Admin(int)));
+    //发送者 ，信号，接收者，槽
+    connect(mAdminTable->mStart_Edit,&QDateEdit::dateChanged,
+            mAdminTable,&Admin_Table::on_Start_Date_Changed);
 
-    //当前选中的条目索引
+    connect(mAdminTable->mFinish_Edit,&QDateEdit::dateChanged,
+            mAdminTable,&Admin_Table::on_Finish_Date_Changed);
+
+    connect(mAdminTable->mFilter_Btn,&QPushButton::clicked,
+            mAdminTable,&Admin_Table::on_Filter_clicked);
+
+    connect(mAdminTable->mReset_Btn,&QPushButton::clicked,
+            mAdminTable,&Admin_Table::on_Reset_clicked);
+
+    connect(mAdminTable->mExport_Btn,&QPushButton::pressed,
+            mAdminTable,&Admin_Table::on_Export_pressed);
+
+    connect(mAdminTable->mSubsidy_Chck,&QCheckBox::stateChanged,
+            mAdminTable,&Admin_Table::on_Subsidy_Check_Admin);
+
+
     mCurrentItem = -1;
 
 }

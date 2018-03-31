@@ -31,8 +31,7 @@ ShopSearchWindow::ShopSearchWindow(CCMIS *c, QWidget *parent) :
     mShopTable = new Shop_Table(ui->tableWidget,ui->StartDateEdit,
                                 ui->FinishDateEdit,ui->FilterButton,
                                 ui->ResetButton,ui->ExportButton,
-                                mCCMIS,ui->DeleteButton,
-                                ui->InsertButton,ui->AlterButton);
+                                mCCMIS);
     connect(mShopTable->mStart_Edit,SIGNAL(dateChanged(QDate)),
             SLOT(mShopTable->on_Start_Date_Changed(QDate);));
 

@@ -17,6 +17,7 @@
 
 class Table_Parent: public QWidget
 {
+     Q_OBJECT
 public:
     //TODO: Need parent pointer……
     //控件类成员
@@ -50,8 +51,8 @@ public:
 
 
     //纯虚函数 子类给出实现 负责表格头
-    virtual void init_Table_Header() = 0;
-    virtual void DelItem() = 0;
+    virtual void init_Table_Header() = 0 ;
+  //  void DelItem();
 
 //一些槽函数
 public slots:
@@ -68,6 +69,7 @@ public slots:
 
 class Admin_Table : public Table_Parent
 {
+     Q_OBJECT
 public:
     //删 增 改
     QPushButton* mDelete_Btn;
@@ -83,27 +85,24 @@ public:
      QCheckBox *subsidy_check);
     void init_Table_Header();
     void DelItem();
-protected slots:
+public slots:
     void on_Subsidy_Check_Admin(int);
 };
 
 
 class Shop_Table: public Table_Parent
 {
+     Q_OBJECT
 public:
       Shop* mCurrent_Shop;
 
-     //删 增 改 只能修改自己店铺相关的
-     QPushButton* mDelete_Btn;
-     QPushButton* mInsert_Btn;
-     QPushButton* mAlter_Btn;
+
 
 
     Shop_Table(QTableWidget *table, QDateEdit* start_edit,
                QDateEdit* finish_edit,QPushButton* filter_btn,
                QPushButton* reset_btn, QPushButton* export_btn,
-               CCMIS* ccmis_sys,QPushButton* delete_btn,
-               QPushButton* insert_btn,QPushButton* alter_btn);
+               CCMIS* ccmis_sys);
     void init_Table_Header();
     void DelItem();
 };
@@ -113,6 +112,7 @@ public:
 
 class User_Table: public Table_Parent
 {
+     Q_OBJECT
 public:
     User* mCurrent_User;
     QCheckBox* mSubsidy_Chck;
@@ -124,8 +124,8 @@ public:
     void init_Table_Header();
     void init_Subsidy_Header();
     void DelItem(){}
-protected slots:
-    void on_Subsidy_Check_User(int);
+public slots:
+   // void on_Subsidy_Check_User(int);
 };
 
 
