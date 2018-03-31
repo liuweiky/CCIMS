@@ -55,6 +55,8 @@ AdministratorSCWindow::AdministratorSCWindow(CCMIS *c, QWidget *parent) :
     connect(mAdminTable->mSubsidy_Chck,&QCheckBox::stateChanged,
             mAdminTable,&Admin_Table::on_Subsidy_Check_Admin);
 
+    connect(mAdminTable->mDelete_Btn,&QCheckBox::clicked,
+            mAdminTable,&Admin_Table::on_DeleteButton_clicked);
 
     mCurrentItem = -1;
 
@@ -87,10 +89,10 @@ void AdministratorSCWindow::on_tableWidget_itemClicked(QTableWidgetItem *item)
     mAdminTable->mCurrentItemIndex = item->row();
 }
 
-void AdministratorSCWindow::on_DeleteButton_clicked()
-{
-    mAdminTable->DelItem();
-}
+//void AdministratorSCWindow::on_DeleteButton_clicked()
+//{
+//    //mAdminTable->DelItem();
+//}
 
 void AdministratorSCWindow::on_InsertButton_clicked()
 {
@@ -100,6 +102,7 @@ void AdministratorSCWindow::on_InsertButton_clicked()
 
 void AdministratorSCWindow::UpdateItem()
 {
+    mAdminTable->mTable->setRowCount(0);
     mAdminTable->mTable->clear();
     mAdminTable->init_Table_Header();
 }

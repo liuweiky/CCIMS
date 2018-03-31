@@ -183,7 +183,11 @@ void Table_Parent::on_Export_pressed()
 
 void Table_Parent::on_Reset_clicked()
 {
+<<<<<<< HEAD
    mTable->setRowCount(0);
+=======
+    this->mTable->setRowCount(0);
+>>>>>>> 31c7648a0af195da976403483bff93e5e92c29e7
     this->mTable->clear();
     this->init_Table_Header();
 }
@@ -192,6 +196,11 @@ void Table_Parent::on_Reset_clicked()
 void Table_Parent::on_tableWidget_itemClicked(QTableWidgetItem *item)
 {
     mCurrentItemIndex = item->row();
+}
+
+void Table_Parent::on_DeleteButton_clicked()
+{
+    this->DelItem();
 }
 
 

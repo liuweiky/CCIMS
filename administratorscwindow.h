@@ -31,7 +31,7 @@ private slots:
 
     void on_tableWidget_itemClicked(QTableWidgetItem *item);
 
-    void on_DeleteButton_clicked();
+//    void on_DeleteButton_clicked();
 
     void on_InsertButton_clicked();
 
