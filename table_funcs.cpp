@@ -177,6 +177,13 @@ void Table_Parent::on_Export_pressed()
     export_Table_To_CSV();
 }
 
+void Table_Parent::on_Reset_clicked()
+{
+    mTable->clear();
+    this->init_Table_Header();
+}
+
+
 void Table_Parent::on_tableWidget_itemClicked(QTableWidgetItem *item)
 {
     mCurrentItemIndex = item->row();
@@ -242,14 +249,11 @@ void Admin_Table::DelItem()
 Shop_Table::Shop_Table(QTableWidget *table, QDateEdit* start_edit,
                        QDateEdit* finish_edit, QPushButton* filter_btn,
                        QPushButton* reset_btn, QPushButton* export_btn,
-                       CCMIS* ccmis_sys, QPushButton *delete_btn,
-                       QPushButton *insert_btn, QPushButton *alter_btn)
+                       CCMIS* ccmis_sys)
         :Table_Parent(table, start_edit,finish_edit,filter_btn,
                     reset_btn, export_btn,ccmis_sys)
 {
-    mDelete_Btn = delete_btn;
-    mInsert_Btn = insert_btn;
-    mAlter_Btn  = alter_btn;
+
     mCurrent_Shop = mCCMIS->GetCurrentShop();
     init_Table_Header();
 }
