@@ -194,6 +194,9 @@
             <bold>false</bold>
            </font>
           </property>
+          <property name="focusPolicy">
+           <enum>Qt::NoFocus</enum>
+          </property>
           <property name="styleSheet">
            <string notr="true">font: 36pt &quot;.SF NS Text&quot;;</string>
           </property>
