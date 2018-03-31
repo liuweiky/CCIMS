@@ -103,3 +103,17 @@ void AdministratorSCWindow::UpdateItem()
     mAdminTable->mTable->clear();
     mAdminTable->init_Table_Header();
 }
+
+void AdministratorSCWindow::on_AlterButton_clicked()
+{
+    if (mAdminTable->mCurrentItemIndex >= 0)
+    {
+        AdministratorAddWindow* aaw = new AdministratorAddWindow(mCCMIS, 1, this);
+        aaw->show();
+    }
+}
+
+Admin_Table* AdministratorSCWindow::GetTable()
+{
+    return mAdminTable;
+}
