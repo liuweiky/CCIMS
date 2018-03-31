@@ -126,8 +126,8 @@ void Table_Parent::show_One_Info_All(Information *one_info, int row_index)
 
     mTable->setItem(row_index,2,new QTableWidgetItem(OutNumStr));
     mTable->setItem(row_index,3,new QTableWidgetItem(OutName));
-    mTable->setItem(row_index,4,new QTableWidgetItem(InName));
-    mTable->setItem(row_index,5,new QTableWidgetItem(InNumStr));
+    mTable->setItem(row_index,4,new QTableWidgetItem(InNumStr));
+    mTable->setItem(row_index,5,new QTableWidgetItem(InName));
     mTable->setItem(row_index,6,new QTableWidgetItem(Money));
     mTable->setItem(row_index,7,new QTableWidgetItem(tag));
     row_index++;
@@ -156,7 +156,45 @@ void Table_Parent::export_Table_To_CSV(){
     file.close();
 }
 
+QString Table_Parent::get_Info_Tag_By_RowIndex(int row_index)
+{
+    if(row_index!=-1){
+        QVector<QString> whole_line;
+        for(int i = 0; i < mTable->columnCount(); i++)
+        {
+            //遍历第row行的所有信息
+            QString index = mTable->item(row_index,i)->text();
+            whole_line.append(index);
+        }
+        int Login_Num = mCCMIS->GetUserNum();
+        QDate date = QDate::fromString(whole_line[0],"yyyy-MM-dd");
+        QString tag_date = date.toString("yyyyMMdd");
+        QTime time = QTime::fromString(whole_line[1],"hh:mm:ss");
+        QString tag_time = time.toString("hhmmss");
+        QString tag_onum,tag_inum,tag_money;
+        QString pattern("(.*).(.*)");
+        QRegExp rx(pattern);
+        if((Login_Num>=CCMIS::SUPERUSER_BEGIN)&&(Login_Num<=CCMIS::SUPERUSER_END)){
+            tag_onum = whole_line[2];
+            tag_inum = whole_line[4];
+            tag_money = whole_line[6].replace(QString("."), QString("")).sprintf("%05d");
 
+        }else  if((Login_Num>=CCMIS::SHOP_BEGIN)&&(Login_Num<=CCMIS::SHOP_END)){
+           tag_onum = whole_line[2];
+            tag_inum =  QString::number(Login_Num).sprintf("%04d",Login_Num);
+            tag_money = whole_line[4].replace(QString("."), QString("")).sprintf("%05d");
+        }else if((Login_Num>=CCMIS::USER_BEGIN)&&(Login_Num<=CCMIS::USER_END)){
+            tag_onum = QString::number(Login_Num).sprintf("%04d",Login_Num);
+            tag_inum = whole_line[2];
+            tag_money =  whole_line[4].replace(QString("."), QString("")).sprintf("%05d");
+        }
+        return (tag_date+tag_time+tag_onum+tag_inum+tag_money);
+    }
+    else
+        return QString("");
+
+
+}
 //----------------------------------------------------------父类槽函数
 
 void Table_Parent::on_Start_Date_Changed(const QDate &date)
@@ -197,6 +235,7 @@ void Table_Parent::on_Reset_clicked()
 void Table_Parent::on_tableWidget_itemClicked(QTableWidgetItem *item)
 {
     mCurrentItemIndex = item->row();
+    qDebug()<<get_Info_Tag_By_RowIndex(mCurrentItemIndex);
 }
 
 void Table_Parent::on_DeleteButton_clicked()

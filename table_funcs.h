@@ -48,7 +48,7 @@ public:
     void show_One_Info_All(Information*,int);
     //输出csv解决跨平台，得按照你自己的改
     void export_Table_To_CSV();
-
+    QString get_Info_Tag_By_RowIndex(int row_index);
 
     //纯虚函数 子类给出实现 负责表格头
     virtual void init_Table_Header() = 0 ;

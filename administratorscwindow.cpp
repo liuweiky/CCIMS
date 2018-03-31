@@ -58,7 +58,8 @@ AdministratorSCWindow::AdministratorSCWindow(CCMIS *c, QWidget *parent) :
     connect(mAdminTable->mDelete_Btn,&QCheckBox::clicked,
             mAdminTable,&Admin_Table::on_DeleteButton_clicked);
 
-
+    connect(mAdminTable->mTable,&QTableWidget::itemPressed,
+            mAdminTable,&Admin_Table::on_tableWidget_itemClicked);
 
 }
 
@@ -84,10 +85,6 @@ void AdministratorSCWindow::on_BackButton_clicked()
     this->close();
 }
 
-void AdministratorSCWindow::on_tableWidget_itemClicked(QTableWidgetItem *item)
-{
-    mAdminTable->mCurrentItemIndex = item->row();
-}
 
 
 void AdministratorSCWindow::on_InsertButton_clicked()
