@@ -189,7 +189,10 @@ void Table_Parent::on_Export_pressed()
 void Table_Parent::on_Reset_clicked()
 {
     this->mTable->setRowCount(0);
+<<<<<<< HEAD
 
+=======
+>>>>>>> 8d20caa463b1f40f8d4c8c039712647e9b2bdd99
     this->mTable->clear();
     this->init_Table_Header();
 }
