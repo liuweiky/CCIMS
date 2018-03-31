@@ -15,7 +15,7 @@
 
 #include"struct_funcs.h"
 
-class Table_Parent
+class Table_Parent: public QWidget
 {
 public:
     //控件类成员
@@ -53,7 +53,7 @@ public:
 
 
 //一些槽函数
-protected slots:
+public slots:
     void on_Start_Date_Changed(const QDate &date);
     void on_Finish_Date_Changed(const QDate &date);
     void on_Filter_clicked();

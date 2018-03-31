@@ -6,7 +6,7 @@ Table_Parent::Table_Parent
                (QTableWidget *table, QDateEdit* start_edit,
                QDateEdit* finish_edit,QPushButton* filter_btn,
                QPushButton* reset_btn, QPushButton* export_btn,
-               CCMIS* ccmis_sys)
+               CCMIS* ccmis_sys):QWidget(NULL)
 {
     mTable = table;
     mStart_Edit = start_edit;
@@ -16,6 +16,7 @@ Table_Parent::Table_Parent
     mExport_Btn = export_btn;
     mCCMIS = ccmis_sys;
     init_Date_Edit();
+
 
 }
 
@@ -202,7 +203,6 @@ Admin_Table::Admin_Table
     mInsert_Btn = insert_btn;
     mAlter_Btn  = alter_btn;
     init_Table_Header();
-
 }
 
 void Admin_Table::init_Table_Header()

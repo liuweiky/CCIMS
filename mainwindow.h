@@ -32,12 +32,15 @@ public:
 private slots:
     void time_dispose();
     void on_pushButton_clicked();
+//    void on_new_info_insert();
+//    void on_load_complete();
 
 protected:
     void closeEvent(QCloseEvent *event) override;
     //这里我mac直接关出现一次提示，command+Q出现两次，目前不知为何
 
 private:
+    bool isLoadCompleted;
     Ui::MainWindow *ui;
     CCMIS* mCCMIS;
 };
