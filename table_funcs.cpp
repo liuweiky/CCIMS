@@ -70,7 +70,7 @@ void Table_Parent::init_Subsidy_Header()
     mTable->setColumnCount(5);
     mTable->setHorizontalHeaderLabels(
            QStringList()<<"日期" <<"时间" <<"入帐号"<<"被补助人"<<"金额"<<"流水号");
-    //mTable->horizontalHeader()->setStretchLastSection(true); //就是这个地方
+    mTable->horizontalHeader()->setStretchLastSection(true); //就是这个地方
     int RowCount = 0;
     Information* iter = mCCMIS->GetInfoPointer() ->next;
     while(iter!=NULL){
@@ -177,7 +177,7 @@ void Table_Parent::on_Filter_clicked()
 
 void Table_Parent::on_Export_pressed()
 {
-    export_Table_To_CSV();
+    this->export_Table_To_CSV();
 }
 
 void Table_Parent::on_Reset_clicked()
@@ -324,9 +324,11 @@ void User_Table::init_Table_Header()
           QStringList()<<"日期" <<"时间" <<"入账号"<<"入账账户"<<"金额");
     mTable->horizontalHeader()->setStretchLastSection(true); //就是这个地方
    int RowCount = 0;
+    int mCurrent_User_Num = mCCMIS->GetUserNum();
    Information* iter = mCCMIS->GetInfoPointer() ->next;
    while(iter!=NULL){
-       show_One_Info_Same_Num(iter,RowCount,iter->Inumber);
+       if(iter->Onumber == mCurrent_User_Num || iter->Inumber == mCurrent_User_Num)
+            show_One_Info_Same_Num(iter,RowCount,iter->Inumber);
        iter  = iter->next;
    }
    return;
