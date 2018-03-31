@@ -66,15 +66,17 @@ void Table_Parent::Table_Filtered_By_Date()
 //父类的补助查看，可以查看全部的补助信息
 void Table_Parent::init_Subsidy_Header()
 {
+    mTable->clear();
     mTable->setColumnCount(5);
     mTable->setHorizontalHeaderLabels(
-           QStringList()<<"日期" <<"时间" <<"入帐号"<<"被补助人"<<"金额");
-    mTable->horizontalHeader()->setStretchLastSection(true); //就是这个地方
+           QStringList()<<"日期" <<"时间" <<"入帐号"<<"被补助人"<<"金额"<<"流水号");
+    //mTable->horizontalHeader()->setStretchLastSection(true); //就是这个地方
     int RowCount = 0;
     Information* iter = mCCMIS->GetInfoPointer() ->next;
     while(iter!=NULL){
         if(iter->Onumber == 2)
             show_One_Info_Same_Num(iter,RowCount,iter->Inumber);
+        iter = iter->next;
     }
     return;
 }
@@ -86,7 +88,7 @@ void Table_Parent::show_One_Info_Same_Num(Information* one_info,int row_index,in
     QString Date = info_date_time.toString("yyyy-MM-dd");
     QString Time = info_date_time.toString("hh:mm:ss");
     QString Money = Information::InfoToMoneyStr(one_info);
-    QString NumStr = QString::number(inum_or_onum).sprintf("%04d",one_info->Onumber);
+    QString NumStr = QString::number(inum_or_onum).sprintf("%04d",inum_or_onum);
     QString tag = QString::fromLocal8Bit(one_info->tag.data());
     mTable->insertRow(row_index);
 
@@ -169,6 +171,7 @@ void Table_Parent::on_Finish_Date_Changed(const QDate &date)
 
 void Table_Parent::on_Filter_clicked()
 {
+    //mTable->clear();
     Table_Filtered_By_Date();
 }
 
@@ -179,7 +182,7 @@ void Table_Parent::on_Export_pressed()
 
 void Table_Parent::on_Reset_clicked()
 {
-    mTable->clear();
+
     this->init_Table_Header();
 }
 
@@ -244,6 +247,22 @@ void Admin_Table::DelItem()
     }
 }
 
+
+//admin槽函数
+void Admin_Table::on_Subsidy_Check_Admin(int state)
+{
+    switch (state) {
+    case Qt::Checked:
+        init_Subsidy_Header();
+        break;
+    case Qt::Unchecked:
+        init_Table_Header();
+        break;
+    }
+}
+
+
+
 //Shop类子函数
 
 Shop_Table::Shop_Table(QTableWidget *table, QDateEdit* start_edit,
@@ -260,6 +279,7 @@ Shop_Table::Shop_Table(QTableWidget *table, QDateEdit* start_edit,
 
 void Shop_Table::init_Table_Header()
 {
+    mTable->clear();
    mTable->setColumnCount(6);
    mTable->setHorizontalHeaderLabels(
           QStringList()<<"日期" <<"时间" <<"出账号"<<"出账账户"<<"金额"<<"流水号");
@@ -298,6 +318,7 @@ User_Table::User_Table(QTableWidget *table, QDateEdit* start_edit,
 
 void User_Table::init_Table_Header()
 {
+    mTable->clear();
    mTable->setColumnCount(5);
    mTable->setHorizontalHeaderLabels(
           QStringList()<<"日期" <<"时间" <<"入账号"<<"入账账户"<<"金额");
@@ -314,9 +335,10 @@ void User_Table::init_Table_Header()
 //用户类下的补助查看，只能查看自己的补助
 void  User_Table::init_Subsidy_Header()
 {
+    mTable->clear();
     mTable->setColumnCount(5);
     mTable->setHorizontalHeaderLabels(
-           QStringList()<<"日期" <<"时间" <<"入帐号"<<"被补助人"<<"金额");
+           QStringList()<<"日期" <<"时间" <<"入帐号"<<"被补助人"<<"金额"<<"流水号");
     mTable->horizontalHeader()->setStretchLastSection(true); //就是这个地方
     int mCurrent_User_Num = mCCMIS->GetUserNum();
     int RowCount = 0;
@@ -324,6 +346,7 @@ void  User_Table::init_Subsidy_Header()
     while(iter!=NULL){
         if(((int)iter->Onumber == 2)&& (iter->Inumber == mCurrent_User_Num))
             show_One_Info_Same_Num(iter,RowCount,mCurrent_User_Num);
+        iter = iter->next;
     }
     return;
 }
