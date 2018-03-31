@@ -49,7 +49,6 @@ void AdministratorAddWindow::on_AddButton_clicked()
     int sec = qt.second();
 
     AdministratorSCWindow* a = (AdministratorSCWindow*)parentWidget();
-    //mCCMIS->NewTransaction(onum, mCCMIS->GetUserNum(), money);
 
     switch (mCCMIS->NewAdmTransaction(year, month, day, hour, min, sec, onum, inum, money)) {
     case -1:

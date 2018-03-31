@@ -58,13 +58,6 @@ AdministratorSCWindow::AdministratorSCWindow(CCMIS *c, QWidget *parent) :
     connect(mAdminTable->mDelete_Btn,&QCheckBox::clicked,
             mAdminTable,&Admin_Table::on_DeleteButton_clicked);
 
-    connect(mAdminTable->mSubsidy_Chck,&QCheckBox::stateChanged,
-            mAdminTable,&Admin_Table::on_Subsidy_Check_Admin);
-
-    connect(mAdminTable->mSubsidy_Chck,&QCheckBox::stateChanged,
-            mAdminTable,&Admin_Table::on_Subsidy_Check_Admin);
-
-
     mCurrentItem = -1;
 
 }
