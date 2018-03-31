@@ -20,6 +20,9 @@ public:
     explicit AdministratorSCWindow(CCMIS* c, QWidget *parent = 0);
     ~AdministratorSCWindow();
     void connect_SIG_With_SLOTS();
+
+    Admin_Table* GetTable();
+
     void UpdateItem();
 
 private slots:
@@ -31,6 +34,8 @@ private slots:
     void on_DeleteButton_clicked();
 
     void on_InsertButton_clicked();
+
+    void on_AlterButton_clicked();
 
 private:
     int mCurrentItem;

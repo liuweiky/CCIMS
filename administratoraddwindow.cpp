@@ -82,6 +82,10 @@ void AdministratorAddWindow::on_AddButton_clicked()
                            tr("创建成功！"),
                            QMessageBox::Yes);
 
+        if (isModify)
+        {
+            a->GetTable()->DelItem();
+        }
         a->UpdateItem();
         break;
     default:
