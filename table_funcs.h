@@ -17,7 +17,6 @@
 
 class Table_Parent: public QWidget
 {
-     Q_OBJECT
 public:
     //TODO: Need parent pointer……
     //控件类成员
@@ -52,7 +51,7 @@ public:
 
     //纯虚函数 子类给出实现 负责表格头
     virtual void init_Table_Header() = 0 ;
-  //  void DelItem();
+    virtual void DelItem() = 0;
 
 //一些槽函数
 public slots:
@@ -69,7 +68,6 @@ public slots:
 
 class Admin_Table : public Table_Parent
 {
-     Q_OBJECT
 public:
     //删 增 改
     QPushButton* mDelete_Btn;
@@ -92,7 +90,6 @@ public slots:
 
 class Shop_Table: public Table_Parent
 {
-     Q_OBJECT
 public:
       Shop* mCurrent_Shop;
 
@@ -112,7 +109,6 @@ public:
 
 class User_Table: public Table_Parent
 {
-     Q_OBJECT
 public:
     User* mCurrent_User;
     QCheckBox* mSubsidy_Chck;

@@ -52,8 +52,8 @@ AdministratorSCWindow::AdministratorSCWindow(CCMIS *c, QWidget *parent) :
     connect(mAdminTable->mExport_Btn,&QPushButton::pressed,
             mAdminTable,&Admin_Table::on_Export_pressed);
 
-    connect(mAdminTable->mSubsidy_Chck,&QCheckBox::stateChanged,
-            mAdminTable,&Admin_Table::on_Subsidy_Check_Admin);
+//    connect(mAdminTable->mSubsidy_Chck,&QCheckBox::stateChanged,
+//            mAdminTable,&Admin_Table::on_Subsidy_Check_Admin);
 
 
     mCurrentItem = -1;
