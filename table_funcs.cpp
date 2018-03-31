@@ -181,6 +181,7 @@ void Table_Parent::on_Export_pressed()
 
 void Table_Parent::on_Reset_clicked()
 {
+    this->mTable->setRowCount(0);
     this->mTable->clear();
     this->init_Table_Header();
 }
