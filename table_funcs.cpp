@@ -191,6 +191,11 @@ void Table_Parent::on_tableWidget_itemClicked(QTableWidgetItem *item)
     mCurrentItemIndex = item->row();
 }
 
+void Table_Parent::on_DeleteButton_clicked()
+{
+    this->DelItem();
+}
+
 
 //Admin 子类函数
 

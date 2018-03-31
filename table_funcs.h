@@ -62,6 +62,7 @@ public slots:
     void on_Export_pressed();
     void on_tableWidget_itemClicked(QTableWidgetItem *item);
     void on_Reset_clicked();
+    void on_DeleteButton_clicked();
 
 };
 
