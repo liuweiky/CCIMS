@@ -33,7 +33,7 @@ public:
 
     CCMIS* mCCMIS;
 //不清楚是否合适
-     int mCurrentItemIndex;
+     int mCurrentItemIndex = -1;
 
 
     Table_Parent(QTableWidget *table, QDateEdit* start_edit,
@@ -60,6 +60,7 @@ public slots:
     void on_Finish_Date_Changed(const QDate &date);
     void on_Filter_clicked();
     void on_Export_pressed();
+
     void on_tableWidget_itemClicked(QTableWidgetItem *item);
     void on_Reset_clicked();
     void on_DeleteButton_clicked();
@@ -127,7 +128,7 @@ public:
     void init_Subsidy_Header();
     void DelItem(){}
 public slots:
-   // void on_Subsidy_Check_User(int);
+   void on_Subsidy_Check_User(int);
 };
 
 

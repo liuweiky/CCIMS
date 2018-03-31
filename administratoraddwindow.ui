@@ -27,14 +27,20 @@
      <string>确认</string>
     </property>
    </widget>
-   <widget class="QDateTimeEdit" name="dateTimeEdit">
+   <widget class="QDateEdit" name="dateEdit">
     <property name="geometry">
      <rect>
       <x>290</x>
-      <y>110</y>
+      <y>70</y>
       <width>231</width>
       <height>31</height>
      </rect>
+    </property>
+    <property name="displayFormat">
+     <string>yyyy/MM/dd</string>
+    </property>
+    <property name="calendarPopup">
+     <bool>true</bool>
     </property>
    </widget>
    <widget class="QLineEdit" name="InumEdit">
@@ -71,7 +77,7 @@
     <property name="geometry">
      <rect>
       <x>200</x>
-      <y>110</y>
+      <y>90</y>
       <width>61</width>
       <height>31</height>
      </rect>
@@ -79,8 +85,9 @@
     <property name="font">
      <font>
       <family>微软雅黑</family>
-      <weight>75</weight>
-      <bold>true</bold>
+      <pointsize>16</pointsize>
+      <weight>50</weight>
+      <bold>false</bold>
      </font>
     </property>
     <property name="text">
@@ -147,6 +154,19 @@
      <string>金额</string>
     </property>
    </widget>
+   <widget class="QTimeEdit" name="timeEdit_2">
+    <property name="geometry">
+     <rect>
+      <x>290</x>
+      <y>110</y>
+      <width>231</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="calendarPopup">
+     <bool>true</bool>
+    </property>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
@@ -154,7 +174,7 @@
      <x>0</x>
      <y>0</y>
      <width>800</width>
-     <height>23</height>
+     <height>26</height>
     </rect>
    </property>
   </widget>

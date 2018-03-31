@@ -11,6 +11,12 @@ AdministratorAddWindow::AdministratorAddWindow(CCMIS* c, int ismod, QWidget *par
 
     isModify = ismod;
 
+    //时间窗口设置
+    ui->dateEdit->setDate(QDate::currentDate());
+    ui->dateEdit->calendarPopup();//弹出日历
+    ui->dateEdit->setMaximumDate(QDate::currentDate());
+    ui->timeEdit_2->setMaximumTime(QTime::currentTime());
+
     //正则表达式，只允许输入0~9
     QRegExp regx("[0-9]+$");
     QValidator *validator = new QRegExpValidator(regx, ui->InumEdit);
@@ -22,7 +28,7 @@ AdministratorAddWindow::AdministratorAddWindow(CCMIS* c, int ismod, QWidget *par
     QDoubleValidator* v = new QDoubleValidator;
     ui->MoneyEdit->setValidator(v);
 
-    ui->dateTimeEdit->setMaximumDateTime(QDateTime::currentDateTime());
+
 }
 
 AdministratorAddWindow::~AdministratorAddWindow()
@@ -36,13 +42,13 @@ void AdministratorAddWindow::on_AddButton_clicked()
     int onum = ui->OnumEdit->text().toInt();
     int money = ui->MoneyEdit->text().toDouble() * 100; //*100
 
-    QDateTime dt= ui->dateTimeEdit->dateTime();
+    QDate dt= ui->dateEdit->date();
 
-    int year = dt.date().year();
-    int month = dt.date().month();
-    int day = dt.date().day();
+    int year = dt.year();
+    int month = dt.month();
+    int day = dt.day();
 
-    QTime qt= ui->dateTimeEdit->time();
+    QTime qt= ui->timeEdit_2->time();
 
     int hour = qt.hour();
     int min = qt.minute();

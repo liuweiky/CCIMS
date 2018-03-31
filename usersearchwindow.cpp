@@ -40,20 +40,19 @@ UserSearchWindow::UserSearchWindow(CCMIS *c, QWidget *parent) :
                                 ui->FinishDateEdit,ui->FilterButton,
                                 ui->ResetButton,ui->ExportButton,
                                 mCCMIS,ui->SubsidyCheck);
-    connect(mUserTable->mStart_Edit,SIGNAL(dateChanged(QDate)),
-            SLOT(mUserTable->on_Start_Date_Changed(QDate);));
+    connect(mUserTable->mStart_Edit,&QDateEdit::dateChanged,
+            mUserTable,&User_Table::on_Start_Date_Changed);
+    connect(mUserTable->mFinish_Edit,&QDateEdit::dateChanged,
+            mUserTable,&User_Table::on_Finish_Date_Changed);
 
-    connect(mUserTable->mFinish_Edit,SIGNAL(dateChanged(QDate)),
-            SLOT(mUserTable->on_Finish_Date_Changed(QDate);));
-    connect(mUserTable->mFilter_Btn,SIGNAL(clicked(bool)),
-            SLOT(mUserTable->on_Filter_clicked();));
-    connect(mUserTable->mReset_Btn,SIGNAL(clicked(bool)),
-            SLOT(mUserTable->on_Reset_clicked();));
-    connect(mUserTable->mExport_Btn,SIGNAL(pressed()),
-            SLOT(mUserTable->on_Export_pressed();));
-
-    connect(mUserTable->mSubsidy_Chck,SIGNAL(stateChanged(int)),
-            SLOT(mUserTable->on_Subsidy_Check_User(int)));
+    connect(mUserTable->mFilter_Btn,&QPushButton::clicked,
+            mUserTable,&User_Table::on_Filter_clicked);
+    connect(mUserTable->mReset_Btn,&QPushButton::clicked,
+            mUserTable,&User_Table::on_Reset_clicked);
+    connect(mUserTable->mExport_Btn,&QPushButton::pressed,
+            mUserTable,&User_Table::on_Export_pressed);
+    connect(mUserTable->mSubsidy_Chck,&QCheckBox::stateChanged,
+            mUserTable,&User_Table::on_Subsidy_Check_User);
 
 }
 

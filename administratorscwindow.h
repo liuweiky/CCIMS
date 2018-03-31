@@ -31,14 +31,13 @@ private slots:
 
     void on_tableWidget_itemClicked(QTableWidgetItem *item);
 
-//    void on_DeleteButton_clicked();
 
     void on_InsertButton_clicked();
 
     void on_AlterButton_clicked();
 
 private:
-    int mCurrentItem;
+
     Ui::AdministratorSCWindow *ui;
     CCMIS *mCCMIS;
     Admin_Table* mAdminTable;

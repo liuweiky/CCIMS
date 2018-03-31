@@ -32,17 +32,17 @@ ShopSearchWindow::ShopSearchWindow(CCMIS *c, QWidget *parent) :
                                 ui->FinishDateEdit,ui->FilterButton,
                                 ui->ResetButton,ui->ExportButton,
                                 mCCMIS);
-    connect(mShopTable->mStart_Edit,SIGNAL(dateChanged(QDate)),
-            SLOT(mShopTable->on_Start_Date_Changed(QDate);));
+    connect(mShopTable->mStart_Edit,&QDateEdit::dateChanged,
+            mShopTable,&Shop_Table::on_Start_Date_Changed);
+    connect(mShopTable->mFinish_Edit,&QDateEdit::dateChanged,
+            mShopTable,&Shop_Table::on_Finish_Date_Changed);
 
-    connect(mShopTable->mFinish_Edit,SIGNAL(dateChanged(QDate)),
-            SLOT(mShopTable->on_Finish_Date_Changed(QDate);));
-    connect(mShopTable->mFilter_Btn,SIGNAL(clicked(bool)),
-            SLOT(mShopTable->on_Filter_clicked();));
-    connect(mShopTable->mReset_Btn,SIGNAL(clicked(bool)),
-            SLOT(mShopTable->on_Reset_clicked();));
-    connect(mShopTable->mExport_Btn,SIGNAL(pressed()),
-            SLOT(mShopTable->on_Export_pressed();));
+    connect(mShopTable->mFilter_Btn,&QPushButton::clicked,
+            mShopTable,&Shop_Table::on_Filter_clicked);
+    connect(mShopTable->mReset_Btn,&QPushButton::clicked,
+            mShopTable,&Shop_Table::on_Reset_clicked);
+    connect(mShopTable->mExport_Btn,&QPushButton::pressed,
+            mShopTable,&Shop_Table::on_Export_pressed);
 
 
 
@@ -71,12 +71,3 @@ void ShopSearchWindow::on_BackButton_clicked()
     this->close();
 }
 
-void ShopSearchWindow::on_DeleteButton_clicked()
-{
-    mShopTable->DelItem();
-}
-
-void ShopSearchWindow::on_tableWidget_itemClicked(QTableWidgetItem *item)
-{
-    mShopTable->mCurrentItemIndex = item->row();
-}

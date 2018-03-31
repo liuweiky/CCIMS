@@ -1,7 +1,9 @@
 #include "table_funcs.h"
 #include <qobject.h>
 #include <QHeaderView>
-//父类函数
+
+//-----------------------------------------------------------
+//----------------------------------------------------父类函数
 Table_Parent::Table_Parent
                (QTableWidget *table, QDateEdit* start_edit,
                QDateEdit* finish_edit,QPushButton* filter_btn,
@@ -155,7 +157,7 @@ void Table_Parent::export_Table_To_CSV(){
 }
 
 
-//父类槽函数
+//----------------------------------------------------------父类槽函数
 
 void Table_Parent::on_Start_Date_Changed(const QDate &date)
 {
@@ -179,15 +181,15 @@ void Table_Parent::on_Filter_clicked()
 void Table_Parent::on_Export_pressed()
 {
     this->export_Table_To_CSV();
+    QMessageBox::information(NULL, tr("提示"),
+                            tr("导出成功！"),
+                             QMessageBox::Yes);
 }
 
 void Table_Parent::on_Reset_clicked()
 {
-<<<<<<< HEAD
-   mTable->setRowCount(0);
-=======
     this->mTable->setRowCount(0);
->>>>>>> 31c7648a0af195da976403483bff93e5e92c29e7
+
     this->mTable->clear();
     this->init_Table_Header();
 }
@@ -204,7 +206,8 @@ void Table_Parent::on_DeleteButton_clicked()
 }
 
 
-//Admin 子类函数
+//-----------------------------------------------------------
+//-----------------------------------------------Admin 子类函数
 
 Admin_Table::Admin_Table
             (QTableWidget *table, QDateEdit* start_edit,
@@ -257,17 +260,24 @@ void Admin_Table::DelItem()
 //                           tr("删除成功！"),
 //                           QMessageBox::Yes);
     }
+    else{
+            return;
+
+    }
+
 }
 
 
-//admin槽函数
+//--------------------------------------------------admin槽函数
 void Admin_Table::on_Subsidy_Check_Admin(int state)
 {
     switch (state) {
     case Qt::Checked:
+        this->mTable->setRowCount(0);
         init_Subsidy_Header();
         break;
     case Qt::Unchecked:
+         this->mTable->setRowCount(0);
         init_Table_Header();
         break;
     }
@@ -311,8 +321,8 @@ void Shop_Table::init_Table_Header()
 
 
 
-
-//用户类子函数
+//---------------------------------------------------------------------
+//-----------------------------------------------------------用户类子函数
 
 
 
@@ -366,3 +376,18 @@ void  User_Table::init_Subsidy_Header()
 }
 
 
+//-----------------------------------------------------用户槽函数
+
+void User_Table::on_Subsidy_Check_User(int state)
+{
+    switch (state) {
+    case Qt::Checked:
+         this->mTable->setRowCount(0);
+        init_Subsidy_Header();
+        break;
+    case Qt::Unchecked:
+         this->mTable->setRowCount(0);
+        init_Table_Header();
+        break;
+    }
+}
