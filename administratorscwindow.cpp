@@ -85,3 +85,14 @@ void AdministratorSCWindow::on_DeleteButton_clicked()
 {
     mAdminTable->DelItem();
 }
+
+void AdministratorSCWindow::on_InsertButton_clicked()
+{
+    AdministratorAddWindow* aaw = new AdministratorAddWindow(mCCMIS, false, this);
+    aaw->show();
+}
+
+void AdministratorSCWindow::ModItem(int year, int month, int day, int hour, int min, int sec, int onum, int inum, int money)
+{
+    mAdminTable->DelItem();
+}

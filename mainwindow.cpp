@@ -64,13 +64,13 @@ void MainWindow::on_pushButton_clicked()
 //        progressDlg->setValue(i);
 //    }
 
-    if (mCCMIS->GetCurrentReadThreadCount() > 0)
-    {
-        QMessageBox::warning(this, tr("警告！"),
-                             tr("数据尚未加载完成！"),
-                             QMessageBox::Ok);
-        return;
-    }
+//    if (mCCMIS->GetCurrentReadThreadCount() > 0)
+//    {
+//        QMessageBox::warning(this, tr("警告！"),
+//                             tr("数据尚未加载完成！"),
+//                             QMessageBox::Ok);
+//        return;
+//    }
 
     //获取帐号
     int number = ui->UserNameLineEdit->text().toInt();

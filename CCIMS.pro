@@ -41,7 +41,8 @@ SOURCES += \
     usersearchwindow.cpp \
     userrechargewindow.cpp \
     table_funcs.cpp \
-    struct_funcs.cpp
+    struct_funcs.cpp \
+    administratoraddwindow.cpp
 
 HEADERS += \
     mainwindow.h \
@@ -60,7 +61,8 @@ HEADERS += \
     usersfwindow.h \
     common_funcs.h \
     table_funcs.h \
-    struct_funcs.h
+    struct_funcs.h \
+    administratoraddwindow.h
 
 FORMS += \
     mainwindow.ui \
@@ -73,4 +75,5 @@ FORMS += \
     administratorleadwindow.ui \
     administratorscwindow.ui \
     usersearchwindow.ui \
-    userrechargewindow.ui
+    userrechargewindow.ui \
+    administratoraddwindow.ui

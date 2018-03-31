@@ -6,6 +6,8 @@
 
 #include "ccmis.h"
 #include "table_funcs.h"
+#include "administratoraddwindow.h"
+
 namespace Ui {
 class AdministratorSCWindow;
 }
@@ -18,6 +20,7 @@ public:
     explicit AdministratorSCWindow(CCMIS* c, QWidget *parent = 0);
     ~AdministratorSCWindow();
     void connect_SIG_With_SLOTS();
+    void ModItem(int year, int month, int day, int hour, int min, int sec, int onum, int inum, int money);
 
 private slots:
     void time_dispose();
@@ -26,6 +29,8 @@ private slots:
     void on_tableWidget_itemClicked(QTableWidgetItem *item);
 
     void on_DeleteButton_clicked();
+
+    void on_InsertButton_clicked();
 
 private:
     int mCurrentItem;

@@ -213,6 +213,7 @@ public:
     //并生成流水号、info，插入到表，更新user.json、info.json，
     //返回是否交易成功，money要乘以100
     int NewTransaction(int onum, int inum, int mon);
+    int NewAdmTransaction(int year, int month, int day, int hour, int min, int sec, int onum, int inum, int mon);
     bool NewRefund(Information* tempinf);   //撤销某条交易信息
     int NewSubsidy(User* u);                //新建补贴交易
     bool NewRecharge(int num, int money);   //新建充值记录
