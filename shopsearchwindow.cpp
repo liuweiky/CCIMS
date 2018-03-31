@@ -71,3 +71,13 @@ void ShopSearchWindow::on_BackButton_clicked()
     parentWidget()->show();
     this->close();
 }
+
+void ShopSearchWindow::on_DeleteButton_clicked()
+{
+    mShopTable->DelItem();
+}
+
+void ShopSearchWindow::on_tableWidget_itemClicked(QTableWidgetItem *item)
+{
+    mShopTable->mCurrentItemIndex = item->row();
+}

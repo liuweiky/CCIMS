@@ -26,6 +26,10 @@ private slots:
     void time_dispose();
     void on_BackButton_clicked();
 
+    void on_DeleteButton_clicked();
+
+    void on_tableWidget_itemClicked(QTableWidgetItem *item);
+
 private:
     Ui::ShopSearchWindow *ui;
     CCMIS *mCCMIS;
