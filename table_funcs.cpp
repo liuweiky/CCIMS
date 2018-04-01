@@ -149,7 +149,15 @@ void Table_Parent::export_Table_To_CSV(){
     for(int i = 0; i < row; i ++) {
         for(int j = 0; j < col; j++) {
         str = mTable->item(i, j)->text();
-        out << str << ",";// 写入文件
+
+        if (j == col - 1 || j == 0) //转文本
+        {
+            out << str << "\t" << ",";  //强制转文本，防止科学记数法
+        } else {
+            out << str << ",";// 写入文件
+        }
+
+
         }
         out << "\n";
     }
