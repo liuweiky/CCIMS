@@ -56,8 +56,8 @@ string UserMainWindow::qstr2str(const QString qstr)
 void UserMainWindow::time_dispose()
 {
     ui->Time->display(AboutUI::ShowDateTime());
-    //月初刷新券
-    mCCMIS->CouponFresh();
+    
+    
 }
 
 void UserMainWindow::on_BackButton_clicked()

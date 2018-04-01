@@ -74,8 +74,8 @@ AdministratorSCWindow::~AdministratorSCWindow()
 void AdministratorSCWindow::time_dispose()
 {
     ui->Time->display(AboutUI::ShowDateTime());
-    //月初刷新券
-    mCCMIS->CouponFresh();
+    
+    
 }
 
 void AdministratorSCWindow::on_BackButton_clicked()

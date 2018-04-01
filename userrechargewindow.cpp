@@ -39,8 +39,8 @@ UserRechargeWindow::~UserRechargeWindow()
 void UserRechargeWindow::time_dispose()
 {
     ui->Time->display(AboutUI::ShowDateTime());
-    //月初刷新券
-    mCCMIS->CouponFresh();
+    
+    
 }
 
 void UserRechargeWindow::on_BackButton_clicked()

@@ -36,8 +36,8 @@ ShopMainWindow::~ShopMainWindow()
 void ShopMainWindow::time_dispose()
 {
     ui->Time->display(AboutUI::ShowDateTime());
-    //月初刷新券
-    mCCMIS->CouponFresh();
+    
+    
 }
 
 void ShopMainWindow::on_BackButton_clicked()

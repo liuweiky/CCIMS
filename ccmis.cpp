@@ -1276,19 +1276,18 @@ Information* CCMIS::GetInfoByTag(QString tag)
 
 void CCMIS::CouponFresh()
 {
-//    User* u = mUser->next;
-//    QDateTime *datetime = QDateTime::currentDateTime();
+    User* u = mUser->next;
+    QDateTime *datetime = new QDateTime(QDateTime::currentDateTime());
 
-//    if (datetime->date()->day() == 1
-//        && datetime->time()->hour() == 0
-//        && datetime->time()->minute() == 0
-//        && datetime->time()->second() == 0){
-//        while (u !=NULL) {
-//            if (num >= USER_BEGIN && num < USER_TEA_EMP_BEGIN){
-//                u->coupon = 10000;
-//            }
-//            u = u->next;
-//        }
-//        WriteUser(USER_FILE_NAME);
-//    }
+    if (datetime->date().day() == 1
+        && datetime->time().hour() == 0
+        && datetime->time().minute() == 0){
+        while (u !=NULL) {
+            if (u->number >= USER_BEGIN && u->number < USER_TEA_EMP_BEGIN){
+                u->coupon = 10000;
+            }
+            u = u->next;
+        }
+        WriteUser(USER_FILE_NAME);
+    }
 }

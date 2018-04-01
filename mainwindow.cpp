@@ -12,7 +12,7 @@ MainWindow::MainWindow(QWidget *parent) :
     //时间处理
     QTimer *timer = new QTimer(this);
     connect(timer,SIGNAL(timeout()),this,SLOT(time_dispose()));         //刷新劵
-    timer->start(1000);
+    timer->start(60000);
 
     //正则表达式，只允许输入0~9
     QRegExp regx("[0-9]+$");
