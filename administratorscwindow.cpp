@@ -89,8 +89,10 @@ void AdministratorSCWindow::on_BackButton_clicked()
 
 void AdministratorSCWindow::on_InsertButton_clicked()
 {
-    AdministratorAddWindow* aaw = new AdministratorAddWindow(mCCMIS, false, this);
-    aaw->show();
+    AdministratorAddDialog* aad = new AdministratorAddDialog(mCCMIS, false, this);
+    aad->setGeometry(this->x()-this->width()/2,this->y()-this->height()/2,
+                     this->width(),this->height());
+    aad->show();
 }
 
 void AdministratorSCWindow::UpdateItem()
@@ -104,8 +106,10 @@ void AdministratorSCWindow::on_AlterButton_clicked()
 {
     if (mAdminTable->mCurrentItemIndex >= 0)
     {
-        AdministratorAddWindow* aaw = new AdministratorAddWindow(mCCMIS, 1, this);
-        aaw->show();
+        AdministratorAddDialog* aad = new AdministratorAddDialog(mCCMIS, 1, this);
+        aad->setGeometry(this->x()-this->width()/2,this->y()-this->height()/2,
+                         this->width(),this->height());
+        aad->show();
     }
 }
 

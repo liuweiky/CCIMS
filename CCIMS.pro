@@ -42,8 +42,8 @@ SOURCES += \
     userrechargewindow.cpp \
     table_funcs.cpp \
     struct_funcs.cpp \
-    administratoraddwindow.cpp \
-    aboutui.cpp
+    aboutui.cpp \
+    administratoradddialog.cpp
 
 HEADERS += \
     mainwindow.h \
@@ -63,8 +63,8 @@ HEADERS += \
     common_funcs.h \
     table_funcs.h \
     struct_funcs.h \
-    administratoraddwindow.h \
-    aboutui.h
+    aboutui.h \
+    administratoradddialog.h
 
 FORMS += \
     mainwindow.ui \
@@ -78,4 +78,4 @@ FORMS += \
     administratorscwindow.ui \
     usersearchwindow.ui \
     userrechargewindow.ui \
-    administratoraddwindow.ui
+    administratoradddialog.ui

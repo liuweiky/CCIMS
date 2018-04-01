@@ -1,9 +1,9 @@
-#include "administratoraddwindow.h"
-#include "ui_administratoraddwindow.h"
+#include "administratoradddialog.h"
+#include "ui_administratoradddialog.h"
 
-AdministratorAddWindow::AdministratorAddWindow(CCMIS* c, int ismod, QWidget *parent) :
-    QMainWindow(parent),
-    ui(new Ui::AdministratorAddWindow)
+AdministratorAddDialog::AdministratorAddDialog(CCMIS* c, int ismod, QWidget *parent) :
+    QDialog(parent),
+    ui(new Ui::AdministratorAddDialog)
 {
     ui->setupUi(this);
 
@@ -27,16 +27,14 @@ AdministratorAddWindow::AdministratorAddWindow(CCMIS* c, int ismod, QWidget *par
 
     QDoubleValidator* v = new QDoubleValidator;
     ui->MoneyEdit->setValidator(v);
-
-
 }
 
-AdministratorAddWindow::~AdministratorAddWindow()
+AdministratorAddDialog::~AdministratorAddDialog()
 {
     delete ui;
 }
 
-void AdministratorAddWindow::on_AddButton_clicked()
+void AdministratorAddDialog::on_buttonBox_accepted()
 {
     int inum = ui->InumEdit->text().toInt();
     int onum = ui->OnumEdit->text().toInt();
@@ -86,7 +84,6 @@ void AdministratorAddWindow::on_AddButton_clicked()
         QMessageBox::information(this, tr("信息！"),
                            tr("创建成功！"),
                            QMessageBox::Yes);
-
         if (isModify)
         {
             a->GetTable()->DelItem();
@@ -96,4 +93,9 @@ void AdministratorAddWindow::on_AddButton_clicked()
     default:
         break;
     }
+}
+
+void AdministratorAddDialog::on_buttonBox_rejected()
+{
+    this->close();
 }

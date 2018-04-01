@@ -7,7 +7,7 @@
 #include "ccmis.h"
 #include "aboutui.h"
 #include "table_funcs.h"
-#include "administratoraddwindow.h"
+#include "administratoradddialog.h"
 
 namespace Ui {
 class AdministratorSCWindow;
