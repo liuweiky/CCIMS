@@ -90,7 +90,12 @@ CCMIS::CCMIS()
     totalShopCount = 0;
     totalUserCount = 0;
 
-    GuessTotalNumber = 15000; //预计15000
+    //预测信息文件大小
+    QFile fileInfo(FilenameCorrect(INFO_FILE_NAME));
+    fileInfo.open(QIODevice::ReadOnly);
+    GuessTotalNumber = (unsigned int)fileInfo.size()/224;   //预测值
+    cout << GuessTotalNumber << endl; //测试用的
+    fileInfo.close();
 
     JsonThread* jthread = new JsonThread(this, THREAD_TYPE_R_INFO);
 
@@ -317,7 +322,6 @@ string CCMIS::ReadAllFileToQString(string filename)
         return string("");
         //String("").Empty();  //结果为true判定用
     }
-
     QString allLine;
     QTextStream readInSteam(&fileReadIn);
     readInSteam.setCodec("UTF-8");
@@ -374,13 +378,13 @@ bool CCMIS::ReadUser(string filename)
             totalUserCount++;   //统计用户数
         }
 
-        //验证数据
-        User* u = mUser->next;
-        while (u != NULL) {
-            cout<<u->number<<"\t"<<u->name<<"\t"<<u->password
-               <<"\t"<<u->balance<<"\t"<<u->coupon<<endl;
-            u=u->next;
-        }
+//        //验证数据
+//        User* u = mUser->next;
+//        while (u != NULL) {
+//            cout<<u->number<<"\t"<<u->name<<"\t"<<u->password
+//               <<"\t"<<u->balance<<"\t"<<u->coupon<<endl;
+//            u=u->next;
+//        }
 
         return true;
     } else {
@@ -417,12 +421,12 @@ bool CCMIS::ReadShop(string filename)
             totalShopCount++;   //统计商铺数
         }
 
-        //验证数据
-        Shop* sh = mShop->next;
-        while (sh != NULL) {
-            cout<<sh->number<<"\t"<<sh->name<<"\t"<<sh->password<<endl;
-            sh=sh->next;
-        }
+//        //验证数据
+//        Shop* sh = mShop->next;
+//        while (sh != NULL) {
+//            cout<<sh->number<<"\t"<<sh->name<<"\t"<<sh->password<<endl;
+//            sh=sh->next;
+//        }
 
         return true;
     } else {
