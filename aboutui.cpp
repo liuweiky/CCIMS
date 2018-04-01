@@ -30,7 +30,7 @@ bool AboutUI::PDlg (QProgressDialog* progressDlg,CCMIS* mCCMIS,
 {
     bool result = false;
     progressDlg->setWindowModality(Qt::WindowModal);
-    //如果运行时间小于3，进度条就不会显示（测试时请置0）
+    //如果运行时间小于0，进度条就不会显示（测试时请置0）
     progressDlg->setMinimumDuration(0);
     progressDlg->setWindowTitle(QStringLiteral("请稍候"));
     while (mCCMIS->GetTotalInfoNumber() < AllNumber) {

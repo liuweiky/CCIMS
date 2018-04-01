@@ -90,7 +90,7 @@ CCMIS::CCMIS()
     totalShopCount = 0;
     totalUserCount = 0;
 
-    GuessTotalNumber = 5000; //预计5000
+    GuessTotalNumber = 15000; //预计15000
 
     JsonThread* jthread = new JsonThread(this, THREAD_TYPE_R_INFO);
 

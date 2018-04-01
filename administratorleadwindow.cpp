@@ -48,5 +48,13 @@ void AdministratorLeadWindow::on_BackButton_clicked()
 
 void AdministratorLeadWindow::on_WorkButton_clicked()
 {
-
+//    QString txt = ui->AddressLine->text();
+//    QMessageBox* msg = new QMessageBox(this);
+//    int number = mCCMIS->ImportInf(txt.toStdString());
+//    if (number > 0){
+//     msg->setText(tr("导入成功！导入"+QString::number(number,10)+"条信息"));
+//    }else{
+//     msg->setText(tr("导入失败！"));
+//    }
+//    msg->show();
 }
