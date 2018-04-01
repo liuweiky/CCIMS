@@ -6,6 +6,7 @@
 #include <QMessageBox>
 
 #include "ccmis.h"
+#include "aboutui.h"
 
 namespace Ui {
 class ShopServiceWindow;

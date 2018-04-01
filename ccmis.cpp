@@ -1,4 +1,5 @@
 #include "ccmis.h"
+#include "aboutui.h"
 
 //跨平台判断
 #ifdef Q_OS_WIN32
@@ -88,6 +89,8 @@ CCMIS::CCMIS()
     totalInfoCount = 0;
     totalShopCount = 0;
     totalUserCount = 0;
+
+    GuessTotalNumber = 5000; //预计5000
 
     JsonThread* jthread = new JsonThread(this, THREAD_TYPE_R_INFO);
 
@@ -460,8 +463,6 @@ bool CCMIS::ReadInf(string filename)
                     get<jsonxx::Number>(JSON_KEY_MONEY);
 
             InsertInf(info);
-
-            totalInfoCount++;   //统计记录数目
         }
     }
 
@@ -1269,18 +1270,8 @@ Information* CCMIS::GetInfoByTag(QString tag)
     return NULL;
 }
 
-QString CCMIS::ShowDateTime(){
-    QDate date = QDate::currentDate();
-    QTime time = QTime::currentTime();
-    QString txt = date.toString("yyyy/MM/dd")+time.toString(" hh:mm:ss");
-    return txt;
-}
-void CCMIS::CouponFresh(){
-    //留空……后面调用的的太多了
-}
-
-
-//void CCMIS::CouponFresh(){
+void CCMIS::CouponFresh()
+{
 //    User* u = mUser->next;
 //    QDateTime *datetime = QDateTime::currentDateTime();
 
@@ -1295,14 +1286,5 @@ void CCMIS::CouponFresh(){
 //            u = u->next;
 //        }
 //        WriteUser(USER_FILE_NAME);
-
-//void CCMIS::CloseTxt(QCloseEvent *event){
-//    if (QMessageBox::information
-//            (this, QObject::tr("关闭"),
-//             QObject::tr("退了就别回来了，这里到处都是BUG"),
-//             QObject::tr("好的"), QObject::tr("我再待一会"), 0, 1) == 0) {
-//        event->accept();
-//    }else {
-//        event->ignore();
 //    }
-//}
+}

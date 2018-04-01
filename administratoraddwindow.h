@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include "ccmis.h"
+#include "aboutui.h"
 #include "administratorscwindow.h"
 
 namespace Ui {

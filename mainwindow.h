@@ -6,7 +6,6 @@
 #include <QDialog>
 #include <QMessageBox>
 #include <QDesktopWidget>
-#include <QProgressDialog>
 
 #include "usermainwindow.h"
 #include "placemainwindow.h"
@@ -16,6 +15,7 @@
 #include "info_table.h"
 
 #include "ccmis.h"
+#include "aboutui.h"
 
 namespace Ui {
 class MainWindow;
@@ -32,8 +32,6 @@ public:
 public slots:
     void time_dispose();
     void on_pushButton_clicked();
-    void on_new_info_insert();
-    void on_load_complete();
 
 protected:
     void closeEvent(QCloseEvent *event) override;

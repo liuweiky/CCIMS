@@ -5,6 +5,7 @@
 #include <QTimer>
 
 #include "ccmis.h"
+#include "aboutui.h"
 
 namespace Ui {
 class AdministratorLeadWindow;

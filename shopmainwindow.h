@@ -8,6 +8,7 @@
 #include "shopservicewindow.h"
 
 #include "ccmis.h"
+#include "aboutui.h"
 
 namespace Ui {
 class ShopMainWindow;

@@ -59,7 +59,7 @@ ShopSearchWindow::~ShopSearchWindow()
 
 void ShopSearchWindow::time_dispose()
 {
-    ui->Time->display(mCCMIS->ShowDateTime());
+    ui->Time->display(AboutUI::ShowDateTime());
     //月初刷新券
     mCCMIS->CouponFresh();
 }

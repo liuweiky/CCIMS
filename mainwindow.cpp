@@ -11,18 +11,13 @@ MainWindow::MainWindow(QWidget *parent) :
 
     //时间处理
     QTimer *timer = new QTimer(this);
-    connect(timer,SIGNAL(timeout()),this,SLOT(time_dispose()));
-
-    timer->start(500);
+    connect(timer,SIGNAL(timeout()),this,SLOT(time_dispose()));         //刷新劵
+    timer->start(1000);
 
     //正则表达式，只允许输入0~9
     QRegExp regx("[0-9]+$");
     QValidator *validator = new QRegExpValidator(regx, ui->UserNameLineEdit);
     ui->UserNameLineEdit->setValidator(validator);
-
-    QTimer *timer_load = new QTimer(this);
-    connect(timer_load,SIGNAL(timeout()),this,SLOT(on_new_info_insert()));
-    timer_load->start(10);
 }
 
 MainWindow::~MainWindow()
@@ -36,42 +31,8 @@ void MainWindow::time_dispose()
     mCCMIS->CouponFresh();
 }
 
-void MainWindow::on_new_info_insert()
-{
-    ui->LoadStateLabel->setText(QString("已加载：")+QString::number(mCCMIS->GetTotalInfoNumber())+QString(" 条数据"));
-}
-
-void MainWindow::on_load_complete()
-{
-
-}
-
 void MainWindow::on_pushButton_clicked()
 {
-//    //进度条
-//    int i = 0;
-//    QProgressDialog *progressDlg = new
-//            QProgressDialog(QStringLiteral("正在载入文件......"),
-//                            QStringLiteral("等待"),0,10000,this);
-//    progressDlg->setWindowModality(Qt::WindowModal);
-//    //如果运行时间小于3，进度条就不会显示（测试时请置0）
-//    progressDlg->setMinimumDuration(3);
-//    progressDlg->setWindowTitle(QStringLiteral("请稍候"));
-//    while (i < 10000) {
-//        //这里可以添加进度前进的活动；初步构想是先获取文件大小，近似拟合时间，
-//        //当完成时直接置满结束，但暂时没看懂读文件线程怎么操作的
-//        i++;
-//        progressDlg->setValue(i);
-//    }
-
-//    if (mCCMIS->GetCurrentReadThreadCount() > 0)
-//    {
-//        QMessageBox::warning(this, tr("警告！"),
-//                             tr("数据尚未加载完成！"),
-//                             QMessageBox::Ok);
-//        return;
-//    }
-
     //获取帐号
     int number = ui->UserNameLineEdit->text().toInt();
     mCCMIS->SetUserNumber(number);
@@ -85,11 +46,18 @@ void MainWindow::on_pushButton_clicked()
                     new AdministratorMainWindow(mCCMIS,this);
             mAMW->setGeometry(this->x(),this->y(),this->width(),this->height());
             mAMW->show();
-
 //            Info_Table* info = new Info_Table(mCCMIS);
 //            info->show();
         } else if (number <= CCMIS::SHOP_END) {
             if (number%100 == 0){
+                //进度条展示
+                QProgressDialog *progressDlg = new
+                        QProgressDialog(QStringLiteral("正在载入文件......"),
+                                        QStringLiteral("等待"),0,
+                                        mCCMIS->GuessTotalNumber,this);
+                if(!AboutUI::PDlg(progressDlg,mCCMIS,mCCMIS->GuessTotalNumber)){
+                    return;
+                }
                 //场所（总商家）
                 PlaceMainWindow *mPMW = new PlaceMainWindow(mCCMIS,this);
                 mPMW->setGeometry(this->x(),this->y(),this->width(),this->height());

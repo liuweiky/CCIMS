@@ -8,6 +8,7 @@
 #include "administratorscwindow.h"
 
 #include "ccmis.h"
+#include "aboutui.h"
 
 namespace Ui {
 class AdministratorMainWindow;

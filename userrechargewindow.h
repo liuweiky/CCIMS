@@ -6,6 +6,7 @@
 #include <QMessageBox>
 
 #include "ccmis.h"
+#include "aboutui.h"
 #include "usermainwindow.h"
 
 namespace Ui {

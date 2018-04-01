@@ -55,7 +55,7 @@ string UserMainWindow::qstr2str(const QString qstr)
 
 void UserMainWindow::time_dispose()
 {
-    ui->Time->display(mCCMIS->ShowDateTime());
+    ui->Time->display(AboutUI::ShowDateTime());
     //月初刷新券
     mCCMIS->CouponFresh();
 }
@@ -69,6 +69,14 @@ void UserMainWindow::on_BackButton_clicked()
 
 void UserMainWindow::on_SearchButton_clicked()
 {
+    //进度条展示
+    QProgressDialog *progressDlg = new
+            QProgressDialog(QStringLiteral("正在载入文件......"),
+                            QStringLiteral("等待"),0,mCCMIS->GuessTotalNumber,this);
+    if(!AboutUI::PDlg(progressDlg,mCCMIS,mCCMIS->GuessTotalNumber)){
+        return;
+    }
+    //产生界面
     UserSearchWindow *mUSW = new UserSearchWindow(mCCMIS,this);
     mUSW->setGeometry(this->x(),this->y(),this->width(),this->height());
     mUSW->show();

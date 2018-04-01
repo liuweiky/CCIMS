@@ -1,12 +1,10 @@
 #ifndef STRUCT_FUNCS_H
 #define STRUCT_FUNCS_H
 
-
 #include <QDateTime>
 #include <string>
 #include <QString>
 #include <jsonxx.h>
-
 
 struct Information
 {
@@ -26,7 +24,6 @@ struct Information
     static QDateTime InfoToDateTime(Information* one_info);
     static void CopyOneInfo(const Information* src,Information* dst);
     
-
 };
 
 struct Shop
@@ -46,11 +43,5 @@ struct User
     int         coupon;     //劵
     User*       next;       //下个结点
 };
-
-
-
-
-
-
 
 #endif // STRUCT_FUNCS_H

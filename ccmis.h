@@ -19,11 +19,9 @@
 
 using namespace std;
 
+#include "common_funcs.h"
 #include "struct_funcs.h"
 #include "jsonxx.h"
-#include "common_funcs.h"
-
-
 
 class CCMIS
 {
@@ -48,6 +46,7 @@ private:
     bool SaveJsonArrToFile(const jsonxx::Array& ToSaveJson,string filename);
 
 public:
+    unsigned int GuessTotalNumber; //预计总信息数
     //跨平台判断
     static const unsigned int PLATFORM_JUDGE;
 
@@ -259,10 +258,7 @@ public:
 
     void SetUserNumber(int n);
 
-    //用于ui的函数
-    QString ShowDateTime();             //输出当前日期时间
-    void CouponFresh();                 //月初刷新劵额
-    //void CloseTxt(QCloseEvent *event);  //关闭窗口弹窗
+    void CouponFresh();//月初刷新劵额
 };
 
 #endif // CCMIS_H

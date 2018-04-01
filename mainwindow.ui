@@ -83,7 +83,7 @@
         </property>
        </widget>
       </item>
-      <item row="2" column="0">
+      <item row="1" column="0">
        <layout class="QHBoxLayout" name="horizontalLayout">
         <item>
          <spacer name="horizontalSpacer_3">
@@ -156,7 +156,7 @@
         </item>
        </layout>
       </item>
-      <item row="4" column="0">
+      <item row="3" column="0">
        <layout class="QHBoxLayout" name="horizontalLayout_3">
         <item>
          <spacer name="horizontalSpacer">
@@ -220,7 +220,7 @@
         </item>
        </layout>
       </item>
-      <item row="3" column="0">
+      <item row="2" column="0">
        <layout class="QHBoxLayout" name="horizontalLayout_2">
         <item>
          <spacer name="horizontalSpacer_4">
@@ -293,22 +293,6 @@
         </item>
        </layout>
       </item>
-      <item row="1" column="0">
-       <widget class="QLabel" name="LoadStateLabel">
-        <property name="font">
-         <font>
-          <family>微软雅黑 Light</family>
-          <pointsize>12</pointsize>
-         </font>
-        </property>
-        <property name="text">
-         <string>正在加载……</string>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignCenter</set>
-        </property>
-       </widget>
-      </item>
      </layout>
     </item>
     <item row="1" column="2">
@@ -332,7 +316,7 @@
      <x>0</x>
      <y>0</y>
      <width>1000</width>
-     <height>23</height>
+     <height>22</height>
     </rect>
    </property>
   </widget>

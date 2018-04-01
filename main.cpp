@@ -5,6 +5,7 @@
 #include "mainwindow.h"
 
 #include "ccmis.h"
+#include "aboutui.h"
 
 int main(int argc, char *argv[])
 {

@@ -34,7 +34,7 @@ AdministratorMainWindow::~AdministratorMainWindow()
 
 void AdministratorMainWindow::time_dispose()
 {
-    ui->Time->display(mCCMIS->ShowDateTime());
+    ui->Time->display(AboutUI::ShowDateTime());
     //月初刷新券
     mCCMIS->CouponFresh();
 }
@@ -56,6 +56,14 @@ void AdministratorMainWindow::on_ImportButton_clicked()
 
 void AdministratorMainWindow::on_WorkButton_clicked()
 {
+    //进度条展示
+    QProgressDialog *progressDlg = new
+            QProgressDialog(QStringLiteral("正在载入文件......"),
+                            QStringLiteral("等待"),0,mCCMIS->GuessTotalNumber,this);
+    if(!AboutUI::PDlg(progressDlg,mCCMIS,mCCMIS->GuessTotalNumber)){
+        return;
+    }
+    //产生界面
     AdministratorSCWindow *mASCW = new AdministratorSCWindow(mCCMIS,this);
     mASCW->setGeometry(this->x(),this->y(),this->width(),this->height());
     mASCW->show();
