@@ -1,7 +1,7 @@
 #include "table_funcs.h"
 #include <qobject.h>
 #include <QHeaderView>
-
+#include <QApplication>
 //-----------------------------------------------------------
 //----------------------------------------------------父类函数
 Table_Parent::Table_Parent
@@ -46,17 +46,20 @@ void Table_Parent::init_Date_Edit()
 
 
 
-void Table_Parent::Table_Filtered_By_Date()
+void Table_Parent::Table_Filtered_By_Date(QTableWidget *qtable)
 {
-    for( int i = 0; i < mTable->rowCount(); ++i )
+    if(qtable == NULL)
+        qtable = mTable;
+
+    for( int i = 0; i < qtable->rowCount(); ++i )
     {
         bool match = false;
-        QTableWidgetItem *item = mTable->item( i, 0 );
+        QTableWidgetItem *item = qtable->item( i, 0 );
         QDate one_date = QDate::fromString (item->text(),"yyyy-MM-dd" );
         if( (one_date >= (*mStart_Date)) && (one_date <= (*mFinish_Date))){
             match = true;
         }
-        mTable->setRowHidden( i, !match );
+        qtable->setRowHidden( i, !match );
      }
 }
 
@@ -68,7 +71,7 @@ void Table_Parent::Table_Filtered_By_Date()
 void Table_Parent::init_Subsidy_Header()
 {
 
-    mTable->setColumnCount(5);
+    mTable->setColumnCount(6);
     mTable->setHorizontalHeaderLabels(
            QStringList()<<"日期" <<"时间" <<"入帐号"<<"被补助人"<<"金额"<<"流水号");
     mTable->horizontalHeader()->setStretchLastSection(true); //就是这个地方
@@ -86,6 +89,7 @@ void Table_Parent::init_Subsidy_Header()
 
 void Table_Parent::show_One_Info_Same_Num(Information* one_info,int row_index,int inum_or_onum)
 {
+    mTable->insertRow(row_index);
     QString Name = mCCMIS->GetAllNameByNum(inum_or_onum);
     QDateTime info_date_time = Information::InfoToDateTime(one_info);
     QString Date = info_date_time.toString("yyyy-MM-dd");
@@ -93,7 +97,7 @@ void Table_Parent::show_One_Info_Same_Num(Information* one_info,int row_index,in
     QString Money = Information::InfoToMoneyStr(one_info);
     QString NumStr = QString::number(inum_or_onum).sprintf("%04d",inum_or_onum);
     QString tag = QString::fromLocal8Bit(one_info->tag.data());
-    mTable->insertRow(row_index);
+
 
 
     mTable->setItem(row_index,0,new QTableWidgetItem(Date));
@@ -102,7 +106,7 @@ void Table_Parent::show_One_Info_Same_Num(Information* one_info,int row_index,in
     mTable->setItem(row_index,3,new QTableWidgetItem(Name));
     mTable->setItem(row_index,4,new QTableWidgetItem(Money));
     mTable->setItem(row_index,5,new QTableWidgetItem(tag));
-    row_index++;
+
 }
 
 void Table_Parent::show_One_Info_All(Information *one_info, int row_index)
@@ -130,7 +134,6 @@ void Table_Parent::show_One_Info_All(Information *one_info, int row_index)
     mTable->setItem(row_index,5,new QTableWidgetItem(InName));
     mTable->setItem(row_index,6,new QTableWidgetItem(Money));
     mTable->setItem(row_index,7,new QTableWidgetItem(tag));
-    row_index++;
 }
 
 void Table_Parent::export_Table_To_CSV(){
@@ -220,13 +223,13 @@ void Table_Parent::on_Finish_Date_Changed(const QDate &date)
 
 void Table_Parent::on_Filter_clicked()
 {
-
-    this->Table_Filtered_By_Date();
+    this->Table_Filtered_By_Date(mTable);
 }
 
 void Table_Parent::on_Export_pressed()
 {
     this->export_Table_To_CSV();
+    QApplication::setQuitOnLastWindowClosed(false);
     QMessageBox::information(NULL, tr("提示"),
                             tr("导出成功！"),
                              QMessageBox::Yes);
@@ -329,9 +332,25 @@ void Admin_Table::on_Subsidy_Check_Admin(int state)
     }
 }
 
+void Admin_Table::on_Reset_clicked()
+{
+    if(mSubsidy_Chck->isChecked()){
+        this->mTable->setRowCount(0);
+       init_Subsidy_Header();
+    }else
+    {
+        this->mTable->setRowCount(0);
+       init_Table_Header();
+    }
+
+}
 
 
-//Shop类子函数
+
+
+
+//-------------------------------------------------------------------
+//---------------------------------------------------------Shop类子函数
 
 Shop_Table::Shop_Table(QTableWidget *table, QDateEdit* start_edit,
                        QDateEdit* finish_edit, QPushButton* filter_btn,
@@ -435,5 +454,16 @@ void User_Table::on_Subsidy_Check_User(int state)
          this->mTable->setRowCount(0);
         init_Table_Header();
         break;
+    }
+}
+
+void User_Table::on_Reset_clicked(){
+    if(mSubsidy_Chck->isChecked()){
+        this->mTable->setRowCount(0);
+        init_Subsidy_Header();
+    }else
+    {
+        this->mTable->setRowCount(0);
+        init_Table_Header();
     }
 }

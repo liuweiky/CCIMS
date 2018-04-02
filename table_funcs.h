@@ -42,7 +42,7 @@ public:
                  CCMIS* ccmis_sys);
 
     void init_Date_Edit();
-    void Table_Filtered_By_Date();
+    void Table_Filtered_By_Date(QTableWidget *qtable = NULL);
     void init_Subsidy_Header();
     void show_One_Info_Same_Num(Information*,int,int);
     void show_One_Info_All(Information*,int);
@@ -89,6 +89,7 @@ public:
     void DelItem();
 public slots:
     void on_Subsidy_Check_Admin(int);
+    void on_Reset_clicked();
 
 };
 
@@ -129,6 +130,7 @@ public:
     void DelItem(){}
 public slots:
    void on_Subsidy_Check_User(int);
+    void on_Reset_clicked();
 };
 
 
