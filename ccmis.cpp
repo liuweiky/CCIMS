@@ -469,7 +469,6 @@ bool CCMIS::ReadInf(string filename)
             InsertInf(info);
         }
     }
-
         //验证数据
         /*Information* info = mInfo->next;
         while (info != NULL) {
@@ -486,47 +485,72 @@ bool CCMIS::ReadInf(string filename)
                  <<info->money<<endl;
             info=info->next;
         }*/
-
         return true;
+}
 
-//    if (!fileALLReadIn.empty()){
-//        jsonxx::Array array;
-//        array.parse(fileALLReadIn);             //解析 json
-//        for (unsigned long i = 0; i < array.size(); i++)  //迭代构造
-//        {
-//            //构造信息
-//            Information* info = new Information();
-//            info->tag = array.get<jsonxx::Object>(i).
-//                    get<jsonxx::String>(JSON_KEY_TAG);
-//            info->year = array.get<jsonxx::Object>(i).
-//                    get<jsonxx::Number>(JSON_KEY_YEAR);
-//            info->month = array.get<jsonxx::Object>(i).
-//                    get<jsonxx::Number>(JSON_KEY_MONTH);
-//            info->day = array.get<jsonxx::Object>(i).
-//                    get<jsonxx::Number>(JSON_KEY_DAY);
-//            info->hour = array.get<jsonxx::Object>(i).
-//                    get<jsonxx::Number>(JSON_KEY_HOUR);
-//            info->minute = array.get<jsonxx::Object>(i).
-//                    get<jsonxx::Number>(JSON_KEY_MINUTE);
-//            info->second = array.get<jsonxx::Object>(i).
-//                    get<jsonxx::Number>(JSON_KEY_SECOND);
-//            info->Inumber= array.get<jsonxx::Object>(i).
-//                    get<jsonxx::Number>(JSON_KEY_INUMBER);
-//            info->Onumber= array.get<jsonxx::Object>(i).
-//                    get<jsonxx::Number>(JSON_KEY_ONUMBER);
-//            info->money= array.get<jsonxx::Object>(i).
-//                    get<jsonxx::Number>(JSON_KEY_MONEY);
-//            if (NewTransaction(info->Onumber, info->Inumber, info->money,
-//                               info->year, info->month, info->day,
-//                               info->hour, info->minute, info->second) == 0) {
-//                successnumber++;    //统计记录数目
+unsigned int CCMIS::ImportInf(string filename){
+    unsigned int successnumber(0);
+    string fileALLReadIn = ReadAllFileToQString(filename);
+    if (!fileALLReadIn.empty()){
+        jsonxx::Array array;
+        array.parse(fileALLReadIn);                       //解析 json
+        for (unsigned long i = 0; i < array.size(); i++)  //迭代构造
+        {
+            //构造信息
+            Information* info = new Information();
+            info->tag = array.get<jsonxx::Object>(i).
+                    get<jsonxx::String>(JSON_KEY_TAG);
+            info->year = array.get<jsonxx::Object>(i).
+                    get<jsonxx::Number>(JSON_KEY_YEAR);
+            info->month = array.get<jsonxx::Object>(i).
+                    get<jsonxx::Number>(JSON_KEY_MONTH);
+            info->day = array.get<jsonxx::Object>(i).
+                    get<jsonxx::Number>(JSON_KEY_DAY);
+            info->hour = array.get<jsonxx::Object>(i).
+                    get<jsonxx::Number>(JSON_KEY_HOUR);
+            info->minute = array.get<jsonxx::Object>(i).
+                    get<jsonxx::Number>(JSON_KEY_MINUTE);
+            info->second = array.get<jsonxx::Object>(i).
+                    get<jsonxx::Number>(JSON_KEY_SECOND);
+            info->Inumber= array.get<jsonxx::Object>(i).
+                    get<jsonxx::Number>(JSON_KEY_INUMBER);
+            info->Onumber= array.get<jsonxx::Object>(i).
+                    get<jsonxx::Number>(JSON_KEY_ONUMBER);
+            info->money= array.get<jsonxx::Object>(i).
+                    get<jsonxx::Number>(JSON_KEY_MONEY);
+
+//            //判断信息合法性
+//            if (info->money <= 0 &&
+//                    info->Inumber <=0 && info->Inumber >=0 &&
+//                    info->Onumber <=0 && info->Onumber >=0) {
+//                continue;
 //            }
-//        }
-//        return successnumber;
-//    } else {
-//        return false;
-//    }
-//    this->WriteInf("test.json");
+//            if (info->Inumber / 1000 == GROUP_CANTEEN /*收款方是食堂*/) {
+//                if (info->money > 5000 || GetTotalCanteenConsumptionByDay
+//                        (info->year, info->month, info->day, info->Onumber)
+//                        + info->money > 10000) {
+//                    continue;   //超过每笔消费或单日限制
+//                } else {
+//                    InsertInf(info);
+//                }
+//            } else if (inum / 1000 == GROUP_MARKET /*收款方是超市*/) {
+//                if (GetTotalCanteenAndMarketConsumptionByDay
+//                        (info->year, info->month, info->day, info->Onumber)
+//                        + info->money > 10000) {
+//                    continue;   //超过单日限制
+//                } else {
+//                    InsertInf(info);
+//                }
+//            } else if (inum / 1000 == GROUP_BATH) {
+//                InsertInf(info);
+//            }
+            InsertInf(info);
+            successnumber++;
+        }
+    } else {
+        successnumber = 0;
+    }
+    return successnumber;
 }
 
 string CCMIS::GenerateTag(int onum, int inum, int mon)
@@ -623,7 +647,8 @@ void CCMIS::InsertInf(Information* tempinf)
 {
     Information* in = mInfo;
 
-    while (in->next != NULL && Information::InfoToDateTime(in->next) < Information::InfoToDateTime(tempinf)) {
+    while (in->next != NULL &&
+           Information::InfoToDateTime(in->next) < Information::InfoToDateTime(tempinf)) {
         in = in->next;
     }
 
@@ -1206,7 +1231,7 @@ bool CCMIS::NewRefund(Information *tempinf)
 
     User* u = mUser->next;
     while (u != NULL) {
-        if (u->number == tempinf->Onumber)
+        if (u->number == (int)tempinf->Onumber)
             break;
         u = u->next;
     }

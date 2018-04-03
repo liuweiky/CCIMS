@@ -177,28 +177,28 @@ QString Table_Parent::get_Info_Tag_By_RowIndex(int row_index)
             QString index = mTable->item(row_index,i)->text();
             whole_line.append(index);
         }
-        int Login_Num = mCCMIS->GetUserNum();
+//        int Login_Num = mCCMIS->GetUserNum();
         QDate date = QDate::fromString(whole_line[0],"yyyy-MM-dd");
         QString tag_date = date.toString("yyyyMMdd");
         QTime time = QTime::fromString(whole_line[1],"hh:mm:ss");
         QString tag_time = time.toString("hhmmss");
         QString tag_onum,tag_inum,tag_money;
-        QString pattern("(.*).(.*)");
-        QRegExp rx(pattern);
-        if((Login_Num>=CCMIS::SUPERUSER_BEGIN)&&(Login_Num<=CCMIS::SUPERUSER_END)){
-            tag_onum = whole_line[2];
-            tag_inum = whole_line[4];
-            tag_money = whole_line[6].replace(QString("."), QString("")).sprintf("%05d");
+//        QString pattern("(.*).(.*)");
+//        QRegExp rx(pattern);
+//        if((Login_Num>=CCMIS::SUPERUSER_BEGIN)&&(Login_Num<=CCMIS::SUPERUSER_END)){
+//            tag_onum = whole_line[2];
+//            tag_inum = whole_line[4];
+//            tag_money = whole_line[6].replace(QString("."), QString("")).sprintf("%05d");
 
-        }else  if((Login_Num>=CCMIS::SHOP_BEGIN)&&(Login_Num<=CCMIS::SHOP_END)){
-           tag_onum = whole_line[2];
-            tag_inum =  QString::number(Login_Num).sprintf("%04d",Login_Num);
-            tag_money = whole_line[4].replace(QString("."), QString("")).sprintf("%05d");
-        }else if((Login_Num>=CCMIS::USER_BEGIN)&&(Login_Num<=CCMIS::USER_END)){
-            tag_onum = QString::number(Login_Num).sprintf("%04d",Login_Num);
-            tag_inum = whole_line[2];
-            tag_money =  whole_line[4].replace(QString("."), QString("")).sprintf("%05d");
-        }
+//        }else  if((Login_Num>=CCMIS::SHOP_BEGIN)&&(Login_Num<=CCMIS::SHOP_END)){
+//           tag_onum = whole_line[2];
+//            tag_inum =  QString::number(Login_Num).sprintf("%04d",Login_Num);
+//            tag_money = whole_line[4].replace(QString("."), QString("")).sprintf("%05d");
+//        }else if((Login_Num>=CCMIS::USER_BEGIN)&&(Login_Num<=CCMIS::USER_END)){
+//            tag_onum = QString::number(Login_Num).sprintf("%04d",Login_Num);
+//            tag_inum = whole_line[2];
+//            tag_money =  whole_line[4].replace(QString("."), QString("")).sprintf("%05d");
+//        }
         return (tag_date+tag_time+tag_onum+tag_inum+tag_money);
     }
     else
@@ -375,7 +375,7 @@ void Shop_Table::init_Table_Header()
    int RowCount = 0;
    Information* iter = mCCMIS->GetInfoPointer() ->next;
    while(iter!=NULL){
-       if (iter->Inumber == mCurrent_Shop->number)
+       if ((int)iter->Inumber == mCurrent_Shop->number)
        {
            show_One_Info_Same_Num(iter,RowCount,iter->Onumber);
        }
@@ -414,7 +414,7 @@ void User_Table::init_Table_Header()
     int mCurrent_User_Num = mCCMIS->GetUserNum();
    Information* iter = mCCMIS->GetInfoPointer() ->next;
    while(iter!=NULL){
-       if(iter->Onumber == mCurrent_User_Num || iter->Inumber == mCurrent_User_Num)
+       if((int)iter->Onumber == mCurrent_User_Num || (int)iter->Inumber == mCurrent_User_Num)
             show_One_Info_Same_Num(iter,RowCount,iter->Inumber);
        iter  = iter->next;
    }
@@ -433,7 +433,7 @@ void  User_Table::init_Subsidy_Header()
     int RowCount = 0;
     Information* iter = mCCMIS->GetInfoPointer() ->next;
     while(iter!=NULL){
-        if(((int)iter->Onumber == 2)&& (iter->Inumber == mCurrent_User_Num))
+        if(((int)iter->Onumber == 2)&& ((int)iter->Inumber == mCurrent_User_Num))
             show_One_Info_Same_Num(iter,RowCount,mCurrent_User_Num);
         iter = iter->next;
     }

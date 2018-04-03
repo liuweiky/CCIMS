@@ -24,10 +24,18 @@ private slots:
 
     void on_buttonBox_rejected();
 
+    void on_checkForCurTime_stateChanged(int arg1);
+
+    void on_dateEdit_dateChanged(const QDate &date);
+
+    void on_timeEdit_2_timeChanged(const QTime &time);
+
 private:
     Ui::AdministratorAddDialog *ui;
     CCMIS* mCCMIS;
     int isModify;
+    QDate* mDate;
+    QTime* mTime;
 };
 
 #endif // ADMINISTRATORADDDIALOG_H
