@@ -62,32 +62,32 @@ void AdministratorAddDialog::on_buttonBox_accepted()
 
     switch (mCCMIS->NewAdmTransaction(year, month, day, hour, min, sec, onum, inum, money)) {
     case -1:
-        QMessageBox::warning(this, tr("警告！"),
+        QMessageBox::warning(a, tr("警告！"),
                            tr("没有该用户！"),
                            QMessageBox::Yes);
         break;
     case -2:
-        QMessageBox::warning(this, tr("警告！"),
+        QMessageBox::warning(a, tr("警告！"),
                            tr("商铺不存在！"),
                            QMessageBox::Yes);
         break;
     case -3:
-        QMessageBox::warning(this, tr("警告！"),
+        QMessageBox::warning(a, tr("警告！"),
                            tr("单日额度已用尽或超过单笔限制！"),
                            QMessageBox::Yes);
         break;
     case -4:
-        QMessageBox::warning(this, tr("警告！"),
+        QMessageBox::warning(a, tr("警告！"),
                            tr("余额不足！"),
                            QMessageBox::Yes);
         break;
     case -5:
-        QMessageBox::warning(this, tr("警告！"),
+        QMessageBox::warning(a, tr("警告！"),
                            tr("金额不能小于 0！"),
                            QMessageBox::Yes);
         break;
     case 0:
-        QMessageBox::information(this, tr("信息！"),
+        QMessageBox::information(a, tr("信息！"),
                            tr("创建成功！"),
                            QMessageBox::Yes);
         if (isModify)
