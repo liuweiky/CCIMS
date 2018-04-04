@@ -260,6 +260,8 @@ public:
     void SetUserNumber(int n);
 
     void CouponFresh();//月初刷新劵额
+
+    int GetProfitByShopNum(int num);
 };
 
 #endif // CCMIS_H

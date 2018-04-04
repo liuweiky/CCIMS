@@ -17,6 +17,7 @@ ShopSearchWindow::ShopSearchWindow(CCMIS *c, QWidget *parent) :
 
     //基本信息展示
     ui->UserName->setText(mCCMIS->GetCurrentUserName());
+    ui->money->setText("总盈利：" + QString::number(mCCMIS->GetProfitByShopNum(mCCMIS->GetUserNum()) / 100.0) + " 元");
 
     //图片导入
     QIcon icon;

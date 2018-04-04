@@ -1316,3 +1316,16 @@ void CCMIS::CouponFresh()
         WriteUser(USER_FILE_NAME);
     }
 }
+
+int CCMIS::GetProfitByShopNum(int num)
+{
+    int profit = 0;
+    Information* i = mInfo->next;
+    while (i != NULL) {
+        if (i->Inumber == num){
+            profit += i->money;
+        }
+        i = i->next;
+    }
+    return profit;
+}
