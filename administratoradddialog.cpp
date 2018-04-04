@@ -44,7 +44,7 @@ void AdministratorAddDialog::on_buttonBox_accepted()
 {
     int inum = ui->InumEdit->text().toInt();
     int onum = ui->OnumEdit->text().toInt();
-    int money = ui->MoneyEdit->text().toDouble() * 100; //*100
+    int money = ui->MoneyEdit->text().toDouble() * 100.001; //*100
 
     //QDate dt= ui->dateEdit->date();
 
@@ -60,7 +60,7 @@ void AdministratorAddDialog::on_buttonBox_accepted()
 
     AdministratorSCWindow* a = (AdministratorSCWindow*)parentWidget();
 
-    switch (mCCMIS->NewAdmTransaction(year, month, day, hour, min, sec, onum, inum, money)) {
+    switch (mCCMIS->NewAdmTransaction(year, month, day, hour, min, sec, onum, inum, money)) {   //Adm可以超过单日限制
     case -1:
         QMessageBox::warning(a, tr("警告！"),
                            tr("没有该用户！"),
