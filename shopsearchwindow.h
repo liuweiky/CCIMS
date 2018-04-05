@@ -3,12 +3,12 @@
 
 #include <QMainWindow>
 #include <QTimer>
-
-#include <qtablewidget.h>
+#include <QTableWidget>
 
 #include "ccmis.h"
 #include "aboutui.h"
 #include "table_funcs.h"
+
 namespace Ui {
 class ShopSearchWindow;
 }
@@ -26,8 +26,6 @@ public:
 private slots:
     void time_dispose();
     void on_BackButton_clicked();
-
-
 
 private:
     Ui::ShopSearchWindow *ui;

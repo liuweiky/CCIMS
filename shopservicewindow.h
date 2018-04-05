@@ -3,7 +3,6 @@
 
 #include <QMainWindow>
 #include <QTimer>
-#include <QMessageBox>
 
 #include "ccmis.h"
 #include "aboutui.h"

@@ -10,7 +10,6 @@ UserMainWindow::UserMainWindow(CCMIS* c, QWidget *parent) :
     this->setAttribute(Qt::WA_DeleteOnClose,true);
 
     mCCMIS = c;
-//    User* u = mCCMIS->GetUserByNum(mCCMIS->GetUserNum());
 
     //时间处理
     QTimer *timer = new QTimer(this);
@@ -56,8 +55,6 @@ string UserMainWindow::qstr2str(const QString qstr)
 void UserMainWindow::time_dispose()
 {
     ui->Time->display(AboutUI::ShowDateTime());
-    
-    
 }
 
 void UserMainWindow::on_BackButton_clicked()
@@ -76,6 +73,7 @@ void UserMainWindow::on_SearchButton_clicked()
     if(!AboutUI::PDlg(progressDlg,mCCMIS,mCCMIS->GuessTotalNumber)){
         return;
     }
+
     //产生界面
     UserSearchWindow *mUSW = new UserSearchWindow(mCCMIS,this);
     mUSW->setGeometry(this->x(),this->y(),this->width(),this->height());
@@ -93,7 +91,6 @@ void UserMainWindow::on_WorkButton_clicked()
 
 void UserMainWindow::refreshUi()
 {
-    //基本信息展示
     ui->UserName->setText(mCCMIS->GetCurrentUserName());
     QString Money = "余额：" + QString::number
             (double(mCCMIS->GetUserByNum(mCCMIS->GetUserNum())->balance)/100,'f',2)

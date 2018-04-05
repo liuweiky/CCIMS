@@ -23,6 +23,7 @@ AdministratorAddDialog::AdministratorAddDialog(CCMIS* c, int ismod, QWidget *par
     mTime->setHMS(ui->timeEdit_2->time().hour(),
                   ui->timeEdit_2->time().second(),0);
 
+    //限制输入设置
     //正则表达式，只允许输入0~9
     QRegExp regx("[0-9]+$");
     QValidator *validator = new QRegExpValidator(regx, ui->InumEdit);
@@ -42,24 +43,19 @@ AdministratorAddDialog::~AdministratorAddDialog()
 
 void AdministratorAddDialog::on_buttonBox_accepted()
 {
+    //读取数据
     int inum = ui->InumEdit->text().toInt();
     int onum = ui->OnumEdit->text().toInt();
     int money = ui->MoneyEdit->text().toDouble() * 100.001; //*100
-
-    //QDate dt= ui->dateEdit->date();
-
     int year = mDate->year();
     int month = mDate->month();
     int day = mDate->day();
-
-    //QTime qt= ui->timeEdit_2->time();
-
     int hour = mTime->hour();
     int min = mTime->minute();
     int sec = mTime->second();
 
+    //传参数至主界面
     AdministratorSCWindow* a = (AdministratorSCWindow*)parentWidget();
-
     switch (mCCMIS->NewAdmTransaction(year, month, day, hour, min, sec, onum, inum, money)) {   //Adm可以超过单日限制
     case -1:
         QMessageBox::warning(a, tr("警告！"),

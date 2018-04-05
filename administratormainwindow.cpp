@@ -35,8 +35,6 @@ AdministratorMainWindow::~AdministratorMainWindow()
 void AdministratorMainWindow::time_dispose()
 {
     ui->Time->display(AboutUI::ShowDateTime());
-    
-    
 }
 
 void AdministratorMainWindow::on_BackButton_clicked()
@@ -63,6 +61,7 @@ void AdministratorMainWindow::on_WorkButton_clicked()
     if(!AboutUI::PDlg(progressDlg,mCCMIS,mCCMIS->GuessTotalNumber)){
         return;
     }
+
     //产生界面
     AdministratorSCWindow *mASCW = new AdministratorSCWindow(mCCMIS,this);
     mASCW->setGeometry(this->x(),this->y(),this->width(),this->height());

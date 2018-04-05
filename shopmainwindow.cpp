@@ -25,7 +25,6 @@ ShopMainWindow::ShopMainWindow(CCMIS* c, QWidget *parent) :
     const char* address = str.c_str();  //转地址QString到char*
     icon.addFile(tr(address));
     ui->BackButton->setIcon(icon);
-
 }
 
 ShopMainWindow::~ShopMainWindow()
@@ -36,8 +35,6 @@ ShopMainWindow::~ShopMainWindow()
 void ShopMainWindow::time_dispose()
 {
     ui->Time->display(AboutUI::ShowDateTime());
-    
-    
 }
 
 void ShopMainWindow::on_BackButton_clicked()
@@ -56,6 +53,7 @@ void ShopMainWindow::on_SearchButton_clicked()
     if(!AboutUI::PDlg(progressDlg,mCCMIS,mCCMIS->GuessTotalNumber)){
         return;
     }
+
     //产生界面
     ShopSearchWindow *mASeaW = new ShopSearchWindow(mCCMIS,this);
     mASeaW->setGeometry(this->x(),this->y(),this->width(),this->height());

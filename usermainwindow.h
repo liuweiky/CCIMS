@@ -20,10 +20,10 @@ class UserMainWindow : public QMainWindow
 
 public:
     explicit UserMainWindow(CCMIS* c, QWidget *parent = 0);
+    ~UserMainWindow();
     QString str2qstr(const string str); //处理中文乱码
     string qstr2str(const QString qstr);
-    void refreshUi();
-    ~UserMainWindow();
+    void refreshUi();   //基本信息刷新展示
 
 private slots:
     void time_dispose();

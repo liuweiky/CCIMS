@@ -94,56 +94,21 @@ CCMIS::CCMIS()
     QFile fileInfo(FilenameCorrect(INFO_FILE_NAME));
     fileInfo.open(QIODevice::ReadOnly);
     GuessTotalNumber = (unsigned int)fileInfo.size()/224;   //预测值
-    cout << GuessTotalNumber << endl; //测试用的
+    cout << GuessTotalNumber << endl;   //测试用的
     fileInfo.close();
 
     JsonThread* jthread = new JsonThread(this, THREAD_TYPE_R_INFO);
 
     //读文件线程开启
     jthread->start();   //TODO: Need to send message when finished.
-
     if (!ReadUser(USER_FILE_NAME))  //判断打开文件是否成功
     {
         cout << "Open " + USER_FILE_NAME + " failed.";
     }
-
     if (!ReadShop(SHOP_FILE_NAME))
     {
         cout << "Open " + SHOP_FILE_NAME + " failed.";
     }
-
-
-    //WriteUser("testuser.json");
-
-    //GenerateTag(6998, 1101, 1500);
-
-    //InsertInf(BuildInfo(6998, 1101, 1500));
-    //WriteInf(INFO_FILE_NAME);
-
-//    if (!ReadInf(INFO_FILE_NAME))
-//    {
-//        cout << "Open " + INFO_FILE_NAME + " failed.";
-//    }
-
-//    Information* test  = SearchInfoByInum(1201);
-//    WriteInf("3216.json",test);
-
-//    cout<<GetTotalCanteenConsumptionByDay(2018,1,3,4001)<<endl;
-//    cout<<GetUserByNum(4000)<<endl;
-
-//    cout << "start transaction...\n";
-//    time_t timep;
-//    time (&timep);
-//    char timestr[64];
-//    strftime(timestr, sizeof(timestr), "%Y-%m-%d %H:%M:%S",localtime(&timep));
-//    cout<<"start: "<<timestr<<endl;
-//    cout << NewTransaction(4001, 3101, 2500)<<endl;
-
-//    time (&timep);
-//    strftime(timestr, sizeof(timestr), "%Y-%m-%d %H:%M:%S",localtime(&timep));
-//    cout<<"end: "<<timestr<<endl;
-
-//    cout << "transaction complete...\n";
 }
 
 int CCMIS::GetCurrentReadThreadCount()
@@ -377,15 +342,6 @@ bool CCMIS::ReadUser(string filename)
 
             totalUserCount++;   //统计用户数
         }
-
-//        //验证数据
-//        User* u = mUser->next;
-//        while (u != NULL) {
-//            cout<<u->number<<"\t"<<u->name<<"\t"<<u->password
-//               <<"\t"<<u->balance<<"\t"<<u->coupon<<endl;
-//            u=u->next;
-//        }
-
         return true;
     } else {
         return false;
@@ -417,17 +373,8 @@ bool CCMIS::ReadShop(string filename)
             s->next = mShop->next;
             mShop->next = s;
 
-
             totalShopCount++;   //统计商铺数
         }
-
-//        //验证数据
-//        Shop* sh = mShop->next;
-//        while (sh != NULL) {
-//            cout<<sh->number<<"\t"<<sh->name<<"\t"<<sh->password<<endl;
-//            sh=sh->next;
-//        }
-
         return true;
     } else {
         return false;
@@ -438,7 +385,7 @@ bool CCMIS::ReadInf(string filename)
 {
     string fileALLReadIn = ReadAllFileToQString(filename);
 
-    if (!fileALLReadIn.empty()){
+    if (!fileALLReadIn.empty()) {
         jsonxx::Array array;
         array.parse(fileALLReadIn);             //解析 json
         for (unsigned long i = 0; i < array.size(); i++)  //迭代构造
@@ -469,23 +416,7 @@ bool CCMIS::ReadInf(string filename)
             InsertInf(info);
         }
     }
-        //验证数据
-        /*Information* info = mInfo->next;
-        while (info != NULL) {
-            cout
-                 <<info->tag<<"\t"
-                 <<info->year<<"\t"
-                 <<info->month<<"\t"
-                 <<info->day<<"\t"
-                 <<info->hour<<"\t"
-                 <<info->minute<<"\t"
-                 <<info->second<<"\t"
-                 <<info->Inumber<<"\t"
-                 <<info->Onumber<<"\t"
-                 <<info->money<<endl;
-            info=info->next;
-        }*/
-        return true;
+    return true;
 }
 
 unsigned int CCMIS::ImportInf(string filename){
@@ -518,32 +449,6 @@ unsigned int CCMIS::ImportInf(string filename){
                     get<jsonxx::Number>(JSON_KEY_ONUMBER);
             info->money= array.get<jsonxx::Object>(i).
                     get<jsonxx::Number>(JSON_KEY_MONEY);
-
-//            //判断信息合法性
-//            if (info->money <= 0 &&
-//                    info->Inumber <=0 && info->Inumber >=0 &&
-//                    info->Onumber <=0 && info->Onumber >=0) {
-//                continue;
-//            }
-//            if (info->Inumber / 1000 == GROUP_CANTEEN /*收款方是食堂*/) {
-//                if (info->money > 5000 || GetTotalCanteenConsumptionByDay
-//                        (info->year, info->month, info->day, info->Onumber)
-//                        + info->money > 10000) {
-//                    continue;   //超过每笔消费或单日限制
-//                } else {
-//                    InsertInf(info);
-//                }
-//            } else if (inum / 1000 == GROUP_MARKET /*收款方是超市*/) {
-//                if (GetTotalCanteenAndMarketConsumptionByDay
-//                        (info->year, info->month, info->day, info->Onumber)
-//                        + info->money > 10000) {
-//                    continue;   //超过单日限制
-//                } else {
-//                    InsertInf(info);
-//                }
-//            } else if (inum / 1000 == GROUP_BATH) {
-//                InsertInf(info);
-//            }
             InsertInf(info);
             successnumber++;
         }
@@ -593,7 +498,6 @@ string CCMIS::GenerateTag(int onum, int inum, int mon)
         tag += to_string(mon);
     }
 
-
     cout<<tag<<endl;
 
     return tag;
@@ -601,7 +505,6 @@ string CCMIS::GenerateTag(int onum, int inum, int mon)
 
 string CCMIS::GenerateTag(int year, int month, int day, int hour, int min, int sec, int onum, int inum, int mon)
 {
-
     /**TIME*/
     string tag = to_string(year);
 
@@ -636,7 +539,6 @@ string CCMIS::GenerateTag(int year, int month, int day, int hour, int min, int s
     } else {
         tag += to_string(mon);
     }
-
 
     cout<<tag<<endl;
 
@@ -712,14 +614,12 @@ bool CCMIS::CheckPassword(string password)
         //禁止登录洗漱券账户
         if (mUserNumber / 1000 == GROUP_BATH &&
                 (mUserNumber / 10) % 10 >= 5) return false;
-
         Shop* s = mShop->next;
         while (s != NULL) {
             if (s->number == mUserNumber)
                 break;
             s = s->next;
         }
-
         if (s !=NULL && password.compare(s->password) == 0)
             return true;
         else return false;
@@ -735,8 +635,6 @@ bool CCMIS::CheckPassword(string password)
             return true;
         else return false;
     }
-
-
 }
 
 void CCMIS::SetUserNumber(int n)
@@ -754,12 +652,10 @@ unsigned int CCMIS::GetTotalInfoNumber()
     return totalInfoCount;
 }
 
-
 unsigned int CCMIS::GetTotalUserNumber()
 {
     return totalUserCount;
 }
-
 
 unsigned int CCMIS::GetTotalShopNumber()
 {
@@ -768,7 +664,7 @@ unsigned int CCMIS::GetTotalShopNumber()
 
 //默认统计补贴信息 onum=2
 Information* CCMIS::SearchInfoByOnum
-(int onum , unsigned long start_date_num,unsigned int start_time_num ,
+(int onum, unsigned long start_date_num,unsigned int start_time_num ,
  unsigned long finish_date_num ,unsigned int finish_time_num )
 {
     Information* filter_info_list = new Information();
@@ -778,8 +674,7 @@ Information* CCMIS::SearchInfoByOnum
 
     unsigned long long start   = start_date_num *  1000000 + start_time_num;
     unsigned long long finish  = finish_date_num * 1000000 + finish_time_num;
-    while(info!=NULL){
-
+    while(info!=NULL) {
         if((int)info->Onumber == onum ){
             unsigned long  info_date = Date::DateToNum
                     (info->year,info->month,info->day);
@@ -787,14 +682,13 @@ Information* CCMIS::SearchInfoByOnum
                     (info->hour,info->minute);
             unsigned long long  info_cur = info_date * 1000000 + info_time;
             if( info_cur>=start && info_cur <=finish ){
-                    Information* filtered_one_info = new Information();
-                    Information::CopyOneInfo(info,filtered_one_info);
-                    filtered_one_info->next = filter_info_list->next;
-                    filter_info_list -> next = filtered_one_info;
+                Information* filtered_one_info = new Information();
+                Information::CopyOneInfo(info,filtered_one_info);
+                filtered_one_info->next = filter_info_list->next;
+                filter_info_list -> next = filtered_one_info;
             }
         }
         info = info->next;
-
     }
     return filter_info_list;
 }
@@ -811,7 +705,6 @@ Information* CCMIS::SearchInfoByInum
     unsigned long long start   = start_date_num *  1000000 + start_time_num;
     unsigned long long finish  = finish_date_num * 1000000 + finish_time_num;
     while(info!=NULL){
-
         if((int)info->Inumber == inum ){
             unsigned long  info_date = Date::DateToNum(info->year,info->month,info->day);
             unsigned int info_time = Time::TimeToNum(info->hour,info->minute);
@@ -824,10 +717,8 @@ Information* CCMIS::SearchInfoByInum
             }
         }
         info = info->next;
-
     }
     return filter_info_list;
-
 }
 
 void CCMIS::DeleteInf(Information *tempinf)
@@ -862,7 +753,6 @@ User* CCMIS::GetUserByNum(int num)
                 return u;
             u = u->next;
         }
-
         return NULL;
     } else {
         return NULL;
@@ -872,12 +762,12 @@ User* CCMIS::GetUserByNum(int num)
 Shop* CCMIS::GetShopByNum(int num)
 {
     if (
-            (num >= SHOP_CANTEEN_BEGIN &&
-            num <= SHOP_CANTEEN_END) ||
-            (num >= SHOP_MARKET_BEGIN &&
-             num <= SHOP_MARKET_END) ||
-            (num >= SHOP_BATH_BEGIN &&
-            num <= SHOP_BATH_END))   //防止越权取得0、1、2号用户权限
+        (num >= SHOP_CANTEEN_BEGIN &&
+        num <= SHOP_CANTEEN_END) ||
+        (num >= SHOP_MARKET_BEGIN &&
+         num <= SHOP_MARKET_END) ||
+        (num >= SHOP_BATH_BEGIN &&
+        num <= SHOP_BATH_END))   //防止越权取得0、1、2号用户权限
     {
         Shop* s = mShop->next;
         while (s != NULL) {
@@ -885,7 +775,6 @@ Shop* CCMIS::GetShopByNum(int num)
                 return s;
             s = s->next;
         }
-
         return NULL;
     } else {
         return NULL;
@@ -924,12 +813,10 @@ QString CCMIS::GetCurrentUserName(){
 User*   CCMIS::GetCurrentUser(){
     return GetUserByNum(mUserNumber);
 }
+
 Shop*   CCMIS::GetCurrentShop(){
     return GetShopByNum(mUserNumber);
 }
-
-
-
 
 int CCMIS::GetTotalCanteenConsumptionByDay(int year, int month, int day, int num)
 {
@@ -945,10 +832,8 @@ int CCMIS::GetTotalCanteenConsumptionByDay(int year, int month, int day, int num
         {
             c += info->money;
         }
-
         info = info->next;
     }
-
     return c;
 }
 
@@ -968,10 +853,8 @@ int CCMIS::GetTotalCanteenAndMarketConsumptionByDay
         {
             c += info->money;
         }
-
         info = info->next;
     }
-
     return c;
 }
 
@@ -1186,7 +1069,8 @@ int CCMIS::NewAdmTransaction(int year, int month, int day, int hour, int min, in
             {
                 u->coupon -= mon;
 
-                Information* info = BuildInfo(year, month, day, hour, min, sec, onum, inum + 50, mon);    //转券账户
+                Information* info = BuildInfo
+                        (year, month, day, hour, min, sec, onum, inum + 50, mon);   //转券账户
                 InsertInf(info);
             } else {    //否则先扣coupon，再扣balance
                 u->balance -= (mon - u->coupon);
@@ -1194,12 +1078,14 @@ int CCMIS::NewAdmTransaction(int year, int month, int day, int hour, int min, in
                 if (u->coupon != 0)
                 {
                     //转券账户
-                    Information* info = BuildInfo(year, month, day, hour, min, sec, onum, inum + 50, u->coupon);
+                    Information* info = BuildInfo
+                            (year, month, day, hour, min, sec, onum, inum + 50, u->coupon);
                     InsertInf(info);
                 }
 
                 //转普通账户
-                Information* info = BuildInfo(year, month, day, hour, min, sec, onum, inum, mon - u->coupon);
+                Information* info = BuildInfo
+                        (year, month, day, hour, min, sec, onum, inum, mon - u->coupon);
                 InsertInf(info);
 
                 u->coupon = 0;
@@ -1265,10 +1151,6 @@ int CCMIS::GetUserNum()
 {
     return mUserNumber;
 }
-
-
-
-
 
 bool CCMIS::NewRecharge(int num, int money)
 {

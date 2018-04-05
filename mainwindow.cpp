@@ -11,9 +11,10 @@ MainWindow::MainWindow(QWidget *parent) :
 
     //时间处理
     QTimer *timer = new QTimer(this);
-    connect(timer,SIGNAL(timeout()),this,SLOT(time_dispose()));         //刷新劵
+    connect(timer,SIGNAL(timeout()),this,SLOT(time_dispose()));
     timer->start(60000);
 
+    //限制输入
     //正则表达式，只允许输入0~9
     QRegExp regx("[0-9]+$");
     QValidator *validator = new QRegExpValidator(regx, ui->UserNameLineEdit);
@@ -46,8 +47,6 @@ void MainWindow::on_pushButton_clicked()
                     new AdministratorMainWindow(mCCMIS,this);
             mAMW->setGeometry(this->x(),this->y(),this->width(),this->height());
             mAMW->show();
-//            Info_Table* info = new Info_Table(mCCMIS);
-//            info->show();
         } else if (number <= CCMIS::SHOP_END) {
             if (number%100 == 0){
                 //进度条展示

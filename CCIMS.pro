@@ -59,7 +59,6 @@ HEADERS += \
     administratorscwindow.h \
     usersearchwindow.h \
     userrechargewindow.h \
-    usersfwindow.h \
     common_funcs.h \
     table_funcs.h \
     struct_funcs.h \

@@ -17,11 +17,11 @@
 #include <QCoreApplication> //读取路径
 #include <QCloseEvent>      //窗口关闭
 
-using namespace std;
-
 #include "common_funcs.h"
 #include "struct_funcs.h"
 #include "jsonxx.h"
+
+using namespace std;
 
 class CCMIS
 {
@@ -114,7 +114,6 @@ public:
     CCMIS();
     ~CCMIS() {}
 
-
     int GetCurrentReadThreadCount();
     int GetCurrentWriteThreadCount();
 
@@ -154,19 +153,18 @@ public:
                 qDebug() << "Write info thread finished.";
                 break;
             case 2:
-
+                //shop无需写入
                 break;
             case 3:
-                qDebug() << "Write info thread start.";
+                qDebug() << "Write user thread start.";
                 mCCMIS->mWriteThreadCount += 1;
                 mCCMIS->WriteUser(mCCMIS->USER_FILE_NAME);
                 mCCMIS->mWriteThreadCount -= 1;
-                qDebug() << "Write info thread finished.";
+                qDebug() << "Write user thread finished.";
                 break;
             default:
                 break;
             }
-
         }
         JsonThread(CCMIS* c, int t): type(t), mCCMIS(c){}
 
@@ -208,7 +206,6 @@ public:
     User*   GetCurrentUser();
     Shop*   GetCurrentShop();
 
-
     //新建消费交易记录，先减少onum的余额，增加inum的余额（可选），
     //并生成流水号、info，插入到表，更新user.json、info.json，
     //返回是否交易成功，money要乘以100
@@ -235,11 +232,9 @@ public:
     unsigned int GetTotalUserNumber();
     unsigned int GetTotalShopNumber();
 
-
     void SearchNumber(int id);                          //根据卡号输出信息
     void SearchTime(int startdate, int startime,
                     int finishdate, int finishtime);    //根据时间输出信息
-
     Information* GetInfoByTag(QString tag);
 
     //默认返回所有补贴信息
@@ -248,7 +243,6 @@ public:
      unsigned int start_time_num = 0 ,
      unsigned long finish_date_num = 99999999,
      unsigned int finish_time_num = 9999 );
-
     Information* SearchInfoByOnum
     (int onum = 2, unsigned long start_date_num = 0,
      unsigned int start_time_num = 0 ,
@@ -259,7 +253,7 @@ public:
 
     void SetUserNumber(int n);
 
-    void CouponFresh();//月初刷新劵额
+    void CouponFresh(); //月初刷新劵额
 
     int GetProfitByShopNum(int num);
 };

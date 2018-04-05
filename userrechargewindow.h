@@ -3,7 +3,6 @@
 
 #include <QMainWindow>
 #include <QTimer>
-#include <QMessageBox>
 
 #include "ccmis.h"
 #include "aboutui.h"
@@ -19,8 +18,8 @@ class UserRechargeWindow : public QMainWindow
 
 public:
     explicit UserRechargeWindow(CCMIS* c, QWidget *parent = 0);  
-    void refreshUi();
     ~UserRechargeWindow();
+    void refreshUi();   //基本信息刷新展示
 
 private slots:
     void time_dispose();

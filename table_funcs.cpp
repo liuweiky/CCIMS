@@ -1,7 +1,5 @@
 #include "table_funcs.h"
-#include <qobject.h>
-#include <QHeaderView>
-#include <QApplication>
+
 //-----------------------------------------------------------
 //----------------------------------------------------父类函数
 Table_Parent::Table_Parent
@@ -38,13 +36,10 @@ void Table_Parent::init_Date_Edit()
     mFinish_Edit->setMaximumDate(QDate::currentDate());
     mFinish_Edit->setMinimumDate(start_date);
 
-
     //弹出日历选择框
     mStart_Edit->setCalendarPopup(true);
     mFinish_Edit->setCalendarPopup(true);
 }
-
-
 
 void Table_Parent::Table_Filtered_By_Date(QTableWidget *qtable)
 {
@@ -63,10 +58,6 @@ void Table_Parent::Table_Filtered_By_Date(QTableWidget *qtable)
      }
 }
 
-
-
-
-
 //父类的补助查看，可以查看全部的补助信息
 void Table_Parent::init_Subsidy_Header()
 {
@@ -84,10 +75,10 @@ void Table_Parent::init_Subsidy_Header()
     }
     RowCount = 0;
     return;
-
 }
 
-void Table_Parent::show_One_Info_Same_Num(Information* one_info,int row_index,int inum_or_onum)
+void Table_Parent::show_One_Info_Same_Num
+(Information* one_info,int row_index,int inum_or_onum)
 {
     mTable->insertRow(row_index);
     QString Name = mCCMIS->GetAllNameByNum(inum_or_onum);
@@ -98,15 +89,12 @@ void Table_Parent::show_One_Info_Same_Num(Information* one_info,int row_index,in
     QString NumStr = QString::number(inum_or_onum).sprintf("%04d",inum_or_onum);
     QString tag = QString::fromLocal8Bit(one_info->tag.data());
 
-
-
     mTable->setItem(row_index,0,new QTableWidgetItem(Date));
     mTable->setItem(row_index,1,new QTableWidgetItem(Time));
     mTable->setItem(row_index,2,new QTableWidgetItem(NumStr));
     mTable->setItem(row_index,3,new QTableWidgetItem(Name));
     mTable->setItem(row_index,4,new QTableWidgetItem(Money));
     mTable->setItem(row_index,5,new QTableWidgetItem(tag));
-
 }
 
 void Table_Parent::show_One_Info_All(Information *one_info, int row_index)
@@ -127,7 +115,6 @@ void Table_Parent::show_One_Info_All(Information *one_info, int row_index)
    // 参见顺序<<"日期" <<"时间" <<"出账号"<<"出账账户"<<"入账号"<<"入账账户"<<"金额"
     mTable->setItem(row_index,0,new QTableWidgetItem(Date));
     mTable->setItem(row_index,1,new QTableWidgetItem(Time));
-
     mTable->setItem(row_index,2,new QTableWidgetItem(OutNumStr));
     mTable->setItem(row_index,3,new QTableWidgetItem(OutName));
     mTable->setItem(row_index,4,new QTableWidgetItem(InNumStr));
@@ -143,7 +130,6 @@ void Table_Parent::export_Table_To_CSV(){
         qDebug() << "Output file failed!";
         return;
     }
-
     QTextStream out(&file);
     QString str;
     //获取表格内容
@@ -151,16 +137,12 @@ void Table_Parent::export_Table_To_CSV(){
     int col = mTable->columnCount();
     for(int i = 0; i < row; i ++) {
         for(int j = 0; j < col; j++) {
-        str = mTable->item(i, j)->text();
-
-        if (j == col - 1 || j == 0) //转文本
-        {
-            out << str << "\t" << ",";  //强制转文本，防止科学记数法
-        } else {
-            out << str << ",";// 写入文件
-        }
-
-
+            str = mTable->item(i, j)->text();
+            if (j == col - 1 || j == 0) {   //转文本
+                out << str << "\t" << ",";  //强制转文本，防止科学记数法
+            }else{
+                out << str << ",";  // 写入文件
+            }
         }
         out << "\n";
     }
@@ -169,45 +151,27 @@ void Table_Parent::export_Table_To_CSV(){
 
 QString Table_Parent::get_Info_Tag_By_RowIndex(int row_index)
 {
-    if(row_index!=-1){
+    if(row_index!=-1) {
         QVector<QString> whole_line;
-        for(int i = 0; i < mTable->columnCount(); i++)
-        {
+        for(int i = 0; i < mTable->columnCount(); i++) {
             //遍历第row行的所有信息
             QString index = mTable->item(row_index,i)->text();
             whole_line.append(index);
         }
-//        int Login_Num = mCCMIS->GetUserNum();
+
         QDate date = QDate::fromString(whole_line[0],"yyyy-MM-dd");
         QString tag_date = date.toString("yyyyMMdd");
         QTime time = QTime::fromString(whole_line[1],"hh:mm:ss");
         QString tag_time = time.toString("hhmmss");
         QString tag_onum,tag_inum,tag_money;
-//        QString pattern("(.*).(.*)");
-//        QRegExp rx(pattern);
-//        if((Login_Num>=CCMIS::SUPERUSER_BEGIN)&&(Login_Num<=CCMIS::SUPERUSER_END)){
-//            tag_onum = whole_line[2];
-//            tag_inum = whole_line[4];
-//            tag_money = whole_line[6].replace(QString("."), QString("")).sprintf("%05d");
 
-//        }else  if((Login_Num>=CCMIS::SHOP_BEGIN)&&(Login_Num<=CCMIS::SHOP_END)){
-//           tag_onum = whole_line[2];
-//            tag_inum =  QString::number(Login_Num).sprintf("%04d",Login_Num);
-//            tag_money = whole_line[4].replace(QString("."), QString("")).sprintf("%05d");
-//        }else if((Login_Num>=CCMIS::USER_BEGIN)&&(Login_Num<=CCMIS::USER_END)){
-//            tag_onum = QString::number(Login_Num).sprintf("%04d",Login_Num);
-//            tag_inum = whole_line[2];
-//            tag_money =  whole_line[4].replace(QString("."), QString("")).sprintf("%05d");
-//        }
         return (tag_date+tag_time+tag_onum+tag_inum+tag_money);
-    }
-    else
+    }else{
         return QString("");
-
-
+    }
 }
-//----------------------------------------------------------父类槽函数
 
+//----------------------------------------------------------父类槽函数
 void Table_Parent::on_Start_Date_Changed(const QDate &date)
 {
     this->mStart_Date->setDate(date.year(),date.month(),date.day());
@@ -242,7 +206,6 @@ void Table_Parent::on_Reset_clicked()
     this->init_Table_Header();
 }
 
-
 void Table_Parent::on_tableWidget_itemClicked(QTableWidgetItem *item)
 {
     mCurrentItemIndex = item->row();
@@ -254,10 +217,8 @@ void Table_Parent::on_DeleteButton_clicked()
     this->DelItem();
 }
 
-
 //-----------------------------------------------------------
 //-----------------------------------------------Admin 子类函数
-
 Admin_Table::Admin_Table
             (QTableWidget *table, QDateEdit* start_edit,
              QDateEdit* finish_edit,QPushButton* filter_btn,
@@ -278,44 +239,33 @@ Admin_Table::Admin_Table
 void Admin_Table::init_Table_Header()
 {
 
-   mTable->setColumnCount(8);
-   mTable->setHorizontalHeaderLabels(
+    mTable->setColumnCount(8);
+    mTable->setHorizontalHeaderLabels(
           QStringList()<<"日期" <<"时间" <<"出账号"<<"出账账户"
                        <<"入账号"<<"入账账户"<<"金额"<<"流水号");
-    mTable->horizontalHeader()->setStretchLastSection(true); //就是这个地方
+    mTable->horizontalHeader()->setStretchLastSection(true);    //就是这个地方
 
-   int RowCount = 0;
-   Information* iter = mCCMIS->GetInfoPointer() ->next;
-   while(iter!=NULL){
+    int RowCount = 0;
+    Information* iter = mCCMIS->GetInfoPointer() ->next;
+    while(iter!=NULL){
        show_One_Info_All(iter,RowCount);
        iter  = iter->next;
-   }
+    }
     RowCount = 0;
-   return;
+    return;
 }
 
 void Admin_Table::DelItem()
 {
-    if (mCurrentItemIndex != -1)
-    {
-        Information* info = mCCMIS->GetInfoByTag(mTable->item(mCurrentItemIndex, 7)->text());
+    if (mCurrentItemIndex != -1) {
+        Information* info = mCCMIS->GetInfoByTag
+                (mTable->item(mCurrentItemIndex,7)->text());
 
         mCCMIS->NewRefund(info);
         mTable->removeRow(mCurrentItemIndex);
         mCurrentItemIndex = -1;
-
-        //Need parent pointer, or this may lead to window disappearance
-//        QMessageBox::information(NULL, tr("提示"),
-//                           tr("删除成功！"),
-//                           QMessageBox::Yes);
     }
-    else{
-            return;
-
-    }
-
 }
-
 
 //--------------------------------------------------admin槽函数
 void Admin_Table::on_Subsidy_Check_Admin(int state)
@@ -326,7 +276,7 @@ void Admin_Table::on_Subsidy_Check_Admin(int state)
         init_Subsidy_Header();
         break;
     case Qt::Unchecked:
-         this->mTable->setRowCount(0);
+        this->mTable->setRowCount(0);
         init_Table_Header();
         break;
     }
@@ -336,22 +286,15 @@ void Admin_Table::on_Reset_clicked()
 {
     if(mSubsidy_Chck->isChecked()){
         this->mTable->setRowCount(0);
-       init_Subsidy_Header();
-    }else
-    {
+        init_Subsidy_Header();
+    }else{
         this->mTable->setRowCount(0);
-       init_Table_Header();
+        init_Table_Header();
     }
-
 }
-
-
-
-
 
 //-------------------------------------------------------------------
 //---------------------------------------------------------Shop类子函数
-
 Shop_Table::Shop_Table(QTableWidget *table, QDateEdit* start_edit,
                        QDateEdit* finish_edit, QPushButton* filter_btn,
                        QPushButton* reset_btn, QPushButton* export_btn,
@@ -359,45 +302,35 @@ Shop_Table::Shop_Table(QTableWidget *table, QDateEdit* start_edit,
         :Table_Parent(table, start_edit,finish_edit,filter_btn,
                     reset_btn, export_btn,ccmis_sys)
 {
-
     mCurrent_Shop = mCCMIS->GetCurrentShop();
     init_Table_Header();
 }
 
 void Shop_Table::init_Table_Header()
 {
-
-   mTable->setColumnCount(6);
-   mTable->setHorizontalHeaderLabels(
+    mTable->setColumnCount(6);
+    mTable->setHorizontalHeaderLabels(
           QStringList()<<"日期" <<"时间" <<"出账号"<<"出账账户"<<"金额"<<"流水号");
     mTable->horizontalHeader()->setStretchLastSection(true); //就是这个地方
 
-   int RowCount = 0;
-   Information* iter = mCCMIS->GetInfoPointer() ->next;
-   while(iter!=NULL){
-       if ((int)iter->Inumber == mCurrent_Shop->number)
-       {
-           show_One_Info_Same_Num(iter,RowCount,iter->Onumber);
-       }
-       iter  = iter->next;
-   }
-   return;
+    int RowCount = 0;
+    Information* iter = mCCMIS->GetInfoPointer() ->next;
+    while(iter!=NULL){
+        if ((int)iter->Inumber == mCurrent_Shop->number) {
+            show_One_Info_Same_Num(iter,RowCount,iter->Onumber);
+        }
+        iter  = iter->next;
+    }
 }
-
-
 
 //---------------------------------------------------------------------
 //-----------------------------------------------------------用户类子函数
-
-
-
 User_Table::User_Table(QTableWidget *table, QDateEdit* start_edit,
                        QDateEdit* finish_edit, QPushButton* filter_btn,
                        QPushButton* reset_btn, QPushButton* export_btn,
                        CCMIS* ccmis_sys, QCheckBox *subsidy_check)
         :Table_Parent(table, start_edit,finish_edit,filter_btn,
-                    reset_btn, export_btn,ccmis_sys)
-{
+                    reset_btn, export_btn,ccmis_sys) {
     mSubsidy_Chck = subsidy_check;
     mCurrent_User = mCCMIS->GetCurrentUser();
     init_Table_Header();
@@ -405,26 +338,24 @@ User_Table::User_Table(QTableWidget *table, QDateEdit* start_edit,
 
 void User_Table::init_Table_Header()
 {
-
-   mTable->setColumnCount(5);
-   mTable->setHorizontalHeaderLabels(
-          QStringList()<<"日期" <<"时间" <<"入账号"<<"入账账户"<<"金额");
+    mTable->setColumnCount(5);
+    mTable->setHorizontalHeaderLabels
+            (QStringList()<<"日期" <<"时间" <<"入账号"<<"入账账户"<<"金额");
     mTable->horizontalHeader()->setStretchLastSection(true); //就是这个地方
-   int RowCount = 0;
+    int RowCount = 0;
     int mCurrent_User_Num = mCCMIS->GetUserNum();
-   Information* iter = mCCMIS->GetInfoPointer() ->next;
-   while(iter!=NULL){
+    Information* iter = mCCMIS->GetInfoPointer() ->next;
+    while(iter!=NULL){
        if((int)iter->Onumber == mCurrent_User_Num || (int)iter->Inumber == mCurrent_User_Num)
             show_One_Info_Same_Num(iter,RowCount,iter->Inumber);
-       iter  = iter->next;
-   }
-   return;
+       iter = iter->next;
+    }
+    return;
 }
 
 //用户类下的补助查看，只能查看自己的补助
 void  User_Table::init_Subsidy_Header()
 {
-
     mTable->setColumnCount(5);
     mTable->setHorizontalHeaderLabels(
            QStringList()<<"日期" <<"时间" <<"入帐号"<<"被补助人"<<"金额"<<"流水号");
@@ -440,18 +371,16 @@ void  User_Table::init_Subsidy_Header()
     return;
 }
 
-
 //-----------------------------------------------------用户槽函数
-
 void User_Table::on_Subsidy_Check_User(int state)
 {
     switch (state) {
     case Qt::Checked:
-         this->mTable->setRowCount(0);
+        this->mTable->setRowCount(0);
         init_Subsidy_Header();
         break;
     case Qt::Unchecked:
-         this->mTable->setRowCount(0);
+        this->mTable->setRowCount(0);
         init_Table_Header();
         break;
     }
@@ -461,8 +390,7 @@ void User_Table::on_Reset_clicked(){
     if(mSubsidy_Chck->isChecked()){
         this->mTable->setRowCount(0);
         init_Subsidy_Header();
-    }else
-    {
+    }else{
         this->mTable->setRowCount(0);
         init_Table_Header();
     }

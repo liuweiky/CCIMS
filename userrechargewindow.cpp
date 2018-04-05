@@ -25,7 +25,9 @@ UserRechargeWindow::UserRechargeWindow(CCMIS *c, QWidget *parent):
     icon.addFile(tr(address));
     ui->BackButton->setIcon(icon);
 
-    QRegExp regx("[0-9]+$");    //正则表达式，只允许输入0~9
+    //限制输入
+    //正则表达式，只允许输入0~9
+    QRegExp regx("[0-9]+$");
     QValidator *validator = new QRegExpValidator(regx, ui->moneyLineEdit);
     ui->moneyLineEdit->setValidator(validator);
 }
@@ -39,8 +41,6 @@ UserRechargeWindow::~UserRechargeWindow()
 void UserRechargeWindow::time_dispose()
 {
     ui->Time->display(AboutUI::ShowDateTime());
-    
-    
 }
 
 void UserRechargeWindow::on_BackButton_clicked()
@@ -86,6 +86,7 @@ void UserRechargeWindow::refreshUi()
             + "元";
     ui->Coupon->setText(Coupon);
 
-    UserMainWindow* u = (UserMainWindow*)parentWidget();    //更新父窗口A
+    //更新父窗口A
+    UserMainWindow* u = (UserMainWindow*)parentWidget();
     u->refreshUi();
 }

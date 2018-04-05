@@ -27,16 +27,13 @@ AdministratorSCWindow::AdministratorSCWindow(CCMIS *c, QWidget *parent) :
     ui->BackButton->setIcon(icon);
 
     //表格显示
-
     mAdminTable = new Admin_Table(ui->tableWidget,ui->StartDateEdit,
                                   ui->FinishDateEdit,ui->FilterButton,
                                   ui->resetButton,ui->ExportButton,mCCMIS,
                                   ui->DeleteButton,ui->InsertButton,
                                   ui->AlterButton,ui->CheckForSubsidy);
 
-
-
-    //发送者 ，信号，接收者，槽
+    //表格控件信号槽实现
     connect(mAdminTable->mStart_Edit,&QDateEdit::dateChanged,
             mAdminTable,&Admin_Table::on_Start_Date_Changed);
 
@@ -60,22 +57,28 @@ AdministratorSCWindow::AdministratorSCWindow(CCMIS *c, QWidget *parent) :
 
     connect(mAdminTable->mTable,&QTableWidget::itemPressed,
             mAdminTable,&Admin_Table::on_tableWidget_itemClicked);
-
 }
-
-
-
 
 AdministratorSCWindow::~AdministratorSCWindow()
 {
     delete ui;
 }
 
+void AdministratorSCWindow::UpdateItem()
+{
+    mAdminTable->mTable->setRowCount(0);
+    mAdminTable->mTable->clear();
+    mAdminTable->init_Table_Header();
+}
+
+Admin_Table* AdministratorSCWindow::GetTable()
+{
+    return mAdminTable;
+}
+
 void AdministratorSCWindow::time_dispose()
 {
     ui->Time->display(AboutUI::ShowDateTime());
-    
-    
 }
 
 void AdministratorSCWindow::on_BackButton_clicked()
@@ -85,21 +88,12 @@ void AdministratorSCWindow::on_BackButton_clicked()
     this->close();
 }
 
-
-
 void AdministratorSCWindow::on_InsertButton_clicked()
 {
     AdministratorAddDialog* aad = new AdministratorAddDialog(mCCMIS, false, this);
     aad->setGeometry(this->x()+this->width()/4,this->y()+this->height()/4,
                      this->width(),this->height());
     aad->show();
-}
-
-void AdministratorSCWindow::UpdateItem()
-{
-    mAdminTable->mTable->setRowCount(0);
-    mAdminTable->mTable->clear();
-    mAdminTable->init_Table_Header();
 }
 
 void AdministratorSCWindow::on_AlterButton_clicked()
@@ -111,9 +105,4 @@ void AdministratorSCWindow::on_AlterButton_clicked()
                 this->width(),this->height());
         aad->show();
     }
-}
-
-Admin_Table* AdministratorSCWindow::GetTable()
-{
-    return mAdminTable;
 }

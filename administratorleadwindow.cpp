@@ -35,8 +35,6 @@ AdministratorLeadWindow::~AdministratorLeadWindow()
 void AdministratorLeadWindow::time_dispose()
 {
     ui->Time->display(AboutUI::ShowDateTime());
-    
-    
 }
 
 void AdministratorLeadWindow::on_BackButton_clicked()

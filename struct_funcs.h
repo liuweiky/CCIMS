@@ -20,25 +20,24 @@ struct Information
     unsigned int money;     //交易额
     Information* next;      //下个结点
     
-    static QString InfoToMoneyStr(Information* one_info);
-    static QDateTime InfoToDateTime(Information* one_info);
-    static void CopyOneInfo(const Information* src,Information* dst);
-    
+    static void CopyOneInfo(const Information* src,Information* dst);   //复制信息
+    static QString InfoToMoneyStr(Information* one_info);   //提取信息日期
+    static QDateTime InfoToDateTime(Information* one_info); //提取信息金钱
 };
 
 struct Shop
 {
-    int         number;
-    QString     name;
-    std::string password;
+    int         number;     //卡号
+    QString     name;       //用户名
+    std::string password;   //密码
     Shop*       next;       //下个结点
 };
 
 struct User
 {
-    int         number;
-    QString     name;
-    std::string password;
+    int         number;     //卡号
+    QString     name;       //用户名
+    std::string password;   //密码
     int         balance;    //余额
     int         coupon;     //劵
     User*       next;       //下个结点

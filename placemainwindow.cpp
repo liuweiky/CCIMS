@@ -36,8 +36,6 @@ PlaceMainWindow::~PlaceMainWindow()
 void PlaceMainWindow::time_dispose()
 {
     ui->Time->display(AboutUI::ShowDateTime());
-    
-    
 }
 
 void PlaceMainWindow::on_BackButton_clicked()

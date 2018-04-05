@@ -1,18 +1,16 @@
 #ifndef TABLE_FUNCS_H
 #define TABLE_FUNCS_H
 
-//为了三个table window
-
-#include<QTableWidget>
-#include<QDateEdit>
-#include<QCheckBox>
-#include<QPushButton>
-#include<QDate>
-#include<QTableWidget>
-#include<QDateTime>
+#include <QTableWidget>
+#include <QDateEdit>
+#include <QCheckBox>
+#include <QPushButton>
+#include <QDateTime>
+#include <QObject>
+#include <QHeaderView>
+#include <QApplication>
 
 #include"ccmis.h"
-
 #include"struct_funcs.h"
 
 class Table_Parent: public QWidget
@@ -32,9 +30,8 @@ public:
     QPushButton* mExport_Btn;
 
     CCMIS* mCCMIS;
-//不清楚是否合适
-     int mCurrentItemIndex = -1;
-
+    //不清楚是否合适?
+    int mCurrentItemIndex = -1;
 
     Table_Parent(QTableWidget *table, QDateEdit* start_edit,
                  QDateEdit* finish_edit,QPushButton* filter_btn,
@@ -46,7 +43,6 @@ public:
     void init_Subsidy_Header();
     void show_One_Info_Same_Num(Information*,int,int);
     void show_One_Info_All(Information*,int);
-    //输出csv解决跨平台，得按照你自己的改
     void export_Table_To_CSV();
     QString get_Info_Tag_By_RowIndex(int row_index);
 
@@ -54,20 +50,15 @@ public:
     virtual void init_Table_Header() = 0 ;
     virtual void DelItem() = 0;
 
-//一些槽函数
 public slots:
     void on_Start_Date_Changed(const QDate &date);
     void on_Finish_Date_Changed(const QDate &date);
     void on_Filter_clicked();
     void on_Export_pressed();
-
     void on_tableWidget_itemClicked(QTableWidgetItem *item);
     void on_Reset_clicked();
     void on_DeleteButton_clicked();
-
 };
-
-
 
 class Admin_Table : public Table_Parent
 {
@@ -80,17 +71,16 @@ public:
     QCheckBox* mSubsidy_Chck;
 
     Admin_Table(QTableWidget *table, QDateEdit* start_edit,
-     QDateEdit* finish_edit,QPushButton* filter_btn,
-     QPushButton* reset_btn, QPushButton* export_btn,
-     CCMIS* ccmis_sys,QPushButton* delete_btn,
-     QPushButton *insert_btn, QPushButton *alter_btn,
-     QCheckBox *subsidy_check);
+    QDateEdit* finish_edit,QPushButton* filter_btn,
+    QPushButton* reset_btn, QPushButton* export_btn,
+    CCMIS* ccmis_sys,QPushButton* delete_btn,
+    QPushButton *insert_btn, QPushButton *alter_btn,
+    QCheckBox *subsidy_check);
     void init_Table_Header();
     void DelItem();
 public slots:
     void on_Subsidy_Check_Admin(int);
     void on_Reset_clicked();
-
 };
 
 
@@ -98,11 +88,7 @@ class Shop_Table: public Table_Parent
 {
     Q_OBJECT
 public:
-      Shop* mCurrent_Shop;
-
-
-
-
+    Shop* mCurrent_Shop;
     Shop_Table(QTableWidget *table, QDateEdit* start_edit,
                QDateEdit* finish_edit,QPushButton* filter_btn,
                QPushButton* reset_btn, QPushButton* export_btn,
@@ -111,16 +97,12 @@ public:
     void DelItem(){}
 };
 
-
-
-
 class User_Table: public Table_Parent
 {
     Q_OBJECT
 public:
     User* mCurrent_User;
     QCheckBox* mSubsidy_Chck;
-
     User_Table(QTableWidget *table, QDateEdit* start_edit,
                QDateEdit* finish_edit,QPushButton* filter_btn,
                QPushButton* reset_btn, QPushButton* export_btn,
@@ -128,32 +110,10 @@ public:
     void init_Table_Header();
     void init_Subsidy_Header();
     void DelItem(){}
+
 public slots:
-   void on_Subsidy_Check_User(int);
+    void on_Subsidy_Check_User(int);
     void on_Reset_clicked();
 };
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 #endif // TABLE_FUNCS_H

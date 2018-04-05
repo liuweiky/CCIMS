@@ -21,13 +21,9 @@ public:
 
 private slots:
     void on_buttonBox_accepted();
-
     void on_buttonBox_rejected();
-
-    void on_checkForCurTime_stateChanged(int arg1);
-
+    void on_checkForCurTime_stateChanged(int arg1); //选择当前时间
     void on_dateEdit_dateChanged(const QDate &date);
-
     void on_timeEdit_2_timeChanged(const QTime &time);
 
 private:

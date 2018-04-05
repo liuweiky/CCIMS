@@ -34,12 +34,13 @@ UserSearchWindow::UserSearchWindow(CCMIS *c, QWidget *parent) :
     icon.addFile(tr(address));
     ui->BackButton->setIcon(icon);
 
-
     //表格显示
     mUserTable = new User_Table(ui->tableWidget,ui->StartDateEdit,
                                 ui->FinishDateEdit,ui->FilterButton,
                                 ui->ResetButton,ui->ExportButton,
                                 mCCMIS,ui->SubsidyCheck);
+
+    //表格控件信号槽实现
     connect(mUserTable->mStart_Edit,&QDateEdit::dateChanged,
             mUserTable,&User_Table::on_Start_Date_Changed);
     connect(mUserTable->mFinish_Edit,&QDateEdit::dateChanged,
@@ -64,8 +65,6 @@ UserSearchWindow::~UserSearchWindow()
 void UserSearchWindow::time_dispose()
 {
     ui->Time->display(AboutUI::ShowDateTime());
-    
-    
 }
 
 void UserSearchWindow::on_BackButton_clicked()
