@@ -1322,7 +1322,7 @@ int CCMIS::GetProfitByShopNum(int num)
     int profit = 0;
     Information* i = mInfo->next;
     while (i != NULL) {
-        if (i->Inumber == num){
+        if ((int)i->Inumber == num){
             profit += i->money;
         }
         i = i->next;
