@@ -44,7 +44,7 @@ void AdministratorAddDialog::on_buttonBox_accepted()
 {
     int inum = ui->InumEdit->text().toInt();
     int onum = ui->OnumEdit->text().toInt();
-    int money = ui->MoneyEdit->text().toDouble() * 100; //*100
+    int money = ui->MoneyEdit->text().toDouble() * 100.001; //*100
 
     //QDate dt= ui->dateEdit->date();
 
@@ -60,34 +60,34 @@ void AdministratorAddDialog::on_buttonBox_accepted()
 
     AdministratorSCWindow* a = (AdministratorSCWindow*)parentWidget();
 
-    switch (mCCMIS->NewAdmTransaction(year, month, day, hour, min, sec, onum, inum, money)) {
+    switch (mCCMIS->NewAdmTransaction(year, month, day, hour, min, sec, onum, inum, money)) {   //Adm可以超过单日限制
     case -1:
-        QMessageBox::warning(this, tr("警告！"),
+        QMessageBox::warning(a, tr("警告！"),
                            tr("没有该用户！"),
                            QMessageBox::Yes);
         break;
     case -2:
-        QMessageBox::warning(this, tr("警告！"),
+        QMessageBox::warning(a, tr("警告！"),
                            tr("商铺不存在！"),
                            QMessageBox::Yes);
         break;
     case -3:
-        QMessageBox::warning(this, tr("警告！"),
+        QMessageBox::warning(a, tr("警告！"),
                            tr("单日额度已用尽或超过单笔限制！"),
                            QMessageBox::Yes);
         break;
     case -4:
-        QMessageBox::warning(this, tr("警告！"),
+        QMessageBox::warning(a, tr("警告！"),
                            tr("余额不足！"),
                            QMessageBox::Yes);
         break;
     case -5:
-        QMessageBox::warning(this, tr("警告！"),
+        QMessageBox::warning(a, tr("警告！"),
                            tr("金额不能小于 0！"),
                            QMessageBox::Yes);
         break;
     case 0:
-        QMessageBox::information(this, tr("信息！"),
+        QMessageBox::information(a, tr("信息！"),
                            tr("创建成功！"),
                            QMessageBox::Yes);
         if (isModify)
