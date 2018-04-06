@@ -96,8 +96,10 @@ public:
                QPushButton* reset_btn, QPushButton* export_btn,
                CCMIS* ccmis_sys,QLabel* total_label);
     void init_Table_Header();
-    void Show_Profit();
     void DelItem(){}
+public slots:
+    void on_Filter_clicked_Shop();
+    void on_Reset_clicked_Shop();
 };
 
 
@@ -111,8 +113,11 @@ public:
                QDateEdit* finish_edit,QPushButton* filter_btn,
                QPushButton* reset_btn, QPushButton* export_btn,
                CCMIS* ccmis_sys,QLabel* total_label);
-    void init_Table_Header(){}
+    void init_Table_Header();
     void DelItem(){}
+public slots:
+    void on_Filter_clicked_SP();
+    void on_Reset_clicked_SP();
 };
 
 

@@ -26,7 +26,7 @@ private slots:
 private:
     Ui::PlaceMainWindow *ui;
     CCMIS* mCCMIS;
-    Shop_Table* mShopTable;
+    ShopPlace_Table* mShopPlaceTable;
 };
 
 #endif // PLACEMAINWINDOW_H

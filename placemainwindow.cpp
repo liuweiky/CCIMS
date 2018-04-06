@@ -29,21 +29,21 @@ PlaceMainWindow::PlaceMainWindow(CCMIS* c, QWidget *parent) :
 
     //表格显示
     //表格显示
-    mShopTable = new Shop_Table(ui->tableWidget,ui->StartDateEdit,
+    mShopPlaceTable = new ShopPlace_Table(ui->tableWidget,ui->StartDateEdit,
                                 ui->FinishDateEdit,ui->FilterButton,
                                 ui->ResetButton,ui->ExportButton,
                                 mCCMIS,ui->TotalProfit);
     //表格控件信号槽实现
-    connect(mShopTable->mStart_Edit,&QDateEdit::dateChanged,
-            mShopTable,&Shop_Table::on_Start_Date_Changed);
-    connect(mShopTable->mFinish_Edit,&QDateEdit::dateChanged,
-            mShopTable,&Shop_Table::on_Finish_Date_Changed);
-    connect(mShopTable->mFilter_Btn,&QPushButton::clicked,
-            mShopTable,&Shop_Table::on_Filter_clicked);
-    connect(mShopTable->mReset_Btn,&QPushButton::clicked,
-            mShopTable,&Shop_Table::on_Reset_clicked);
-    connect(mShopTable->mExport_Btn,&QPushButton::pressed,
-            mShopTable,&Shop_Table::on_Export_pressed);
+    connect(mShopPlaceTable->mStart_Edit,&QDateEdit::dateChanged,
+            mShopPlaceTable,&ShopPlace_Table::on_Start_Date_Changed);
+    connect(mShopPlaceTable->mFinish_Edit,&QDateEdit::dateChanged,
+            mShopPlaceTable,&ShopPlace_Table::on_Finish_Date_Changed);
+    connect(mShopPlaceTable->mFilter_Btn,&QPushButton::clicked,
+            mShopPlaceTable,&ShopPlace_Table::on_Filter_clicked_SP);
+    connect(mShopPlaceTable->mReset_Btn,&QPushButton::clicked,
+            mShopPlaceTable,&ShopPlace_Table::on_Reset_clicked_SP);
+    connect(mShopPlaceTable->mExport_Btn,&QPushButton::pressed,
+            mShopPlaceTable,&ShopPlace_Table::on_Export_pressed);
 
 
 }

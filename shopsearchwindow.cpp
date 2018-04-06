@@ -38,9 +38,9 @@ ShopSearchWindow::ShopSearchWindow(CCMIS *c, QWidget *parent) :
     connect(mShopTable->mFinish_Edit,&QDateEdit::dateChanged,
             mShopTable,&Shop_Table::on_Finish_Date_Changed);
     connect(mShopTable->mFilter_Btn,&QPushButton::clicked,
-            mShopTable,&Shop_Table::on_Filter_clicked);
+            mShopTable,&Shop_Table::on_Filter_clicked_Shop);
     connect(mShopTable->mReset_Btn,&QPushButton::clicked,
-            mShopTable,&Shop_Table::on_Reset_clicked);
+            mShopTable,&Shop_Table::on_Reset_clicked_Shop);
     connect(mShopTable->mExport_Btn,&QPushButton::pressed,
             mShopTable,&Shop_Table::on_Export_pressed);
 }

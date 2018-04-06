@@ -172,14 +172,19 @@ QString Table_Parent::get_Info_Tag_By_RowIndex(int row_index)
 }
 
 
-//只适用6列表格
+
 QString Table_Parent::get_Current_Table_Money()
 {
-
+    int col_index = 0;
+    int cur_num =this->mCCMIS->GetUserNum();
+    col_index =(cur_num%100 == 0)? 6:4;
     double total=0;
-    for(int i = 0;i<mTable->rowCount();i++)
+    qDebug()<<this->mTable->rowCount();
+    for(int i = 0;i<this->mTable->rowCount();i++)
     {
-        QString cur_money = mTable->item(i,4)->text();
+        if(this->mTable->isRowHidden(i))
+            continue;
+        QString cur_money = this->mTable->item(i,col_index)->text();
         double cur_money_d = std::stod(cur_money.toStdString());
         total += cur_money_d;
 
@@ -347,8 +352,27 @@ void Shop_Table::init_Table_Header()
     }
 }
 
+
+
+void Shop_Table::on_Filter_clicked_Shop()
+{
+    this->Table_Filtered_By_Date(mTable);
+    this->mTotal_Profit->setText("总盈利：" + get_Current_Table_Money() + " 元");
+}
+
+
+void Shop_Table::on_Reset_clicked_Shop()
+{
+    this->mTable->setRowCount(0);
+    this->mTable->clear();
+    this->init_Table_Header();
+    this->mTotal_Profit->setText("总盈利：" + get_Current_Table_Money() + " 元");
+}
+
+
+
 //---------------------------------------------------------------------
-//-----------------------------------------------------------大商铺 子函数
+//-----------------------------------------------------------大商铺类子函数
 ShopPlace_Table::ShopPlace_Table(QTableWidget *table, QDateEdit* start_edit,
                        QDateEdit* finish_edit, QPushButton* filter_btn,
                        QPushButton* reset_btn, QPushButton* export_btn,
@@ -360,11 +384,58 @@ ShopPlace_Table::ShopPlace_Table(QTableWidget *table, QDateEdit* start_edit,
     mTotal_Profit = total_label;
 
     init_Table_Header();
+    mTotal_Profit->setText("总盈利：" + get_Current_Table_Money() + " 元");
+}
+
+void ShopPlace_Table::init_Table_Header()
+{
+    //初始化表头
+    mTable->setColumnCount(8);
+    mTable->setHorizontalHeaderLabels(
+          QStringList()<<"日期" <<"时间" <<"出账号"<<"出账账户"
+                       <<"入账号"<<"入账账户"<<"金额"<<"流水号");
+    mTable->horizontalHeader()->setStretchLastSection(true); //就是这个地方
+
+    int RowCount = 0;
+    Information* iter = mCCMIS->GetInfoPointer() ->next;
+
+
+    int cur_num = mCCMIS->GetUserNum();
+
+    if(cur_num%1000 == 0){
+        while(iter!=NULL){
+            if (((int)iter->Inumber > cur_num) && ((int)iter->Inumber < (cur_num+1000)) ) {
+                show_One_Info_All(iter,RowCount);
+            }
+            iter  = iter->next;
+        }
+    }else if(cur_num%100 == 0){
+        while(iter!=NULL){
+            if (((int)iter->Inumber > cur_num) && ((int)iter->Inumber < (cur_num+100)) ) {
+                show_One_Info_All(iter,RowCount);
+            }
+            iter  = iter->next;
+        }
+    }
 }
 
 
 
 
+void ShopPlace_Table::on_Filter_clicked_SP()
+{
+    this->Table_Filtered_By_Date(mTable);
+    this->mTotal_Profit->setText("总盈利：" + get_Current_Table_Money() + " 元");
+}
+
+
+void ShopPlace_Table::on_Reset_clicked_SP()
+{
+    this->mTable->setRowCount(0);
+    this->mTable->clear();
+    this->init_Table_Header();
+    this->mTotal_Profit->setText("总盈利：" + get_Current_Table_Money() + " 元");
+}
 
 
 //---------------------------------------------------------------------
