@@ -257,8 +257,53 @@ Admin_Table::Admin_Table
     mDelete_Btn = delete_btn;
     mInsert_Btn = insert_btn;
     mAlter_Btn  = alter_btn;
-    init_Table_Header();
+
+
+    int now_num = mCCMIS->GetUserNum();
+    switch (now_num) {
+    case 0:
+         init_Table_Header();
+        break;
+    case 1:
+        mSubsidy_Chck->setEnabled(false);;
+        mDelete_Btn->setEnabled(false);;
+        mInsert_Btn->setEnabled(false);;
+        mAlter_Btn->setEnabled(false);;
+        init_Super_Table_Header(now_num);
+        break;
+    case 2:
+        mSubsidy_Chck->setEnabled(false);;
+        mDelete_Btn->setEnabled(false);;
+        mInsert_Btn->setEnabled(false);;
+        mAlter_Btn->setEnabled(false);;
+        init_Super_Table_Header(now_num);
+        break;
+    default:
+        break;
+    }
+
 }
+
+
+void Admin_Table::init_Super_Table_Header(int now_num)
+{
+    mTable->setColumnCount(6);
+    mTable->setHorizontalHeaderLabels(
+           QStringList()<<"日期" <<"时间" <<"入账号"<<"入账人"<<"金额"<<"流水号");
+    mTable->horizontalHeader()->setStretchLastSection(true);
+    int RowCount = 0;
+    Information* iter = mCCMIS->GetInfoPointer() ->next;
+    while(iter!=NULL){
+        if(iter->Onumber == now_num)
+            show_One_Info_Same_Num(iter,RowCount,iter->Inumber);
+        iter = iter->next;
+    }
+    RowCount = 0;
+    return;
+}
+
+
+
 
 void Admin_Table::init_Table_Header()
 {

@@ -79,6 +79,7 @@ public:
     QCheckBox *subsidy_check);
     void init_Table_Header();
     void DelItem();
+    void init_Super_Table_Header(int now_num);
 public slots:
     void on_Subsidy_Check_Admin(int);
     void on_Reset_clicked();
