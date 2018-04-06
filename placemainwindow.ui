@@ -81,7 +81,7 @@
       </item>
      </layout>
     </item>
-    <item row="0" column="2">
+    <item row="0" column="1">
      <spacer name="verticalSpacer_3">
       <property name="orientation">
        <enum>Qt::Vertical</enum>
@@ -89,7 +89,7 @@
       <property name="sizeHint" stdset="0">
        <size>
         <width>20</width>
-        <height>102</height>
+        <height>40</height>
        </size>
       </property>
      </spacer>
@@ -103,17 +103,14 @@
         </property>
         <property name="sizeHint" stdset="0">
          <size>
-          <width>40</width>
-          <height>20</height>
+          <width>65</width>
+          <height>17</height>
          </size>
         </property>
        </spacer>
       </item>
       <item>
        <layout class="QGridLayout" name="gridLayout">
-        <property name="verticalSpacing">
-         <number>80</number>
-        </property>
         <item row="0" column="0" colspan="2">
          <layout class="QHBoxLayout" name="horizontalLayout">
           <item>
@@ -166,340 +163,317 @@
           </item>
          </layout>
         </item>
-        <item row="1" column="0">
+        <item row="1" column="0" colspan="2">
+         <layout class="QHBoxLayout" name="horizontalLayout_2">
+          <item>
+           <spacer name="horizontalSpacer_9">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>98</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item>
+           <widget class="QLabel" name="TotalProfit">
+            <property name="minimumSize">
+             <size>
+              <width>100</width>
+              <height>28</height>
+             </size>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">font: 20pt &quot;.SF NS Text&quot;;</string>
+            </property>
+            <property name="text">
+             <string>总盈利：?元</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <spacer name="horizontalSpacer_10">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>118</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+         </layout>
+        </item>
+        <item row="2" column="0">
+         <layout class="QHBoxLayout" name="horizontalLayout_3">
+          <item>
+           <spacer name="horizontalSpacer_3">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item>
+           <widget class="QLabel" name="StartLabel">
+            <property name="minimumSize">
+             <size>
+              <width>81</width>
+              <height>28</height>
+             </size>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">font: 20pt &quot;.SF NS Text&quot;;</string>
+            </property>
+            <property name="text">
+             <string>起始日期</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QDateEdit" name="StartDateEdit">
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>28</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>16777215</width>
+              <height>28</height>
+             </size>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <spacer name="horizontalSpacer_4">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+         </layout>
+        </item>
+        <item row="2" column="1" rowspan="2">
+         <layout class="QHBoxLayout" name="horizontalLayout_7">
+          <item>
+           <spacer name="horizontalSpacer_11">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item>
+           <widget class="QPushButton" name="FilterButton">
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>35</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>16777215</width>
+              <height>35</height>
+             </size>
+            </property>
+            <property name="font">
+             <font>
+              <family>.SF NS Text</family>
+              <pointsize>20</pointsize>
+              <weight>50</weight>
+              <italic>false</italic>
+              <bold>false</bold>
+             </font>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">font: 20pt &quot;.SF NS Text&quot;;</string>
+            </property>
+            <property name="text">
+             <string>搜索</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="ResetButton">
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>35</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>16777215</width>
+              <height>35</height>
+             </size>
+            </property>
+            <property name="font">
+             <font>
+              <family>.SF NS Text</family>
+              <pointsize>20</pointsize>
+              <weight>50</weight>
+              <italic>false</italic>
+              <bold>false</bold>
+             </font>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">font: 20pt &quot;.SF NS Text&quot;;</string>
+            </property>
+            <property name="text">
+             <string>复原</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="ExportButton">
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>35</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>16777215</width>
+              <height>35</height>
+             </size>
+            </property>
+            <property name="font">
+             <font>
+              <family>.SF NS Text</family>
+              <pointsize>20</pointsize>
+              <weight>50</weight>
+              <italic>false</italic>
+              <bold>false</bold>
+             </font>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">font: 20pt &quot;.SF NS Text&quot;;</string>
+            </property>
+            <property name="text">
+             <string>输出</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <spacer name="horizontalSpacer_12">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+         </layout>
+        </item>
+        <item row="3" column="0">
+         <layout class="QHBoxLayout" name="horizontalLayout_6">
+          <item>
+           <spacer name="horizontalSpacer_5">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item>
+           <widget class="QLabel" name="FinishLabel">
+            <property name="minimumSize">
+             <size>
+              <width>81</width>
+              <height>28</height>
+             </size>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">font: 20pt &quot;.SF NS Text&quot;;</string>
+            </property>
+            <property name="text">
+             <string>终止日期</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QDateEdit" name="FinishDateEdit">
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>28</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>16777215</width>
+              <height>28</height>
+             </size>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <spacer name="horizontalSpacer_6">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+         </layout>
+        </item>
+        <item row="4" column="0" colspan="2">
          <widget class="QTableWidget" name="tableWidget">
           <property name="minimumSize">
            <size>
-            <width>500</width>
+            <width>800</width>
             <height>350</height>
            </size>
           </property>
           <property name="maximumSize">
            <size>
-            <width>500</width>
+            <width>800</width>
             <height>350</height>
            </size>
           </property>
+          <attribute name="verticalHeaderVisible">
+           <bool>false</bool>
+          </attribute>
          </widget>
-        </item>
-        <item row="1" column="1">
-         <layout class="QGridLayout" name="gridLayout_3">
-          <property name="verticalSpacing">
-           <number>50</number>
-          </property>
-          <item row="0" column="0">
-           <layout class="QHBoxLayout" name="horizontalLayout_2">
-            <item>
-             <spacer name="horizontalSpacer_9">
-              <property name="orientation">
-               <enum>Qt::Horizontal</enum>
-              </property>
-              <property name="sizeHint" stdset="0">
-               <size>
-                <width>98</width>
-                <height>20</height>
-               </size>
-              </property>
-             </spacer>
-            </item>
-            <item>
-             <widget class="QLabel" name="TotalProfit">
-              <property name="minimumSize">
-               <size>
-                <width>100</width>
-                <height>28</height>
-               </size>
-              </property>
-              <property name="styleSheet">
-               <string notr="true">font: 20pt &quot;.SF NS Text&quot;;</string>
-              </property>
-              <property name="text">
-               <string>总盈利：?元</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <spacer name="horizontalSpacer_10">
-              <property name="orientation">
-               <enum>Qt::Horizontal</enum>
-              </property>
-              <property name="sizeHint" stdset="0">
-               <size>
-                <width>118</width>
-                <height>20</height>
-               </size>
-              </property>
-             </spacer>
-            </item>
-           </layout>
-          </item>
-          <item row="2" column="0">
-           <layout class="QHBoxLayout" name="horizontalLayout_6">
-            <item>
-             <spacer name="horizontalSpacer_5">
-              <property name="orientation">
-               <enum>Qt::Horizontal</enum>
-              </property>
-              <property name="sizeHint" stdset="0">
-               <size>
-                <width>40</width>
-                <height>20</height>
-               </size>
-              </property>
-             </spacer>
-            </item>
-            <item>
-             <widget class="QLabel" name="FinishLabel">
-              <property name="minimumSize">
-               <size>
-                <width>81</width>
-                <height>28</height>
-               </size>
-              </property>
-              <property name="styleSheet">
-               <string notr="true">font: 20pt &quot;.SF NS Text&quot;;</string>
-              </property>
-              <property name="text">
-               <string>终止日期</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QDateEdit" name="FinishDateEdit">
-              <property name="minimumSize">
-               <size>
-                <width>0</width>
-                <height>28</height>
-               </size>
-              </property>
-              <property name="maximumSize">
-               <size>
-                <width>16777215</width>
-                <height>28</height>
-               </size>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <spacer name="horizontalSpacer_6">
-              <property name="orientation">
-               <enum>Qt::Horizontal</enum>
-              </property>
-              <property name="sizeHint" stdset="0">
-               <size>
-                <width>40</width>
-                <height>20</height>
-               </size>
-              </property>
-             </spacer>
-            </item>
-           </layout>
-          </item>
-          <item row="1" column="0">
-           <layout class="QHBoxLayout" name="horizontalLayout_3">
-            <item>
-             <spacer name="horizontalSpacer_3">
-              <property name="orientation">
-               <enum>Qt::Horizontal</enum>
-              </property>
-              <property name="sizeHint" stdset="0">
-               <size>
-                <width>40</width>
-                <height>20</height>
-               </size>
-              </property>
-             </spacer>
-            </item>
-            <item>
-             <widget class="QLabel" name="StartLabel">
-              <property name="minimumSize">
-               <size>
-                <width>81</width>
-                <height>28</height>
-               </size>
-              </property>
-              <property name="styleSheet">
-               <string notr="true">font: 20pt &quot;.SF NS Text&quot;;</string>
-              </property>
-              <property name="text">
-               <string>起始日期</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QDateEdit" name="StartDateEdit">
-              <property name="minimumSize">
-               <size>
-                <width>0</width>
-                <height>28</height>
-               </size>
-              </property>
-              <property name="maximumSize">
-               <size>
-                <width>16777215</width>
-                <height>28</height>
-               </size>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <spacer name="horizontalSpacer_4">
-              <property name="orientation">
-               <enum>Qt::Horizontal</enum>
-              </property>
-              <property name="sizeHint" stdset="0">
-               <size>
-                <width>40</width>
-                <height>20</height>
-               </size>
-              </property>
-             </spacer>
-            </item>
-           </layout>
-          </item>
-          <item row="4" column="0">
-           <layout class="QHBoxLayout" name="horizontalLayout_7">
-            <item>
-             <spacer name="horizontalSpacer_11">
-              <property name="orientation">
-               <enum>Qt::Horizontal</enum>
-              </property>
-              <property name="sizeHint" stdset="0">
-               <size>
-                <width>40</width>
-                <height>20</height>
-               </size>
-              </property>
-             </spacer>
-            </item>
-            <item>
-             <widget class="QPushButton" name="ResetButton">
-              <property name="text">
-               <string>复原</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <spacer name="horizontalSpacer_15">
-              <property name="orientation">
-               <enum>Qt::Horizontal</enum>
-              </property>
-              <property name="sizeHint" stdset="0">
-               <size>
-                <width>40</width>
-                <height>20</height>
-               </size>
-              </property>
-             </spacer>
-            </item>
-            <item>
-             <widget class="QPushButton" name="ExportButton">
-              <property name="minimumSize">
-               <size>
-                <width>0</width>
-                <height>35</height>
-               </size>
-              </property>
-              <property name="maximumSize">
-               <size>
-                <width>16777215</width>
-                <height>35</height>
-               </size>
-              </property>
-              <property name="font">
-               <font>
-                <family>.SF NS Text</family>
-                <pointsize>20</pointsize>
-                <weight>50</weight>
-                <italic>false</italic>
-                <bold>false</bold>
-               </font>
-              </property>
-              <property name="styleSheet">
-               <string notr="true">font: 20pt &quot;.SF NS Text&quot;;</string>
-              </property>
-              <property name="text">
-               <string>输出</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <spacer name="horizontalSpacer_12">
-              <property name="orientation">
-               <enum>Qt::Horizontal</enum>
-              </property>
-              <property name="sizeHint" stdset="0">
-               <size>
-                <width>40</width>
-                <height>20</height>
-               </size>
-              </property>
-             </spacer>
-            </item>
-           </layout>
-          </item>
-          <item row="3" column="0">
-           <layout class="QHBoxLayout" name="horizontalLayout_9">
-            <item>
-             <spacer name="horizontalSpacer_16">
-              <property name="orientation">
-               <enum>Qt::Horizontal</enum>
-              </property>
-              <property name="sizeHint" stdset="0">
-               <size>
-                <width>40</width>
-                <height>20</height>
-               </size>
-              </property>
-             </spacer>
-            </item>
-            <item>
-             <widget class="QPushButton" name="FilterButton">
-              <property name="minimumSize">
-               <size>
-                <width>0</width>
-                <height>35</height>
-               </size>
-              </property>
-              <property name="maximumSize">
-               <size>
-                <width>16777215</width>
-                <height>35</height>
-               </size>
-              </property>
-              <property name="font">
-               <font>
-                <family>.SF NS Text</family>
-                <pointsize>20</pointsize>
-                <weight>50</weight>
-                <italic>false</italic>
-                <bold>false</bold>
-               </font>
-              </property>
-              <property name="styleSheet">
-               <string notr="true">font: 20pt &quot;.SF NS Text&quot;;</string>
-              </property>
-              <property name="text">
-               <string>搜索</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <spacer name="horizontalSpacer_17">
-              <property name="orientation">
-               <enum>Qt::Horizontal</enum>
-              </property>
-              <property name="sizeHint" stdset="0">
-               <size>
-                <width>40</width>
-                <height>20</height>
-               </size>
-              </property>
-             </spacer>
-            </item>
-           </layout>
-          </item>
-         </layout>
         </item>
        </layout>
       </item>
@@ -510,15 +484,15 @@
         </property>
         <property name="sizeHint" stdset="0">
          <size>
-          <width>40</width>
-          <height>20</height>
+          <width>27</width>
+          <height>17</height>
          </size>
         </property>
        </spacer>
       </item>
      </layout>
     </item>
-    <item row="2" column="1">
+    <item row="2" column="2">
      <spacer name="verticalSpacer_4">
       <property name="orientation">
        <enum>Qt::Vertical</enum>
@@ -526,7 +500,7 @@
       <property name="sizeHint" stdset="0">
        <size>
         <width>20</width>
-        <height>102</height>
+        <height>40</height>
        </size>
       </property>
      </spacer>
@@ -601,7 +575,7 @@
      <x>0</x>
      <y>0</y>
      <width>1000</width>
-     <height>26</height>
+     <height>22</height>
     </rect>
    </property>
   </widget>

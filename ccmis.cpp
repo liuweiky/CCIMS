@@ -764,7 +764,7 @@ Shop* CCMIS::GetShopByNum(int num)
     if (
         (num >= SHOP_CANTEEN_BEGIN -1 &&
         num <= SHOP_CANTEEN_END +1 ) ||
-        (num >= SHOP_MARKET_BEGIN  -1&&
+        (num >= SHOP_MARKET_BEGIN -1 &&
          num <= SHOP_MARKET_END +1) ||
         (num >= SHOP_BATH_BEGIN -1 &&
         num <= SHOP_BATH_END +1))   //防止越权取得0、1、2号用户权限

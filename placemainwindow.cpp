@@ -28,7 +28,6 @@ PlaceMainWindow::PlaceMainWindow(CCMIS* c, QWidget *parent) :
     ui->BackButton->setIcon(icon);
 
     //表格显示
-    //表格显示
     mShopPlaceTable = new ShopPlace_Table(ui->tableWidget,ui->StartDateEdit,
                                 ui->FinishDateEdit,ui->FilterButton,
                                 ui->ResetButton,ui->ExportButton,
@@ -44,8 +43,6 @@ PlaceMainWindow::PlaceMainWindow(CCMIS* c, QWidget *parent) :
             mShopPlaceTable,&ShopPlace_Table::on_Reset_clicked_SP);
     connect(mShopPlaceTable->mExport_Btn,&QPushButton::pressed,
             mShopPlaceTable,&ShopPlace_Table::on_Export_pressed);
-
-
 }
 
 PlaceMainWindow::~PlaceMainWindow()
