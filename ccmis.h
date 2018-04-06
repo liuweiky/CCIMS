@@ -200,6 +200,7 @@ public:
 
     User*   GetUserByNum(int num);          //通过卡号获取用户指针
     Shop*   GetShopByNum(int num);          //通过卡号获取商户指针
+    Shop*   GetAllShopByNum(int num);       //包括总账户
     QString GetAllNameByNum(int num);       //通过卡号得到用户名？
         int GetUserNum();                   //获取当前用户流水号
     QString GetCurrentUserName();           //获取当前用户名
