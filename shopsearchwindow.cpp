@@ -17,7 +17,7 @@ ShopSearchWindow::ShopSearchWindow(CCMIS *c, QWidget *parent) :
 
     //基本信息展示
     ui->UserName->setText(mCCMIS->GetCurrentUserName());
-    ui->money->setText("总盈利：" + QString::number(mCCMIS->GetProfitByShopNum(mCCMIS->GetUserNum()) / 100.0) + " 元");
+
 
     //图片导入
     QIcon icon;
@@ -31,7 +31,7 @@ ShopSearchWindow::ShopSearchWindow(CCMIS *c, QWidget *parent) :
     mShopTable = new Shop_Table(ui->tableWidget,ui->StartDateEdit,
                                 ui->FinishDateEdit,ui->FilterButton,
                                 ui->ResetButton,ui->ExportButton,
-                                mCCMIS);
+                                mCCMIS,ui->money);
     //表格控件信号槽实现
     connect(mShopTable->mStart_Edit,&QDateEdit::dateChanged,
             mShopTable,&Shop_Table::on_Start_Date_Changed);
@@ -61,3 +61,5 @@ void ShopSearchWindow::on_BackButton_clicked()
     parentWidget()->show();
     this->close();
 }
+
+

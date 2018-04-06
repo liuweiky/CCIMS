@@ -171,6 +171,25 @@ QString Table_Parent::get_Info_Tag_By_RowIndex(int row_index)
     }
 }
 
+
+//只适用6列表格
+QString Table_Parent::get_Current_Table_Money()
+{
+
+    double total=0;
+    for(int i = 0;i<mTable->rowCount();i++)
+    {
+        QString cur_money = mTable->item(i,4)->text();
+        double cur_money_d = std::stod(cur_money.toStdString());
+        total += cur_money_d;
+
+    }
+    return QString::number(total).sprintf("%.2f",total);
+}
+
+
+
+
 //----------------------------------------------------------父类槽函数
 void Table_Parent::on_Start_Date_Changed(const QDate &date)
 {
@@ -298,12 +317,17 @@ void Admin_Table::on_Reset_clicked()
 Shop_Table::Shop_Table(QTableWidget *table, QDateEdit* start_edit,
                        QDateEdit* finish_edit, QPushButton* filter_btn,
                        QPushButton* reset_btn, QPushButton* export_btn,
-                       CCMIS* ccmis_sys)
+                       CCMIS* ccmis_sys, QLabel *total_label)
         :Table_Parent(table, start_edit,finish_edit,filter_btn,
                     reset_btn, export_btn,ccmis_sys)
 {
     mCurrent_Shop = mCCMIS->GetCurrentShop();
+    mTotal_Profit = total_label;
+
+
+
     init_Table_Header();
+    mTotal_Profit->setText("总盈利：" + get_Current_Table_Money() + " 元");
 }
 
 void Shop_Table::init_Table_Header()
@@ -324,6 +348,26 @@ void Shop_Table::init_Table_Header()
 }
 
 //---------------------------------------------------------------------
+//-----------------------------------------------------------大商铺 子函数
+ShopPlace_Table::ShopPlace_Table(QTableWidget *table, QDateEdit* start_edit,
+                       QDateEdit* finish_edit, QPushButton* filter_btn,
+                       QPushButton* reset_btn, QPushButton* export_btn,
+                       CCMIS* ccmis_sys, QLabel *total_label)
+        :Table_Parent(table, start_edit,finish_edit,filter_btn,
+                    reset_btn, export_btn,ccmis_sys)
+{
+    mCurrent_ShopPalace = mCCMIS->GetCurrentShop();
+    mTotal_Profit = total_label;
+
+    init_Table_Header();
+}
+
+
+
+
+
+
+//---------------------------------------------------------------------
 //-----------------------------------------------------------用户类子函数
 User_Table::User_Table(QTableWidget *table, QDateEdit* start_edit,
                        QDateEdit* finish_edit, QPushButton* filter_btn,
@@ -338,9 +382,9 @@ User_Table::User_Table(QTableWidget *table, QDateEdit* start_edit,
 
 void User_Table::init_Table_Header()
 {
-    mTable->setColumnCount(5);
+    mTable->setColumnCount(6);
     mTable->setHorizontalHeaderLabels
-            (QStringList()<<"日期" <<"时间" <<"入账号"<<"入账账户"<<"金额");
+            (QStringList()<<"日期" <<"时间" <<"入账号"<<"入账账户"<<"金额"<<"流水号");
     mTable->horizontalHeader()->setStretchLastSection(true); //就是这个地方
     int RowCount = 0;
     int mCurrent_User_Num = mCCMIS->GetUserNum();
@@ -356,7 +400,7 @@ void User_Table::init_Table_Header()
 //用户类下的补助查看，只能查看自己的补助
 void  User_Table::init_Subsidy_Header()
 {
-    mTable->setColumnCount(5);
+    mTable->setColumnCount(6);
     mTable->setHorizontalHeaderLabels(
            QStringList()<<"日期" <<"时间" <<"入帐号"<<"被补助人"<<"金额"<<"流水号");
     mTable->horizontalHeader()->setStretchLastSection(true); //就是这个地方

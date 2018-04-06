@@ -1,10 +1,17 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-
+#include <QShortcut>
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
+    //关联enter键
+    QShortcut *en_key=new QShortcut(QKeySequence(Qt::Key_Enter),this);//
+    connect(en_key,SIGNAL(activated()),this,SLOT(on_pushButton_clicked()));//连接到指定槽函数
+    QShortcut *re_key=new QShortcut(QKeySequence(Qt::Key_Return),this);//创建一个快捷键"Key_Return"键
+    connect(re_key,SIGNAL(activated()),this,SLOT(on_pushButton_clicked()));//连接到指定槽函数
+
+
     ui->setupUi(this);
 
     mCCMIS = new CCMIS();

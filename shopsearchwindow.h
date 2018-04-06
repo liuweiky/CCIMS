@@ -27,6 +27,7 @@ private slots:
     void time_dispose();
     void on_BackButton_clicked();
 
+
 private:
     Ui::ShopSearchWindow *ui;
     CCMIS *mCCMIS;

@@ -9,7 +9,7 @@
 #include <QObject>
 #include <QHeaderView>
 #include <QApplication>
-
+#include <QLabel>
 #include"ccmis.h"
 #include"struct_funcs.h"
 
@@ -45,6 +45,7 @@ public:
     void show_One_Info_All(Information*,int);
     void export_Table_To_CSV();
     QString get_Info_Tag_By_RowIndex(int row_index);
+    QString get_Current_Table_Money();
 
     //纯虚函数 子类给出实现 负责表格头
     virtual void init_Table_Header() = 0 ;
@@ -89,13 +90,38 @@ class Shop_Table: public Table_Parent
     Q_OBJECT
 public:
     Shop* mCurrent_Shop;
+    QLabel* mTotal_Profit;
     Shop_Table(QTableWidget *table, QDateEdit* start_edit,
                QDateEdit* finish_edit,QPushButton* filter_btn,
                QPushButton* reset_btn, QPushButton* export_btn,
-               CCMIS* ccmis_sys);
+               CCMIS* ccmis_sys,QLabel* total_label);
     void init_Table_Header();
+    void Show_Profit();
     void DelItem(){}
 };
+
+
+class ShopPlace_Table: public Table_Parent
+{
+    Q_OBJECT
+public:
+    Shop* mCurrent_ShopPalace;
+    QLabel* mTotal_Profit;
+    ShopPlace_Table(QTableWidget *table, QDateEdit* start_edit,
+               QDateEdit* finish_edit,QPushButton* filter_btn,
+               QPushButton* reset_btn, QPushButton* export_btn,
+               CCMIS* ccmis_sys,QLabel* total_label);
+    void init_Table_Header(){}
+    void DelItem(){}
+};
+
+
+
+
+
+
+
+
 
 class User_Table: public Table_Parent
 {

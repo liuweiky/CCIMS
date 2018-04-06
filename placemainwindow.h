@@ -6,7 +6,7 @@
 
 #include "ccmis.h"
 #include "aboutui.h"
-
+#include "table_funcs.h"
 namespace Ui {
 class PlaceMainWindow;
 }
@@ -26,6 +26,7 @@ private slots:
 private:
     Ui::PlaceMainWindow *ui;
     CCMIS* mCCMIS;
+    Shop_Table* mShopTable;
 };
 
 #endif // PLACEMAINWINDOW_H

@@ -47,7 +47,7 @@
           </property>
           <property name="icon">
            <iconset>
-            <normaloff>../../../Downloads/返回.png</normaloff>../../../Downloads/返回.png</iconset>
+            <normaloff>../../Downloads/返回.png</normaloff>../../Downloads/返回.png</iconset>
           </property>
          </widget>
         </item>
@@ -203,7 +203,7 @@
              </spacer>
             </item>
             <item>
-             <widget class="QLabel" name="money">
+             <widget class="QLabel" name="TotalProfit">
               <property name="minimumSize">
                <size>
                 <width>100</width>
@@ -260,12 +260,12 @@
                <string notr="true">font: 20pt &quot;.SF NS Text&quot;;</string>
               </property>
               <property name="text">
-               <string>终止时间</string>
+               <string>终止日期</string>
               </property>
              </widget>
             </item>
             <item>
-             <widget class="QDateTimeEdit" name="FinishTime">
+             <widget class="QDateEdit" name="FinishDateEdit">
               <property name="minimumSize">
                <size>
                 <width>0</width>
@@ -322,12 +322,12 @@
                <string notr="true">font: 20pt &quot;.SF NS Text&quot;;</string>
               </property>
               <property name="text">
-               <string>起始时间</string>
+               <string>起始日期</string>
               </property>
              </widget>
             </item>
             <item>
-             <widget class="QDateTimeEdit" name="StartTime">
+             <widget class="QDateEdit" name="StartDateEdit">
               <property name="minimumSize">
                <size>
                 <width>0</width>
@@ -373,33 +373,9 @@
              </spacer>
             </item>
             <item>
-             <widget class="QPushButton" name="SearchButton">
-              <property name="minimumSize">
-               <size>
-                <width>0</width>
-                <height>35</height>
-               </size>
-              </property>
-              <property name="maximumSize">
-               <size>
-                <width>16777215</width>
-                <height>35</height>
-               </size>
-              </property>
-              <property name="font">
-               <font>
-                <family>.SF NS Text</family>
-                <pointsize>20</pointsize>
-                <weight>50</weight>
-                <italic>false</italic>
-                <bold>false</bold>
-               </font>
-              </property>
-              <property name="styleSheet">
-               <string notr="true">font: 20pt &quot;.SF NS Text&quot;;</string>
-              </property>
+             <widget class="QPushButton" name="ResetButton">
               <property name="text">
-               <string>搜索</string>
+               <string>复原</string>
               </property>
              </widget>
             </item>
@@ -417,7 +393,7 @@
              </spacer>
             </item>
             <item>
-             <widget class="QPushButton" name="OutputButton">
+             <widget class="QPushButton" name="ExportButton">
               <property name="minimumSize">
                <size>
                 <width>0</width>
@@ -478,34 +454,33 @@
              </spacer>
             </item>
             <item>
-             <widget class="QLabel" name="FinishLabel_2">
-              <property name="minimumSize">
-               <size>
-                <width>41</width>
-                <height>28</height>
-               </size>
-              </property>
-              <property name="styleSheet">
-               <string notr="true">font: 20pt &quot;.SF NS Text&quot;;</string>
-              </property>
-              <property name="text">
-               <string>商铺</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QComboBox" name="comboBox">
+             <widget class="QPushButton" name="FilterButton">
               <property name="minimumSize">
                <size>
                 <width>0</width>
-                <height>28</height>
+                <height>35</height>
                </size>
               </property>
               <property name="maximumSize">
                <size>
                 <width>16777215</width>
-                <height>28</height>
+                <height>35</height>
                </size>
+              </property>
+              <property name="font">
+               <font>
+                <family>.SF NS Text</family>
+                <pointsize>20</pointsize>
+                <weight>50</weight>
+                <italic>false</italic>
+                <bold>false</bold>
+               </font>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">font: 20pt &quot;.SF NS Text&quot;;</string>
+              </property>
+              <property name="text">
+               <string>搜索</string>
               </property>
              </widget>
             </item>
@@ -626,7 +601,7 @@
      <x>0</x>
      <y>0</y>
      <width>1000</width>
-     <height>22</height>
+     <height>26</height>
     </rect>
    </property>
   </widget>
