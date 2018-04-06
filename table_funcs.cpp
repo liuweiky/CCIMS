@@ -284,7 +284,6 @@ Admin_Table::Admin_Table
 
 }
 
-
 void Admin_Table::init_Super_Table_Header(int now_num)
 {
     mTable->setColumnCount(6);
@@ -294,16 +293,13 @@ void Admin_Table::init_Super_Table_Header(int now_num)
     int RowCount = 0;
     Information* iter = mCCMIS->GetInfoPointer() ->next;
     while(iter!=NULL){
-        if(iter->Onumber == now_num)
+        if((int)iter->Onumber == now_num)
             show_One_Info_Same_Num(iter,RowCount,iter->Inumber);
         iter = iter->next;
     }
     RowCount = 0;
     return;
 }
-
-
-
 
 void Admin_Table::init_Table_Header()
 {
