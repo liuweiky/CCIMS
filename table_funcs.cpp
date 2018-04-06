@@ -16,7 +16,7 @@ Table_Parent::Table_Parent
     mExport_Btn = export_btn;
     mCCMIS = ccmis_sys;
     init_Date_Edit();
-
+    mTable->setEditTriggers(QAbstractItemView::NoEditTriggers);
     mCurrentItemIndex = -1;
 }
 
@@ -179,7 +179,6 @@ QString Table_Parent::get_Current_Table_Money()
     int cur_num =this->mCCMIS->GetUserNum();
     col_index =(cur_num%100 == 0)? 6:4;
     double total=0;
-    qDebug()<<this->mTable->rowCount();
     for(int i = 0;i<this->mTable->rowCount();i++)
     {
         if(this->mTable->isRowHidden(i))
