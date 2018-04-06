@@ -16,7 +16,7 @@ Table_Parent::Table_Parent
     mExport_Btn = export_btn;
     mCCMIS = ccmis_sys;
     init_Date_Edit();
-
+    mTable->setEditTriggers(QAbstractItemView::NoEditTriggers);
     mCurrentItemIndex = -1;
 }
 
