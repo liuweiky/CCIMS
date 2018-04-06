@@ -103,7 +103,6 @@ public slots:
     void on_Reset_clicked_Shop();
 };
 
-
 class ShopPlace_Table: public Table_Parent
 {
     Q_OBJECT
@@ -120,14 +119,6 @@ public slots:
     void on_Filter_clicked_SP();
     void on_Reset_clicked_SP();
 };
-
-
-
-
-
-
-
-
 
 class User_Table: public Table_Parent
 {

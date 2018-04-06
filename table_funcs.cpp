@@ -440,7 +440,6 @@ void ShopPlace_Table::init_Table_Header()
     int RowCount = 0;
     Information* iter = mCCMIS->GetInfoPointer() ->next;
 
-
     int cur_num = mCCMIS->GetUserNum();
 
     if(cur_num%1000 == 0){
@@ -460,9 +459,6 @@ void ShopPlace_Table::init_Table_Header()
     }
 }
 
-
-
-
 void ShopPlace_Table::on_Filter_clicked_SP()
 {
     this->Table_Filtered_By_Date(mTable);
@@ -477,7 +473,6 @@ void ShopPlace_Table::on_Reset_clicked_SP()
     this->init_Table_Header();
     this->mTotal_Profit->setText("总盈利：" + get_Current_Table_Money() + " 元");
 }
-
 
 //---------------------------------------------------------------------
 //-----------------------------------------------------------用户类子函数
