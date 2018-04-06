@@ -762,12 +762,21 @@ User* CCMIS::GetUserByNum(int num)
 Shop* CCMIS::GetShopByNum(int num)
 {
     if (
+<<<<<<< HEAD
         (num >= SHOP_CANTEEN_BEGIN -1 &&
         num <= SHOP_CANTEEN_END +1 ) ||
         (num >= SHOP_MARKET_BEGIN -1 &&
          num <= SHOP_MARKET_END +1) ||
         (num >= SHOP_BATH_BEGIN -1 &&
         num <= SHOP_BATH_END +1))   //防止越权取得0、1、2号用户权限
+=======
+        (num >= SHOP_CANTEEN_BEGIN  &&
+        num <= SHOP_CANTEEN_END  ) ||
+        (num >= SHOP_MARKET_BEGIN  &&
+         num <= SHOP_MARKET_END ) ||
+        (num >= SHOP_BATH_BEGIN  &&
+        num <= SHOP_BATH_END ))   //防止越权取得0、1、2号用户权限
+>>>>>>> 428237da8db5b73b26c15936e66b72454db05e70
     {
         Shop* s = mShop->next;
         while (s != NULL) {
@@ -780,6 +789,30 @@ Shop* CCMIS::GetShopByNum(int num)
         return NULL;
     }
 }
+
+
+Shop* CCMIS::GetAllShopByNum(int num)
+{
+    if ((num >= SHOP_BEGIN  &&
+        num <= SHOP_END  ) )
+    {
+        Shop* s = mShop->next;
+        while (s != NULL) {
+            if (s->number == num)
+                return s;
+            s = s->next;
+        }
+        return NULL;
+    } else {
+        return NULL;
+    }
+}
+
+
+
+
+
+
 
 QString CCMIS::GetAllNameByNum(int num)
 {
@@ -794,7 +827,7 @@ QString CCMIS::GetAllNameByNum(int num)
         default:
         {
             User* temp_user = GetUserByNum(num);
-            Shop* temp_shop = GetShopByNum(num);
+            Shop* temp_shop = GetAllShopByNum(num);
             if(temp_shop)
                 return temp_shop->name;
             else if(temp_user)
