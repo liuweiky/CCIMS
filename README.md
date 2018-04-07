@@ -1,4 +1,5 @@
 # CCIMS
+Campus Card Information Management System
 ## 1. 实验题目与要求
 ### 1. 编写一个C语言程序，实现校园卡管理信息系统，至少能够管理30张卡片的100条的刷卡信息。
 * 其中:
