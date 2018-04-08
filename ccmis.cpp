@@ -1140,22 +1140,36 @@ bool CCMIS::NewRefund(Information *tempinf)
         return false;
 
     User* u = mUser->next;
-    while (u != NULL) {
-        if (u->number == (int)tempinf->Onumber)
-            break;
-        u = u->next;
-    }
 
-    if (u == NULL)
-        return false;
+    if (tempinf->Onumber == 1 || tempinf->Onumber == 2) {    //是充值记录或补助记录
+        while (u != NULL) {
+            if (u->number == (int)tempinf->Inumber)
+                break;
+            u = u->next;
+        }
 
-    if (    //券消费
-            tempinf->Inumber / 1000 == GROUP_BATH &&
-            (tempinf->Inumber / 10) % 10 >= 5)
-    {
-        u->coupon += tempinf->money;
+        if (u == NULL)
+            return false;
+
+        u->balance -= tempinf->money;
     } else {
-        u->balance += tempinf->money;
+        while (u != NULL) {
+            if (u->number == (int)tempinf->Onumber)
+                break;
+            u = u->next;
+        }
+
+        if (u == NULL)
+            return false;
+
+        if (    //券消费
+                tempinf->Inumber / 1000 == GROUP_BATH &&
+                (tempinf->Inumber / 10) % 10 >= 5)
+        {
+            u->coupon += tempinf->money;
+        } else {
+            u->balance += tempinf->money;
+        }
     }
 
     DeleteInf(tempinf);
