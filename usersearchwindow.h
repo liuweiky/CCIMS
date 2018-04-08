@@ -7,6 +7,7 @@
 #include "ccims.h"
 #include "aboutui.h"
 #include "table_funcs.h"
+
 namespace Ui {
 class UserSearchWindow;
 }

@@ -1,4 +1,4 @@
-#include "CCIMS.h"
+#include "ccims.h"
 #include "aboutui.h"
 
 //跨平台判断
@@ -11,12 +11,12 @@
 #endif
 
 //自定义常量
-const string CCIMS::BACKBUTTON_PICTURE_NAME = "BackButton.png";
+const string CCIMS::BACKBUTTON_PICTURE_NAME = "image/BackButton.png";
 
-const string CCIMS::OUT_FILE_NAME   = "user.csv";
-const string CCIMS::USER_FILE_NAME  = "user.json";
-const string CCIMS::SHOP_FILE_NAME  = "shop.json";
-const string CCIMS::INFO_FILE_NAME  = "info.json";
+const string CCIMS::OUT_FILE_NAME   = "data/table.csv";
+const string CCIMS::USER_FILE_NAME  = "data/user.json";
+const string CCIMS::SHOP_FILE_NAME  = "data/shop.json";
+const string CCIMS::INFO_FILE_NAME  = "data/info.json";
 
 const string CCIMS::JSON_KEY_NUMBER  = "number";
 const string CCIMS::JSON_KEY_NAME  = "name";

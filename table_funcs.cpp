@@ -125,7 +125,7 @@ void Table_Parent::show_One_Info_All(Information *one_info, int row_index)
 
 void Table_Parent::export_Table_To_CSV(){
     //打开.csv文件
-    QFile file("table.csv");
+    QFile file(mCCIMS->FilenameCorrect(CCIMS::OUT_FILE_NAME));
     if(!file.open(QIODevice::WriteOnly | QIODevice::Text)) {
         qDebug() << "Output file failed!";
         return;
