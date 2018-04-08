@@ -4,7 +4,7 @@
 #include <QMainWindow>
 #include <QTimer>
 
-#include "ccmis.h"
+#include "ccims.h"
 #include "aboutui.h"
 #include "usermainwindow.h"
 
@@ -17,7 +17,7 @@ class UserRechargeWindow : public QMainWindow
     Q_OBJECT
 
 public:
-    explicit UserRechargeWindow(CCMIS* c, QWidget *parent = 0);  
+    explicit UserRechargeWindow(CCIMS* c, QWidget *parent = 0);  
     ~UserRechargeWindow();
     void refreshUi();   //基本信息刷新展示
 
@@ -28,7 +28,7 @@ private slots:
 
 private:
     Ui::UserRechargeWindow *ui;
-    CCMIS* mCCMIS;
+    CCIMS* mCCIMS;
 };
 
 #endif // USERRECHARGEWINDOW_H

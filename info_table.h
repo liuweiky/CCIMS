@@ -9,7 +9,7 @@
 #include <QDateTimeEdit>
 #include <QMessageBox>
 
-#include "ccmis.h"
+#include "ccims.h"
 #include "information.h"
 
 namespace Ui {
@@ -21,9 +21,9 @@ class Info_Table : public QWidget
     Q_OBJECT
 
 public:
-    explicit Info_Table(CCMIS* ccmis_system,QWidget *parent = 0);
+    explicit Info_Table(CCIMS* ccims_system,QWidget *parent = 0);
     ~Info_Table();
-    void PrintOneInfo(CCMIS* ccmis_system, Information* OneLineInfo,int  IndexOfRow);
+    void PrintOneInfo(CCIMS* ccims_system, Information* OneLineInfo,int  IndexOfRow);
 
     //只显示一个人的补助表格
     void GetWholeOneUserSubsidyTable(QTableWidget* qtable,int inum);
@@ -50,7 +50,7 @@ private:
      int mCurrentItem;
 
     Ui::Info_Table *ui;
-    CCMIS* mCCMIS;
+    CCIMS* mCCIMS;
 
     QCheckBox* CheckForSubsidy;
     QDateEdit* Start_Date_Edit;

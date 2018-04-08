@@ -1,5 +1,5 @@
-#ifndef CCMIS_H
-#define CCMIS_H
+#ifndef CCIMS_H
+#define CCIMS_H
 
 #include <fstream>
 #include <sstream>
@@ -23,7 +23,7 @@
 
 using namespace std;
 
-class CCMIS
+class CCIMS
 {
 
 private:
@@ -111,8 +111,8 @@ public:
     static const int THREAD_TYPE_R_INFO;
     static const int THREAD_TYPE_R_SHOP;
 
-    CCMIS();
-    ~CCMIS() {}
+    CCIMS();
+    ~CCIMS() {}
 
     int GetCurrentReadThreadCount();
     int GetCurrentWriteThreadCount();
@@ -126,30 +126,30 @@ public:
             switch (type) {
             case -1:
                 qDebug() << "Read info thread start.";
-                mCCMIS->mReadThreadCount += 1;
-                mCCMIS->ReadInf(mCCMIS->INFO_FILE_NAME);
-                mCCMIS->mReadThreadCount -=1;
+                mCCIMS->mReadThreadCount += 1;
+                mCCIMS->ReadInf(mCCIMS->INFO_FILE_NAME);
+                mCCIMS->mReadThreadCount -=1;
                 qDebug() << "Read info thread finished.";
                 break;
             case -2:
                 qDebug() << "Read shop thread start.";
-                mCCMIS->mReadThreadCount += 1;
-                mCCMIS->ReadShop(mCCMIS->SHOP_FILE_NAME);
-                mCCMIS->mReadThreadCount -=1;
+                mCCIMS->mReadThreadCount += 1;
+                mCCIMS->ReadShop(mCCIMS->SHOP_FILE_NAME);
+                mCCIMS->mReadThreadCount -=1;
                 qDebug() << "Read shop thread finished.";
                 break;
             case -3:
                 qDebug() << "Read user thread start.";
-                mCCMIS->mReadThreadCount += 1;
-                mCCMIS->ReadUser(mCCMIS->USER_FILE_NAME);
-                mCCMIS->mReadThreadCount -=1;
+                mCCIMS->mReadThreadCount += 1;
+                mCCIMS->ReadUser(mCCIMS->USER_FILE_NAME);
+                mCCIMS->mReadThreadCount -=1;
                 qDebug() << "Read user thread finished.";
                 break;
             case 1:
                 qDebug() << "Write info thread start.";
-                mCCMIS->mWriteThreadCount += 1;
-                mCCMIS->WriteInf(mCCMIS->INFO_FILE_NAME);
-                mCCMIS->mWriteThreadCount -= 1;
+                mCCIMS->mWriteThreadCount += 1;
+                mCCIMS->WriteInf(mCCIMS->INFO_FILE_NAME);
+                mCCIMS->mWriteThreadCount -= 1;
                 qDebug() << "Write info thread finished.";
                 break;
             case 2:
@@ -157,20 +157,20 @@ public:
                 break;
             case 3:
                 qDebug() << "Write user thread start.";
-                mCCMIS->mWriteThreadCount += 1;
-                mCCMIS->WriteUser(mCCMIS->USER_FILE_NAME);
-                mCCMIS->mWriteThreadCount -= 1;
+                mCCIMS->mWriteThreadCount += 1;
+                mCCIMS->WriteUser(mCCIMS->USER_FILE_NAME);
+                mCCIMS->mWriteThreadCount -= 1;
                 qDebug() << "Write user thread finished.";
                 break;
             default:
                 break;
             }
         }
-        JsonThread(CCMIS* c, int t): type(t), mCCMIS(c){}
+        JsonThread(CCIMS* c, int t): type(t), mCCIMS(c){}
 
     private:
         int type;
-        CCMIS* mCCMIS;
+        CCIMS* mCCIMS;
     };
 
     QString FilenameCorrect(string filename);       //应对不同平台输出文件路径
@@ -259,4 +259,4 @@ public:
     int GetProfitByShopNum(int num);
 };
 
-#endif // CCMIS_H
+#endif // CCIMS_H

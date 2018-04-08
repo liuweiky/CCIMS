@@ -29,7 +29,7 @@ SOURCES += \
     main.cpp \
     mainwindow.cpp \
     jsonxx.cpp \
-    ccmis.cpp \
+    ccims.cpp \
     shopmainwindow.cpp \
     usermainwindow.cpp \
     shopsearchwindow.cpp \
@@ -48,7 +48,7 @@ SOURCES += \
 HEADERS += \
     mainwindow.h \
     jsonxx.h \
-    ccmis.h \
+    ccims.h \
     shopmainwindow.h \
     usermainwindow.h \
     shopsearchwindow.h \

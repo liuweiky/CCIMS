@@ -1,14 +1,14 @@
 #include "administratorleadwindow.h"
 #include "ui_administratorleadwindow.h"
 
-AdministratorLeadWindow::AdministratorLeadWindow(CCMIS *c, QWidget *parent) :
+AdministratorLeadWindow::AdministratorLeadWindow(CCIMS *c, QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::AdministratorLeadWindow)
 {
     ui->setupUi(this);
     this->setAttribute(Qt::WA_DeleteOnClose,true);
 
-    mCCMIS = c;
+    mCCIMS = c;
 
     //时间处理
     QTimer *timer = new QTimer(this);
@@ -16,12 +16,12 @@ AdministratorLeadWindow::AdministratorLeadWindow(CCMIS *c, QWidget *parent) :
     timer->start(500);
 
     //基本信息展示
-    ui->UserName->setText(mCCMIS->GetCurrentUserName());
+    ui->UserName->setText(mCCIMS->GetCurrentUserName());
 
     //图片导入
     QIcon icon;
-    std::string str = mCCMIS->FilenameCorrect
-            (mCCMIS->BACKBUTTON_PICTURE_NAME).toStdString();
+    std::string str = mCCIMS->FilenameCorrect
+            (mCCIMS->BACKBUTTON_PICTURE_NAME).toStdString();
     const char* address = str.c_str();  //转地址QString到char*
     icon.addFile(tr(address));
     ui->BackButton->setIcon(icon);
@@ -48,7 +48,7 @@ void AdministratorLeadWindow::on_WorkButton_clicked()
 {
     QString txt = ui->AddressLine->text();
     QMessageBox* msg = new QMessageBox(this);
-    unsigned int number = mCCMIS->ImportInf(txt.toStdString());
+    unsigned int number = mCCIMS->ImportInf(txt.toStdString());
     if (number > 0){
      msg->setText(tr("导入成功！导入") +
                      QString::number(number,10).toStdString().data()

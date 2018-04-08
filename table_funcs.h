@@ -10,8 +10,9 @@
 #include <QHeaderView>
 #include <QApplication>
 #include <QLabel>
-#include"ccmis.h"
-#include"struct_funcs.h"
+
+#include "ccims.h"
+#include "struct_funcs.h"
 
 class Table_Parent: public QWidget
 {
@@ -29,14 +30,14 @@ public:
     QPushButton* mReset_Btn;
     QPushButton* mExport_Btn;
 
-    CCMIS* mCCMIS;
+    CCIMS* mCCIMS;
     //不清楚是否合适?
     int mCurrentItemIndex = -1;
 
     Table_Parent(QTableWidget *table, QDateEdit* start_edit,
                  QDateEdit* finish_edit,QPushButton* filter_btn,
                  QPushButton* reset_btn, QPushButton* export_btn,
-                 CCMIS* ccmis_sys);
+                 CCIMS* CCIMS_sys);
 
     void init_Date_Edit();
     void Table_Filtered_By_Date(QTableWidget *qtable = NULL);
@@ -74,7 +75,7 @@ public:
     Admin_Table(QTableWidget *table, QDateEdit* start_edit,
     QDateEdit* finish_edit,QPushButton* filter_btn,
     QPushButton* reset_btn, QPushButton* export_btn,
-    CCMIS* ccmis_sys,QPushButton* delete_btn,
+    CCIMS* CCIMS_sys,QPushButton* delete_btn,
     QPushButton *insert_btn, QPushButton *alter_btn,
     QCheckBox *subsidy_check);
     void init_Table_Header();
@@ -95,7 +96,7 @@ public:
     Shop_Table(QTableWidget *table, QDateEdit* start_edit,
                QDateEdit* finish_edit,QPushButton* filter_btn,
                QPushButton* reset_btn, QPushButton* export_btn,
-               CCMIS* ccmis_sys,QLabel* total_label);
+               CCIMS* CCIMS_sys,QLabel* total_label);
     void init_Table_Header();
     void DelItem(){}
 public slots:
@@ -112,7 +113,7 @@ public:
     ShopPlace_Table(QTableWidget *table, QDateEdit* start_edit,
                QDateEdit* finish_edit,QPushButton* filter_btn,
                QPushButton* reset_btn, QPushButton* export_btn,
-               CCMIS* ccmis_sys,QLabel* total_label);
+               CCIMS* CCIMS_sys,QLabel* total_label);
     void init_Table_Header();
     void DelItem(){}
 public slots:
@@ -129,7 +130,7 @@ public:
     User_Table(QTableWidget *table, QDateEdit* start_edit,
                QDateEdit* finish_edit,QPushButton* filter_btn,
                QPushButton* reset_btn, QPushButton* export_btn,
-               CCMIS* ccmis_sys,QCheckBox* subsidy_check);
+               CCIMS* CCIMS_sys,QCheckBox* subsidy_check);
     void init_Table_Header();
     void init_Subsidy_Header();
     void DelItem(){}

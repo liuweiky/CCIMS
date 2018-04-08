@@ -1,14 +1,14 @@
 #include "userrechargewindow.h"
 #include "ui_userrechargewindow.h"
 
-UserRechargeWindow::UserRechargeWindow(CCMIS *c, QWidget *parent):
+UserRechargeWindow::UserRechargeWindow(CCIMS *c, QWidget *parent):
     QMainWindow(parent),
     ui(new Ui::UserRechargeWindow)
 {
     ui->setupUi(this);
     this->setAttribute(Qt::WA_DeleteOnClose,true);
 
-    mCCMIS = c;
+    mCCIMS = c;
 
     //时间处理
     QTimer *timer = new QTimer(this);
@@ -19,8 +19,8 @@ UserRechargeWindow::UserRechargeWindow(CCMIS *c, QWidget *parent):
 
     //图片导入
     QIcon icon;
-    std::string str = mCCMIS->FilenameCorrect
-            (mCCMIS->BACKBUTTON_PICTURE_NAME).toStdString();
+    std::string str = mCCIMS->FilenameCorrect
+            (mCCIMS->BACKBUTTON_PICTURE_NAME).toStdString();
     const char* address = str.c_str();  //转地址QString到char*
     icon.addFile(tr(address));
     ui->BackButton->setIcon(icon);
@@ -53,13 +53,13 @@ void UserRechargeWindow::on_BackButton_clicked()
 void UserRechargeWindow::on_WorkButton_clicked()
 {
     int money = ui->moneyLineEdit->text().toInt() * 100;
-    if (mCCMIS->GetUserByNum(mCCMIS->GetUserNum())->balance + money > 100000)
+    if (mCCIMS->GetUserByNum(mCCIMS->GetUserNum())->balance + money > 100000)
     {
         QMessageBox::warning(this, tr("警告！"),
                            tr("校园卡余额超过 1000！"),
                            QMessageBox::Yes);
     } else {
-        if (mCCMIS->NewRecharge(mCCMIS->GetUserNum(), money))
+        if (mCCIMS->NewRecharge(mCCIMS->GetUserNum(), money))
         {
             QMessageBox* msg = new QMessageBox(this);
             msg->setText(tr("充值成功！"));
@@ -76,13 +76,13 @@ void UserRechargeWindow::on_WorkButton_clicked()
 void UserRechargeWindow::refreshUi()
 {
     //基本信息展示
-    ui->UserName->setText(mCCMIS->GetCurrentUserName());
+    ui->UserName->setText(mCCIMS->GetCurrentUserName());
     QString Money = "余额：" + QString::number
-            (double(mCCMIS->GetUserByNum(mCCMIS->GetUserNum())->balance)/100,'f',2)
+            (double(mCCIMS->GetUserByNum(mCCIMS->GetUserNum())->balance)/100,'f',2)
             + "元";
     ui->Money->setText(Money);
     QString Coupon = "劵：" + QString::number
-            (double(mCCMIS->GetUserByNum(mCCMIS->GetUserNum())->coupon)/100,'f',2)
+            (double(mCCIMS->GetUserByNum(mCCIMS->GetUserNum())->coupon)/100,'f',2)
             + "元";
     ui->Coupon->setText(Coupon);
 

@@ -7,7 +7,7 @@
 #include "administratorleadwindow.h"
 #include "administratorscwindow.h"
 
-#include "ccmis.h"
+#include "ccims.h"
 #include "aboutui.h"
 
 namespace Ui {
@@ -19,7 +19,7 @@ class AdministratorMainWindow : public QMainWindow
     Q_OBJECT
 
 public:
-    explicit AdministratorMainWindow(CCMIS* c, QWidget *parent = 0);
+    explicit AdministratorMainWindow(CCIMS* c, QWidget *parent = 0);
     ~AdministratorMainWindow();
 
 private slots:
@@ -30,7 +30,7 @@ private slots:
 
 private:
     Ui::AdministratorMainWindow *ui;
-    CCMIS* mCCMIS;
+    CCIMS* mCCIMS;
 };
 
 #endif // ADMINISTRATORMAINWINDOW_H

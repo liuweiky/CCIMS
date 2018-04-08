@@ -4,7 +4,7 @@
 #include <QMainWindow>
 #include <QTimer>
 
-#include "ccmis.h"
+#include "ccims.h"
 #include "aboutui.h"
 
 namespace Ui {
@@ -16,7 +16,7 @@ class ShopServiceWindow : public QMainWindow
     Q_OBJECT
 
 public:
-    explicit ShopServiceWindow(CCMIS* c, QWidget *parent = 0);
+    explicit ShopServiceWindow(CCIMS* c, QWidget *parent = 0);
     ~ShopServiceWindow();
 
 private slots:
@@ -30,7 +30,7 @@ signals:
 
 private:
     Ui::ShopServiceWindow *ui;
-    CCMIS* mCCMIS;
+    CCIMS* mCCIMS;
 };
 
 #endif // SHOPSERVICEWINDOW_H

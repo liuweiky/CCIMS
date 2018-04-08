@@ -2,14 +2,14 @@
 #include "ui_placemainwindow.h"
 
 
-PlaceMainWindow::PlaceMainWindow(CCMIS* c, QWidget *parent) :
+PlaceMainWindow::PlaceMainWindow(CCIMS* c, QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::PlaceMainWindow)
 {
     ui->setupUi(this);
     this->setAttribute(Qt::WA_DeleteOnClose,true);
 
-    mCCMIS = c;
+    mCCIMS = c;
 
     //时间处理
     QTimer *timer = new QTimer(this);
@@ -17,12 +17,12 @@ PlaceMainWindow::PlaceMainWindow(CCMIS* c, QWidget *parent) :
     timer->start(500);
 
     //基本信息展示
-    ui->UserName->setText(mCCMIS->GetCurrentUserName());
+    ui->UserName->setText(mCCIMS->GetCurrentUserName());
 
     //图片导入
     QIcon icon;
-    std::string str = mCCMIS->FilenameCorrect
-            (mCCMIS->BACKBUTTON_PICTURE_NAME).toStdString();
+    std::string str = mCCIMS->FilenameCorrect
+            (mCCIMS->BACKBUTTON_PICTURE_NAME).toStdString();
     const char* address = str.c_str();  //转地址QString到char*
     icon.addFile(tr(address));
     ui->BackButton->setIcon(icon);
@@ -31,7 +31,7 @@ PlaceMainWindow::PlaceMainWindow(CCMIS* c, QWidget *parent) :
     mShopPlaceTable = new ShopPlace_Table(ui->tableWidget,ui->StartDateEdit,
                                 ui->FinishDateEdit,ui->FilterButton,
                                 ui->ResetButton,ui->ExportButton,
-                                mCCMIS,ui->TotalProfit);
+                                mCCIMS,ui->TotalProfit);
     //表格控件信号槽实现
     connect(mShopPlaceTable->mStart_Edit,&QDateEdit::dateChanged,
             mShopPlaceTable,&ShopPlace_Table::on_Start_Date_Changed);

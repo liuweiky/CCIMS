@@ -1,13 +1,13 @@
 #include "administratoradddialog.h"
 #include "ui_administratoradddialog.h"
 
-AdministratorAddDialog::AdministratorAddDialog(CCMIS* c, int ismod, QWidget *parent) :
+AdministratorAddDialog::AdministratorAddDialog(CCIMS* c, int ismod, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::AdministratorAddDialog)
 {
     ui->setupUi(this);
 
-    mCCMIS = c;
+    mCCIMS = c;
     mDate = new QDate();
     mTime = new QTime();
     isModify = ismod;
@@ -56,7 +56,7 @@ void AdministratorAddDialog::on_buttonBox_accepted()
 
     //传参数至主界面
     AdministratorSCWindow* a = (AdministratorSCWindow*)parentWidget();
-    switch (mCCMIS->NewAdmTransaction(year, month, day, hour, min, sec, onum, inum, money)) {   //Adm可以超过单日限制
+    switch (mCCIMS->NewAdmTransaction(year, month, day, hour, min, sec, onum, inum, money)) {   //Adm可以超过单日限制
     case -1:
         QMessageBox::warning(a, tr("警告！"),
                            tr("没有该用户！"),

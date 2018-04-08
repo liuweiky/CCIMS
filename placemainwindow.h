@@ -4,7 +4,7 @@
 #include <QMainWindow>
 #include <QTimer>
 
-#include "ccmis.h"
+#include "ccims.h"
 #include "aboutui.h"
 #include "table_funcs.h"
 namespace Ui {
@@ -16,7 +16,7 @@ class PlaceMainWindow : public QMainWindow
     Q_OBJECT
 
 public:
-    explicit PlaceMainWindow(CCMIS* c, QWidget *parent = 0);
+    explicit PlaceMainWindow(CCIMS* c, QWidget *parent = 0);
     ~PlaceMainWindow();
 
 private slots:
@@ -25,7 +25,7 @@ private slots:
 
 private:
     Ui::PlaceMainWindow *ui;
-    CCMIS* mCCMIS;
+    CCIMS* mCCIMS;
     ShopPlace_Table* mShopPlaceTable;
 };
 

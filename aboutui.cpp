@@ -13,7 +13,7 @@ QString AboutUI::ShowDateTime()
     return txt;
 }
 
-bool AboutUI::PDlg (QProgressDialog* progressDlg,CCMIS* mCCMIS,
+bool AboutUI::PDlg (QProgressDialog* progressDlg,CCIMS* mCCIMS,
                     unsigned int AllNumber)
 {
     bool result = false;
@@ -21,8 +21,8 @@ bool AboutUI::PDlg (QProgressDialog* progressDlg,CCMIS* mCCMIS,
     //如果运行时间小于0，进度条就不会显示（测试时请置0）
     progressDlg->setMinimumDuration(0);
     progressDlg->setWindowTitle(QStringLiteral("请稍候"));
-    while (mCCMIS->GetTotalInfoNumber() < AllNumber) {
-            progressDlg->setValue(mCCMIS->GetTotalInfoNumber());
+    while (mCCIMS->GetTotalInfoNumber() < AllNumber) {
+            progressDlg->setValue(mCCIMS->GetTotalInfoNumber());
             QCoreApplication::processEvents();//避免界面冻结
             if(progressDlg->wasCanceled()) return result;
     }

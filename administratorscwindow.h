@@ -4,7 +4,7 @@
 #include <QMainWindow>
 #include <QTimer>
 
-#include "ccmis.h"
+#include "ccims.h"
 #include "aboutui.h"
 #include "table_funcs.h"
 #include "administratoradddialog.h"
@@ -18,7 +18,7 @@ class AdministratorSCWindow : public QMainWindow
     Q_OBJECT
 
 public:
-    explicit AdministratorSCWindow(CCMIS* c, QWidget *parent = 0);
+    explicit AdministratorSCWindow(CCIMS* c, QWidget *parent = 0);
     ~AdministratorSCWindow();
 
     void connect_SIG_With_SLOTS();
@@ -33,7 +33,7 @@ private slots:
 
 private:
     Ui::AdministratorSCWindow *ui;
-    CCMIS *mCCMIS;
+    CCIMS *mCCIMS;
     Admin_Table* mAdminTable;
 };
 

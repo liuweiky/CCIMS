@@ -14,7 +14,7 @@
 
 #include "info_table.h"
 
-#include "ccmis.h"
+#include "ccims.h"
 #include "aboutui.h"
 
 namespace Ui {
@@ -39,7 +39,7 @@ protected:
 
 private:
     Ui::MainWindow *ui;
-    CCMIS* mCCMIS;
+    CCIMS* mCCIMS;
 };
 
 #endif // MAINWINDOW_H

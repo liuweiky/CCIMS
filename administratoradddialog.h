@@ -3,7 +3,7 @@
 
 #include <QDialog>
 
-#include "ccmis.h"
+#include "ccims.h"
 #include "aboutui.h"
 #include "administratorscwindow.h"
 
@@ -16,7 +16,7 @@ class AdministratorAddDialog : public QDialog
     Q_OBJECT
 
 public:
-    explicit AdministratorAddDialog(CCMIS* c, int ismod, QWidget *parent = 0);
+    explicit AdministratorAddDialog(CCIMS* c, int ismod, QWidget *parent = 0);
     ~AdministratorAddDialog();
 
 private slots:
@@ -28,7 +28,7 @@ private slots:
 
 private:
     Ui::AdministratorAddDialog *ui;
-    CCMIS* mCCMIS;
+    CCIMS* mCCIMS;
     int isModify;
     QDate* mDate;
     QTime* mTime;

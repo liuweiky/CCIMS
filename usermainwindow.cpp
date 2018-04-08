@@ -2,14 +2,14 @@
 #include "ui_usermainwindow.h"
 #include <QDebug>
 
-UserMainWindow::UserMainWindow(CCMIS* c, QWidget *parent) :
+UserMainWindow::UserMainWindow(CCIMS* c, QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::UserMainWindow)
 {
     ui->setupUi(this);
     this->setAttribute(Qt::WA_DeleteOnClose,true);
 
-    mCCMIS = c;
+    mCCIMS = c;
 
     //时间处理
     QTimer *timer = new QTimer(this);
@@ -17,20 +17,20 @@ UserMainWindow::UserMainWindow(CCMIS* c, QWidget *parent) :
     timer->start(500);
 
     //基本信息展示
-    ui->UserName->setText(mCCMIS->GetCurrentUserName());
+    ui->UserName->setText(mCCIMS->GetCurrentUserName());
     QString Money = "余额：" + QString::number
-            (double(mCCMIS->GetUserByNum(mCCMIS->GetUserNum())->balance)/100,'f',2)
+            (double(mCCIMS->GetUserByNum(mCCIMS->GetUserNum())->balance)/100,'f',2)
             + "元";
     ui->Money->setText(Money);
     QString Coupon = "劵：" + QString::number
-            (double(mCCMIS->GetUserByNum(mCCMIS->GetUserNum())->coupon)/100,'f',2)
+            (double(mCCIMS->GetUserByNum(mCCIMS->GetUserNum())->coupon)/100,'f',2)
             + "元";
     ui->Coupon->setText(Coupon);
 
     //图片导入
     QIcon icon;
-    std::string str = mCCMIS->FilenameCorrect
-            (mCCMIS->BACKBUTTON_PICTURE_NAME).toStdString();
+    std::string str = mCCIMS->FilenameCorrect
+            (mCCIMS->BACKBUTTON_PICTURE_NAME).toStdString();
     const char* address = str.c_str();  //转地址QString到char*
     icon.addFile(tr(address));
     ui->BackButton->setIcon(icon);
@@ -69,13 +69,13 @@ void UserMainWindow::on_SearchButton_clicked()
     //进度条展示
     QProgressDialog *progressDlg = new
             QProgressDialog(QStringLiteral("正在载入文件......"),
-                            QStringLiteral("等待"),0,mCCMIS->GuessTotalNumber,this);
-    if(!AboutUI::PDlg(progressDlg,mCCMIS,mCCMIS->GuessTotalNumber)){
+                            QStringLiteral("等待"),0,mCCIMS->GuessTotalNumber,this);
+    if(!AboutUI::PDlg(progressDlg,mCCIMS,mCCIMS->GuessTotalNumber)){
         return;
     }
 
     //产生界面
-    UserSearchWindow *mUSW = new UserSearchWindow(mCCMIS,this);
+    UserSearchWindow *mUSW = new UserSearchWindow(mCCIMS,this);
     mUSW->setGeometry(this->x(),this->y(),this->width(),this->height());
     mUSW->show();
     this->hide();
@@ -83,7 +83,7 @@ void UserMainWindow::on_SearchButton_clicked()
 
 void UserMainWindow::on_WorkButton_clicked()
 {
-    UserRechargeWindow *mURW = new UserRechargeWindow(mCCMIS,this);
+    UserRechargeWindow *mURW = new UserRechargeWindow(mCCIMS,this);
     mURW->setGeometry(this->x(),this->y(),this->width(),this->height());
     mURW->show();
     this->hide();
@@ -91,13 +91,13 @@ void UserMainWindow::on_WorkButton_clicked()
 
 void UserMainWindow::refreshUi()
 {
-    ui->UserName->setText(mCCMIS->GetCurrentUserName());
+    ui->UserName->setText(mCCIMS->GetCurrentUserName());
     QString Money = "余额：" + QString::number
-            (double(mCCMIS->GetUserByNum(mCCMIS->GetUserNum())->balance)/100,'f',2)
+            (double(mCCIMS->GetUserByNum(mCCIMS->GetUserNum())->balance)/100,'f',2)
             + "元";
     ui->Money->setText(Money);
     QString Coupon = "劵：" + QString::number
-            (double(mCCMIS->GetUserByNum(mCCMIS->GetUserNum())->coupon)/100,'f',2)
+            (double(mCCIMS->GetUserByNum(mCCIMS->GetUserNum())->coupon)/100,'f',2)
             + "元";
     ui->Coupon->setText(Coupon);
 }

@@ -7,7 +7,7 @@
 #include "shopsearchwindow.h"
 #include "shopservicewindow.h"
 
-#include "ccmis.h"
+#include "ccims.h"
 #include "aboutui.h"
 
 namespace Ui {
@@ -19,7 +19,7 @@ class ShopMainWindow : public QMainWindow
     Q_OBJECT
 
 public:
-    explicit ShopMainWindow(CCMIS* c, QWidget *parent = 0);
+    explicit ShopMainWindow(CCIMS* c, QWidget *parent = 0);
     ~ShopMainWindow();
 
 private slots:
@@ -29,7 +29,7 @@ private slots:
     void on_WorkButton_clicked();
 
 private:
-    CCMIS* mCCMIS;
+    CCIMS* mCCIMS;
     Ui::ShopMainWindow *ui;
 };
 

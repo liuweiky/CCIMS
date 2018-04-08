@@ -6,7 +6,7 @@ Table_Parent::Table_Parent
                (QTableWidget *table, QDateEdit* start_edit,
                QDateEdit* finish_edit,QPushButton* filter_btn,
                QPushButton* reset_btn, QPushButton* export_btn,
-               CCMIS* ccmis_sys):QWidget(NULL)
+               CCIMS* CCIMS_sys):QWidget(NULL)
 {
     mTable = table;
     mStart_Edit = start_edit;
@@ -14,7 +14,7 @@ Table_Parent::Table_Parent
     mFilter_Btn = filter_btn;
     mReset_Btn = reset_btn;
     mExport_Btn = export_btn;
-    mCCMIS = ccmis_sys;
+    mCCIMS = CCIMS_sys;
     init_Date_Edit();
     mTable->setEditTriggers(QAbstractItemView::NoEditTriggers);
     mCurrentItemIndex = -1;
@@ -67,7 +67,7 @@ void Table_Parent::init_Subsidy_Header()
            QStringList()<<"日期" <<"时间" <<"入帐号"<<"被补助人"<<"金额"<<"流水号");
     mTable->horizontalHeader()->setStretchLastSection(true); //就是这个地方
     int RowCount = 0;
-    Information* iter = mCCMIS->GetInfoPointer() ->next;
+    Information* iter = mCCIMS->GetInfoPointer() ->next;
     while(iter!=NULL){
         if(iter->Onumber == 2)
             show_One_Info_Same_Num(iter,RowCount,iter->Inumber);
@@ -81,7 +81,7 @@ void Table_Parent::show_One_Info_Same_Num
 (Information* one_info,int row_index,int inum_or_onum)
 {
     mTable->insertRow(row_index);
-    QString Name = mCCMIS->GetAllNameByNum(inum_or_onum);
+    QString Name = mCCIMS->GetAllNameByNum(inum_or_onum);
     QDateTime info_date_time = Information::InfoToDateTime(one_info);
     QString Date = info_date_time.toString("yyyy-MM-dd");
     QString Time = info_date_time.toString("hh:mm:ss");
@@ -100,8 +100,8 @@ void Table_Parent::show_One_Info_Same_Num
 void Table_Parent::show_One_Info_All(Information *one_info, int row_index)
 {
     //每个项目转成QString
-    QString InName  = mCCMIS->GetAllNameByNum(one_info->Inumber);
-    QString OutName = mCCMIS->GetAllNameByNum(one_info->Onumber);
+    QString InName  = mCCIMS->GetAllNameByNum(one_info->Inumber);
+    QString OutName = mCCIMS->GetAllNameByNum(one_info->Onumber);
     QString InNumStr = QString::number(one_info->Inumber).sprintf("%04d",one_info->Inumber);
     QString OutNumStr = QString::number(one_info->Onumber).sprintf("%04d",one_info->Onumber);
     QDateTime info_date_time = Information::InfoToDateTime(one_info);
@@ -176,7 +176,7 @@ QString Table_Parent::get_Info_Tag_By_RowIndex(int row_index)
 QString Table_Parent::get_Current_Table_Money()
 {
     int col_index = 0;
-    int cur_num =this->mCCMIS->GetUserNum();
+    int cur_num =this->mCCIMS->GetUserNum();
     col_index =(cur_num%100 == 0)? 6:4;
     double total=0;
     qDebug()<<this->mTable->rowCount();
@@ -247,11 +247,11 @@ Admin_Table::Admin_Table
             (QTableWidget *table, QDateEdit* start_edit,
              QDateEdit* finish_edit,QPushButton* filter_btn,
              QPushButton* reset_btn, QPushButton* export_btn,
-             CCMIS* ccmis_sys,QPushButton* delete_btn,
+             CCIMS* CCIMS_sys,QPushButton* delete_btn,
              QPushButton *insert_btn, QPushButton *alter_btn,
              QCheckBox *subsidy_check)
         :Table_Parent(table, start_edit,finish_edit,filter_btn,
-                    reset_btn, export_btn,ccmis_sys)
+                    reset_btn, export_btn,CCIMS_sys)
 {
     mSubsidy_Chck = subsidy_check;
     mDelete_Btn = delete_btn;
@@ -259,7 +259,7 @@ Admin_Table::Admin_Table
     mAlter_Btn  = alter_btn;
 
 
-    int now_num = mCCMIS->GetUserNum();
+    int now_num = mCCIMS->GetUserNum();
     switch (now_num) {
     case 0:
          init_Table_Header();
@@ -291,7 +291,7 @@ void Admin_Table::init_Super_Table_Header(int now_num)
            QStringList()<<"日期" <<"时间" <<"入账号"<<"入账人"<<"金额"<<"流水号");
     mTable->horizontalHeader()->setStretchLastSection(true);
     int RowCount = 0;
-    Information* iter = mCCMIS->GetInfoPointer() ->next;
+    Information* iter = mCCIMS->GetInfoPointer() ->next;
     while(iter!=NULL){
         if((int)iter->Onumber == now_num)
             show_One_Info_Same_Num(iter,RowCount,iter->Inumber);
@@ -311,7 +311,7 @@ void Admin_Table::init_Table_Header()
     mTable->horizontalHeader()->setStretchLastSection(true);    //就是这个地方
 
     int RowCount = 0;
-    Information* iter = mCCMIS->GetInfoPointer() ->next;
+    Information* iter = mCCIMS->GetInfoPointer() ->next;
     while(iter!=NULL){
        show_One_Info_All(iter,RowCount);
        iter  = iter->next;
@@ -323,10 +323,10 @@ void Admin_Table::init_Table_Header()
 void Admin_Table::DelItem()
 {
     if (mCurrentItemIndex != -1) {
-        Information* info = mCCMIS->GetInfoByTag
+        Information* info = mCCIMS->GetInfoByTag
                 (mTable->item(mCurrentItemIndex,7)->text());
 
-        mCCMIS->NewRefund(info);
+        mCCIMS->NewRefund(info);
         mTable->removeRow(mCurrentItemIndex);
         mCurrentItemIndex = -1;
     }
@@ -363,11 +363,11 @@ void Admin_Table::on_Reset_clicked()
 Shop_Table::Shop_Table(QTableWidget *table, QDateEdit* start_edit,
                        QDateEdit* finish_edit, QPushButton* filter_btn,
                        QPushButton* reset_btn, QPushButton* export_btn,
-                       CCMIS* ccmis_sys, QLabel *total_label)
+                       CCIMS* CCIMS_sys, QLabel *total_label)
         :Table_Parent(table, start_edit,finish_edit,filter_btn,
-                    reset_btn, export_btn,ccmis_sys)
+                    reset_btn, export_btn,CCIMS_sys)
 {
-    mCurrent_Shop = mCCMIS->GetCurrentShop();
+    mCurrent_Shop = mCCIMS->GetCurrentShop();
     mTotal_Profit = total_label;
 
 
@@ -384,7 +384,7 @@ void Shop_Table::init_Table_Header()
     mTable->horizontalHeader()->setStretchLastSection(true); //就是这个地方
 
     int RowCount = 0;
-    Information* iter = mCCMIS->GetInfoPointer() ->next;
+    Information* iter = mCCIMS->GetInfoPointer() ->next;
     while(iter!=NULL){
         if ((int)iter->Inumber == mCurrent_Shop->number) {
             show_One_Info_Same_Num(iter,RowCount,iter->Onumber);
@@ -417,11 +417,11 @@ void Shop_Table::on_Reset_clicked_Shop()
 ShopPlace_Table::ShopPlace_Table(QTableWidget *table, QDateEdit* start_edit,
                        QDateEdit* finish_edit, QPushButton* filter_btn,
                        QPushButton* reset_btn, QPushButton* export_btn,
-                       CCMIS* ccmis_sys, QLabel *total_label)
+                       CCIMS* CCIMS_sys, QLabel *total_label)
         :Table_Parent(table, start_edit,finish_edit,filter_btn,
-                    reset_btn, export_btn,ccmis_sys)
+                    reset_btn, export_btn,CCIMS_sys)
 {
-    mCurrent_ShopPalace = mCCMIS->GetCurrentShop();
+    mCurrent_ShopPalace = mCCIMS->GetCurrentShop();
     mTotal_Profit = total_label;
 
     init_Table_Header();
@@ -438,9 +438,9 @@ void ShopPlace_Table::init_Table_Header()
     mTable->horizontalHeader()->setStretchLastSection(true); //就是这个地方
 
     int RowCount = 0;
-    Information* iter = mCCMIS->GetInfoPointer() ->next;
+    Information* iter = mCCIMS->GetInfoPointer() ->next;
 
-    int cur_num = mCCMIS->GetUserNum();
+    int cur_num = mCCIMS->GetUserNum();
 
     if(cur_num%1000 == 0){
         while(iter!=NULL){
@@ -479,11 +479,11 @@ void ShopPlace_Table::on_Reset_clicked_SP()
 User_Table::User_Table(QTableWidget *table, QDateEdit* start_edit,
                        QDateEdit* finish_edit, QPushButton* filter_btn,
                        QPushButton* reset_btn, QPushButton* export_btn,
-                       CCMIS* ccmis_sys, QCheckBox *subsidy_check)
+                       CCIMS* CCIMS_sys, QCheckBox *subsidy_check)
         :Table_Parent(table, start_edit,finish_edit,filter_btn,
-                    reset_btn, export_btn,ccmis_sys) {
+                    reset_btn, export_btn,CCIMS_sys) {
     mSubsidy_Chck = subsidy_check;
-    mCurrent_User = mCCMIS->GetCurrentUser();
+    mCurrent_User = mCCIMS->GetCurrentUser();
     init_Table_Header();
 }
 
@@ -494,8 +494,8 @@ void User_Table::init_Table_Header()
             (QStringList()<<"日期" <<"时间" <<"入账号"<<"入账账户"<<"金额"<<"流水号");
     mTable->horizontalHeader()->setStretchLastSection(true); //就是这个地方
     int RowCount = 0;
-    int mCurrent_User_Num = mCCMIS->GetUserNum();
-    Information* iter = mCCMIS->GetInfoPointer() ->next;
+    int mCurrent_User_Num = mCCIMS->GetUserNum();
+    Information* iter = mCCIMS->GetInfoPointer() ->next;
     while(iter!=NULL){
        if((int)iter->Onumber == mCurrent_User_Num || (int)iter->Inumber == mCurrent_User_Num)
             show_One_Info_Same_Num(iter,RowCount,iter->Inumber);
@@ -511,9 +511,9 @@ void  User_Table::init_Subsidy_Header()
     mTable->setHorizontalHeaderLabels(
            QStringList()<<"日期" <<"时间" <<"入帐号"<<"被补助人"<<"金额"<<"流水号");
     mTable->horizontalHeader()->setStretchLastSection(true); //就是这个地方
-    int mCurrent_User_Num = mCCMIS->GetUserNum();
+    int mCurrent_User_Num = mCCIMS->GetUserNum();
     int RowCount = 0;
-    Information* iter = mCCMIS->GetInfoPointer() ->next;
+    Information* iter = mCCIMS->GetInfoPointer() ->next;
     while(iter!=NULL){
         if(((int)iter->Onumber == 2)&& ((int)iter->Inumber == mCurrent_User_Num))
             show_One_Info_Same_Num(iter,RowCount,mCurrent_User_Num);

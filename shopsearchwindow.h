@@ -5,7 +5,7 @@
 #include <QTimer>
 #include <QTableWidget>
 
-#include "ccmis.h"
+#include "ccims.h"
 #include "aboutui.h"
 #include "table_funcs.h"
 
@@ -18,7 +18,7 @@ class ShopSearchWindow : public QMainWindow
     Q_OBJECT
 
 public:
-    explicit ShopSearchWindow(CCMIS *c, QWidget *parent = 0);
+    explicit ShopSearchWindow(CCIMS *c, QWidget *parent = 0);
     ~ShopSearchWindow();
     QTableWidget* GetWholeShopSearchTable();
     void ShowOneInfo(QTableWidget* shop_table, Information* one_info,int row_index);
@@ -30,7 +30,7 @@ private slots:
 
 private:
     Ui::ShopSearchWindow *ui;
-    CCMIS *mCCMIS;
+    CCIMS *mCCIMS;
     Shop_Table* mShopTable;
 };
 

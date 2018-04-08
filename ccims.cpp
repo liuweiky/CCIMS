@@ -1,77 +1,77 @@
-#include "ccmis.h"
+#include "CCIMS.h"
 #include "aboutui.h"
 
 //跨平台判断
 #ifdef Q_OS_WIN32
-    const unsigned int CCMIS::PLATFORM_JUDGE = 0;
+    const unsigned int CCIMS::PLATFORM_JUDGE = 0;
 #elif defined (Q_OS_MAC)
-    const unsigned int CCMIS::PLATFORM_JUDGE = 1;
+    const unsigned int CCIMS::PLATFORM_JUDGE = 1;
 #else
-    const unsigned int CCMIS::PLATFORM_JUDGE = 2;
+    const unsigned int CCIMS::PLATFORM_JUDGE = 2;
 #endif
 
 //自定义常量
-const string CCMIS::BACKBUTTON_PICTURE_NAME = "BackButton.png";
+const string CCIMS::BACKBUTTON_PICTURE_NAME = "BackButton.png";
 
-const string CCMIS::OUT_FILE_NAME   = "user.csv";
-const string CCMIS::USER_FILE_NAME  = "user.json";
-const string CCMIS::SHOP_FILE_NAME  = "shop.json";
-const string CCMIS::INFO_FILE_NAME  = "info.json";
+const string CCIMS::OUT_FILE_NAME   = "user.csv";
+const string CCIMS::USER_FILE_NAME  = "user.json";
+const string CCIMS::SHOP_FILE_NAME  = "shop.json";
+const string CCIMS::INFO_FILE_NAME  = "info.json";
 
-const string CCMIS::JSON_KEY_NUMBER  = "number";
-const string CCMIS::JSON_KEY_NAME  = "name";
-const string CCMIS::JSON_KEY_PASSWORD  = "password";
-const string CCMIS::JSON_KEY_BALANCE  = "balance";
-const string CCMIS::JSON_KEY_COUPON  = "coupon";
+const string CCIMS::JSON_KEY_NUMBER  = "number";
+const string CCIMS::JSON_KEY_NAME  = "name";
+const string CCIMS::JSON_KEY_PASSWORD  = "password";
+const string CCIMS::JSON_KEY_BALANCE  = "balance";
+const string CCIMS::JSON_KEY_COUPON  = "coupon";
 
-const string CCMIS::JSON_KEY_TAG = "tag";
-const string CCMIS::JSON_KEY_YEAR = "year";
-const string CCMIS::JSON_KEY_MONTH = "month";
-const string CCMIS::JSON_KEY_DAY = "day";
-const string CCMIS::JSON_KEY_HOUR = "hour";
-const string CCMIS::JSON_KEY_MINUTE = "minute";
-const string CCMIS::JSON_KEY_SECOND = "second";
-const string CCMIS::JSON_KEY_ONUMBER = "onumber";
-const string CCMIS::JSON_KEY_INUMBER = "inumber";
-const string CCMIS::JSON_KEY_MONEY = "money";
+const string CCIMS::JSON_KEY_TAG = "tag";
+const string CCIMS::JSON_KEY_YEAR = "year";
+const string CCIMS::JSON_KEY_MONTH = "month";
+const string CCIMS::JSON_KEY_DAY = "day";
+const string CCIMS::JSON_KEY_HOUR = "hour";
+const string CCIMS::JSON_KEY_MINUTE = "minute";
+const string CCIMS::JSON_KEY_SECOND = "second";
+const string CCIMS::JSON_KEY_ONUMBER = "onumber";
+const string CCIMS::JSON_KEY_INUMBER = "inumber";
+const string CCIMS::JSON_KEY_MONEY = "money";
 
-const int CCMIS::SUPERUSER_BEGIN = 0;
-const int CCMIS::SUPERUSER_END = 999;
-const int CCMIS::SHOP_CANTEEN_BEGIN = 1101;
-const int CCMIS::SHOP_CANTEEN_END = 1999;
-const int CCMIS::SHOP_MARKET_BEGIN = 2101;
-const int CCMIS::SHOP_MARKET_END = 2999;
-const int CCMIS::SHOP_BATH_BEGIN = 3101;
-const int CCMIS::SHOP_BATH_END = 3999;
-const int CCMIS::SHOP_BEGIN = 1000;
-const int CCMIS::SHOP_END = 3999;
-const int CCMIS::USER_TEA_EMP_BEGIN = 5000;
-const int CCMIS::USER_TEA_EMP_END = 6999;
-const int CCMIS::USER_BEGIN = 4000;
-const int CCMIS::USER_END = 6999;
+const int CCIMS::SUPERUSER_BEGIN = 0;
+const int CCIMS::SUPERUSER_END = 999;
+const int CCIMS::SHOP_CANTEEN_BEGIN = 1101;
+const int CCIMS::SHOP_CANTEEN_END = 1999;
+const int CCIMS::SHOP_MARKET_BEGIN = 2101;
+const int CCIMS::SHOP_MARKET_END = 2999;
+const int CCIMS::SHOP_BATH_BEGIN = 3101;
+const int CCIMS::SHOP_BATH_END = 3999;
+const int CCIMS::SHOP_BEGIN = 1000;
+const int CCIMS::SHOP_END = 3999;
+const int CCIMS::USER_TEA_EMP_BEGIN = 5000;
+const int CCIMS::USER_TEA_EMP_END = 6999;
+const int CCIMS::USER_BEGIN = 4000;
+const int CCIMS::USER_END = 6999;
 
-const int CCMIS::MESSAGE_TRANSACTION_SUCCESS = 0;
-const int CCMIS::MESSAGE_TRANSACTION_NO_USER = -1;
-const int CCMIS::MESSAGE_TRANSACTION_NO_SHOP = -2;
-const int CCMIS::MESSAGE_TRANSACTION_OVERFLOW = -3;
-const int CCMIS::MESSAGE_TRANSACTION_BALANCE_NOT_ENOUGH = -4;
-const int CCMIS::MESSAGE_TRANSACTION_MONEY_LOWER_THAN_ZERO = -5;
-const int CCMIS::MESSAGE_TRANSACTION_UNKNOWN = -6;
+const int CCIMS::MESSAGE_TRANSACTION_SUCCESS = 0;
+const int CCIMS::MESSAGE_TRANSACTION_NO_USER = -1;
+const int CCIMS::MESSAGE_TRANSACTION_NO_SHOP = -2;
+const int CCIMS::MESSAGE_TRANSACTION_OVERFLOW = -3;
+const int CCIMS::MESSAGE_TRANSACTION_BALANCE_NOT_ENOUGH = -4;
+const int CCIMS::MESSAGE_TRANSACTION_MONEY_LOWER_THAN_ZERO = -5;
+const int CCIMS::MESSAGE_TRANSACTION_UNKNOWN = -6;
 
-const int CCMIS::GROUP_SUPERUSER = 0;
-const int CCMIS::GROUP_CANTEEN = 1;
-const int CCMIS::GROUP_MARKET = 2;
-const int CCMIS::GROUP_BATH = 3;
+const int CCIMS::GROUP_SUPERUSER = 0;
+const int CCIMS::GROUP_CANTEEN = 1;
+const int CCIMS::GROUP_MARKET = 2;
+const int CCIMS::GROUP_BATH = 3;
 
-const int CCMIS::THREAD_TYPE_R_INFO = -1;
-const int CCMIS::THREAD_TYPE_R_SHOP = -2;
-const int CCMIS::THREAD_TYPE_R_USER = -3;
+const int CCIMS::THREAD_TYPE_R_INFO = -1;
+const int CCIMS::THREAD_TYPE_R_SHOP = -2;
+const int CCIMS::THREAD_TYPE_R_USER = -3;
 
-const int CCMIS::THREAD_TYPE_W_INFO = 1;
-const int CCMIS::THREAD_TYPE_W_SHOP = 2;
-const int CCMIS::THREAD_TYPE_W_USER = 3;
+const int CCIMS::THREAD_TYPE_W_INFO = 1;
+const int CCIMS::THREAD_TYPE_W_SHOP = 2;
+const int CCIMS::THREAD_TYPE_W_USER = 3;
 
-CCMIS::CCMIS()
+CCIMS::CCIMS()
 {
     //初始化
     mUserNumber = -1;
@@ -111,17 +111,17 @@ CCMIS::CCMIS()
     }
 }
 
-int CCMIS::GetCurrentReadThreadCount()
+int CCIMS::GetCurrentReadThreadCount()
 {
     return mReadThreadCount;
 }
 
-int CCMIS::GetCurrentWriteThreadCount()
+int CCIMS::GetCurrentWriteThreadCount()
 {
     return mWriteThreadCount;
 }
 
-jsonxx::Array CCMIS::LinkListToJson(User* user_list)
+jsonxx::Array CCIMS::LinkListToJson(User* user_list)
 {
     jsonxx::Array array;
 
@@ -139,7 +139,7 @@ jsonxx::Array CCMIS::LinkListToJson(User* user_list)
     return array;
 }
 
-jsonxx::Array CCMIS::LinkListToJson(Information* info_list)
+jsonxx::Array CCIMS::LinkListToJson(Information* info_list)
 {
     jsonxx::Array array;
 
@@ -163,7 +163,7 @@ jsonxx::Array CCMIS::LinkListToJson(Information* info_list)
     return array;
 }
 
-jsonxx::Array CCMIS::LinkListToJson(Shop* shop_list)
+jsonxx::Array CCIMS::LinkListToJson(Shop* shop_list)
 {
     jsonxx::Array array;
 
@@ -180,7 +180,7 @@ jsonxx::Array CCMIS::LinkListToJson(Shop* shop_list)
     return array;
 }
 
-bool CCMIS::SaveJsonArrToFile(const jsonxx::Array& ToSaveJson,string filename)
+bool CCIMS::SaveJsonArrToFile(const jsonxx::Array& ToSaveJson,string filename)
 {
     QString allJsonArray = QString::fromLocal8Bit(ToSaveJson.json().data());
 
@@ -201,7 +201,7 @@ bool CCMIS::SaveJsonArrToFile(const jsonxx::Array& ToSaveJson,string filename)
 
 
 //应该用多态用模板，下面这六个函数，怕吕帅而已。。。
-bool CCMIS::WriteShop(string filename,Shop* shop_list)
+bool CCIMS::WriteShop(string filename,Shop* shop_list)
 {
     jsonxx::Array shop_json;
     if(shop_list == NULL)
@@ -215,7 +215,7 @@ bool CCMIS::WriteShop(string filename,Shop* shop_list)
         return false;
 }
 
-bool CCMIS::WriteInf(string filename,Information* info_list)
+bool CCIMS::WriteInf(string filename,Information* info_list)
 {
 
     jsonxx::Array info_json;
@@ -231,7 +231,7 @@ bool CCMIS::WriteInf(string filename,Information* info_list)
 }
 
 
-bool CCMIS::WriteUser(string filename,User* user_list)
+bool CCIMS::WriteUser(string filename,User* user_list)
 {
     jsonxx::Array user_json;
     if(user_list == NULL)
@@ -246,7 +246,7 @@ bool CCMIS::WriteUser(string filename,User* user_list)
 }
 
 
-void CCMIS::WriteInfForDel()
+void CCIMS::WriteInfForDel()
 {
 
     JsonThread* jthread = new JsonThread(this, THREAD_TYPE_W_USER);
@@ -256,7 +256,7 @@ void CCMIS::WriteInfForDel()
 }
 
 
-QString CCMIS::FilenameCorrect(string filename)
+QString CCIMS::FilenameCorrect(string filename)
 {
     //跨平台处理
     QString finalfilename;
@@ -278,7 +278,7 @@ QString CCMIS::FilenameCorrect(string filename)
 }
 
 
-string CCMIS::ReadAllFileToQString(string filename)
+string CCIMS::ReadAllFileToQString(string filename)
 {
     //读取文件
     QFile fileReadIn(FilenameCorrect(filename));
@@ -302,7 +302,7 @@ string CCMIS::ReadAllFileToQString(string filename)
 }
 
 
-bool CCMIS::ReadUser(string filename)
+bool CCIMS::ReadUser(string filename)
 {
     /**by liuvv*/
     //change by wangzl using qfile, coding with utf-8
@@ -348,7 +348,7 @@ bool CCMIS::ReadUser(string filename)
     }
 }
 
-bool CCMIS::ReadShop(string filename)
+bool CCIMS::ReadShop(string filename)
 {
     /**by liuvv*/
     //change by wangzl using qfile, coding with utf-8
@@ -381,7 +381,7 @@ bool CCMIS::ReadShop(string filename)
     }
 }
 
-bool CCMIS::ReadInf(string filename)
+bool CCIMS::ReadInf(string filename)
 {
     string fileALLReadIn = ReadAllFileToQString(filename);
 
@@ -419,7 +419,7 @@ bool CCMIS::ReadInf(string filename)
     return true;
 }
 
-unsigned int CCMIS::ImportInf(string filename){
+unsigned int CCIMS::ImportInf(string filename){
     unsigned int successnumber(0);
     string fileALLReadIn = ReadAllFileToQString(filename);
     if (!fileALLReadIn.empty()){
@@ -458,7 +458,7 @@ unsigned int CCMIS::ImportInf(string filename){
     return successnumber;
 }
 
-string CCMIS::GenerateTag(int onum, int inum, int mon)
+string CCIMS::GenerateTag(int onum, int inum, int mon)
 {
     time_t tt = time(NULL);
     tm* t= localtime(&tt);
@@ -503,7 +503,7 @@ string CCMIS::GenerateTag(int onum, int inum, int mon)
     return tag;
 }
 
-string CCMIS::GenerateTag(int year, int month, int day, int hour, int min, int sec, int onum, int inum, int mon)
+string CCIMS::GenerateTag(int year, int month, int day, int hour, int min, int sec, int onum, int inum, int mon)
 {
     /**TIME*/
     string tag = to_string(year);
@@ -545,7 +545,7 @@ string CCMIS::GenerateTag(int year, int month, int day, int hour, int min, int s
     return tag;
 }
 
-void CCMIS::InsertInf(Information* tempinf)
+void CCIMS::InsertInf(Information* tempinf)
 {
     Information* in = mInfo;
 
@@ -560,7 +560,7 @@ void CCMIS::InsertInf(Information* tempinf)
     totalInfoCount++;
 }
 
-Information* CCMIS::BuildInfo(int onum, int inum, int mon)
+Information* CCIMS::BuildInfo(int onum, int inum, int mon)
 {
     Information* info = new Information();
     info->tag = GenerateTag(onum, inum, mon);
@@ -584,7 +584,7 @@ Information* CCMIS::BuildInfo(int onum, int inum, int mon)
     return info;
 }
 
-Information* CCMIS::BuildInfo(int year, int month, int day, int hour, int min, int sec, int onum, int inum, int mon)
+Information* CCIMS::BuildInfo(int year, int month, int day, int hour, int min, int sec, int onum, int inum, int mon)
 {
     Information* info = new Information();
     info->tag = GenerateTag(year, month, day, hour, min, sec, onum, inum, mon);
@@ -605,7 +605,7 @@ Information* CCMIS::BuildInfo(int year, int month, int day, int hour, int min, i
     return info;
 }
 
-bool CCMIS::CheckPassword(string password)
+bool CCIMS::CheckPassword(string password)
 {
     if (mUserNumber == -1) return false;    //用户名未初始化
 
@@ -637,33 +637,33 @@ bool CCMIS::CheckPassword(string password)
     }
 }
 
-void CCMIS::SetUserNumber(int n)
+void CCIMS::SetUserNumber(int n)
 {
     mUserNumber = n;
 }
 
-Information* CCMIS::GetInfoPointer()
+Information* CCIMS::GetInfoPointer()
 {
     return mInfo;
 }
 
-unsigned int CCMIS::GetTotalInfoNumber()
+unsigned int CCIMS::GetTotalInfoNumber()
 {
     return totalInfoCount;
 }
 
-unsigned int CCMIS::GetTotalUserNumber()
+unsigned int CCIMS::GetTotalUserNumber()
 {
     return totalUserCount;
 }
 
-unsigned int CCMIS::GetTotalShopNumber()
+unsigned int CCIMS::GetTotalShopNumber()
 {
     return totalShopCount;
 }
 
 //默认统计补贴信息 onum=2
-Information* CCMIS::SearchInfoByOnum
+Information* CCIMS::SearchInfoByOnum
 (int onum, unsigned long start_date_num,unsigned int start_time_num ,
  unsigned long finish_date_num ,unsigned int finish_time_num )
 {
@@ -693,7 +693,7 @@ Information* CCMIS::SearchInfoByOnum
     return filter_info_list;
 }
 
-Information* CCMIS::SearchInfoByInum
+Information* CCIMS::SearchInfoByInum
 (int inum, unsigned long start_date_num,unsigned int start_time_num,
  unsigned long finish_date_num,unsigned int finish_time_num)
 {
@@ -721,7 +721,7 @@ Information* CCMIS::SearchInfoByInum
     return filter_info_list;
 }
 
-void CCMIS::DeleteInf(Information *tempinf)
+void CCIMS::DeleteInf(Information *tempinf)
 {
     if (tempinf == NULL)
         return;
@@ -743,7 +743,7 @@ void CCMIS::DeleteInf(Information *tempinf)
     }
 }
 
-User* CCMIS::GetUserByNum(int num)
+User* CCIMS::GetUserByNum(int num)
 {
     if (num >= USER_BEGIN && num <= USER_END)
     {
@@ -759,7 +759,7 @@ User* CCMIS::GetUserByNum(int num)
     }
 }
 
-Shop* CCMIS::GetShopByNum(int num)
+Shop* CCIMS::GetShopByNum(int num)
 {
     if (
         (num >= SHOP_CANTEEN_BEGIN  &&
@@ -782,7 +782,7 @@ Shop* CCMIS::GetShopByNum(int num)
 }
 
 
-Shop* CCMIS::GetAllShopByNum(int num)
+Shop* CCIMS::GetAllShopByNum(int num)
 {
     if ((num >= SHOP_BEGIN  &&
         num <= SHOP_END  ) )
@@ -805,7 +805,7 @@ Shop* CCMIS::GetAllShopByNum(int num)
 
 
 
-QString CCMIS::GetAllNameByNum(int num)
+QString CCIMS::GetAllNameByNum(int num)
 {
     switch (num) {
         case 0:
@@ -830,19 +830,19 @@ QString CCMIS::GetAllNameByNum(int num)
     }
 }
 
-QString CCMIS::GetCurrentUserName(){
+QString CCIMS::GetCurrentUserName(){
     return this->GetAllNameByNum(mUserNumber);
 }
 
-User*   CCMIS::GetCurrentUser(){
+User*   CCIMS::GetCurrentUser(){
     return GetUserByNum(mUserNumber);
 }
 
-Shop*   CCMIS::GetCurrentShop(){
+Shop*   CCIMS::GetCurrentShop(){
     return GetShopByNum(mUserNumber);
 }
 
-int CCMIS::GetTotalCanteenConsumptionByDay(int year, int month, int day, int num)
+int CCIMS::GetTotalCanteenConsumptionByDay(int year, int month, int day, int num)
 {
     int c =0;
     Information* info = mInfo->next;
@@ -861,7 +861,7 @@ int CCMIS::GetTotalCanteenConsumptionByDay(int year, int month, int day, int num
     return c;
 }
 
-int CCMIS::GetTotalCanteenAndMarketConsumptionByDay
+int CCIMS::GetTotalCanteenAndMarketConsumptionByDay
 (int year, int month, int day, int num)
 {
     int c =0;
@@ -882,7 +882,7 @@ int CCMIS::GetTotalCanteenAndMarketConsumptionByDay
     return c;
 }
 
-int CCMIS::NewSubsidy(User* u)
+int CCIMS::NewSubsidy(User* u)
 {
     if (u->number >= USER_TEA_EMP_BEGIN &&
             u->number <= USER_TEA_EMP_END)   //教职工单次消费超20
@@ -904,7 +904,7 @@ int CCMIS::NewSubsidy(User* u)
     }
 }
 
-int CCMIS::NewTransaction(int onum, int inum, int mon)
+int CCIMS::NewTransaction(int onum, int inum, int mon)
 {
     if (mon <= 0)
         return MESSAGE_TRANSACTION_MONEY_LOWER_THAN_ZERO;
@@ -1023,7 +1023,7 @@ int CCMIS::NewTransaction(int onum, int inum, int mon)
     return MESSAGE_TRANSACTION_UNKNOWN; //未知错误
 }
 
-int CCMIS::NewAdmTransaction(int year, int month, int day, int hour, int min, int sec, int onum, int inum, int mon)
+int CCIMS::NewAdmTransaction(int year, int month, int day, int hour, int min, int sec, int onum, int inum, int mon)
 {
     if (mon <= 0)
         return MESSAGE_TRANSACTION_MONEY_LOWER_THAN_ZERO;
@@ -1133,7 +1133,7 @@ int CCMIS::NewAdmTransaction(int year, int month, int day, int hour, int min, in
     return MESSAGE_TRANSACTION_UNKNOWN; //未知错误
 }
 
-bool CCMIS::NewRefund(Information *tempinf)
+bool CCIMS::NewRefund(Information *tempinf)
 {
     qDebug()<<tempinf;
     if (tempinf == NULL)
@@ -1185,12 +1185,12 @@ bool CCMIS::NewRefund(Information *tempinf)
     return true;
 }
 
-int CCMIS::GetUserNum()
+int CCIMS::GetUserNum()
 {
     return mUserNumber;
 }
 
-bool CCMIS::NewRecharge(int num, int money)
+bool CCIMS::NewRecharge(int num, int money)
 {
     User* u = GetUserByNum(num);
     u->balance += money;
@@ -1207,7 +1207,7 @@ bool CCMIS::NewRecharge(int num, int money)
     return true;
 }
 
-Information* CCMIS::GetInfoByTag(QString tag)
+Information* CCIMS::GetInfoByTag(QString tag)
 {
     Information* i = mInfo->next;
     while (i != NULL) {
@@ -1219,7 +1219,7 @@ Information* CCMIS::GetInfoByTag(QString tag)
     return NULL;
 }
 
-void CCMIS::CouponFresh()
+void CCIMS::CouponFresh()
 {
     User* u = mUser->next;
     QDateTime *datetime = new QDateTime(QDateTime::currentDateTime());
@@ -1237,7 +1237,7 @@ void CCMIS::CouponFresh()
     }
 }
 
-int CCMIS::GetProfitByShopNum(int num)
+int CCIMS::GetProfitByShopNum(int num)
 {
     int profit = 0;
     Information* i = mInfo->next;

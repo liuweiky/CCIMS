@@ -4,7 +4,7 @@
 #include <QMainWindow>
 #include <QTimer>
 
-#include "ccmis.h"
+#include "ccims.h"
 #include "aboutui.h"
 #include "table_funcs.h"
 namespace Ui {
@@ -16,7 +16,7 @@ class UserSearchWindow : public QMainWindow
     Q_OBJECT
 
 public:
-    explicit UserSearchWindow(CCMIS* c, QWidget *parent = 0);
+    explicit UserSearchWindow(CCIMS* c, QWidget *parent = 0);
     ~UserSearchWindow();
 
 private slots:
@@ -25,7 +25,7 @@ private slots:
 
 private:
     Ui::UserSearchWindow *ui;
-    CCMIS* mCCMIS;
+    CCIMS* mCCIMS;
     User_Table* mUserTable;
 };
 

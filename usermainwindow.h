@@ -7,7 +7,7 @@
 #include "usersearchwindow.h"
 #include "userrechargewindow.h"
 
-#include "ccmis.h"
+#include "ccims.h"
 #include "aboutui.h"
 
 namespace Ui {
@@ -19,7 +19,7 @@ class UserMainWindow : public QMainWindow
     Q_OBJECT
 
 public:
-    explicit UserMainWindow(CCMIS* c, QWidget *parent = 0);
+    explicit UserMainWindow(CCIMS* c, QWidget *parent = 0);
     ~UserMainWindow();
     QString str2qstr(const string str); //处理中文乱码
     string qstr2str(const QString qstr);
@@ -33,7 +33,7 @@ private slots:
 
 private:
     Ui::UserMainWindow *ui;
-    CCMIS* mCCMIS;
+    CCIMS* mCCIMS;
 };
 
 #endif // USERMAINWINDOW_H

@@ -13,7 +13,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     ui->setupUi(this);
 
-    mCCMIS = new CCMIS();
+    mCCIMS = new CCIMS();
 
     //时间处理
     QTimer *timer = new QTimer(this);
@@ -35,47 +35,47 @@ MainWindow::~MainWindow()
 void MainWindow::time_dispose()
 {
     //月初刷新券
-    mCCMIS->CouponFresh();
+    mCCIMS->CouponFresh();
 }
 
 void MainWindow::on_pushButton_clicked()
 {
     //获取帐号
     int number = ui->UserNameLineEdit->text().toInt();
-    mCCMIS->SetUserNumber(number);
+    mCCIMS->SetUserNumber(number);
 
     //判断用户名和密码条件
-    if (mCCMIS->CheckPassword(ui->PasswordLineEdit->text().toStdString()))
+    if (mCCIMS->CheckPassword(ui->PasswordLineEdit->text().toStdString()))
     {
-        if (number <= CCMIS::SUPERUSER_END) {
+        if (number <= CCIMS::SUPERUSER_END) {
             //管理员
             AdministratorMainWindow *mAMW =
-                    new AdministratorMainWindow(mCCMIS,this);
+                    new AdministratorMainWindow(mCCIMS,this);
             mAMW->setGeometry(this->x(),this->y(),this->width(),this->height());
             mAMW->show();
-        } else if (number <= CCMIS::SHOP_END) {
+        } else if (number <= CCIMS::SHOP_END) {
             if (number%100 == 0){
                 //进度条展示
                 QProgressDialog *progressDlg = new
                         QProgressDialog(QStringLiteral("正在载入文件......"),
                                         QStringLiteral("等待"),0,
-                                        mCCMIS->GuessTotalNumber,this);
-                if(!AboutUI::PDlg(progressDlg,mCCMIS,mCCMIS->GuessTotalNumber)){
+                                        mCCIMS->GuessTotalNumber,this);
+                if(!AboutUI::PDlg(progressDlg,mCCIMS,mCCIMS->GuessTotalNumber)){
                     return;
                 }
                 //场所（总商家）
-                PlaceMainWindow *mPMW = new PlaceMainWindow(mCCMIS,this);
+                PlaceMainWindow *mPMW = new PlaceMainWindow(mCCIMS,this);
                 mPMW->setGeometry(this->x(),this->y(),this->width(),this->height());
                 mPMW->show();
             }else {
                 //商家
-                ShopMainWindow *mSMW = new ShopMainWindow(mCCMIS,this);
+                ShopMainWindow *mSMW = new ShopMainWindow(mCCIMS,this);
                 mSMW->setGeometry(this->x(),this->y(),this->width(),this->height());
                 mSMW->show();
             }
         } else {
             //用户
-            UserMainWindow *mUMW = new UserMainWindow(mCCMIS,this);
+            UserMainWindow *mUMW = new UserMainWindow(mCCIMS,this);
             mUMW->setGeometry(this->x(),this->y(),this->width(),this->height());
             mUMW->show();
         }
