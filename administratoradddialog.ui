@@ -337,6 +337,16 @@
    </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>dateEdit</tabstop>
+  <tabstop>timeEdit_2</tabstop>
+  <tabstop>OnumEdit</tabstop>
+  <tabstop>InumEdit</tabstop>
+  <tabstop>MoneyEdit</tabstop>
+  <tabstop>checkForCurTime</tabstop>
+  <tabstop>Cur_Onum_Btn</tabstop>
+  <tabstop>Cur_Inum_Btn</tabstop>
+ </tabstops>
  <resources/>
  <connections>
   <connection>
