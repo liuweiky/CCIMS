@@ -91,6 +91,7 @@ void AdministratorSCWindow::on_BackButton_clicked()
 void AdministratorSCWindow::on_InsertButton_clicked()
 {
     AdministratorAddDialog* aad = new AdministratorAddDialog(mCCIMS, false, this);
+    aad->setInOutNumEnable(false);
     aad->setGeometry(this->x()+this->width()/4,this->y()+this->height()/4,
                      this->width(),this->height());
     aad->show();
@@ -101,6 +102,8 @@ void AdministratorSCWindow::on_AlterButton_clicked()
     if (mAdminTable->mCurrentItemIndex >= 0)
     {
         AdministratorAddDialog* aad = new AdministratorAddDialog(mCCIMS, 1, this);
+        aad->setInOutNumEnable(true);
+
         aad->setGeometry(this->x()+this->width()/4,this->y()+this->height()/4,
                 this->width(),this->height());
         aad->show();

@@ -270,14 +270,28 @@
        </property>
       </widget>
      </item>
-     <item row="1" column="1" colspan="3">
-      <widget class="QLineEdit" name="OnumEdit"/>
-     </item>
-     <item row="2" column="1" colspan="3">
-      <widget class="QLineEdit" name="InumEdit"/>
-     </item>
      <item row="3" column="1" colspan="3">
       <widget class="QLineEdit" name="MoneyEdit"/>
+     </item>
+     <item row="1" column="1" colspan="2">
+      <widget class="QLineEdit" name="OnumEdit"/>
+     </item>
+     <item row="2" column="1" colspan="2">
+      <widget class="QLineEdit" name="InumEdit"/>
+     </item>
+     <item row="1" column="3">
+      <widget class="QCheckBox" name="Cur_Onum_Btn">
+       <property name="text">
+        <string>选择当前出账账户</string>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="3">
+      <widget class="QCheckBox" name="Cur_Inum_Btn">
+       <property name="text">
+        <string>选择当前入账账户</string>
+       </property>
+      </widget>
      </item>
     </layout>
    </item>

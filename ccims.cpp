@@ -184,9 +184,10 @@ bool CCIMS::SaveJsonArrToFile(const jsonxx::Array& ToSaveJson,string filename)
 {
     QString allJsonArray = QString::fromLocal8Bit(ToSaveJson.json().data());
 
-    QFile fileOut(COMMON_FUNCS::UTF8ToQString(filename));
-    if(!fileOut.open(QIODevice::WriteOnly|QIODevice::Text)){
+    QFile fileOut(FilenameCorrect(filename));
+    if(!fileOut.open(QIODevice::WriteOnly | QIODevice::Text)){
         qDebug("Could not open the file for WRITING! \n");
+        fileOut.close();
         return false;
     }
 
@@ -198,9 +199,6 @@ bool CCIMS::SaveJsonArrToFile(const jsonxx::Array& ToSaveJson,string filename)
     return true;
 }
 
-
-
-//应该用多态用模板，下面这六个函数，怕吕帅而已。。。
 bool CCIMS::WriteShop(string filename,Shop* shop_list)
 {
     jsonxx::Array shop_json;
@@ -284,6 +282,7 @@ string CCIMS::ReadAllFileToQString(string filename)
     QFile fileReadIn(FilenameCorrect(filename));
     if(!fileReadIn.open(QIODevice::ReadOnly | QIODevice::Text)){
         qDebug ("Could not open the file for reading /n");
+        fileReadIn.close();
         return string("");
         //String("").Empty();  //结果为true判定用
     }

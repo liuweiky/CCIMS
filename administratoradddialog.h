@@ -18,6 +18,7 @@ class AdministratorAddDialog : public QDialog
 public:
     explicit AdministratorAddDialog(CCIMS* c, int ismod, QWidget *parent = 0);
     ~AdministratorAddDialog();
+    void setInOutNumEnable(bool state);
 
 private slots:
     void on_buttonBox_accepted();
@@ -32,6 +33,8 @@ private:
     int isModify;
     QDate* mDate;
     QTime* mTime;
+    QPushButton* mCur_Inum_Btn;
+    QPushButton* mCur_Onum_Btn;
 };
 
 #endif // ADMINISTRATORADDDIALOG_H
