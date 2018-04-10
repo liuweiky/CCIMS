@@ -1,6 +1,6 @@
  #include "administratoradddialog.h"
 #include "ui_administratoradddialog.h"
-
+#include "administratorscwindow.h"
 AdministratorAddDialog::AdministratorAddDialog(CCIMS* c, int ismod, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::AdministratorAddDialog)
@@ -30,28 +30,13 @@ AdministratorAddDialog::AdministratorAddDialog(CCIMS* c, int ismod, QWidget *par
     //正则表达式，只允许输入0~9
     QRegExp regx("[0-9]+$");
 
-
     QValidator* validator;
-
-    if(mCur_Inum_Btn->isChecked()){
-        ui->InumEdit->setEnabled(false);
-        ui->InumEdit->setText();
-    }else{
-        validator = new QRegExpValidator(regx, ui->InumEdit);
-        ui->InumEdit->setValidator(validator);
-
-    }
-
-    if(mCur_Onum_Btn->isChecked()){
-        ui->OnumEdit->setEnabled(false);
-    }else{
-        validator = new QRegExpValidator(regx, ui->OnumEdit);
-        ui->OnumEdit->setValidator(validator);
-    }
-
-
-
-
+    //出账、入账输入
+    validator = new QRegExpValidator(regx, ui->InumEdit);
+    ui->InumEdit->setValidator(validator);
+    validator = new QRegExpValidator(regx, ui->OnumEdit);
+    ui->OnumEdit->setValidator(validator);
+    //金额输入
     QDoubleValidator* v = new QDoubleValidator;
     ui->MoneyEdit->setValidator(v);
 }
@@ -158,4 +143,34 @@ void AdministratorAddDialog::on_dateEdit_dateChanged(const QDate &date)
 void AdministratorAddDialog::on_timeEdit_2_timeChanged(const QTime &time)
 {
     mTime->setHMS(time.hour(),time.minute(),0);
+}
+
+void AdministratorAddDialog::on_Cur_Onum_Btn_stateChanged(int arg1)
+{
+    AdministratorSCWindow   * p = (AdministratorSCWindow*) parentWidget();
+    switch(arg1){
+    case Qt::Checked:
+        ui->OnumEdit->setEnabled(false);
+        ui->OnumEdit->setText(p->GetTable()->get_Current_Row_Onum());
+        qDebug()<<ui->OnumEdit->text();
+        break;
+    case Qt::Unchecked:
+        ui->OnumEdit->setEnabled(true);
+        break;
+    }
+}
+
+void AdministratorAddDialog::on_Cur_Inum_Btn_stateChanged(int arg1)
+{
+    AdministratorSCWindow   * p = (AdministratorSCWindow*) parentWidget();
+    switch(arg1){
+    case Qt::Checked:
+        ui->InumEdit->setEnabled(false);
+        ui->InumEdit->setText(p->GetTable()->get_Current_Row_Inum());
+        qDebug()<<ui->InumEdit->text();
+        break;
+    case Qt::Unchecked:
+        ui->InumEdit->setEnabled(true);
+        break;
+    }
 }

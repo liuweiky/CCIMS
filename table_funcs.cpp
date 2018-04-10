@@ -177,6 +177,9 @@ QString Table_Parent::get_Info_Tag_By_RowIndex(int row_index)
 
 
 
+
+
+
 QString Table_Parent::get_Current_Table_Money()
 {
     int col_index = 0;
@@ -335,6 +338,32 @@ void Admin_Table::DelItem()
         mCurrentItemIndex = -1;
     }
 }
+
+
+QString Admin_Table::get_Current_Row_Inum()
+{
+    if(mCurrentItemIndex != -1){
+        QString inum = mTable->item(mCurrentItemIndex,4)->text();
+
+        return inum;
+    }
+}
+
+QString Admin_Table::get_Current_Row_Onum()
+{
+    if(mCurrentItemIndex != -1){
+        QString onum = mTable->item(mCurrentItemIndex,2)->text();
+
+        return onum;
+    }
+}
+
+
+
+
+
+
+
 
 //--------------------------------------------------admin槽函数
 void Admin_Table::on_Subsidy_Check_Admin(int state)

@@ -2,7 +2,7 @@
 #define ADMINISTRATORADDDIALOG_H
 
 #include <QDialog>
-
+#include <QCheckBox>
 #include "ccims.h"
 #include "aboutui.h"
 #include "administratorscwindow.h"
@@ -27,14 +27,18 @@ private slots:
     void on_dateEdit_dateChanged(const QDate &date);
     void on_timeEdit_2_timeChanged(const QTime &time);
 
+    void on_Cur_Onum_Btn_stateChanged(int arg1);
+
+    void on_Cur_Inum_Btn_stateChanged(int arg1);
+
 private:
     Ui::AdministratorAddDialog *ui;
     CCIMS* mCCIMS;
     int isModify;
     QDate* mDate;
     QTime* mTime;
-    QPushButton* mCur_Inum_Btn;
-    QPushButton* mCur_Onum_Btn;
+    QCheckBox* mCur_Inum_Btn;
+    QCheckBox* mCur_Onum_Btn;
 };
 
 #endif // ADMINISTRATORADDDIALOG_H
