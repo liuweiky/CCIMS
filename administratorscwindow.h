@@ -31,6 +31,8 @@ private slots:
     void on_InsertButton_clicked();
     void on_AlterButton_clicked();
 
+    void on_CheckForSubsidy_stateChanged(int arg1);
+
 private:
     Ui::AdministratorSCWindow *ui;
     CCIMS *mCCIMS;
