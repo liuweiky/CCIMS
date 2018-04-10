@@ -339,6 +339,24 @@ void Admin_Table::DelItem()
     }
 }
 
+void Admin_Table::on_tableWidget_itemClicked(QTableWidgetItem *item)
+{
+    mCurrentItemIndex = item->row();
+    if (
+            get_Current_Row_Onum() == QString("0000") ||
+            get_Current_Row_Onum() == QString("0001") ||
+            get_Current_Row_Onum() == QString("0002") )
+    {
+
+        mDelete_Btn->setEnabled(false);
+        mInsert_Btn->setEnabled(false);
+        mAlter_Btn->setEnabled(false);
+    } else {
+        mDelete_Btn->setEnabled(true);
+        mInsert_Btn->setEnabled(true);
+        mAlter_Btn->setEnabled(true);
+    }
+}
 
 QString Admin_Table::get_Current_Row_Inum()
 {

@@ -83,6 +83,8 @@ public:
     void init_Super_Table_Header(int now_num);
     QString get_Current_Row_Onum();
     QString get_Current_Row_Inum();
+
+    void on_tableWidget_itemClicked(QTableWidgetItem *item);
 public slots:
     void on_Subsidy_Check_Admin(int);
     void on_Reset_clicked();
