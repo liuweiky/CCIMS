@@ -109,3 +109,15 @@ void AdministratorSCWindow::on_AlterButton_clicked()
         aad->show();
     }
 }
+
+void AdministratorSCWindow::on_CheckForSubsidy_stateChanged(int arg1)
+{
+    switch(arg1){
+    case Qt::Checked:
+        ui->AlterButton->setEnabled(false);
+        break;
+    case Qt::Unchecked:
+        ui->AlterButton->setEnabled(true);
+        break;
+    }
+}

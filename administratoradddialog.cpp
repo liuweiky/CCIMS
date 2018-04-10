@@ -38,6 +38,7 @@ AdministratorAddDialog::AdministratorAddDialog(CCIMS* c, int ismod, QWidget *par
     ui->OnumEdit->setValidator(validator);
     //金额输入
     QDoubleValidator* v = new QDoubleValidator;
+    v->setDecimals(2);
     ui->MoneyEdit->setValidator(v);
 }
 
