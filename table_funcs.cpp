@@ -126,18 +126,18 @@ void Table_Parent::show_One_Info_All(Information *one_info, int row_index)
 void Table_Parent::export_Table_To_CSV(){
 
     //当前登陆用户名
-    QString cur_name = mCCIMS->GetCurrentUserName();
-    QString cur_date = QDate::currentDate().toString("yyyy-MM-dd");
-    QString cur_time = QTime::currentTime().toString("hh:mm:ss");
+    string cur_name = mCCIMS->GetCurrentUserName().toStdString();
+    string cur_date = QDate::currentDate().toString("yyyyMMdd").toStdString();
+    string cur_time = QTime::currentTime().toString("hhmmss").toStdString();
 
     //建立文件名
-    string fileName = CCIMS::OUT_FILE_NAME + cur_name.toStdString() + cur_date.toStdString() +" " +cur_time.toStdString();
+    string fileName = CCIMS::OUT_FILE_NAME + cur_name + cur_date +"-" +cur_time;
     //fileName += std::to_string(mCCIMS->GetUserNum());
     fileName += ".csv";
     //打开.csv文件
     QFile file(mCCIMS->FilenameCorrect(fileName));
     if(!file.open(QIODevice::WriteOnly | QIODevice::Text)) {
-        qDebug() << "Output file failed!";
+        qDebug() << "Output file failed!"<<file.fileName();
         return;
     }
     QTextStream out(&file);
