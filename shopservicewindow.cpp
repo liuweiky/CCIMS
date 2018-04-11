@@ -57,6 +57,14 @@ void ShopServiceWindow::on_WorkButton_clicked()
     int onum = ui->CardNumLineEdit->text().toInt();
     int money = ui->MoneyLineEdit->text().toDouble() * 100; //*100
 
+    if (money <= 0)
+    {
+        QMessageBox::warning(this, tr("警告！"),
+                           tr("无效的金额！"),
+                           QMessageBox::Yes);
+        return;
+    }
+
     switch (mCCIMS->NewTransaction(onum, mCCIMS->GetUserNum(), money)) {
     case -1:
         QMessageBox::warning(this, tr("警告！"),

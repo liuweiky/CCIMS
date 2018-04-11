@@ -53,8 +53,11 @@ void UserRechargeWindow::on_BackButton_clicked()
 void UserRechargeWindow::on_WorkButton_clicked()
 {
     int money = ui->moneyLineEdit->text().toInt() * 100;
-    if (mCCIMS->GetUserByNum(mCCIMS->GetUserNum())->balance + money > 100000)
-    {
+    if (money <= 0) {   //金额过大溢出处理
+        QMessageBox::warning(this, tr("警告！"),
+                           tr("无效的金额！"),
+                           QMessageBox::Yes);
+    } else if (mCCIMS->GetUserByNum(mCCIMS->GetUserNum())->balance + money > 100000) {
         QMessageBox::warning(this, tr("警告！"),
                            tr("校园卡余额超过 1000！"),
                            QMessageBox::Yes);

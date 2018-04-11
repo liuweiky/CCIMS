@@ -87,7 +87,7 @@ void AdministratorAddDialog::on_buttonBox_accepted()
         break;
     case -5:
         QMessageBox::warning(a, tr("警告！"),
-                           tr("金额不能小于 0！"),
+                           tr("金额小于 0 或格式错误！"),
                            QMessageBox::Yes);
         break;
     case 0:
