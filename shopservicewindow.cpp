@@ -32,6 +32,7 @@ ShopServiceWindow::ShopServiceWindow(CCIMS *c, QWidget *parent) :
     QValidator *validator = new QRegExpValidator(regx, ui->CardNumLineEdit);
     ui->CardNumLineEdit->setValidator(validator);
     QDoubleValidator* v = new QDoubleValidator;
+    v->setDecimals(2);
     ui->MoneyLineEdit->setValidator(v);
 }
 
