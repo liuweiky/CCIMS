@@ -44,7 +44,7 @@ public:
     void init_Subsidy_Header();
     void show_One_Info_Same_Num(Information*,int,int);
     void show_One_Info_All(Information*,int);
-    void export_Table_To_CSV();
+    bool export_Table_To_CSV();
     QString get_Info_Tag_By_RowIndex(int row_index);
     QString get_Current_Table_Money();
 

@@ -123,7 +123,7 @@ void Table_Parent::show_One_Info_All(Information *one_info, int row_index)
     mTable->setItem(row_index,7,new QTableWidgetItem(tag));
 }
 
-void Table_Parent::export_Table_To_CSV(){
+bool Table_Parent::export_Table_To_CSV(){
 
     //当前登陆用户名
     string cur_name = mCCIMS->GetCurrentUserName().toStdString();
@@ -137,7 +137,7 @@ void Table_Parent::export_Table_To_CSV(){
     QFile file(mCCIMS->FilenameCorrect(fileName));
     if(!file.open(QIODevice::WriteOnly | QIODevice::Text)) {
         qDebug() << "Output file failed!"<<file.fileName();
-        return;
+        return false;
     }
     QTextStream out(&file);
     QString str;
@@ -145,6 +145,8 @@ void Table_Parent::export_Table_To_CSV(){
     int row = mTable->rowCount();//表格总行数
     int col = mTable->columnCount();
     for(int i = 0; i < row; i ++) {
+        if(this->mTable->isRowHidden(i))
+            continue;
         for(int j = 0; j < col; j++) {
             str = mTable->item(i, j)->text();
             if (j == col - 1 || j == 0) {   //转文本
@@ -156,6 +158,13 @@ void Table_Parent::export_Table_To_CSV(){
         out << "\n";
     }
     file.close();
+    if(file.size() == 0){
+        file.remove();
+        return false;
+
+    }
+
+    return true;
 }
 
 QString Table_Parent::get_Info_Tag_By_RowIndex(int row_index)
@@ -228,11 +237,18 @@ void Table_Parent::on_Filter_clicked()
 
 void Table_Parent::on_Export_pressed()
 {
-    this->export_Table_To_CSV();
+    bool isNotEmptyFile = this->export_Table_To_CSV();
+    if(isNotEmptyFile){
     QApplication::setQuitOnLastWindowClosed(false);
     QMessageBox::information(NULL, tr("提示"),
                             tr("导出成功！"),
-                             QMessageBox::Yes);
+                             QMessageBox::Yes);}
+    else{
+        QApplication::setQuitOnLastWindowClosed(false);
+        QMessageBox::information(NULL, tr("提示"),
+                                tr("导出为空！"),
+                                 QMessageBox::Yes);
+    }
 }
 
 void Table_Parent::on_Reset_clicked()
@@ -370,6 +386,7 @@ QString Admin_Table::get_Current_Row_Inum()
 
         return inum;
     }
+    return QString("");
 }
 
 QString Admin_Table::get_Current_Row_Onum()
@@ -379,6 +396,7 @@ QString Admin_Table::get_Current_Row_Onum()
 
         return onum;
     }
+    return QString("");
 }
 
 
