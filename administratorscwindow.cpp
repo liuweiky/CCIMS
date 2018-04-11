@@ -115,9 +115,11 @@ void AdministratorSCWindow::on_CheckForSubsidy_stateChanged(int arg1)
     switch(arg1){
     case Qt::Checked:
         ui->AlterButton->setEnabled(false);
+        ui->DeleteButton->setEnabled(false);
         break;
     case Qt::Unchecked:
         ui->AlterButton->setEnabled(true);
+        ui->DeleteButton->setEnabled(true);
         break;
     }
 }
