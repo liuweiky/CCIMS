@@ -13,7 +13,7 @@
 //自定义常量
 const string CCIMS::BACKBUTTON_PICTURE_NAME = "image/BackButton.png";
 
-const string CCIMS::OUT_FILE_NAME   = "data/table";
+const string CCIMS::OUT_FILE_NAME   = "data/";
 const string CCIMS::USER_FILE_NAME  = "data/user.json";
 const string CCIMS::SHOP_FILE_NAME  = "data/shop.json";
 const string CCIMS::INFO_FILE_NAME  = "data/info.json";
