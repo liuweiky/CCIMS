@@ -30,7 +30,7 @@ shop_arr = [int(x) for x in shop_arr if (x > 2000) and (x < 3000)]
 # print(len(bath_arr))
 # print(len(shop_arr))
 
-with open('user_short.json', 'r', encoding="utf8") as u:
+with open('user.json', 'r', encoding="utf8") as u:
     user = json.load(u)
 
 user_arr = np.zeros((len(user)))
@@ -142,14 +142,12 @@ def datelist(beginDate, endDate):
     return date_l
 
 
-whole_date_arr = datelist('2018-01-01', '2018-03-01')
+whole_date_arr = datelist('2018-03-01', '2018-04-12')
 
 def current_month(day):
     if day <= 30:
         return 0
-    elif day <= 59:
-        return 1
-    return 2
+    return 1
 
 def one_stu_whole_payments(stu_index):
     one_stu_bath_coupon_money = [10000, 10000, 10000]

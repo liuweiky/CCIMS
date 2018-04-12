@@ -31,7 +31,7 @@ public:
     QPushButton* mExport_Btn;
 
     CCIMS* mCCIMS;
-    //不清楚是否合适?
+
     int mCurrentItemIndex = -1;
 
     Table_Parent(QTableWidget *table, QDateEdit* start_edit,

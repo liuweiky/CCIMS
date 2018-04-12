@@ -249,6 +249,7 @@ void Table_Parent::on_Export_pressed()
                                 tr("导出为空！"),
                                  QMessageBox::Yes);
     }
+    mExport_Btn->released();
 }
 
 void Table_Parent::on_Reset_clicked()
