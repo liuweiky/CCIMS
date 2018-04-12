@@ -90,6 +90,11 @@ void AdministratorAddDialog::on_buttonBox_accepted()
                            tr("金额小于 0 或格式错误！"),
                            QMessageBox::Yes);
         break;
+    case -7:
+        QMessageBox::warning(a, tr("警告！"),
+                           tr("重复插入！"),
+                           QMessageBox::Yes);
+        break;
     case 0:
         QMessageBox::information(a, tr("信息！"),
                            tr("创建成功！"),

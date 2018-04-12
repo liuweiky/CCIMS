@@ -57,6 +57,7 @@ const int CCIMS::MESSAGE_TRANSACTION_OVERFLOW = -3;
 const int CCIMS::MESSAGE_TRANSACTION_BALANCE_NOT_ENOUGH = -4;
 const int CCIMS::MESSAGE_TRANSACTION_MONEY_LOWER_THAN_ZERO = -5;
 const int CCIMS::MESSAGE_TRANSACTION_UNKNOWN = -6;
+const int CCIMS::MESSAGE_TRANSACTION_DUP = -7;
 
 const int CCIMS::GROUP_SUPERUSER = 0;
 const int CCIMS::GROUP_CANTEEN = 1;
@@ -448,8 +449,8 @@ unsigned int CCIMS::ImportInf(string filename){
                     get<jsonxx::Number>(JSON_KEY_ONUMBER);
             info->money= array.get<jsonxx::Object>(i).
                     get<jsonxx::Number>(JSON_KEY_MONEY);
-            InsertInf(info);
-            successnumber++;
+            if (InsertInf(info))
+                successnumber++;
         }
     } else {
         successnumber = 0;
@@ -544,9 +545,20 @@ string CCIMS::GenerateTag(int year, int month, int day, int hour, int min, int s
     return tag;
 }
 
-void CCIMS::InsertInf(Information* tempinf)
+bool CCIMS::InsertInf(Information* tempinf)
 {
-    Information* in = mInfo;
+    Information* in = mInfo->next;
+
+    while (in != NULL && tempinf->tag.compare(in->tag) != 0) {
+        in = in->next;
+    }
+
+    if (in != NULL)
+    {
+        return false;
+    }
+
+    in = mInfo;
 
     while (in->next != NULL &&
            Information::InfoToDateTime(in->next) < Information::InfoToDateTime(tempinf)) {
@@ -557,6 +569,8 @@ void CCIMS::InsertInf(Information* tempinf)
     in->next = tempinf;
 
     totalInfoCount++;
+
+    return true;
 }
 
 Information* CCIMS::BuildInfo(int onum, int inum, int mon)
@@ -1045,7 +1059,10 @@ int CCIMS::NewAdmTransaction(int year, int month, int day, int hour, int min, in
         u->balance -= mon;
         //WriteUser(USER_FILE_NAME);
         Information* info = BuildInfo(year, month, day, hour, min, sec, onum, inum, mon);
-        InsertInf(info);
+        if (!InsertInf(info))
+        {
+            return MESSAGE_TRANSACTION_DUP;
+        }
         //WriteInf(INFO_FILE_NAME);
 
         if (u->number >= USER_TEA_EMP_BEGIN &&
@@ -1069,7 +1086,10 @@ int CCIMS::NewAdmTransaction(int year, int month, int day, int hour, int min, in
         u->balance -= mon;
         //WriteUser(USER_FILE_NAME);
         Information* info = BuildInfo(year, month, day, hour, min, sec, onum, inum, mon);
-        InsertInf(info);
+        if (!InsertInf(info))
+        {
+            return MESSAGE_TRANSACTION_DUP;
+        }
         //WriteInf(INFO_FILE_NAME);
 
         JsonThread* jthread = new JsonThread(this, THREAD_TYPE_W_USER);
@@ -1094,7 +1114,10 @@ int CCIMS::NewAdmTransaction(int year, int month, int day, int hour, int min, in
 
                 Information* info = BuildInfo
                         (year, month, day, hour, min, sec, onum, inum + 50, mon);   //转券账户
-                InsertInf(info);
+                if (!InsertInf(info))
+                {
+                    return MESSAGE_TRANSACTION_DUP;
+                }
             } else {    //否则先扣coupon，再扣balance
                 u->balance -= (mon - u->coupon);
 
@@ -1103,13 +1126,19 @@ int CCIMS::NewAdmTransaction(int year, int month, int day, int hour, int min, in
                     //转券账户
                     Information* info = BuildInfo
                             (year, month, day, hour, min, sec, onum, inum + 50, u->coupon);
-                    InsertInf(info);
+                    if (!InsertInf(info))
+                    {
+                        return MESSAGE_TRANSACTION_DUP;
+                    }
                 }
 
                 //转普通账户
                 Information* info = BuildInfo
                         (year, month, day, hour, min, sec, onum, inum, mon - u->coupon);
-                InsertInf(info);
+                if (!InsertInf(info))
+                {
+                    return MESSAGE_TRANSACTION_DUP;
+                }
 
                 u->coupon = 0;
             }

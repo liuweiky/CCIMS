@@ -97,6 +97,7 @@ public:
     static const int MESSAGE_TRANSACTION_BALANCE_NOT_ENOUGH;
     static const int MESSAGE_TRANSACTION_MONEY_LOWER_THAN_ZERO;
     static const int MESSAGE_TRANSACTION_UNKNOWN;
+    static const int MESSAGE_TRANSACTION_DUP;
 
     static const int GROUP_SUPERUSER;
     static const int GROUP_CANTEEN;
@@ -189,7 +190,7 @@ public:
     void WriteInfForDel();
 
     void ClearInf();                                                //清空整个信息表
-    void InsertInf(Information* tempinf);                           //添加单个信息表
+    bool InsertInf(Information* tempinf);                           //添加单个信息表
     void DeleteInf(Information* tempinf);                           //删除单个信息表
     void ChangeInf(Information* beforeinf, Information* afterinf);  //改变单个信息表
 
